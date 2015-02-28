@@ -1,0 +1,15 @@
+pyc
+*.swp
+*.bak
+*.class
+
+/local.properties
+/import-summary.txt
+
+/.gradle/
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+
+/build/
+/app/build/
