@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#F2F2F2">  
+ 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:id="@+id/title" >
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/item_titlebar" />
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical">
+    <ScrollView     
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" > 
+		<LinearLayout
+		    android:id="@+id/scrollview"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical">
+		</LinearLayout>
+	</ScrollView>
+	<LinearLayout
+	    android:id="@+id/linearview"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical">
+	</LinearLayout>
+</LinearLayout>
+	
+</LinearLayout>
+
+

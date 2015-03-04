@@ -100,7 +100,6 @@ public class HttpRequestApi {
                         ContentType.create("text/plain", MIME.UTF8_CHARSET));
 			}
 		}
-
         HttpEntity httpEntity = this.multipartEntityBuilder.build();
         this.getHttpPost().setEntity(httpEntity);
         
@@ -133,7 +132,7 @@ public class HttpRequestApi {
 
         try {
         	Log.i(TAG,"start http connecting");
-			this.httpResponse = this.httpClient.execute(this.httpRequest); // 发送 HTTP 请求并获取服务端响应
+			this.httpResponse = this.httpClient.execute(this.httpRequest); // 发送HTTP请求并获取服务端响应
         } catch(ConnectTimeoutException e){
             Log.i(TAG,"time out");
             this.responseEntity = null;

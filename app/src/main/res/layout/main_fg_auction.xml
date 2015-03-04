@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        layout="@layout/item_titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/auction_status_all"
+            style="@style/auction_status_tab"
+            android:text="全部"/>
+        <RadioButton android:id="@+id/auction_status_preview"
+            style="@style/auction_status_tab"
+            android:text="预展中"/>
+        <RadioButton android:id="@+id/auction_status_bid"
+            style="@style/auction_status_tab"
+            android:text="拍卖中"/>
+        <RadioButton android:id="@+id/auction_status_over"
+            style="@style/auction_status_tab"
+            android:text="已结束"/>
+    </LinearLayout>
+
+    <!-- 展示各种拍卖会 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.boguzhai.logic.utils.ListViewForScrollView
+                android:id="@+id/auction_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </ScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>

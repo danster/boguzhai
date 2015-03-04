@@ -1,4 +1,4 @@
-package com.boguzhai.logic.task;
+package com.boguzhai.logic.thread;
 
 import android.os.Handler;
 import android.os.Message;
@@ -12,9 +12,9 @@ public class HttpPostRunnable implements Runnable{
     private HttpRequestApi conn;
     private Handler handler;
 
-    public HttpPostRunnable(HttpRequestApi _conn, Handler _handler){
-        this.conn = _conn;
-        this.handler = _handler;
+    public HttpPostRunnable(HttpRequestApi conn, Handler handler){
+        this.conn = conn;
+        this.handler = handler;
     }
 
     @Override

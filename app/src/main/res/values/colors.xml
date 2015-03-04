@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">#0000</color>
+    <color name="white">#fff</color>
+    <color name="black">#000000</color> <!-- 黑色 -->
+    <color name="dark_black">#3E3E3E</color> <!-- 深黑色 -->
+    <color name="half_black">#8C8C8C</color> <!-- 中黑色 -->
+    <color name="light_black">#BABABA</color> <!-- 浅黑色 -->
+    <color name="hint_black">#A0A0A0</color> <!-- 提示灰色 -->
+
+    <color name="yellow">#FFFF00</color>
+    <color name="fuchsia">#FF00FF</color>
+    <color name="red">#FF0000</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="gray">#808080</color>
+    <color name="olive">#808000</color>
+    <color name="purple">#800080</color>
+    <color name="maroon">#800000</color>
+    <color name="aqua">#00FFFF</color>
+    <color name="lime">#00FF00</color>
+    <color name="teal">#008080</color>
+    <color name="green">#008000</color>
+    <color name="blue">#0000FF</color>
+    <color name="navy">#000080</color>
+    <color name="gold">#ff9a8050</color>
+
+    <color name="single_line">#FF909090</color> <!-- 分割线 -->
+
+</resources>

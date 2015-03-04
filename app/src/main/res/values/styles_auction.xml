@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- 条形栏间的分割线式样 -->
+    <style name="auction_status_tab">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/main_tab_itembg_selector</item>
+        <item name="android:textColor">@color/auction_tab_selector</item>
+    </style>
+
+
+
+</resources>
