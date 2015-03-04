@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() { return Integer.MAX_VALUE;}
-
             @Override
             public boolean isViewFromObject(View view, Object object) { return view == object;}
 
@@ -106,11 +105,16 @@ public class HomeFragment extends Fragment {
 
         });
 
+        // 设置监听，主要是设置点点的背景
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()  {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrollStateChanged(int arg0) {}
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {}
+
             @Override
             public void onPageSelected(int position) {
+                index=position;
                 int selectItems = position % mImageViews.length;
                 for (int i = 0; i < tips.length; i++) {
                     if (i == selectItems) {
@@ -120,14 +124,10 @@ public class HomeFragment extends Fragment {
                     }
                 }
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {}
         });
 
         // 设置ViewPager的默认项, 如果想往左边滑动, index初始化要是大整数才行
-        index=1000*mImageViews.length;
-        viewPager.setCurrentItem(index);
+        viewPager.setCurrentItem(1000*mImageViews.length);
 
         // 设置ViewPager的滑动策略
         new Handler() {
@@ -138,6 +138,8 @@ public class HomeFragment extends Fragment {
                 sendEmptyMessageDelayed(0, 3000);
             }
         }.sendEmptyMessageDelayed(0, 3000);
+
+
     }
 
     // 动态加载首页拍品
@@ -190,4 +192,28 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+
+    // 初始化动态广告栏中导航小图标样式
+    public void setTipPic(ViewGroup vGroup, int selected, int regular) {
+        tips = new ImageView[imgIdArray.length];
+
+        for (int i = 0; i < tips.length; i++) {
+            ImageView imageView = new ImageView(getActivity());
+
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
+            tips[i] = imageView;
+            if (i == 0) {
+                tips[i].setBackgroundResource(selected);
+            } else {
+                tips[i].setBackgroundResource(regular);
+            }
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            layoutParams.leftMargin = 7;
+            layoutParams.rightMargin = 7;
+            vGroup.addView(imageView, layoutParams);
+        }
+    }
+
 }
