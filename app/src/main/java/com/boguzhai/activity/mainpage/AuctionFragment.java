@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.items.AuctionListAdapter;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.utils.ListViewForScrollView;
 

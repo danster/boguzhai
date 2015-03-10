@@ -1,50 +1,189 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
 <include
     android:layout_width="match_parent"
     android:layout_height="60dp"
     layout="@layout/item_titlebar" />
+
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="0dp"
+    android:layout_weight="1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/choose_lot_type_1">
+            <TextView style="@style/search_left_text" android:text="请选择分类一 "/>
+            <TextView style="@style/search_center_text"
+                android:id="@+id/lot_type_1"/>
+            <ImageView style="@style/search_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline" />
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/choose_lot_type_2">
+            <TextView style="@style/search_left_text" android:text="请选择分类二 "/>
+            <TextView style="@style/search_center_text"
+                android:id="@+id/lot_type_2"/>
+            <ImageView style="@style/search_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline" />
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/choose_lot_type_3">
+            <TextView style="@style/search_left_text" android:text="请选择分类三 "/>
+            <TextView style="@style/search_center_text"
+                android:id="@+id/lot_type_3"/>
+            <ImageView style="@style/search_right_arrow" />
+        </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/transparent"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/choose_auction"
+            android:layout_marginTop="10dp" >
+            <TextView style="@style/search_left_text" android:text="请选择拍卖会 "/>
+            <TextView style="@style/search_center_text"
+                android:id="@+id/auction"/>
+            <ImageView style="@style/search_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline" />
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/choose_session" >
+            <TextView style="@style/search_left_text" android:text="请选择专场 "/>
+            <TextView style="@style/search_center_text"
+                android:id="@+id/session"/>
+            <ImageView style="@style/search_right_arrow" />
+        </LinearLayout>
+
+        <TextView style="@style/base_bar"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:textSize="15sp"
+            android:text="请选择拍卖会状态"/>
+        <View style="@style/longline" />
+        <RadioGroup
+            android:id="@+id/radioGroup_auction_status"
+            style="@style/base_bar"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/auction_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不限"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/auction_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预展中"/>
+            <RadioButton
+                android:id="@+id/auction_bid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="拍卖中"
+                />
+        </RadioGroup>
 
 
-    <ImageView
-        android:id="@+id/search_auction"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/search_auction"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/transparent"/>
+        <TextView style="@style/base_bar"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:textSize="15sp"
+            android:text="请选择拍卖方式"/>
+        <View style="@style/longline" />
+        <RadioGroup
+            android:id="@+id/radioGroup_bid_type"
+            style="@style/base_bar"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/bid_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不限"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/bid_live"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="现场拍卖"/>
+            <RadioButton
+                android:id="@+id/bid_both"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="同步拍卖"/>
+            <RadioButton
+                android:id="@+id/bid_net"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="网络拍卖"/>
+        </RadioGroup>
 
-    <ImageView
-        android:id="@+id/search_lot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/search_lot"/>
+        <TextView style="@style/base_bar"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:textSize="15sp"
+            android:text="请选择拍品状态"/>
+        <View style="@style/longline" />
+        <RadioGroup
+            android:id="@+id/radioGroup_lot_status"
+            style="@style/base_bar"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/lot_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不限"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/lot_deal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已成交"/>
+            <RadioButton
+                android:id="@+id/lot_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="流拍"/>
+        </RadioGroup>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/transparent"/>
-
+        <TextView style="@style/base_bar"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:textSize="15sp"
+            android:text="请选择成交方式"/>
+        <View style="@style/longline" />
+        <RadioGroup
+            android:id="@+id/radioGroup_deal_type"
+            style="@style/base_bar"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/deal_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不限"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/deal_net"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="网络出价"/>
+            <RadioButton
+                android:id="@+id/deal_live"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="现场出价"/>
+        </RadioGroup>
     </LinearLayout>
 </ScrollView>
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/gold"
+    android:id="@+id/search"
+    android:text="查询"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.boguzhai.activity.mainpage;
+package com.boguzhai.activity.items;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.logic.dao.Lot;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class LotListAdapter extends BaseAdapter {
         ViewHolder holder = null;    
         if (convertView == null) { 
             holder = new ViewHolder();    
-            convertView = inflater.inflate(R.layout.main_fg_home_lotlist, null);
+            convertView = inflater.inflate(R.layout.item_list_lot, null);
             holder.leftLot = (LinearLayout) convertView.findViewById(R.id.leftLot);
             holder.leftImage = (ImageView) convertView.findViewById(R.id.leftImage);
             holder.leftLotName = (TextView) convertView.findViewById(R.id.leftLotName);

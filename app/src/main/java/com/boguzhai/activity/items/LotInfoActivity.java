@@ -1,4 +1,4 @@
-package com.boguzhai.activity.auction;
+package com.boguzhai.activity.items;
 
 import android.os.Bundle;
 import android.view.View;

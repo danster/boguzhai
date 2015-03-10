@@ -38,13 +38,12 @@
         <activity android:name=".activity.base.AppStartActivity" > </activity>
 
         <!-- activities belong part of search -->
-        <activity android:name=".activity.search.SearchAuctionActivity"></activity>
-        <activity android:name=".activity.search.SearchLotActivity"></activity>
+        <activity android:name=".activity.search.SearchResultActivity"></activity>
 
 
         <!-- activities belong part of auction -->
         <activity android:name=".activity.auction.AuctionPreviewActivity"></activity>
-        <activity android:name=".activity.auction.LotInfoActivity"></activity>
+        <activity android:name=".activity.items.LotInfoActivity"></activity>
     </application>
 
 </manifest>

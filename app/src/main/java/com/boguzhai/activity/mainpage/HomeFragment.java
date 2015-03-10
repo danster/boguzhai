@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.utils.HttpRequestApi;
 import com.boguzhai.logic.utils.ListViewForScrollView;
