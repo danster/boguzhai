@@ -1,0 +1,164 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <!-- 拍品图片与名称 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/image"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:textSize="16sp"
+                android:textColor="@color/dark_black"
+                android:lines="1"
+                android:text="羊年芙蓉童子挂件"/>
+
+            <TextView
+                android:layout_width="50sp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="#957A4D"
+                android:text="收藏"/>
+
+            <TextView
+                android:layout_width="50sp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="#957A4D"
+                android:text="分享"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 拍品详情 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center|left"
+                android:background="#957A4D"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center|left"
+                android:text="拍品详情"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="拍品分类: 古籍书刊 > 写书札记 > 名人札记 \n拍品编号: ASC210409140
+预估价: 12000元 - 15000元\n起拍价: 3000元\n尺寸: 134厘米*60厘米\n年代: 明朝\n折损度: 完整"/>
+    </LinearLayout>
+
+    <!-- 拍品简介 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center|left"
+                android:background="#957A4D"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center|left"
+                android:text="拍品简介"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   《双鉴行窝图》是唐寅商品画之代表作，由画幅左下角“与汪君虽未伸晤言”、“双鉴行窝吴郡唐寅为富溪汪君作”一句可知，是唐寅受安徽新安某人而作。唐寅不少画作是友情赠送的祝寿礼物。
+      此幅作品极具收藏价值，它历经数百年而保存完整，可见其多么难得，历代珍藏家、鉴赏家都视其为书法中的珍宝。"/>
+    </LinearLayout>
+
+    <!-- 拍卖会信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center|left"
+                android:background="#957A4D"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center|left"
+                android:text="拍卖会信息"/>
+        </LinearLayout>
+
+        <!-- 展示拍卖会信息 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/session_info" >
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/item_info_auction" />
+        </LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

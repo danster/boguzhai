@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- 展示拍卖会信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/auction_type"
+                android:layout_width="40dp"
+                android:layout_height="22dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@color/gold"
+                android:text="同步"/>
+            <TextView
+                android:id="@+id/auction_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:gravity="center|left"
+                android:textSize="18sp"
+                android:text="2015博古斋新年大拍"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/half_black"
+                android:text="拍卖会状态: "/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/red"
+                android:text="预展中"/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/half_black"
+                android:text="  上拍件数: "/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/red"
+                android:text="305件"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/half_black"
+                android:text="成交件数: "/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/red"
+                android:text="210件"/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/half_black"
+                android:text=" 成交率: "/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/red"
+                android:text="73%"/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/half_black"
+                android:text=" 成交额: "/>
+            <TextView style="@style/auction_info_text"
+                android:textColor="@color/red"
+                android:text="21.23万"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 展示专场信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/session_info" >
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/item_info_session" />
+    </LinearLayout>
+
+</LinearLayout>

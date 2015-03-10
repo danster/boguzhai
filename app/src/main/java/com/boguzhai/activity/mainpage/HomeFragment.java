@@ -44,13 +44,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_fg_home, null);
         context = (MainActivity)getActivity(); //getApplicationContext()
-        setDynamicAds();
-        setDynamicLots();
+        showSessionAds();
+        showLotList();
         return view;
     }
 
-    // 动态加载广告位
-    public void setDynamicAds(){
+    // 展示拍卖会广告位
+    public void showSessionAds(){
         viewGroup = (ViewGroup) view.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewInfo = (TextView)view.findViewById(R.id.viewInfo);
@@ -142,12 +142,12 @@ public class HomeFragment extends Fragment {
 
     }
 
-    // 动态加载首页拍品
-    public void setDynamicLots(){
+    // 展示首页拍品列表
+    public void showLotList(){
         listview = (ListViewForScrollView) view.findViewById(R.id.lotlist);
         list = new ArrayList<Lot>();
 
-        for(int i=0; i<2; i++){
+        for(int i=0; i<9; i++){
             Lot lot = new Lot();
             list.add(lot);
         }
@@ -159,7 +159,6 @@ public class HomeFragment extends Fragment {
         conn.addParam("m", "getMainLotList");
         conn.setUrl("http://www.boguzhai.com/api.jhtml");
         //new Thread(new HttpPostRunnable(conn,new MyHandler())).start();
-
     }
 
     public class MyHandler extends Handler {

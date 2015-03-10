@@ -7,7 +7,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 
 public class SearchAuctionActivity extends BaseActivity {
-
+    private static final String TAG = "SearchAuctionActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

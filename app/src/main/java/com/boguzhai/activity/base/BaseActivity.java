@@ -1,6 +1,7 @@
 package com.boguzhai.activity.base;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,6 +29,8 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
     	listen(title_left);
         listen(title);
         listen(title_right);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //禁止手机横屏
 
         title_right.setVisibility(View.INVISIBLE);
 

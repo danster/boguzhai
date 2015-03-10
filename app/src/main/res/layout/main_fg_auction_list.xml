@@ -7,65 +7,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="@color/white"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal" >
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginRight="5dp"
-                android:orientation="vertical" >
-                <ImageView
-                    android:id="@+id/leftImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/image"/>
-                <TextView
-                    android:id="@+id/leftText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:background="@color/white"
-                    android:text="1清代官窑景德镇瓷器作品1号"
-                    android:textColor="@color/dark_black"
-                    android:textSize="15sp"
-                    android:lines="1"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical" >
-                <ImageView
-                    android:id="@+id/rightImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/image"/>
-                <TextView
-                    android:id="@+id/rightText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:background="@color/white"
-                    android:text="2清代官窑景德镇瓷器作品2号"
-                    android:textColor="@color/dark_black"
-                    android:textSize="15sp"
-                    android:lines="1"/>
-            </LinearLayout>
-        </LinearLayout>
+    <!-- 展示拍卖会信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/auction_type"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@color/gold"
+            android:text="同步"/>
+        <TextView
+            android:id="@+id/auction_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:text="2015博古斋新年大拍"/>
+    </LinearLayout>
+    <!-- 展示拍卖会专场信息 -->
+    <com.boguzhai.logic.utils.ListViewForScrollView
+        android:id="@+id/session_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

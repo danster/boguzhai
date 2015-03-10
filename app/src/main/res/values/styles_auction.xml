@@ -1,17 +1,32 @@
 <resources>
 
-    <!-- 条形栏间的分割线式样 -->
     <style name="auction_status_tab">
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:button">@null</item>
-        <item name="android:background">@drawable/main_tab_itembg_selector</item>
+        <item name="android:background">@drawable/auction_tab_bg_selector</item>
         <item name="android:textColor">@color/auction_tab_selector</item>
     </style>
 
+    <style name="auction_info_text">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="lot_info_text">
+        <item name="android:layout_height">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lines">1</item>
+    </style>
 
 
 </resources>

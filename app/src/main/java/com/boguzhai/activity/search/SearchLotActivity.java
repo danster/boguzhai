@@ -16,6 +16,7 @@ import com.boguzhai.activity.base.BaseActivity;
 import java.util.Calendar;
 
 public class SearchLotActivity extends BaseActivity {
+    private static final String TAG = "SearchLotActivity";
 
     private String[] firstLotTypes = {"全部","玉兰香苑", "张江地铁站", "金科路", "张江路", "紫薇路", "香楠小区" };
     private String[][] secondLotTypes = {{"全部"},{"全部"},{"全部"}};

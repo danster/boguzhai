@@ -83,11 +83,14 @@ def search():
     png_transfer("search_auction.png","search_auction.png",height=150,org_dir="icon/")
     png_transfer("search_lot.png","search_lot.png",height=150,org_dir="icon/")
 
+def auction():
+    png_transfer("icon_search.png","base_search.png",height=30,org_dir="icon/")
+
 
 if __name__ == '__main__':
     main_icon()
     search()
-
+    auction()
 
 
 

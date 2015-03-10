@@ -10,20 +10,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:background="@color/white"
         android:orientation="horizontal">
-        <RadioButton android:id="@+id/auction_status_all"
-            style="@style/auction_status_tab"
-            android:text="全部"/>
-        <RadioButton android:id="@+id/auction_status_preview"
-            style="@style/auction_status_tab"
-            android:text="预展中"/>
-        <RadioButton android:id="@+id/auction_status_bid"
-            style="@style/auction_status_tab"
-            android:text="拍卖中"/>
-        <RadioButton android:id="@+id/auction_status_over"
-            style="@style/auction_status_tab"
-            android:text="已结束"/>
+        <RadioGroup
+            android:id="@+id/auction_status_tab"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <RadioButton android:id="@+id/auction_status_all"
+                style="@style/auction_status_tab"
+                android:text="全部"/>
+            <RadioButton android:id="@+id/auction_status_preview"
+                style="@style/auction_status_tab"
+                android:text="预展中"/>
+            <RadioButton android:id="@+id/auction_status_bid"
+                style="@style/auction_status_tab"
+                android:text="拍卖中"/>
+            <RadioButton android:id="@+id/auction_status_over"
+                style="@style/auction_status_tab"
+                android:text="已结束"/>
+        </RadioGroup>
     </LinearLayout>
 
     <!-- 展示各种拍卖会 -->

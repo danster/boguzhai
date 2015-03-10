@@ -23,7 +23,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:paddingTop">8dip</item>
         <item name="android:paddingBottom">4dip</item>
-        <item name="android:background">@drawable/main_tab_itembg_selector</item>
+        <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/main_tab_selector</item>
         <item name="android:button">@null</item>
     </style>

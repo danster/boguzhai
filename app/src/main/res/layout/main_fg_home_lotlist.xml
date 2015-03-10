@@ -6,66 +6,76 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical" >
-
+        android:layout_height="200dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal" >
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal" >
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            android:id="@+id/leftLot"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/leftImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginRight="5dp"
-                android:orientation="vertical" >
-                <ImageView
-                    android:id="@+id/leftImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/image"/>
-                <TextView
-                    android:id="@+id/leftText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:background="@color/white"
-                    android:text="1清代官窑景德镇瓷器作品1号"
-                    android:textColor="@color/dark_black"
-                    android:textSize="15sp"
-                    android:lines="1"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:background="@drawable/image"/>
+            <TextView
+                android:id="@+id/leftLotName"
+                style="@style/lot_info_text"
+                android:layout_height="20dp"
+                android:textColor="@color/dark_black"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/leftLotID"
+                style="@style/lot_info_text"
+                android:text="拍品号: A3102091234"/>
+            <TextView
+                android:id="@+id/leftLotApprisal"
+                style="@style/lot_info_text"
+                android:text="预估价: ￥8000 - ￥12000"/>
+            <TextView
+                android:id="@+id/leftLotStartPrice"
+                style="@style/lot_info_text"
+                android:text="起拍价: ￥4000"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/rightLot"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:background="@color/white"
+            android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/rightImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical" >
-                <ImageView
-                    android:id="@+id/rightImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/image"/>
-                <TextView
-                    android:id="@+id/rightText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:background="@color/white"
-                    android:text="2清代官窑景德镇瓷器作品2号"
-                    android:textColor="@color/dark_black"
-                    android:textSize="15sp"
-                    android:lines="1"/>
-            </LinearLayout>
+                android:background="@drawable/image"/>
+            <TextView
+                android:id="@+id/rightLotName"
+                style="@style/lot_info_text"
+                android:layout_height="20dp"
+                android:textColor="@color/dark_black"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/rightLotID"
+                style="@style/lot_info_text"
+                android:text="拍品号: A3102091234"/>
+            <TextView
+                android:id="@+id/rightLotApprisal"
+                style="@style/lot_info_text"
+                android:text="预估价: ￥8000 - ￥12000"/>
+            <TextView
+                android:id="@+id/rightLotStartPrice"
+                style="@style/lot_info_text"
+                android:text="起拍价: ￥4000"/>
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
