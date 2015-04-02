@@ -1,0 +1,62 @@
+<resources>
+
+    <style name="me_left_image">
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_width">35dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:gravity">center|left</item>
+    </style>
+
+    <style name="me_middle_text">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/dark_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="me_right_arrow">
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_width">12dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/base_arrow_right_small</item>
+    </style>
+
+    <style name="myinfo_left_text">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/dark_black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="myinfo_middle_text">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center|right</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="verify_left_text" parent="@style/myinfo_left_text">
+    </style>
+
+    <style name="myinfo_right_arrow" parent="@style/me_right_arrow"> </style>
+    <style name="myinfo_right_clear" parent="@style/me_right_arrow">
+        <item name="android:layout_height">15dp</item>
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_marginLeft">7dp</item>
+        <item name="android:background">@drawable/base_clear</item>
+    </style>
+
+</resources>

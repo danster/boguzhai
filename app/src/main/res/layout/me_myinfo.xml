@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout android:id="@+id/my_photo"
+            style="@style/base_bar"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="头像"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+            <ImageView android:id="@+id/photo"
+                android:layout_height="90dp"
+                android:layout_width="90dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/image"
+                />
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/my_name"
+            style="@style/base_bar"
+            android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="姓名"/>
+            <TextView android:id="@+id/name"
+                style="@style/myinfo_middle_text"
+                android:text="张三"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout android:id="@+id/my_nickname"
+            style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="昵称"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/nickname"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_zone">
+            <TextView style="@style/myinfo_left_text"  android:text="地区"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/zone"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+
+
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_email"
+            android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="邮箱"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/email"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_mobile">
+            <TextView style="@style/myinfo_left_text"  android:text="手机"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/mobile"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_more_contact">
+            <TextView style="@style/myinfo_left_text"  android:text="更多联系方式"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/more_contact"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_verify"
+            android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="实名认证"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/verify"
+                android:textColor="@color/red"
+                android:text="审核未通过"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_capital">
+            <TextView style="@style/myinfo_left_text"  android:text="资金账户"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/capital"
+                android:textColor="@color/red"
+                android:text="￥9911.20"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_delivery_address">
+            <TextView style="@style/myinfo_left_text"  android:text="收货地址"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/delivery_address"
+                android:text="上海市黄浦区福州路707号4楼4023室"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+
+<LinearLayout style="@style/base_bar"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="16dp"
+    android:background="@color/transparent">
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:textColor="@color/white"
+        android:text="退  出"/>
+</LinearLayout>
+   
+</LinearLayout>

@@ -66,7 +66,6 @@ def png_transfer(name, new_name=None, width=None, height=None, org_dir=None):
     #image.resize((new_width, new_height), Image.ANTIALIAS) // not able on png
     image.save(new_url,"PNG")
 
-
 def main_icon():
     tab_height = 30;
     
@@ -79,6 +78,12 @@ def main_icon():
     png_transfer("main_tab_me.png", height=tab_height)
     png_transfer("main_tab_me_on.png", height=tab_height)
 
+def base():
+    png_transfer("logo.png","ic_laucher_h.png",height=72,org_dir="icon/")
+    png_transfer("logo.png","ic_laucher_m.png",height=48,org_dir="icon/")
+    png_transfer("logo.png","ic_laucher_x.png",height=95,org_dir="icon/")
+    png_transfer("logo.png","ic_laucher_xx.png",height=144,org_dir="icon/")
+
 def search():
     png_transfer("search_auction.png","search_auction.png",height=150,org_dir="icon/")
     png_transfer("search_lot.png","search_lot.png",height=150,org_dir="icon/")
@@ -87,10 +92,16 @@ def auction():
     png_transfer("icon_search.png","base_search.png",height=30,org_dir="icon/")
 
 
+def me():
+    png_transfer("banner_red.png","me_banner_red.png",height=30,org_dir="icon/")
+    png_transfer("me_bg.png","me_bg.png",height=100,org_dir="icon/")
+
 if __name__ == '__main__':
     main_icon()
+    base()
     search()
     auction()
+    me()
 
 
 

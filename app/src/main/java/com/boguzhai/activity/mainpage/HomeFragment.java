@@ -1,6 +1,7 @@
 package com.boguzhai.activity.mainpage;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,7 +17,9 @@ import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.items.LotListAdapter;
+import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpRequestApi;
 import com.boguzhai.logic.utils.ListViewForScrollView;
 
@@ -70,7 +73,7 @@ public class HomeFragment extends Fragment {
 
         // 将导航小图标加入到ViewGroup中
         tips = new ImageView[imgIdArray.length];
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(60,60);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20,20);
         layoutParams.leftMargin = 3;
         layoutParams.rightMargin = 3;
 
@@ -119,9 +122,9 @@ public class HomeFragment extends Fragment {
                 int selectItems = position % mImageViews.length;
                 for (int i = 0; i < tips.length; i++) {
                     if (i == selectItems) {
-                        tips[i].setBackgroundResource(R.drawable.circle_selected);
+                        tips[i].setBackgroundResource(R.drawable.circle_selected_little);
                     } else {
-                        tips[i].setBackgroundResource(R.drawable.circle_unselected);
+                        tips[i].setBackgroundResource(R.drawable.circle_unselected_little);
                     }
                 }
             }
@@ -159,7 +162,7 @@ public class HomeFragment extends Fragment {
         HttpRequestApi conn = new HttpRequestApi();
         conn.addParam("m", "getMainLotList");
         conn.setUrl("http://www.boguzhai.com/api.jhtml");
-        //new Thread(new HttpPostRunnable(conn,new MyHandler())).start();
+        new Thread(new HttpPostRunnable(conn,new MyHandler())).start();
     }
 
     public class MyHandler extends Handler {
@@ -180,6 +183,7 @@ public class HomeFragment extends Fragment {
                             context.tips.setMessage("服务器出错, 获取信息失败").create().show();
                             break;
                         case -1:
+                            context.startActivity(new Intent(context, LoginActivity.class));
                             break;
                         default:
                             break;

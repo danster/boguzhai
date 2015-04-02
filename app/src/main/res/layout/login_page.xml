@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/base_text"
+            android:layout_width="100dp"
+            android:text="手机/邮箱"/>
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:textSize="15sp"
+            android:background="@color/transparent"/>
+        <ImageView style="@style/base_right_clear"
+            android:id="@+id/username_clear"/>
+    </LinearLayout>
+
+    <View style="@style/longline"/>
+
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/base_text"
+	    android:layout_width="100dp"
+        android:text="密          码"/>
+	<EditText
+	    android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+        android:inputType="textPassword"
+        android:textSize="15sp"
+        android:background="@color/transparent"/>
+    <ImageView style="@style/base_right_clear"
+	    android:id="@+id/password_clear"/>
+</LinearLayout>
+
+<LinearLayout style="@style/base_bar"
+    android:background="@color/transparent"> 
+	<TextView style="@style/base_text"
+	    android:id="@+id/register"
+        android:layout_width="100dp"
+	    android:textColor="@color/blue"
+	    android:text="注  册" />
+	<TextView 
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+	<TextView style="@style/base_text"
+	    android:id="@+id/forget_pwd"
+	    android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	    android:textSize="14sp"
+	    android:background="@color/transparent"
+	    android:textColor="@color/blue"
+	    android:text="忘记密码" />
+</LinearLayout>
+
+<LinearLayout style="@style/base_bar"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/transparent"> 
+	<TextView
+	    android:id="@+id/login"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#ff751c20"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+	    android:text="登  录"/>
+</LinearLayout>
+
+</LinearLayout>

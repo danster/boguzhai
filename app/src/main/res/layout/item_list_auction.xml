@@ -16,14 +16,15 @@
     <!-- 展示拍卖会信息 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
         <TextView
             android:id="@+id/auction_type"
             android:layout_width="40dp"
-            android:layout_height="20dp"
+            android:layout_height="22dp"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@color/white"
             android:background="@color/gold"
             android:text="同步"/>
@@ -32,7 +33,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:gravity="center|left"
             android:textSize="18sp"
             android:text="2015博古斋新年大拍"/>
     </LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout android:id="@+id/my_tele"
+            style="@style/base_bar"
+            android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="座机"/>
+            <TextView android:id="@+id/tele"
+                style="@style/myinfo_middle_text"
+                android:text="021-78265632"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout android:id="@+id/my_fax"
+            style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="传真"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/fax"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_QQ">
+            <TextView style="@style/myinfo_left_text"  android:text="QQ"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/QQ"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_address">
+            <TextView style="@style/myinfo_left_text"  android:text="地址"/>
+            <TextView style="@style/myinfo_middle_text"
+                android:id="@+id/address"
+                android:text="上海市福州路45弄12号802"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

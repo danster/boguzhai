@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:descendantFocusability="beforeDescendants"
+ 	android:focusableInTouchMode="true">
+
+	<LinearLayout style="@style/login_bar">
+		<ImageView style="@style/register_l_iv"
+            android:background="@drawable/image"/>
+		<EditText style="@style/register_ev"
+		    android:id="@+id/username"
+            android:text="手机/邮箱"/>
+		<TextView
+            android:id="@+id/get_check_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#ff751c20"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:text=" 获取验证码 "/>
+	</LinearLayout>
+
+    <LinearLayout style="@style/login_bar">
+        <ImageView style="@style/register_l_iv"
+            android:background="@drawable/image"/>
+        <EditText style="@style/register_ev"
+            android:id="@+id/check_code"
+            android:text="验证码"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/login_bar">
+        <ImageView style="@style/register_l_iv"
+            android:background="@drawable/image"/>
+        <EditText style="@style/register_ev"
+            android:id="@+id/password"
+            android:text="密码"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/login_bar"
+        android:background="@color/transparent">
+        <CheckBox style="@style/register_l_iv"
+            android:textColor="@color/gold"
+            android:id="@+id/agree"/>
+        <TextView style="@style/base_text"
+            android:textColor="@color/gold"
+            android:text="同意"/>
+        <TextView style="@style/register_ev"
+            android:id="@+id/protocol"
+            android:autoLink="web"
+            android:textColor="@color/gold"
+            android:text="博古斋拍卖网注册协议"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/login_bar"
+        android:background="@color/transparent">
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#ff751c20"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="同意协议，提交注册"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/login_bar"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/transparent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:text="您已经注册，快来 "/>
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff751c20"
+            android:textSize="16sp"
+            android:text="直接登录!"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.mainpage.MainActivity;
+import com.boguzhai.logic.dao.SharedKeys;
 
 
 public class AppStartActivity extends Activity {
@@ -17,11 +18,12 @@ public class AppStartActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.app_start_page);
+        Log.i(TAG,"in the AppStartActivity");
 
 		new Handler().postDelayed(new Runnable() {
             public void run() {
-                if( App.settings.getBoolean("firstlogin", true)){
-                    App.settings_editor.putBoolean("firstlogin", false);
+                if( App.settings.getBoolean(SharedKeys.firstlogin, true)){
+                    App.settings_editor.putBoolean(SharedKeys.firstlogin, false);
                     App.settings_editor.commit();
                     Log.i(TAG,"first login, go to app guide");
                     startActivity(new Intent(AppStartActivity.this, AppGuideActivity.class));
@@ -30,6 +32,6 @@ public class AppStartActivity extends Activity {
                     App.mainTabIndex = R.id.rb_1;
                     startActivity(new Intent(AppStartActivity.this, MainActivity.class));
                 }
-            }}, 2000);
+            }}, 1500);
 	}
 }

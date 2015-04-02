@@ -40,10 +40,19 @@
         <!-- activities belong part of search -->
         <activity android:name=".activity.search.SearchResultActivity"></activity>
 
-
         <!-- activities belong part of auction -->
         <activity android:name=".activity.auction.AuctionPreviewActivity"></activity>
         <activity android:name=".activity.items.LotInfoActivity"></activity>
+
+        <!-- activities belong part of login -->
+        <activity android:name=".activity.login.LoginActivity"></activity>
+        <activity android:name=".activity.login.RegisterActivity"></activity>
+        <activity android:name=".activity.login.ForgetPwdActivity"></activity>
+
+        <!-- activities belong part of me -->
+        <activity android:name=".activity.me.info.AccountInfoActivity"></activity>
+        <activity android:name=".activity.me.info.MoreContactActivity"></activity>
+        <activity android:name=".activity.me.info.IdentityVerifyActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package com.boguzhai.activity.base;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,26 +15,31 @@ import com.boguzhai.R;
 
 public abstract class BaseActivity extends Activity implements OnClickListener {
     public static String TAG = "BaseActivity";
+    public Context context;
     public LinearLayout content, title_bar;
     public TextView title_left, title, title_right;
+
+    public AlertDialog.Builder tips;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        this.context = this;
         this.setContentView(R.layout.base_frame);
 		
 		title_bar = (LinearLayout)findViewById(R.id.title);
-		title_left = (TextView)findViewById(R.id.title_left);
         title = (TextView)findViewById(R.id.title_center);
+		title_left = (TextView)findViewById(R.id.title_left);
 		title_right = (TextView)findViewById(R.id.title_right);
+        title_right.setVisibility(View.INVISIBLE);
     	
     	listen(title_left);
         listen(title);
         listen(title_right);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //禁止手机横屏
-
-        title_right.setVisibility(View.INVISIBLE);
+        tips = new AlertDialog.Builder(this);
+        tips.setTitle("提示").setPositiveButton("确定", null);
 
 //        title_left.setTextSize(20);
 //        title_center.setTextSize(30);

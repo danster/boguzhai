@@ -5,12 +5,48 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <!-- 条形栏间的分割线式样 -->
+    <!-- 常见的文字和图标式样 ************************************************ -->
+    <style name="base_image">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="base_text" >
+        <item name="android:textColor">@color/dark_black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center_vertical|left</item>
+    </style>
+
+    <style name="base_right_arrow">
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/base_arrow_right_small</item>
+    </style>
+    
+    <style name="base_right_clear">
+        <item name="android:layout_height">15dp</item>
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/base_clear</item>
+    </style>
+    <!-- ************************************************ 常见的文字和图标式样 -->
+
+    <!-- 条形栏的基本式样 -->
     <style name="base_bar">
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
         <item name="android:gravity">center|left</item>
         <item name="android:background">@drawable/base_bar_selector</item>
     </style>
@@ -35,7 +71,7 @@
         <item name="android:background">@color/single_line</item>
     </style>
 
-    <!-- 条形栏间的分割线式样 -->
+    <!-- 树形分割线式样 -->
     <style name="longline_vertical">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0.5dp</item>

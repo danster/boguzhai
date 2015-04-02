@@ -7,11 +7,13 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.boguzhai.R;
+import com.boguzhai.logic.dao.Account;
 
 public class App extends Application {
 	public static final String TAG = "App";
 	
 	/** 下列信息需要在用户登录时立刻从服务器端获取 **/
+    public static Account account = new Account();
 	
 	/** 下列信息需要在用户登录后实时从服务器端获取 **/
 

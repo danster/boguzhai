@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/base_bar">
+        <EditText style="@style/login_l_ev"
+            android:id="@+id/phone"
+            android:hint="填写绑定的手机号码"/>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text=" 获取验证码 "
+            android:background="@color/green"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/get_check_code" />
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <EditText style="@style/login_l_ev"
+            android:id="@+id/check_code"
+            android:hint="请填写手机验证码"/>
+        <ImageView style="@style/base_right_clear"
+            android:id="@+id/check_code_clear"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <EditText style="@style/login_l_ev"
+            android:id="@+id/pwd_input"
+            android:inputType="textPassword"
+            android:hint="请填写新密码"/>
+        <ImageView style="@style/base_right_clear"
+            android:id="@+id/pwd_input_clear"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <EditText style="@style/login_l_ev"
+            android:id="@+id/pwd_confirm"
+            android:inputType="textPassword"
+            android:hint="请确认新密码"/>
+        <ImageView style="@style/base_right_clear"
+            android:id="@+id/pwd_confirm_clear"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp"
+        android:background="@color/transparent">
+        <TextView
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#ff751c20"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="重置密码"/>
+    </LinearLayout>
+
+</LinearLayout>

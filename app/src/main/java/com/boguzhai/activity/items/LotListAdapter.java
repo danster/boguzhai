@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.logic.dao.Lot;
 
+
 import java.util.ArrayList;
 
 public class LotListAdapter extends BaseAdapter {
@@ -57,9 +58,13 @@ public class LotListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();    
         }
 
-        System.out.println("lot list position " + position);
         holder.leftImage.setBackgroundResource(R.drawable.image);
-        holder.leftLotName.setText("博古斋展示拍品 " + 2*position);
+        holder.leftLotName.setText(list.get(2*position).name);
+        holder.leftLotID.setText("拍品号: "+list.get(2*position).id);
+        holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).apprisal1
+                                        +" - ￥"+list.get(2*position).apprisal2);
+        holder.leftLotStartPrice.setText("起拍价: ￥"+list.get(2*position).startPrice);
+
         holder.leftLot.setOnClickListener(new MyOnClickListener(2 * position));
 
         holder.rightLot.setVisibility(View.VISIBLE);
@@ -68,7 +73,11 @@ public class LotListAdapter extends BaseAdapter {
         } else {
             holder.rightLot.setOnClickListener(new MyOnClickListener(2*position+1));
             holder.rightImage.setBackgroundResource(R.drawable.image);
-            holder.rightLotName.setText("博古斋展示拍品 "+(2*position+1));
+            holder.rightLotName.setText(list.get(2*position+1).name);
+            holder.rightLotID.setText("拍品号: "+list.get(2*position+1).id);
+            holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).apprisal1
+                    +" - ￥"+list.get(2*position+1).apprisal2);
+            holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
         }
 
         return convertView;    

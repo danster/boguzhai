@@ -87,8 +87,6 @@
                 />
         </RadioGroup>
 
-
-
         <TextView style="@style/base_bar"
             android:layout_marginTop="10dp"
             android:gravity="center|left"
@@ -96,9 +94,10 @@
             android:text="请选择拍卖方式"/>
         <View style="@style/longline" />
         <RadioGroup
-            android:id="@+id/radioGroup_bid_type"
             style="@style/base_bar"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroup_bid_type"
+            android:orientation="vertical">
             <RadioButton
                 android:id="@+id/bid_all"
                 android:layout_width="wrap_content"

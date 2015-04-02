@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.mainpage.MainActivity;
 
 public class AppGuideActivity extends Activity implements View.OnClickListener {
@@ -123,7 +124,7 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
 
             case R.id.app_sign:
                 App.mainTabIndex = R.id.rb_1;
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
         }
     };

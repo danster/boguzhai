@@ -1,6 +1,8 @@
 package com.boguzhai.activity.mainpage;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,7 +23,6 @@ public class SearchFragment extends Fragment {
     private String[] firstLotTypes = {"全部","玉兰香苑", "张江地铁站", "金科路", "张江路", "紫薇路", "香楠小区" };
     private String[][] secondLotTypes = {{"全部"},{"全部"},{"全部"}};
     String lotType1, lotType2, lotType3;
-
 
     int auctions_status=1, bid_type=1, lot_status=1, deal_type=1;
 
@@ -49,13 +50,6 @@ public class SearchFragment extends Fragment {
         this.listenRadioGroup(R.id.radioGroup_lot_status);
 
         return view;
-    }
-
-    // 监听一个 VieW
-    public void listen(View view){
-        if ( view != null ){
-            view.setOnClickListener(listener);
-        }
     }
 
     // 监听一个 ViewId
@@ -91,10 +85,8 @@ public class SearchFragment extends Fragment {
                 case R.id.deal_all : deal_type = 1; break;
                 case R.id.deal_live: deal_type = 2; break;
                 case R.id.deal_net : deal_type = 3; break;
-
                 default: break;
             }
-
         }
     }
 
@@ -102,13 +94,22 @@ public class SearchFragment extends Fragment {
         @Override
         public void onClick(View v){
             switch (v.getId()) {
+                case R.id.choose_lot_type_1:
+                    new AlertDialog.Builder(context).setSingleChoiceItems(firstLotTypes, 0,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int index) {
+                                ((TextView) view.findViewById(R.id.lot_type_1)).setText(firstLotTypes[index]);
+                                lotType1 = firstLotTypes[index];
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton("取消", null).show();
+                    break;
                 case R.id.search:
                     context.startActivity(new Intent( context,  SearchResultActivity.class));
                     break;
                 default:
                     break;
             }
-
         }
     }
 
