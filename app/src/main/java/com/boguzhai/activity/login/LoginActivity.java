@@ -27,6 +27,7 @@ public class LoginActivity extends BaseActivity {
 	protected Account account=null;
 	protected TextView username_tv, password_tv;
     private String username, password;
+    private Class<?> cls = null;
 
 	private static ProgressDialog dialog;
 
@@ -35,11 +36,13 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setScrollView(R.layout.login_page);
         title.setText("会员登录");
-
-		setBaseEnv();
+		init();
 	}
 
-	protected void setBaseEnv(){
+	protected void init(){
+        Intent intent = getIntent();
+        cls =  (Class<?>)getIntent().getSerializableExtra("cls");
+
 		this.username_tv = (TextView)findViewById(R.id.username);
 		this.password_tv = (TextView)findViewById(R.id.password);
 
@@ -79,6 +82,11 @@ public class LoginActivity extends BaseActivity {
         break;
         case R.id.login:
             App.isLogin = true;
+            if(cls != null){
+                startActivity(new Intent(this, cls));
+                finish();
+            }
+
             App.mainTabIndex = R.id.rb_4;
             startActivity(new Intent(this, MainActivity.class));
 

@@ -3,7 +3,6 @@ package com.boguzhai.activity.mainpage;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,13 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.App;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.login.RegisterActivity;
+import com.boguzhai.activity.me.bidding.BiddingActivity;
+import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
+import com.boguzhai.activity.me.order.PayOrderActivity;
+import com.boguzhai.activity.me.proxy.ProxyPricingActivity;
+import com.boguzhai.activity.me.settings.SystemSettingsActivity;
+import com.boguzhai.activity.me.upload.UploadLotActivity;
 
 public class MeFragment extends Fragment {
     private static String TAG = "MeFragment";
@@ -32,7 +37,6 @@ public class MeFragment extends Fragment {
         TextView title_right = (TextView)view.findViewById(R.id.title_right);
         title_right.setText("注册");
         view.findViewById(R.id.title_left).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.title_right).setVisibility(View.VISIBLE);
 
         this.showMyInfo();
         this.listen(R.id.me_login);
@@ -51,9 +55,11 @@ public class MeFragment extends Fragment {
 
     public void showMyInfo(){
         if( App.isLogin == false ){
+            view.findViewById(R.id.title_right).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.GONE);
             view.findViewById(R.id.me_login_view).setVisibility(View.VISIBLE);
         } else {
+            view.findViewById(R.id.title_right).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_login_view).setVisibility(View.GONE);
         }
@@ -71,22 +77,49 @@ public class MeFragment extends Fragment {
         @Override
         public void onClick(View v){
             switch (v.getId()) {
-                case R.id.me_login:
-                    Log.i("MeFragment","to login");
-                    startActivity(new Intent(context, LoginActivity.class));
-                    break;
                 case R.id.title_right:
-                    Log.i("MeFragment","to register");
                     startActivity(new Intent(context, RegisterActivity.class));
                     break;
+                case R.id.me_login:
+                    startActivity(new Intent(context, LoginActivity.class));
+                    break;
                 case R.id.me_myinfo:
-                    Log.i("MeFragment","to show myinfo");
                     startActivity(new Intent(context, AccountInfoActivity.class));
+                    break;
+                case R.id.me_my_auctions:
+                    startActivityByLogin(AccountInfoActivity.class);
+                    break;
+                case R.id.me_biding:
+                    startActivityByLogin(BiddingActivity.class);
+                    break;
+                case R.id.me_billing:
+                    startActivityByLogin(PayOrderActivity.class);
+                    break;
+                case R.id.me_my_proxy:
+                    startActivityByLogin(ProxyPricingActivity.class);
+                    break;
+                case R.id.me_my_favorites:
+                    startActivityByLogin(MyCollectionActivity.class);
+                    break;
+                case R.id.me_upload:
+                    startActivityByLogin(UploadLotActivity.class);
+                    break;
+                case R.id.me_system:
+                    startActivityByLogin(SystemSettingsActivity.class);
                     break;
                 default:
                     break;
             }
+        }
+    }
 
+    public void startActivityByLogin(Class<?> cls){
+        if(App.isLogin == true)
+            context.startActivity(new Intent(context, cls));
+        else {
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.putExtra("cls", cls);
+            context.startActivity(intent);
         }
     }
 

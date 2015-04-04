@@ -49,10 +49,32 @@
         <activity android:name=".activity.login.RegisterActivity"></activity>
         <activity android:name=".activity.login.ForgetPwdActivity"></activity>
 
-        <!-- activities belong part of me -->
+        <!-- activities belong part of me info -->
         <activity android:name=".activity.me.info.AccountInfoActivity"></activity>
         <activity android:name=".activity.me.info.MoreContactActivity"></activity>
         <activity android:name=".activity.me.info.IdentityVerifyActivity"></activity>
+
+        <!-- activities belong part of me myauction -->
+        <activity android:name=".activity.me.myauction.MyAuctionActivity"></activity>
+
+        <!-- activities belong part of me bidding -->
+        <activity android:name=".activity.me.bidding.BiddingActivity"></activity>
+
+        <!-- activities belong part of me order -->
+        <activity android:name=".activity.me.order.PayOrderActivity"></activity>
+
+        <!-- activities belong part of me proxy -->
+        <activity android:name=".activity.me.proxy.ProxyPricingActivity"></activity>
+
+        <!-- activities belong part of me collect -->
+        <activity android:name=".activity.me.collect.MyCollectionActivity"></activity>
+
+        <!-- activities belong part of me upload -->
+        <activity android:name=".activity.me.upload.UploadLotActivity"></activity>
+
+        <!-- activities belong part of me setting -->
+        <activity android:name=".activity.me.settings.SystemSettingsActivity"></activity>
+
     </application>
 
 </manifest>
