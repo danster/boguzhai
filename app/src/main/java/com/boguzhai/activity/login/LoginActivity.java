@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,6 +44,9 @@ public class LoginActivity extends BaseActivity {
         Intent intent = getIntent();
         cls =  (Class<?>)getIntent().getSerializableExtra("cls");
 
+        if(cls != null ){
+            Log.i("cls name: ",cls.getName());
+        }
 		this.username_tv = (TextView)findViewById(R.id.username);
 		this.password_tv = (TextView)findViewById(R.id.password);
 
@@ -84,11 +88,11 @@ public class LoginActivity extends BaseActivity {
             App.isLogin = true;
             if(cls != null){
                 startActivity(new Intent(this, cls));
-                finish();
+            }else{
+                App.mainTabIndex = R.id.rb_4;
+                startActivity(new Intent(this, MainActivity.class));
             }
 
-            App.mainTabIndex = R.id.rb_4;
-            startActivity(new Intent(this, MainActivity.class));
 
 //            username = username_tv.getText().toString();
 //            password = password_tv.getText().toString();

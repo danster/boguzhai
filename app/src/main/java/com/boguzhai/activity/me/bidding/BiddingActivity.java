@@ -10,12 +10,12 @@ public class BiddingActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_bidding);
+        this.setLinearView(R.layout.me_bidding);
         title.setText("正在竞价");
-        initView();
+        init();
 	}
 
-	protected void initView(){
+	protected void init(){
 
 	}
 

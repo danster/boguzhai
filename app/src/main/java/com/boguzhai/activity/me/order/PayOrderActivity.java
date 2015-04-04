@@ -10,12 +10,12 @@ public class PayOrderActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_payorder);
+        this.setLinearView(R.layout.me_payorder);
         title.setText("结算交割");
-        initView();
+        init();
 	}
 
-	protected void initView(){
+	protected void init(){
 
 	}
 

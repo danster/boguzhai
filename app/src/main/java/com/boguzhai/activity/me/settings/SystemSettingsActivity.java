@@ -10,12 +10,12 @@ public class SystemSettingsActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_settings);
+        this.setLinearView(R.layout.me_settings);
         title.setText("系统设置");
-        initView();
+        init();
 	}
 
-	protected void initView(){
+	protected void init(){
 
 	}
 

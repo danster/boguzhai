@@ -10,12 +10,12 @@ public class MyCollectionActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_mycollection);
+        this.setLinearView(R.layout.me_mycollection);
         title.setText("我的收藏");
-        initView();
+        init();
 	}
 
-	protected void initView(){
+	protected void init(){
 
 	}
 

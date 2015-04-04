@@ -10,12 +10,12 @@ public class MyAuctionActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_myauction);
+        this.setLinearView(R.layout.me_myauction);
         title.setText("我的拍卖会");
-        initView();
+        init();
 	}
 
-	protected void initView(){
+	protected void init(){
 
 	}
 

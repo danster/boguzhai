@@ -10,12 +10,12 @@ public class ProxyPricingActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_proxy);
+        this.setLinearView(R.layout.me_proxy);
         title.setText("代理出价");
-        initView();
+        init();
 	}
 
-	protected void initView(){
+	protected void init(){
 
 	}
 
