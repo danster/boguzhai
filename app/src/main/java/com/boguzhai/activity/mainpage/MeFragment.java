@@ -15,6 +15,7 @@ import com.boguzhai.activity.login.RegisterActivity;
 import com.boguzhai.activity.me.bidding.BiddingActivity;
 import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
+import com.boguzhai.activity.me.myauction.MyAuctionActivity;
 import com.boguzhai.activity.me.order.PayOrderActivity;
 import com.boguzhai.activity.me.proxy.ProxyPricingActivity;
 import com.boguzhai.activity.me.settings.SystemSettingsActivity;
@@ -87,7 +88,7 @@ public class MeFragment extends Fragment {
                     startActivity(new Intent(context, AccountInfoActivity.class));
                     break;
                 case R.id.me_my_auctions:
-                    startActivityByLogin(AccountInfoActivity.class);
+                    startActivityByLogin(MyAuctionActivity.class);
                     break;
                 case R.id.me_biding:
                     startActivityByLogin(BiddingActivity.class);
