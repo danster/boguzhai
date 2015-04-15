@@ -1,5 +1,6 @@
 package com.boguzhai.activity.auction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -7,12 +8,11 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.utils.ListViewForScrollView;
+import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
 
 public class AuctionPreviewActivity extends BaseActivity {
-    private static final String TAG = "AuctionPreviewActivity";
 
     private ArrayList<Lot> list;
     private ListViewForScrollView listview;
@@ -23,21 +23,25 @@ public class AuctionPreviewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLinearView(R.layout.auction_preview);
         title.setText("拍卖预展");
+        title_right.setText("筛选");
+        title_right.setVisibility(View.VISIBLE);
 
-        showLotList();
+        showListView();
     }
 
     @Override
     public void onClick(View v){
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.title_right:
+                startActivity(new Intent(this, LotFilterActivity.class));
             default:
             break;
         }
     }
 
     // 展示专场的拍品列表
-    public void showLotList(){
+    public void showListView(){
         listview = (ListViewForScrollView) findViewById(R.id.lotlist);
         list = new ArrayList<Lot>();
 

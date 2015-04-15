@@ -12,12 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.logic.utils.Utility;
 
 public abstract class BaseActivity extends Activity implements OnClickListener {
     public static String TAG = "BaseActivity";
     public Context context;
     public LinearLayout content, title_bar;
     public TextView title_left, title, title_right;
+    public Utility utility = new Utility();
 
     public AlertDialog.Builder tips;
 
@@ -41,11 +43,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
         tips = new AlertDialog.Builder(this);
         tips.setTitle("提示").setPositiveButton("确定", null);
 
-//        title_left.setTextSize(20);
-//        title_center.setTextSize(30);
 //        title_right.setTextSize(20);
-//        title_left.setTextColor(this.getResources().getColor(R.color.white));
-//        title_center.setTextColor(this.getResources().getColor(R.color.white));
 //        title_right.setTextColor(this.getResources().getColor(R.color.white));
 
 	}
@@ -106,8 +104,6 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 		}
 		return super.onKeyDown (keyCode, event);
     }
-
-
 }
 
 	

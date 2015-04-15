@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingTop="3dp"
-    android:paddingBottom="3dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
     android:background="#ff9a8054" >
 
     <LinearLayout
@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="0dp"
-        android:layout_weight="4"
+        android:layout_weight="3.5"
         android:gravity="center"
         android:orientation="vertical">
         <TextView
@@ -43,7 +43,7 @@
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="0dp"
-        android:layout_weight="1.3"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
         <TextView

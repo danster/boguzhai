@@ -1,8 +1,13 @@
 package com.boguzhai.logic.utils;
 
 import android.graphics.Bitmap;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.boguzhai.activity.base.App;
+import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.logic.dao.SharedKeys;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.UpdateUserInfoHandler;
@@ -13,6 +18,8 @@ import com.google.zxing.common.BitMatrix;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 
 public class Utility {
@@ -90,6 +97,41 @@ public class Utility {
         //通过像素数组生成bitmap,具体参考api
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
         return bitmap;
+    }
+
+    // 给spinner设置初始环境
+    public void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result){
+        Spinner spinner;
+
+        if(v == null){ spinner = (Spinner) activity.findViewById(view_id);
+        }else {  spinner = (Spinner) v.findViewById(view_id);}
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item,list);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new SpinnerSelectedListener(list, result));
+        spinner.setVisibility(View.VISIBLE);
+        spinner.setSelection( Arrays.asList(list).indexOf(result.toString()));
+    }
+
+    // Activity环境下，给spinner设置初始环境
+    public void setSpinner(BaseActivity activity, int view_id, String[] list, StringBuffer result){
+        setSpinner(activity,null,view_id,list,result);
+    }
+
+    // 使用数组形式操作spinner
+    class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
+        private String[] list;
+        StringBuffer result;
+
+        public SpinnerSelectedListener(String[] list, StringBuffer result){
+            this.list=list; this.result=result;
+        }
+
+        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            result.replace(0,result.length(),list[arg2]);
+        }
+        public void onNothingSelected(AdapterView<?> arg0) {}
     }
 
 }

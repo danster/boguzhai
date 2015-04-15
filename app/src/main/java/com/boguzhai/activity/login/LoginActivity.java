@@ -17,6 +17,9 @@ import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.mainpage.MainActivity;
 import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.SharedKeys;
+import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.utils.HttpRequestApi;
+import com.boguzhai.logic.utils.StringApi;
 import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
@@ -28,7 +31,7 @@ public class LoginActivity extends BaseActivity {
 	protected Account account=null;
 	protected TextView username_tv, password_tv;
     private String username, password;
-    private Class<?> cls = null;
+    private Class<?> fromClass = null;
 
 	private static ProgressDialog dialog;
 
@@ -42,10 +45,10 @@ public class LoginActivity extends BaseActivity {
 
 	protected void init(){
         Intent intent = getIntent();
-        cls =  (Class<?>)getIntent().getSerializableExtra("cls");
+        fromClass =  (Class<?>)getIntent().getSerializableExtra("fromClass");
 
-        if(cls != null ){
-            Log.i("cls name: ",cls.getName());
+        if(fromClass != null ){
+            Log.i("fromClass name: ",fromClass.getName());
         }
 		this.username_tv = (TextView)findViewById(R.id.username);
 		this.password_tv = (TextView)findViewById(R.id.password);
@@ -86,36 +89,35 @@ public class LoginActivity extends BaseActivity {
         break;
         case R.id.login:
             App.isLogin = true;
-            if(cls != null){
-                startActivity(new Intent(this, cls));
+            if(fromClass != null){
+                startActivity(new Intent(this, fromClass));
             }else{
                 App.mainTabIndex = R.id.rb_4;
                 startActivity(new Intent(this, MainActivity.class));
             }
 
 
-//            username = username_tv.getText().toString();
-//            password = password_tv.getText().toString();
-//            App.settings_editor.putString(SharedKeys.username, username);
-//            App.settings_editor.putString(SharedKeys.password, password);
-//            App.settings_editor.commit();
-//
-//
-//            if(!StringApi.checkPhoneNumber(username)){
-//                tips.setMessage(StringApi.tips).create().show();
-//                break;
-//            }else if(password.length() <= 0){
-//                tips.setMessage("密码不能为空").create().show();
-//                break;
-//            }else {
-//                HttpRequestApi conn = new HttpRequestApi();
-//                conn.addParam("m", "login");
-//                conn.addParam("username", username);
-//                conn.addParam("password", password);
-//                conn.setUrl("http://www.boguzhai.com/api.jhtml");
-//        		new Thread(new HttpPostRunnable(conn,new LoginHandler())).start();
-//        		LoginActivity.dialog.show();  //出现在finish()之后会出错
-//        	}
+            username = username_tv.getText().toString();
+            password = password_tv.getText().toString();
+            App.settings_editor.putString(SharedKeys.username, username);
+            App.settings_editor.putString(SharedKeys.password, password);
+            App.settings_editor.commit();
+
+
+            if(!StringApi.checkPhoneNumber(username)){
+                tips.setMessage(StringApi.tips).create().show();
+                break;
+            }else if(password.length() <= 0){
+                tips.setMessage("密码不能为空").create().show();
+                break;
+            }else {
+                HttpRequestApi conn = new HttpRequestApi();
+                conn.addParam("username", username);
+                conn.addParam("password", password);
+                conn.setUrl("http://www.boguzhai.com/api.jhtml");
+        		new Thread(new HttpPostRunnable(conn,new LoginHandler())).start();
+        		LoginActivity.dialog.show();  //出现在finish()之后会出错
+        	}
 
         break;
         default:  break;

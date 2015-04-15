@@ -2,6 +2,7 @@ package com.boguzhai.activity.items;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +12,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.logic.dao.Lot;
-
 
 import java.util.ArrayList;
 
 public class LotListAdapter extends BaseAdapter {
-    private final String TAG = "LotListAdapter";
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<Lot> list;
+    private boolean isMain = false;
 
 	public LotListAdapter(Context context, ArrayList<Lot> list) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.list = list;
-    }    
-    
+    }
+
+    public LotListAdapter(Context context, ArrayList<Lot> list, boolean isMain) {
+        this(context,list);
+        this.isMain = isMain;
+    }
+
     @Override    
     public int getCount() { return (list.size()+1)/2; }
     @Override    
@@ -58,7 +64,7 @@ public class LotListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();    
         }
 
-        holder.leftImage.setBackgroundResource(R.drawable.image);
+        holder.leftImage.setBackgroundResource(R.drawable.default_image);
         holder.leftLotName.setText(list.get(2*position).name);
         holder.leftLotID.setText("拍品号: "+list.get(2*position).id);
         holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).apprisal1
@@ -72,12 +78,28 @@ public class LotListAdapter extends BaseAdapter {
             holder.rightLot.setVisibility(View.INVISIBLE);
         } else {
             holder.rightLot.setOnClickListener(new MyOnClickListener(2*position+1));
-            holder.rightImage.setBackgroundResource(R.drawable.image);
+            holder.rightImage.setBackgroundResource(R.drawable.default_image);
             holder.rightLotName.setText(list.get(2*position+1).name);
             holder.rightLotID.setText("拍品号: "+list.get(2*position+1).id);
             holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).apprisal1
                     +" - ￥"+list.get(2*position+1).apprisal2);
             holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
+        }
+
+        if(isMain){
+            ViewGroup.LayoutParams params = holder.leftLotName.getLayoutParams();
+            params.height = 40;
+            holder.leftLotName.setLayoutParams(params);
+            holder.rightLotName.setLayoutParams(params);
+
+            holder.leftLotName.setGravity(Gravity.CENTER);
+            holder.rightLotName.setGravity(Gravity.CENTER);
+            holder.leftLotID.setVisibility(View.GONE);
+            holder.rightLotID.setVisibility(View.GONE);
+            holder.leftLotApprisal.setVisibility(View.GONE);
+            holder.rightLotApprisal.setVisibility(View.GONE);
+            holder.leftLotStartPrice.setVisibility(View.GONE);
+            holder.rightLotStartPrice.setVisibility(View.GONE);
         }
 
         return convertView;    

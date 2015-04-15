@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.items.AuctionListAdapter;
 import com.boguzhai.logic.dao.Auction;
-import com.boguzhai.logic.utils.ListViewForScrollView;
+import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class AuctionFragment extends Fragment {
     private View view;
     private MainActivity context;
 
-    private ArrayList<Auction> list;
+    private ArrayList<Auction> list, list_show;
     private ListViewForScrollView listview;
     AuctionListAdapter adapter;
 
@@ -38,26 +39,60 @@ public class AuctionFragment extends Fragment {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                updateDynamicAuctions(checkedId);
             }
         });
 
         setDynamicAuctions();
+        RadioButton radio = (RadioButton)view.findViewById(R.id.auction_status_all);
+        radio.setChecked(true);
 
         return view;
     }
 
     public void setDynamicAuctions(){
-
         listview = (ListViewForScrollView) view.findViewById(R.id.auction_list);
         list = new ArrayList<Auction>();
+        list_show = new ArrayList<Auction>();
 
-        for(int i=0; i<2; i++){
-            Auction auction = new Auction();
-            list.add(auction);
-        }
+        Auction at = new Auction(); at.status="预展中"; at.type="网络"; list.add(at);
+        at = new Auction(); at.status="预展中"; at.type="同步"; list.add(at);
+        at = new Auction(); at.status="进行中"; at.type="网络"; list.add(at);
+        at = new Auction(); at.status="进行中"; at.type="同步"; list.add(at);
+        at = new Auction(); at.status="已结束"; at.type="网络"; list.add(at);
+        at = new Auction(); at.status="已结束"; at.type="同步"; list.add(at);
 
-        adapter = new AuctionListAdapter(context, list);
+        list_show.addAll(list);
+        adapter = new AuctionListAdapter(context, list_show);
+
         listview.setAdapter(adapter);
+    }
+
+    public void updateDynamicAuctions(int checkedId){
+        list_show.clear();
+        switch (checkedId){
+            case R.id.auction_status_all:
+                list_show.addAll(list);
+                break;
+            case R.id.auction_status_preview:
+                for(int i=0; i<list.size(); i++)
+                    if(list.get(i).status=="预展中")
+                        list_show.add(list.get(i));
+                break;
+            case R.id.auction_status_bid:
+                for(int i=0; i<list.size(); i++)
+                    if(list.get(i).status=="进行中")
+                        list_show.add(list.get(i));
+                break;
+            case R.id.auction_status_over:
+                for(int i=0; i<list.size(); i++)
+                    if(list.get(i).status=="已结束")
+                        list_show.add(list.get(i));
+                break;
+            default:
+                break;
+        }
+        adapter.notifyDataSetChanged();
     }
 
 }

@@ -21,7 +21,7 @@ import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpRequestApi;
-import com.boguzhai.logic.utils.ListViewForScrollView;
+import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,10 +58,10 @@ public class HomeFragment extends Fragment {
         viewGroup = (ViewGroup) view.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewInfo = (TextView)view.findViewById(R.id.viewInfo);
-        imgIdArray = new int[] { R.drawable.image,
-                                 R.drawable.image,
-                                 R.drawable.image,
-                                 R.drawable.image };
+        imgIdArray = new int[] { R.drawable.default_image,
+                                 R.drawable.default_image,
+                                 R.drawable.default_image,
+                                 R.drawable.default_image };
 
         // 将静态图片ID装载到数组中
         mImageViews = new ImageView[imgIdArray.length];
@@ -142,8 +142,6 @@ public class HomeFragment extends Fragment {
                 sendEmptyMessageDelayed(0, 3000);
             }
         }.sendEmptyMessageDelayed(0, 3000);
-
-
     }
 
     // 展示首页拍品列表
@@ -153,10 +151,11 @@ public class HomeFragment extends Fragment {
 
         for(int i=0; i<9; i++){
             Lot lot = new Lot();
+            lot.name="景德镇瓷器"+i;
             list.add(lot);
         }
 
-        adapter = new LotListAdapter(context, list);
+        adapter = new LotListAdapter(context, list, true);
         listview.setAdapter(adapter);
 
         HttpRequestApi conn = new HttpRequestApi();

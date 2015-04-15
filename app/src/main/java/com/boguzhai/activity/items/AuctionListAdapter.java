@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Session;
-import com.boguzhai.logic.utils.ListViewForScrollView;
+import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
 
@@ -54,6 +54,8 @@ public class AuctionListAdapter extends BaseAdapter {
         ArrayList<Session> session_list = new ArrayList<Session>();
         for(int i=0; i<2; i++){
             Session session = new Session();
+            session.status=list.get(position).status;
+            session.type=list.get(position).type;
             session_list.add(session);
         }
 

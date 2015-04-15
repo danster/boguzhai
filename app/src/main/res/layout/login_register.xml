@@ -9,7 +9,7 @@
 
 	<LinearLayout style="@style/login_bar">
 		<ImageView style="@style/register_l_iv"
-            android:background="@drawable/image"/>
+            android:background="@drawable/sign_user"/>
 		<EditText style="@style/register_ev"
 		    android:id="@+id/username"
             android:text="手机/邮箱"/>
@@ -26,7 +26,7 @@
 
     <LinearLayout style="@style/login_bar">
         <ImageView style="@style/register_l_iv"
-            android:background="@drawable/image"/>
+            android:background="@drawable/sign_id"/>
         <EditText style="@style/register_ev"
             android:id="@+id/check_code"
             android:text="验证码"/>
@@ -34,7 +34,7 @@
 
     <LinearLayout style="@style/login_bar">
         <ImageView style="@style/register_l_iv"
-            android:background="@drawable/image"/>
+            android:background="@drawable/sign_code"/>
         <EditText style="@style/register_ev"
             android:id="@+id/password"
             android:text="密码"/>

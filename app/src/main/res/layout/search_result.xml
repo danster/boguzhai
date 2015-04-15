@@ -12,10 +12,12 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.boguzhai.logic.utils.ListViewForScrollView
+            <com.boguzhai.logic.widget.ListViewForScrollView
                 android:id="@+id/lotlist"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:footerDividersEnabled="false"
+                android:dividerHeight="0dp"/>
         </ScrollView>
     </LinearLayout>
 

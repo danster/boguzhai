@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/base_itembar" android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_text"  android:text="支付信息"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/info"
+            android:text="2015上海博古斋拍卖会-古籍专场"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_itembar">
+        <TextView style="@style/myinfo_left_text"  android:text="支付金额"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/money"
+            android:textColor="@color/red"
+            android:textSize="15sp"
+            android:text="1000元"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_itembar"
+        android:background="@color/transparent"
+        android:gravity="center|left">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="请选择支付方式"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_itembar" android:layout_height="60dp" android:id="@+id/alipay">
+        <ImageView style="@style/me_left_image"
+            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:background="@drawable/image"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:textSize="16sp"
+                android:textColor="@color/dark_black"
+                android:textStyle="bold"
+                android:gravity="center|left"
+                android:text="支付宝客户端"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:text="推荐安装支付宝客户端的用户使用"/>
+        </LinearLayout>
+        <ImageView style="@style/search_right_arrow" />
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_itembar"  android:layout_height="60dp" android:id="@+id/bank_card">
+        <ImageView style="@style/me_left_image"
+            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:background="@drawable/image"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:textSize="16sp"
+                android:textColor="@color/dark_black"
+                android:textStyle="bold"
+                android:gravity="center|left"
+                android:text="银行卡支付"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:text="支持储蓄卡信用卡，无需开通网银"/>
+        </LinearLayout>
+        <ImageView style="@style/search_right_arrow" />
+    </LinearLayout>
+
+</LinearLayout>

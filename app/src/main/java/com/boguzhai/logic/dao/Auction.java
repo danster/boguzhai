@@ -7,8 +7,8 @@ package com.boguzhai.logic.dao;
 public class Auction {
     public String id = "";
     public String name = "";
-    public String type = "";       //1:现场拍卖 2:同步拍卖 3:网络拍卖
-    public String status = "";     //1:预展中 2:拍卖中 3:已成交
+    public String type = "";       //"同步" "网络"
+    public String status = "";     //"预展中" "进行中" "已结束"
     public String location = "";
     public String auctionTime = "";
     public String previewTime = "";

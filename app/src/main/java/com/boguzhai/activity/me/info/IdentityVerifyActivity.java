@@ -12,7 +12,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 
 public class IdentityVerifyActivity extends BaseActivity {
-    protected static final String TAG = "IdentityVerifyActivity";
     protected TextView property, credential_type;
     protected EditText name, mobile, credential_number;
     protected ImageView credential_image;

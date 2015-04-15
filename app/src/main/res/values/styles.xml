@@ -40,7 +40,8 @@
     <!-- ************************************************ 常见的文字和图标式样 -->
 
     <!-- 条形栏的基本式样 -->
-    <style name="base_bar">
+    <!-- 条形栏的基本式样 -->
+    <style name="base_itembar">
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingTop">5dp</item>
@@ -48,6 +49,10 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
         <item name="android:gravity">center|left</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="base_bar" parent="@style/base_itembar">
         <item name="android:background">@drawable/base_bar_selector</item>
     </style>
 
@@ -76,6 +81,14 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0.5dp</item>
         <item name="android:background">@color/single_line</item>
+    </style>
+
+    // 开关
+    <style name="filter_switch">
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:gravity">center|right</item>
+        <item name="android:background">@drawable/base_choose_on</item>
     </style>
 
 </resources>

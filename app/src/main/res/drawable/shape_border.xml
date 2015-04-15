@@ -8,7 +8,7 @@
     <stroke android:width="0.05dp" android:color="#ff878787" />
 
     <!-- android:radius 弧形的半径 -->
-    <corners android:radius="3dip" />
+    <corners android:radius="1dip" />
 
     <padding
         android:bottom="0dp"

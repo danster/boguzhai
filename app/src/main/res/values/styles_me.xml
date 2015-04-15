@@ -3,8 +3,8 @@
     <style name="me_left_image">
         <item name="android:layout_height">35dp</item>
         <item name="android:layout_width">35dp</item>
-        <item name="android:layout_marginLeft">15dp</item>
-        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">10dp</item>
         <item name="android:gravity">center|left</item>
     </style>
 
@@ -38,14 +38,23 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="myinfo_left_star" parent="@style/myinfo_left_text">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
     <style name="myinfo_middle_text">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center|right</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/half_black</item>
         <item name="android:singleLine">true</item>
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <style name="verify_left_text" parent="@style/myinfo_left_text">

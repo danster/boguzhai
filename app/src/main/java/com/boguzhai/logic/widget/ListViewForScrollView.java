@@ -1,4 +1,4 @@
-package com.boguzhai.logic.utils;
+package com.boguzhai.logic.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

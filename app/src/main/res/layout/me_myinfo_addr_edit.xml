@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_star"  android:text="*"/>
+        <TextView style="@style/myinfo_left_text"  android:text="收件人"/>
+        <EditText style="@style/myinfo_middle_text" android:id="@+id/name"
+            android:text="黄浩"/>
+        <ImageView style="@style/myinfo_right_clear" android:id="@+id/name_clear"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_star"  android:text="*"/>
+        <TextView style="@style/myinfo_left_text"  android:text="收货地址"
+            android:layout_marginRight="2dp"/>
+        <LinearLayout style="@style/base_bar"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center|right">
+            <Spinner android:id="@+id/addr_1" style="@style/lot_filter_spinner"></Spinner>
+            <Spinner android:id="@+id/addr_2" style="@style/lot_filter_spinner"></Spinner>
+            <Spinner android:id="@+id/addr_3" style="@style/lot_filter_spinner"></Spinner>
+        </LinearLayout>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_star"  android:text="*"/>
+        <TextView style="@style/myinfo_left_text"  android:text="详细地址"/>
+        <EditText style="@style/myinfo_middle_text" android:id="@+id/addr_4"
+            android:text="福州路201号3021室"/>
+        <ImageView style="@style/myinfo_right_clear" android:id="@+id/addr_4_clear"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_star"  android:text="*"/>
+        <TextView style="@style/myinfo_left_text"  android:text="手机"/>
+        <EditText style="@style/myinfo_middle_text" android:id="@+id/mobile"
+            android:text="13812345678"/>
+        <ImageView style="@style/myinfo_right_clear" android:id="@+id/mobile_clear"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_star"  android:text="  "/>
+        <TextView style="@style/myinfo_left_text"  android:text="固定电话"/>
+        <EditText style="@style/myinfo_middle_text" android:id="@+id/telephone"
+            android:text="021-36272834"/>
+        <ImageView style="@style/myinfo_right_clear" android:id="@+id/telephone_clear"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_star"  android:text="  "/>
+        <TextView style="@style/myinfo_left_text"  android:text="邮编"/>
+        <EditText style="@style/myinfo_middle_text" android:id="@+id/zip"
+            android:text="200030"/>
+        <ImageView style="@style/myinfo_right_clear" android:id="@+id/zip_clear"/>
+    </LinearLayout>
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_star"  android:text="  "/>
+        <TextView style="@style/myinfo_left_text"  android:text="设为默认地址"/>
+        <EditText style="@style/myinfo_middle_text" />
+        <CheckBox
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center|right"
+            android:onClick="itemClicked"
+            android:id="@+id/is_default"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/transparent">
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:textColor="@color/white"
+            android:text=" 确 定 "/>
+    </LinearLayout>
+
+</LinearLayout>

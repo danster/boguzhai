@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.AuctionActiveActivity;
 import com.boguzhai.activity.auction.AuctionPreviewActivity;
 import com.boguzhai.logic.dao.Session;
 
@@ -66,9 +67,16 @@ public class SessionListAdapter extends BaseAdapter {
 		}
 		@Override
 		public void onClick(View v) {
-            Intent intent = new Intent( context,  AuctionPreviewActivity.class);
-            intent.putExtra("sessionId", list.get(position).id);
-            context.startActivity(intent);
+            if (list.get(position).status == "进行中" ){
+                Intent intent = new Intent( context, AuctionActiveActivity.class);
+                intent.putExtra("sessionId", list.get(position).id);
+                context.startActivity(intent);
+            }else{
+                Intent intent = new Intent( context, AuctionPreviewActivity.class);
+                intent.putExtra("sessionId", list.get(position).id);
+                context.startActivity(intent);
+            }
+
 		}
     }
 

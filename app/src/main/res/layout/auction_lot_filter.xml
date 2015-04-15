@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_text"  android:text="请选择分类一 "/>
+        <Spinner android:id="@+id/type1" style="@style/lot_filter_spinner"></Spinner>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_text"  android:text="请选择分类二 "/>
+        <Spinner android:id="@+id/type2" style="@style/lot_filter_spinner"></Spinner>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_text"  android:text="请选择分类三 "/>
+        <Spinner android:id="@+id/type3" style="@style/lot_filter_spinner"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_text"  android:text="请选择拍品状态 "/>
+        <Spinner android:id="@+id/status" style="@style/lot_filter_spinner"></Spinner>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_text"  android:text="请选择成交方式 "/>
+        <Spinner android:id="@+id/deal_type" style="@style/lot_filter_spinner"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <LinearLayout style="@style/base_bar"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView style="@style/myinfo_left_text"
+                android:layout_margin="0dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="起拍价"/>
+            <TextView style="@style/lot_filter_text"
+                android:id="@+id/low_price"
+                android:textColor="@color/red" android:text="200"/>
+            <TextView style="@style/lot_filter_text"  android:text=" 元 - "/>
+            <TextView style="@style/lot_filter_text"
+                android:id="@+id/high_price"
+                android:textColor="@color/red"
+                android:text="200"/>
+            <TextView style="@style/lot_filter_text"  android:text=" 元"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/range">
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/transparent">
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:textColor="@color/white"
+            android:text=" 确 定 "/>
+    </LinearLayout>
+
+</LinearLayout>

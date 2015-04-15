@@ -90,11 +90,27 @@ def search():
 
 def auction():
     png_transfer("icon_search.png","base_search.png",height=30,org_dir="icon/")
+    png_transfer("seek_thumb_disabled.png","seek_thumb_disabled.png",height=30,org_dir="icon/")
+    png_transfer("seek_thumb_normal.png","seek_thumb_normal.png",height=30,org_dir="icon/")
+    png_transfer("seek_thumb_pressed.png","seek_thumb_pressed.png",height=30,org_dir="icon/")
+
+
+    png_transfer("OK.png","pay_succeed.png",height=120,org_dir="icon/")
+    png_transfer("stop.png","pay_failed.png",height=120,org_dir="icon/")
 
 
 def me():
     png_transfer("banner_red.png","me_banner_red.png",height=30,org_dir="icon/")
     png_transfer("me_bg.png","me_bg.png",height=100,org_dir="icon/")
+
+    png_transfer("me_tab_myauction.png",width=35,org_dir="icon/")
+    png_transfer("me_tab_bidding.png",width=35,org_dir="icon/")
+    png_transfer("me_tab_payment.png",width=35,org_dir="icon/")
+    png_transfer("me_tab_proxy.png",width=35,org_dir="icon/")
+    png_transfer("me_tab_favorite.png",width=35,org_dir="icon/")
+    png_transfer("me_tab_settings.png",width=35,org_dir="icon/")
+    png_transfer("me_tab_upload.png",width=35,org_dir="icon/")
+
 
 if __name__ == '__main__':
     main_icon()

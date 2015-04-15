@@ -30,7 +30,6 @@
                 android:layout_gravity="center"
                 android:background="@drawable/image"
                 />
-            <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
 
         <LinearLayout android:id="@+id/my_name"
@@ -40,7 +39,6 @@
             <TextView android:id="@+id/name"
                 style="@style/myinfo_middle_text"
                 android:text="张三"/>
-            <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout android:id="@+id/my_nickname"
@@ -48,7 +46,6 @@
             <TextView style="@style/myinfo_left_text"  android:text="昵称"/>
             <TextView style="@style/myinfo_middle_text"
                 android:id="@+id/nickname"/>
-            <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar"
@@ -56,7 +53,6 @@
             <TextView style="@style/myinfo_left_text"  android:text="地区"/>
             <TextView style="@style/myinfo_middle_text"
                 android:id="@+id/zone"/>
-            <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
 
 
@@ -66,7 +62,6 @@
             <TextView style="@style/myinfo_left_text"  android:text="邮箱"/>
             <TextView style="@style/myinfo_middle_text"
                 android:id="@+id/email"/>
-            <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar"
@@ -74,7 +69,6 @@
             <TextView style="@style/myinfo_left_text"  android:text="手机"/>
             <TextView style="@style/myinfo_middle_text"
                 android:id="@+id/mobile"/>
-            <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar"
@@ -119,17 +113,14 @@
 </ScrollView>
 
 
-<LinearLayout style="@style/base_bar"
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
     android:layout_marginTop="12dp"
-    android:layout_marginBottom="16dp"
-    android:background="@color/transparent">
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/red"
-        android:textColor="@color/white"
-        android:text="退  出"/>
-</LinearLayout>
+    android:background="@color/gold"
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    android:id="@+id/logout"
+    android:text="退 出"/>
    
 </LinearLayout>

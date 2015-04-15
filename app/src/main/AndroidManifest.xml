@@ -42,7 +42,15 @@
 
         <!-- activities belong part of auction -->
         <activity android:name=".activity.auction.AuctionPreviewActivity"></activity>
-        <activity android:name=".activity.items.LotInfoActivity"></activity>
+        <activity android:name=".activity.auction.LotInfoActivity"></activity>
+        <activity android:name=".activity.auction.LotFilterActivity"></activity>
+        <activity android:name=".activity.auction.AuctionActiveActivity"></activity>
+
+
+        <activity android:name=".activity.auction.apply.ApplyForAuctionActivity"></activity>
+        <activity android:name=".activity.auction.apply.ShowSpecialLotsActivity"></activity>
+        <activity android:name=".activity.auction.apply.PayBailActivity"></activity>
+        <activity android:name=".activity.auction.apply.PayBailResultActivity"></activity>
 
         <!-- activities belong part of login -->
         <activity android:name=".activity.login.LoginActivity"></activity>
@@ -51,8 +59,14 @@
 
         <!-- activities belong part of me info -->
         <activity android:name=".activity.me.info.AccountInfoActivity"></activity>
-        <activity android:name=".activity.me.info.MoreContactActivity"></activity>
+        <activity android:name=".activity.me.info.AccountInfoMoreActivity"></activity>
+        <activity android:name=".activity.me.info.AccountInfoEditActivity"></activity>
         <activity android:name=".activity.me.info.IdentityVerifyActivity"></activity>
+        <activity android:name=".activity.me.info.DeliveryAddressManageActivity"></activity>
+        <activity android:name=".activity.me.info.DeliveryAddressEditActivity"></activity>
+
+        <!-- activities belong part of me capital -->
+        <activity android:name=".activity.me.capital.MyCapitalActivity"></activity>
 
         <!-- activities belong part of me myauction -->
         <activity android:name=".activity.me.myauction.MyAuctionActivity"></activity>

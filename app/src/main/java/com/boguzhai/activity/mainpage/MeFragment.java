@@ -35,9 +35,6 @@ public class MeFragment extends Fragment {
 
         TextView title = (TextView)view.findViewById(R.id.title_center);
         title.setText("我");
-        TextView title_right = (TextView)view.findViewById(R.id.title_right);
-        title_right.setText("注册");
-        view.findViewById(R.id.title_left).setVisibility(View.INVISIBLE);
 
         this.showMyInfo();
         this.listen(R.id.me_login);
@@ -56,6 +53,8 @@ public class MeFragment extends Fragment {
 
     public void showMyInfo(){
         if( App.isLogin == false ){
+            ((TextView)view.findViewById(R.id.title_right)).setText("注册");
+            view.findViewById(R.id.title_left).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.title_right).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.GONE);
             view.findViewById(R.id.me_login_view).setVisibility(View.VISIBLE);
@@ -119,7 +118,7 @@ public class MeFragment extends Fragment {
             context.startActivity(new Intent(context, cls));
         else {
             Intent intent = new Intent(context, LoginActivity.class);
-            intent.putExtra("cls", cls);
+            intent.putExtra("fromClass", cls);
             context.startActivity(intent);
         }
     }

@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+        <ImageView
+            android:id="@+id/result_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/pay_succeed"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_itembar"
+        android:background="@color/transparent"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/result_tips"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/dark_black"
+            android:text="恭喜您，保证金支付成功！"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/result_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout style="@style/base_itembar" android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_text"  android:text="参拍信息"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/info"
+            android:text="2015上海博古斋拍卖会-古籍专场"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_itembar">
+        <TextView style="@style/myinfo_left_text"  android:text="网络拍牌号"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/number"
+            android:textColor="@color/red"
+            android:textSize="15sp"
+            android:text="N007"/>
+    </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

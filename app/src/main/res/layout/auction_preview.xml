@@ -7,9 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
         android:background="@color/white">
 
         <!-- 展示拍卖会信息 -->
@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="3dp">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -42,14 +42,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:lines="1"
                     android:background="@color/transparent"/>
-                <Button
-                    android:layout_width="40dp"
+                <TextView
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:textColor="@color/dark_black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:background="@color/red"
                     android:text="搜索"/>
@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
@@ -69,16 +69,16 @@
     <!-- 展示各种拍品 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
+        android:layout_height="wrap_content">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.boguzhai.logic.utils.ListViewForScrollView
+            <com.boguzhai.logic.widget.ListViewForScrollView
                 android:id="@+id/lotlist"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:footerDividersEnabled="false"
+                android:dividerHeight="0dp"/>
         </ScrollView>
     </LinearLayout>
 

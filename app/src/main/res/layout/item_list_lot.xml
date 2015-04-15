@@ -6,75 +6,85 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:paddingBottom="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:paddingBottom="2dp"
         android:orientation="horizontal" >
         <LinearLayout
             android:id="@+id/leftLot"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white"
             android:orientation="vertical" >
-            <ImageView
-                android:id="@+id/leftImage"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/image"/>
+                android:layout_height="90dp"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/leftImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/default_image"/>
+            </LinearLayout>
             <TextView
                 android:id="@+id/leftLotName"
                 style="@style/lot_info_text"
-                android:layout_height="20dp"
+                android:layout_height="18dp"
                 android:textColor="@color/dark_black"
-                android:textSize="16sp"/>
+                android:textSize="15sp"
+                android:text=" 景德镇瓷器"/>
             <TextView
                 android:id="@+id/leftLotID"
                 style="@style/lot_info_text"
-                android:text="拍品号: A3102091234"/>
+                android:text=" 拍品号: A3102091234"/>
             <TextView
                 android:id="@+id/leftLotApprisal"
                 style="@style/lot_info_text"
-                android:text="预估价: ￥8000 - ￥12000"/>
+                android:text=" 预估价: ￥8000-￥12000"/>
             <TextView
                 android:id="@+id/leftLotStartPrice"
                 style="@style/lot_info_text"
-                android:text="起拍价: ￥4000"/>
+                android:text=" 起拍价: ￥4000"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/rightLot"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:background="@color/white"
             android:orientation="vertical" >
-            <ImageView
-                android:id="@+id/rightImage"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/image"/>
+                android:layout_height="90dp"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/rightImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/default_image"/>
+            </LinearLayout>
             <TextView
                 android:id="@+id/rightLotName"
                 style="@style/lot_info_text"
-                android:layout_height="20dp"
+                android:layout_height="18dp"
                 android:textColor="@color/dark_black"
-                android:textSize="16sp"/>
+                android:textSize="15sp"
+                android:text=" 景德镇瓷器"/>
             <TextView
                 android:id="@+id/rightLotID"
                 style="@style/lot_info_text"
-                android:text="拍品号: A3102091234"/>
+                android:text=" 拍品号: A3102091234"/>
             <TextView
                 android:id="@+id/rightLotApprisal"
                 style="@style/lot_info_text"
-                android:text="预估价: ￥8000 - ￥12000"/>
+                android:text=" 预估价: ￥8000 - ￥12000"/>
             <TextView
                 android:id="@+id/rightLotStartPrice"
                 style="@style/lot_info_text"
-                android:text="起拍价: ￥4000"/>
+                android:text=" 起拍价: ￥4000"/>
         </LinearLayout>
     </LinearLayout>
 

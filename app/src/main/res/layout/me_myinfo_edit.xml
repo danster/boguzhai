@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout android:id="@+id/my_photo"
+            style="@style/base_bar"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="头像"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+            <ImageView android:id="@+id/photo"
+                android:layout_height="90dp"
+                android:layout_width="90dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/image"
+                />
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="姓名"/>
+            <EditText android:id="@+id/name"
+                style="@style/myinfo_middle_text"
+                android:hint="张三"/>
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/name_clear"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="昵称"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/nickname"
+                android:hint="Jim"/>
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/nickname_clear"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="地区"/>
+            <LinearLayout style="@style/base_bar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center|right">
+                <Spinner android:id="@+id/addr_1" style="@style/lot_filter_spinner"></Spinner>
+                <Spinner android:id="@+id/addr_2" style="@style/lot_filter_spinner"></Spinner>
+                <Spinner android:id="@+id/addr_3" style="@style/lot_filter_spinner"></Spinner>
+            </LinearLayout>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="具体地址"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/address"
+                android:hint="上海市福州路45弄12号802"/>
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/address_clear"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/base_bar" android:id="@+id/my_email"
+            android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="邮箱"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/email"
+                android:text="zhanfsan@126.com"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar" android:id="@+id/my_mobile">
+            <TextView style="@style/myinfo_left_text"  android:text="手机"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/mobile"
+                android:text="13523451289"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/base_bar"  android:layout_marginTop="10dp">
+            <TextView style="@style/myinfo_left_text"  android:text="座机"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/tele"
+                android:hint="021-78265632"/>
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/tele_clear"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="传真"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/fax"
+                android:hint="010-3414141"/>
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/fax_clear" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="QQ"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/QQ"
+                android:hint="1434151541"/>
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/QQ_clear" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:layout_marginTop="12dp"
+    android:background="@color/gold"
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    android:id="@+id/ok"
+    android:text="确定"/>
+   
+</LinearLayout>

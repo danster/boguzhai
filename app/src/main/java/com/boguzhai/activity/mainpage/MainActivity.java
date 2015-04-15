@@ -14,7 +14,7 @@ import com.boguzhai.activity.base.App;
 import com.boguzhai.activity.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
-    private static final String TAG = "MainActivity";
+    private final String TAG = "MainActivity";
     private FragmentManager fragmentManager;
     private RadioGroup radioGroup;
     public AlertDialog.Builder tips;

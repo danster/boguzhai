@@ -107,28 +107,28 @@
 
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_my_auctions">
-                <TextView style="@style/me_left_image" android:background="@drawable/image"/>
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_myauction"/>
                 <TextView style="@style/me_middle_text" android:text="我的拍卖会"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_biding">
-                <TextView style="@style/me_left_image" android:background="@drawable/image"/>
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_bidding"/>
                 <TextView style="@style/me_middle_text" android:text="正在竞价"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_billing">
-                <TextView style="@style/me_left_image" android:background="@drawable/image"/>
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_payment"/>
                 <TextView style="@style/me_middle_text" android:text="结算交割"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_my_proxy">
-                <TextView style="@style/me_left_image" android:background="@drawable/image"/>
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_proxy"/>
                 <TextView style="@style/me_middle_text" android:text="代理出价"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
@@ -136,14 +136,14 @@
             <LinearLayout style="@style/base_bar"
                 android:layout_marginTop="10dp"
                 android:id="@+id/me_my_favorites">
-                <TextView style="@style/me_left_image" android:background="@drawable/image"/>
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_favorite"/>
                 <TextView style="@style/me_middle_text" android:text="我的收藏"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_upload">
-                <TextView style="@style/me_left_image" android:background="@drawable/image"/>
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_upload"/>
                 <TextView style="@style/me_middle_text" android:text="上传拍品"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
@@ -151,7 +151,7 @@
             <LinearLayout style="@style/base_bar"
                 android:layout_marginTop="10dp"
                 android:id="@+id/me_system">
-                <TextView style="@style/me_left_image" android:background="@drawable/image"/>
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_settings"/>
                 <TextView style="@style/me_middle_text" android:text="系统设置"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>

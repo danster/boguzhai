@@ -9,7 +9,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.utils.ListViewForScrollView;
+import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
 import java.util.Collections;

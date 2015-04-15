@@ -15,9 +15,8 @@ import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.mainpage.MainActivity;
 
 public class AppGuideActivity extends Activity implements View.OnClickListener {
-	private static final String TAG = "AppGuideActivity";
-	ViewPager viewPager; // ViewPager
-    ViewGroup viewGroup; //
+	ViewPager viewPager;
+    ViewGroup viewGroup;
 	ImageView[] imageViews, tips;
 	ImageView startTips, signTips;
 	
