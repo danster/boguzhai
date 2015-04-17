@@ -33,10 +33,11 @@ public class MeFragment extends Fragment {
         context = (MainActivity)getActivity();
         listener = new MyOnClickListener();
 
-        TextView title = (TextView)view.findViewById(R.id.title_center);
-        title.setText("我");
+        ((TextView)view.findViewById(R.id.title_center)).setText("我");
+        view.findViewById(R.id.title_left).setVisibility(View.INVISIBLE);
 
         this.showMyInfo();
+
         this.listen(R.id.me_login);
         this.listen(R.id.title_right);
         this.listen(R.id.me_myinfo);
@@ -53,25 +54,23 @@ public class MeFragment extends Fragment {
 
     public void showMyInfo(){
         if( App.isLogin == false ){
+            context.toastMessage("未登录",1);
             ((TextView)view.findViewById(R.id.title_right)).setText("注册");
-            view.findViewById(R.id.title_left).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.title_right).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.GONE);
             view.findViewById(R.id.me_login_view).setVisibility(View.VISIBLE);
         } else {
+            context.toastMessage("已登录",1);
             view.findViewById(R.id.title_right).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_login_view).setVisibility(View.GONE);
         }
     }
 
-    // 监听一个 ViewId
-    public void listen( int id){
-        View v = view.findViewById(id);
-        if ( v != null ){
-            v.setOnClickListener(listener);
-        }
-    }
+    /*************************** View Listener ****************************/
+    public void listen( View v){ if(v!=null){ v.setOnClickListener(listener);}} // 监听一个 VieW
+    public void listen( int id){ this.listen(view.findViewById(id));}           // 监听一个 View Id
+    public void listen( int[] ids){ for(int id: ids){ this.listen(id);}}        // 监听一组 View Ids
 
     class MyOnClickListener implements View.OnClickListener{
         @Override
@@ -118,7 +117,6 @@ public class MeFragment extends Fragment {
             context.startActivity(new Intent(context, cls));
         else {
             Intent intent = new Intent(context, LoginActivity.class);
-            intent.putExtra("fromClass", cls);
             context.startActivity(intent);
         }
     }

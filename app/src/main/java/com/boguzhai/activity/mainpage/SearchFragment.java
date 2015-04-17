@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -66,6 +65,9 @@ public class SearchFragment extends Fragment {
         lot_status.replace(0,lot_status.length(),"不限");
         lot_deal_type.replace(0,lot_deal_type.length(),"不限");
 
+//        listen(R.id.auction);
+//        listen(R.id.session);
+
         utility.setSpinner(context, view, R.id.type1, list_type1, type1);
         utility.setSpinner(context, view, R.id.type2, list_type2, type2);
         utility.setSpinner(context, view, R.id.type3, list_type3, type3);
@@ -79,13 +81,11 @@ public class SearchFragment extends Fragment {
         utility.setSpinner(context, view, R.id.session, list_session, session);
     }
 
-    // 监听一个 ViewId
-    public void listen( int id){
-        View v = view.findViewById(id);
-        if ( v != null ){
-            v.setOnClickListener(listener);
-        }
-    }
+
+    /*************************** View Listener ****************************/
+    public void listen( View v){ if(v!=null){ v.setOnClickListener(listener);}} // 监听一个 VieW
+    public void listen( int id){ this.listen(view.findViewById(id));}           // 监听一个 View Id
+    public void listen( int[] ids){ for(int id: ids){ this.listen(id);}}        // 监听一组 View Ids
 
     class MyOnClickListener implements View.OnClickListener{
         @Override
@@ -99,20 +99,5 @@ public class SearchFragment extends Fragment {
                     break;
             }
         }
-    }
-
-    // 使用数组形式操作spinner
-    class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
-        private String[] list;
-        StringBuffer result;
-
-        public SpinnerSelectedListener(String[] list, StringBuffer result){
-            this.list=list; this.result=result;
-        }
-
-        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            result.replace(0,result.length(),list[arg2]);
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {}
     }
 }

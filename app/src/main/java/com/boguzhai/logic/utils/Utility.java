@@ -6,76 +6,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.boguzhai.activity.base.App;
 import com.boguzhai.activity.base.BaseActivity;
-import com.boguzhai.logic.dao.SharedKeys;
-import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.thread.UpdateUserInfoHandler;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Arrays;
 
 
 public class Utility {
-
-    public static void updateUserInfoByTokenid(){
-        HttpRequestApi conn = new HttpRequestApi();
-        conn.addParam("m", "getAccountInfo");
-        conn.addParam("sessionid", App.settings.getString(SharedKeys.sessionid, ""));
-        conn.setUrl("http://www.boguzhai.com/api..jhtml");
-        new Thread(new HttpPostRunnable(conn,new UpdateUserInfoHandler())).start();
-    }
-
-	public static void updateUserInfo(JSONObject jsonObject){
-        try {
-            App.isLogin = true;
-            App.settings_editor.putString(SharedKeys.sessionid, jsonObject.getString("sessionid"));
-            App.settings_editor.commit();
-
-            JSONObject account = jsonObject.getJSONObject("account");
-
-            if(account.has("username")){
-                App.account.setUsername(account.getString("username"));
-            }else{   App.account.setUsername("未设置");}
-
-            if(account.has("name")){
-                App.account.setName(account.getString("name"));
-            }else{   App.account.setUsername("未设置");}
-
-            if(account.has("sex")) {
-                App.account.setSex(account.getInt("sex"));
-            }else{   App.account.setSex(-1);}
-
-            if(account.has("photo_uri")){
-                App.account.setPhotoUrl(account.getString("photo_uri"));
-            }else{   App.account.setPhotoUrl("");}
-
-            if(account.has("phone")){
-                App.account.setPhone(account.getString("phone"));
-            }else{   App.account.setPhone("未设置");}
-
-            if(account.has("wxcode")){
-                App.account.setWxcode(account.getString("wxcode"));
-            }else{   App.account.setWxcode("未设置");}
-
-            if(account.has("birthday")){
-                App.account.setBirthday(account.getString("birthday"));
-            }else{   App.account.setBirthday("未设置");}
-
-            if(account.has("email")){
-                App.account.setEmail(account.getString("email"));
-            }else{   App.account.setEmail("未设置");}
-
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     public static Bitmap Create2DCode(String str) throws WriterException {
         //生成二维矩阵,编码时指定大小,不要生成了图片以后再进行缩放,这样会模糊导致识别失败
@@ -99,24 +39,33 @@ public class Utility {
         return bitmap;
     }
 
-    // 给spinner设置初始环境
-    public void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result){
-        Spinner spinner;
 
+    // 给spinner设置自定义Listener
+    public void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result, AdapterView.OnItemSelectedListener listener){
+        Spinner spinner;
         if(v == null){ spinner = (Spinner) activity.findViewById(view_id);
         }else {  spinner = (Spinner) v.findViewById(view_id);}
+
+        AdapterView.OnItemSelectedListener _listener;
+        if(listener==null){_listener = new SpinnerSelectedListener(list, result);
+        }else{ _listener = listener; }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item,list);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new SpinnerSelectedListener(list, result));
+        spinner.setOnItemSelectedListener(_listener);
         spinner.setVisibility(View.VISIBLE);
         spinner.setSelection( Arrays.asList(list).indexOf(result.toString()));
     }
 
+    // 给spinner设置初始环境
+    public void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result){
+        setSpinner(activity,v,view_id,list,result,null);
+    }
+
     // Activity环境下，给spinner设置初始环境
     public void setSpinner(BaseActivity activity, int view_id, String[] list, StringBuffer result){
-        setSpinner(activity,null,view_id,list,result);
+        setSpinner(activity,null,view_id,list,result, null);
     }
 
     // 使用数组形式操作spinner

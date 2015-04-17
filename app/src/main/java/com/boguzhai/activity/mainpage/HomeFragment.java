@@ -1,7 +1,7 @@
 package com.boguzhai.activity.mainpage;
 
 import android.app.Fragment;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,16 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.items.LotListAdapter;
-import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.utils.HttpRequestApi;
+import com.boguzhai.logic.thread.HttpPostHandler;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -158,40 +156,38 @@ public class HomeFragment extends Fragment {
         adapter = new LotListAdapter(context, list, true);
         listview.setAdapter(adapter);
 
-        HttpRequestApi conn = new HttpRequestApi();
-        conn.addParam("m", "getMainLotList");
-        conn.setUrl("http://www.boguzhai.com/api.jhtml");
-        new Thread(new HttpPostRunnable(conn,new MyHandler())).start();
+//        HttpRequestApi conn = new HttpRequestApi();
+//        conn.setUrl("http://115.231.94.51/phones/pSessionAction!getMainAuctionInfoList.htm");
+//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
+//
+//        conn.setUrl("http://115.231.94.51/phones/pSessionAction!getMainAuctionSessionList.htm");
+//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
     }
 
-    public class MyHandler extends Handler {
+
+    public class MyHandler extends HttpPostHandler {
+        public MyHandler(Context context){ super(context);}
         @Override
-        public void handleMessage(Message msg) {
-            if(msg.what == 1){
-                try {
-                    JSONObject result = new JSONObject((String)msg.obj);
-                    int code = Integer.parseInt(result.getString("code"));
-                    switch(code){
-                        case 0:
-                            JSONObject data = result.getJSONObject("data");
-                            Lot lot = new Lot();
-                            list.add(lot);
-                            adapter.notifyDataSetChanged();
-                            break;
-                        case 1:
-                            context.tips.setMessage("服务器出错, 获取信息失败").create().show();
-                            break;
-                        case -1:
-                            context.startActivity(new Intent(context, LoginActivity.class));
-                            break;
-                        default:
-                            break;
+        public void handlerData(int code, JSONObject data){
+            try {
+                switch (code){
+                    case 0:
+                    if(data.has("auctionInfoIdList")){
+                        JSONArray auctionInfoIdList = data.getJSONArray("auctionInfoIdList");
+
+
                     }
-                } catch (JSONException ex) {
-                    context.tips.setMessage("服务器出错").create().show();
+                    if(data.has("auctionSessionIdList")){
+                        JSONArray auctionSessionIdList = data.getJSONArray("auctionSessionIdList");
+
+
+                    }
+                    break;
+                    default:
+                    break;
                 }
-            }else if(msg.what == 0 ){
-                Toast.makeText(context, "网络连接失败", Toast.LENGTH_LONG).show();
+            }catch(JSONException ex) {
+                this.context.alertMessage("抱歉, 解析信息时报错了");
             }
         }
     }
@@ -202,7 +198,6 @@ public class HomeFragment extends Fragment {
 
         for (int i = 0; i < tips.length; i++) {
             ImageView imageView = new ImageView(getActivity());
-
             imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
             tips[i] = imageView;
             if (i == 0) {
@@ -212,7 +207,8 @@ public class HomeFragment extends Fragment {
             }
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                               ViewGroup.LayoutParams.WRAP_CONTENT));
             layoutParams.leftMargin = 7;
             layoutParams.rightMargin = 7;
             vGroup.addView(imageView, layoutParams);

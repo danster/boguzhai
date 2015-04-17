@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.logic.utils.Utility;
@@ -40,11 +41,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
         listen(title_right);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //禁止手机横屏
-        tips = new AlertDialog.Builder(this);
-        tips.setTitle("提示").setPositiveButton("确定", null);
-
-//        title_right.setTextSize(20);
-//        title_right.setTextColor(this.getResources().getColor(R.color.white));
+        createAlertDialog();
 
 	}
 
@@ -60,25 +57,29 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	}
 
 	/*************************** View Listener ****************************/
-    // 监听一个 VieW
-    public void listen(View view){
-        if ( view != null ){
-            view.setOnClickListener(this);
-        }
+    public void listen( View v){ if(v!=null){ v.setOnClickListener(this);}} // 监听一个 VieW
+	public void listen( int id){ this.listen(findViewById(id));}            // 监听一个 View Id
+	public void listen( int[] ids){ for(int id: ids){ this.listen(id);}}    // 监听一组 View Ids
+
+    /************************* Information Display Utility **************/
+    private void createAlertDialog(){
+        tips = new AlertDialog.Builder(this);
+        tips.setIcon(android.R.drawable.ic_dialog_info);
+        tips.setTitle("提示").setMessage("");
+//        tips.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) { }
+//        }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) { }
+//        });
     }
-	// 监听一个 ViewId
-	public void listen( int id){
-		View view = findViewById(id);
-		if ( view != null ){
-			view.setOnClickListener(this);
-		}
-	}
-	// 监听一组 View Ids
-	public void listen( int[] ids){
-		for(int id: ids){ 
-			this.listen(id);
-		}
-	}
+
+    public void alertMessage(String msg){
+        tips.setMessage(msg).show();
+    }
+
+    public void toastMessage(String msg, int time){
+        Toast.makeText(context.getApplicationContext(), msg, time).show();
+    }
 
 	/********************* Override  & Activity Manager *****************/
 	@Override

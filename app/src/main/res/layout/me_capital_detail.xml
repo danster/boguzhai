@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout style="@style/base_bar" android:layout_marginTop="5dp">
+        <TextView android:id="@+id/type_name" style="@style/myinfo_left_text" android:layout_margin="0dp" android:text="型  "/>
+        <Spinner android:id="@+id/type_list" style="@style/lot_filter_spinner"></Spinner>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView android:id="@+id/left_date"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="2015-2-3 "/>
+        <ImageView style="@style/myinfo_right_arrow"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/base_arrow_right_small"/>
+        <TextView android:id="@+id/right_date"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text=" 2015-3-4 "/>
+        <TextView android:id="@+id/search"
+            style="@style/base_text"
+            android:background="#ff8a292e"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text=" 搜  索 "/>
+    </LinearLayout>
+
+    <!-- 展示资金明细 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.boguzhai.logic.widget.ListViewForScrollView
+                android:id="@+id/detail_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:footerDividersEnabled="false"
+                android:dividerHeight="0dp"/>
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>

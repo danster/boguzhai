@@ -10,7 +10,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.App;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.mainpage.MainActivity;
-import com.boguzhai.activity.me.capital.MyCapitalActivity;
+import com.boguzhai.activity.me.capital.CapitalShowActivity;
 
 public class AccountInfoActivity extends BaseActivity {
 	protected TextView name, nickname, zone, email, mobile, more_contact, verify, capital, delivery_address;
@@ -19,7 +19,7 @@ public class AccountInfoActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_myinfo);
+        this.setLinearView(R.layout.me_myinfo);
         title.setText("个人信息");
         title_right.setText("编辑");
         title_right.setVisibility(View.VISIBLE);
@@ -66,7 +66,7 @@ public class AccountInfoActivity extends BaseActivity {
             break;
 
         case R.id.my_capital:
-            startActivity(new Intent(this, MyCapitalActivity.class));
+            startActivity(new Intent(this, CapitalShowActivity.class));
             break;
 
         case R.id.my_verify:

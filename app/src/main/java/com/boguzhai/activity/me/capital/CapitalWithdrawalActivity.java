@@ -5,12 +5,12 @@ import android.view.View;
 
 import com.boguzhai.activity.base.BaseActivity;
 
-public class MyCapitalActivity extends BaseActivity {
+public class CapitalWithdrawalActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        title.setText("资金账户");
+        title.setText("提现");
         init();
 	}
 
@@ -20,16 +20,10 @@ public class MyCapitalActivity extends BaseActivity {
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
-
-		switch (view.getId()) {
-        default: break;
+		switch (view.getId()){
+            default: break;
 		};
 	}
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
 }
 

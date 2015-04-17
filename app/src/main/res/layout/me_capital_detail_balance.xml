@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+            <TextView android:id="@+id/info_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center|left"
+                android:textSize="13sp"
+                android:textColor="#555"
+                android:text="ZC1500214300"/>
+
+            <TextView android:id="@+id/info_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_marginLeft="2dp"
+                android:gravity="center|left"
+                android:textSize="13sp"
+                android:textColor="#555"
+                android:text="支付保证金"/>
+
+            <TextView android:id="@+id/info_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:layout_marginLeft="2dp"
+                android:gravity="center|left"
+                android:textSize="13sp"
+                android:textColor="#999"
+                android:text="2015.12.4 12:32"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:orientation="horizontal">
+            <TextView android:id="@+id/info_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="top|left"
+                android:textSize="13sp"
+                android:textColor="#555"
+                android:text="收入：1200"/>
+
+            <TextView android:id="@+id/info_5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_marginLeft="2dp"
+                android:gravity="top|left"
+                android:textSize="13sp"
+                android:textColor="#555"
+                android:text="支出：3400"/>
+
+            <TextView android:id="@+id/info_6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:layout_marginLeft="2dp"
+                android:gravity="top|left"
+                android:textSize="13sp"
+                android:textColor="#555"
+                android:text="余额：￥2000.00"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

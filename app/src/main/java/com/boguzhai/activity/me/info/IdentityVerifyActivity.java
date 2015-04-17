@@ -18,7 +18,7 @@ public class IdentityVerifyActivity extends BaseActivity {
 
     private String[] propertyList = {"个人","单位"};
     private int propertyIndex = 0;
-    private String[] credentialTypeList = {"二代身份证","军官证","港澳通行证","护照"};
+    private String[] credentialTypeList = {"二代身份证","三代身份证","港澳台身份证","护照","其它"};
     private int credentialTypeIndex = 0;
 
 	@Override

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_text" android:layout_width="60dp"
+            android:layout_margin="0dp" android:text="开户行"/>
+        <Spinner android:id="@+id/bank_name" style="@style/lot_filter_spinner"></Spinner>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_text"  android:layout_width="60dp"
+            android:layout_margin="0dp" android:text="账号"/>
+        <EditText android:id="@+id/bank_number" style="@style/myinfo_middle_text"
+            android:gravity="center|left"
+            android:textSize="17sp"
+            android:hint="必填(信用卡不能用于提现)"/>
+        <ImageView style="@style/myinfo_right_clear" android:id="@+id/bank_number_clear"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:background="@color/transparent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp"
+        android:gravity="center|left">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="提示:    "/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/gray"
+            android:text="为了资金安全银行卡户名必须与网站实名认证用户姓名一致"/>
+    </LinearLayout>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_text" android:layout_margin="0dp" android:text="户名"/>
+        <TextView android:id="@+id/name" style="@style/myinfo_middle_text" android:text="张三"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/myinfo_left_text" android:layout_margin="0dp" android:text="验证码"/>
+        <EditText android:id="@+id/check_code" style="@style/myinfo_middle_text" android:hint="必填"/>
+        <TextView android:id="@+id/get_check_code"
+            style="@style/base_text"
+            android:background="#ff8a292e"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:text=" 获取验证码 "/>
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:layout_marginTop="12dp"
+    android:background="@color/gold"
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    android:id="@+id/ok"
+    android:text="绑 定"/>
+
+</LinearLayout>

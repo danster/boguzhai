@@ -1,6 +1,7 @@
 package com.boguzhai.activity.mainpage;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,14 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.items.AuctionListAdapter;
 import com.boguzhai.logic.dao.Auction;
+import com.boguzhai.logic.thread.HttpPostHandler;
+import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.utils.HttpRequestApi;
 import com.boguzhai.logic.widget.ListViewForScrollView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -69,6 +77,11 @@ public class AuctionFragment extends Fragment {
     }
 
     public void updateDynamicAuctions(int checkedId){
+//        HttpRequestApi conn = new HttpRequestApi();
+//        conn.addParam("status", "");
+//        conn.setUrl("http://test.shbgz.com/tradingsys/phones/pMainAction!getAuctionList.htm");
+//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
+
         list_show.clear();
         switch (checkedId){
             case R.id.auction_status_all:
@@ -93,6 +106,41 @@ public class AuctionFragment extends Fragment {
                 break;
         }
         adapter.notifyDataSetChanged();
+    }
+
+    public class MyHandler extends HttpPostHandler {
+        public MyHandler(Context context){ super(context);}
+        @Override
+        public void handlerData(int code, JSONObject data){
+            try {
+                switch (code){
+                    case 0:
+                        JSONArray auctionMainIdList = data.getJSONArray("auctionMainIdList");
+                        ArrayList<String> idList = new ArrayList<String>();
+                        for(int i=0; i<auctionMainIdList.length(); ++i){
+                            idList.add((String)auctionMainIdList.get(i));
+                        }
+
+
+
+
+                        break;
+                    default:
+                        break;
+                }
+            }catch(JSONException ex) {
+                this.context.alertMessage("抱歉, 解析信息时报错了");
+            }
+        }
+    }
+
+    public void showAuction(String id){
+        HttpRequestApi conn = new HttpRequestApi();
+        conn.addParam("status", "");
+        conn.setUrl("http://test.shbgz.com/tradingsys/phones/pMainAction!getAuctionList.htm");
+        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
+
+
     }
 
 }

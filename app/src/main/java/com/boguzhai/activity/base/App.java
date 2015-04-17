@@ -22,7 +22,7 @@ public class App extends Application {
 	/** 下列信息需要在 SQlite 数据库里进行缓存 **/
 
 	/** 下列信息需要在启动APP时进行初始化 **/
-    public static boolean isLogin = false;         // 用户登录状态
+    public static boolean isLogin = true;         // 用户登录状态
     public static SharedPreferences settings = null ;
     public static SharedPreferences.Editor settings_editor = null ;
     public static PackageInfo pInfo = null;       // APP包的相关信息
