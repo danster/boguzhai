@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 展示拍卖会专场信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/my_bidding_lot_image"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/image" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+<!--1-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/my_bidding_lot_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="center|left"
+                    android:text="-------"
+                    android:textColor="@color/dark_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/my_bidding_lot_isleader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@color/yellow"
+                    android:gravity="center|left"
+                    android:text="-------"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+            <!--2-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="拍品号："
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/my_bidding_lot_no"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="---"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="出价次数："
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/my_bidding_lot_pricecount"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="---"
+                    android:textSize="15sp" />
+
+                </LinearLayout>
+            <!--3-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="预估价："
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/my_bidding_lot_appraisal"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="---"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="起拍价："
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/my_bidding_lot_startprice"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="---"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+            <!--4-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="当前价："
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/my_bidding_lot_nowprice"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="---"
+                    android:textColor="@color/red"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="我的最高出价："
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/my_bidding_lot_topprice"
+                    android:layout_width="40dp"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="---"
+                    android:textColor="@color/red"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

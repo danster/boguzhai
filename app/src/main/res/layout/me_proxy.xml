@@ -3,6 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
+    <RadioGroup
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="28dp">
+
+        <RadioButton
+            android:id="@+id/rb_my_proxy"
+            android:text="我的代理出价"
+            style="@style/my_auction_tab" />
+
+        <RadioButton
+            android:id="@+id/rb_my_proxy_histroy"
+            android:text="历史代理"
+            style="@style/my_auction_tab" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/my_proxy_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 </LinearLayout>

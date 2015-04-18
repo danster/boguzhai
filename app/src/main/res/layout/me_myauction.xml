@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
+
+    <RadioGroup
+        android:id="@+id/rg_my_auction_tab"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_my_auction_all"
+            style="@style/my_auction_tab"
+            android:text="全部"/>
+
+        <RadioButton
+            android:id="@+id/rb_my_auction_display"
+            style="@style/my_auction_tab"
+            android:text="预展中"/>
+
+        <RadioButton
+            android:id="@+id/rb_my_auction_onauction"
+            style="@style/my_auction_tab"
+            android:text="拍卖中"/>
+
+        <RadioButton
+            android:id="@+id/rb_my_auction_histroy"
+            style="@style/my_auction_tab"
+            android:text="往期拍卖"/>
+
+    </RadioGroup>
+
+
+    <FrameLayout
+        android:id="@+id/my_auction_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        </FrameLayout>
 </LinearLayout>
