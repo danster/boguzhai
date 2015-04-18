@@ -35,7 +35,7 @@ public class App extends Application {
         settings = this.getSharedPreferences("settings", 0);
         settings_editor = settings.edit();
 
-        isLogin = false;
+        isLogin = true;
 
         try {
             pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
