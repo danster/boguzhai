@@ -1,4 +1,4 @@
-package com.boguzhai.activity.me.items;
+package com.boguzhai.activity.me.bidding;
 
 import android.content.Context;
 import android.view.LayoutInflater;

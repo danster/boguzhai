@@ -83,6 +83,7 @@
 
         <!-- activities belong part of me proxy -->
         <activity android:name=".activity.me.proxy.ProxyPricingActivity"></activity>
+        <activity android:name=".activity.me.proxy.SetProxyPricingActivity"></activity>
 
         <!-- activities belong part of me collect -->
         <activity android:name=".activity.me.collect.MyCollectionActivity"></activity>

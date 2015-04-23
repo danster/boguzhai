@@ -58,7 +58,6 @@ public class MyAuctionActivity extends BaseActivity {
 
 
 
-
 	@Override
 	public void onClick(View view) {
         super.onClick(view);

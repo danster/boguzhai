@@ -5,11 +5,86 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
-
-    <ListView
-        android:id="@+id/lv_my_proxy"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            style="@style/base_bar"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/base_search" />
+
+            <EditText
+                android:id="@+id/et_my_proxy_keyword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:gravity="center|left"
+                android:hint="输入关键字查询"
+                android:lines="1" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_my_proxy_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="确定" />
+
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+    <LinearLayout style="@style/base_bar">
+
+        <TextView
+            style="@style/search_left_text"
+            android:text="请选择拍卖会 " />
+
+        <Spinner
+            android:id="@+id/sp_my_proxy_choose_auction"
+            style="@style/lot_filter_spinner"></Spinner>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/base_arrow_right"/>
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+    <LinearLayout style="@style/base_bar">
+
+        <TextView
+            style="@style/search_left_text"
+            android:text="请选择拍卖专场 " />
+
+        <Spinner
+            android:id="@+id/sp_my_proxy_choose_session"
+            style="@style/lot_filter_spinner"></Spinner>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/base_arrow_right"/>
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout_my_proxy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.boguzhai.logic.view.XListView
+            android:id="@+id/lv_my_proxy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

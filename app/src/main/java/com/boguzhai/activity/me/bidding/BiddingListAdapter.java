@@ -1,4 +1,4 @@
-package com.boguzhai.activity.me.items;
+package com.boguzhai.activity.me.bidding;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import com.boguzhai.logic.dao.BiddingLot;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bobo on 15/4/7.
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class BiddingListAdapter extends BaseAdapter {
 
     private Context mContext;
-    private ArrayList<Auction> mAuctionList;
+    private List<Auction> mAuctionList;
     private LayoutInflater inflater;
 
     private String[] type = {"现场", "同步", "网络"};
@@ -33,7 +34,7 @@ public class BiddingListAdapter extends BaseAdapter {
 
     }
 
-    public BiddingListAdapter(Context context, ArrayList<Auction> auctionList) {
+    public BiddingListAdapter(Context context, List<Auction> auctionList) {
         inflater = LayoutInflater.from(context);
         mContext = context;
         mAuctionList = auctionList;

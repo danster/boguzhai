@@ -1,22 +1,33 @@
 package com.boguzhai.activity.me.bidding;
 
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
-import com.boguzhai.activity.me.items.BiddingListAdapter;
 import com.boguzhai.logic.dao.Auction;
+import com.boguzhai.logic.dao.BiddingLot;
+import com.boguzhai.logic.view.XListViewForSrollView;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class BiddingActivity extends BaseActivity {
+public class BiddingActivity extends BaseActivity implements XListViewForSrollView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     private ListViewForScrollView lv_bidding;//整个竞价列表
     private BiddingListAdapter adaper;
-    private ArrayList<Auction> mAuctionList;
+    private List<Auction> mAuctionList;
+    private List<BiddingAuctionList> mList;
+    private SwipeRefreshLayout swipe_refresh;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,6 +38,11 @@ public class BiddingActivity extends BaseActivity {
 
 	protected void init(){
 
+        swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipe_refresh.setColorSchemeResources(R.color.gold);
+        swipe_refresh.setOnRefreshListener(this);
+
+
         lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
         mAuctionList = new ArrayList<>();
         testData();
@@ -36,6 +52,35 @@ public class BiddingActivity extends BaseActivity {
 	}
 
     public void testData() {
+//        List<BiddingAuctionList> mList = new ArrayList<>();
+//        BiddingAuctionList biddingAuctionList = new BiddingAuctionList();
+//        biddingAuctionList.auction.name = "2015新春大拍";
+//
+//        BiddingLot lot = new BiddingLot();
+//        lot.isLeader = 0;
+//        lot.No = 123;
+//        lot.name = "明代唐伯虎书法作品";
+//        lot.priceCount = 5;
+//        lot.apprisal1 = 5000;
+//        lot.apprisal2 = 8000;
+//        lot.startPrice = 3000;
+//        lot.nowPrice = 4000;
+//        lot.topPrice = 4000;
+//        biddingAuctionList.lotList.add(lot);
+//
+//        lot = new BiddingLot();
+//        lot.isLeader = 1;
+//        lot.No = 312;
+//        lot.name = "唐代瓷器";
+//        lot.priceCount = 5;
+//        lot.apprisal1 = 8000;
+//        lot.apprisal2 = 10000;
+//        lot.startPrice = 5000;
+//        lot.nowPrice = 9000;
+//        lot.topPrice = 8000;
+//        biddingAuctionList.lotList.add(lot);
+
+
         Auction auction = new Auction();
         auction.type = "1";
         auction.name = "2015新春大拍";
@@ -55,4 +100,60 @@ public class BiddingActivity extends BaseActivity {
 	public void onClick(View view) {
         super.onClick(view);
     }
+
+    @Override
+    public void onRefresh() {
+        Log.i(TAG, "下拉刷新");
+        new Thread() {
+            @Override
+            public void run() {
+                SystemClock.sleep(2000);
+                swipe_refresh.setRefreshing(false);
+//                BiddingActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        onLoad();
+//                    }
+//                });
+            }
+        }.start();
+    }
+
+
+    @Override
+    public void onLoadMore() {
+        Log.i(TAG, "加载更多");
+        new Thread() {
+            @Override
+            public void run() {
+                SystemClock.sleep(2000);
+//                BiddingActivity.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        onLoad();
+//                    }
+//                });
+//
+            }
+        }.start();
+
+    }
+
+    /**
+     * 得到刷新的时间
+     * @return
+     */
+    private String getLastTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.format(new Date());
+    }
+
+//    /**
+//     * 停止刷新
+//     */
+//    private void onLoad() {
+//        lv_bidding.stopRefresh();
+//        lv_bidding.stopLoadMore();
+//        lv_bidding.setRefreshTime(getLastTime());
+//    }
 }

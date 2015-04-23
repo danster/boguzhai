@@ -18,26 +18,17 @@ public class FragmentFactory {
         Fragment fragment = null;
         switch (index) {
             case R.id.rb_my_auction_all:
-                fragment = new AllFragment();
-                Log.i(TAG, "我的拍卖会:全部");
+                fragment = new BaseFragment("");
                 break;
             case R.id.rb_my_auction_display:
-                fragment = new OnDisplayFragment();
-                Log.i(TAG, "我的拍卖会:预展中");
+                fragment = new BaseFragment("预展中");
                 break;
             case R.id.rb_my_auction_onauction:
-                fragment = new OnAuctionFragment();
-                Log.i(TAG, "我的拍卖会:拍卖中");
+                fragment = new BaseFragment("拍卖中");
                 break;
             case R.id.rb_my_auction_histroy:
-                fragment = new AuctionHistroyFragment();
-                Log.i(TAG, "我的拍卖会:往期拍卖");
+                fragment = new BaseFragment("已结束");
                 break;
-            default:
-                fragment = new AllFragment();
-                Log.i(TAG, "我的拍卖会:全部");
-                break;
-
         }
         return fragment;
     }
