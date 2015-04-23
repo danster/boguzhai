@@ -11,7 +11,7 @@ public class DeliveryAddress implements Serializable {
     public String addr_1 = "" ;   //收货地址，某某i省
     public String addr_2 = "" ;   //收货地址，某某市
     public String addr_3 = "" ;   //收货地址，某某区
-    public String addr_4 = "" ;   //收货地址，具体地址
+    public String address = "" ;   //收货地址，具体地址
     public String mobile = "" ;
     public String telephone = "" ;
     public String zip = "" ;
@@ -23,15 +23,16 @@ public class DeliveryAddress implements Serializable {
     }
 
     public String toString(){
-        String address = "";
-        address = isDefault ? "【默认地址】" + address : address;
-        address += receiver == "" ? "" : receiver + ", ";
-        address += addr_1 + " " + addr_2 + " "+addr_3 + ",";
-        address += mobile == "" ? "" : mobile ;
-        address += telephone == "" ? "" : ", " + telephone;
-        address += zip == "" ? "" : ", " + zip ;
+        String str = "";
+        str = isDefault ? "【默认地址】" + str : str;
+        str += receiver == "" ? "" : receiver + ", ";
+        str += addr_1 + " " + addr_2 + " "+addr_3 + ", ";
+        str += address+", ";
+        str += mobile == "" ? "" : mobile ;
+        str += telephone == "" ? "" : ", " + telephone;
+        str += zip == "" ? "" : ", " + zip ;
 
-        return address;
+        return str;
     }
 
 }

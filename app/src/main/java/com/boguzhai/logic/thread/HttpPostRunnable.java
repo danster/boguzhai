@@ -1,34 +1,34 @@
 package com.boguzhai.logic.thread;
 
 import android.os.Handler;
-import android.os.Message;
+import android.os.Looper;
 
-import com.boguzhai.logic.utils.HttpRequestApi;
-
-import org.apache.http.protocol.HTTP;
+import com.boguzhai.activity.base.Variable;
+import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.NetworkApi;
 
 public class HttpPostRunnable implements Runnable{
-    private HttpRequestApi conn;
+    private HttpClient conn;
     private Handler handler;
 
-    public HttpPostRunnable(HttpRequestApi conn, Handler handler){
+    public HttpPostRunnable(HttpClient conn, Handler handler){
         this.conn = conn;
         this.handler = handler;
     }
 
     @Override
     public void run() {
-        conn.post();
-        Message msg = new Message();
-        if( conn.getResponseEntity() != null){
-            msg.obj = conn.responseToString(HTTP.UTF_8);
-            msg.what = 0;
-            handler.sendMessage(msg);
-        } else {
-            msg.obj = "网络连接出错";
-            msg.what = 1;
-            handler.sendMessage(msg);
+        Looper.prepare();
+        if(!NetworkApi.isNetConnected(Variable.app_context)){
+            handler.obtainMessage(1,"没有检测到网络, 请检查您的网络").sendToTarget();
+            return;
         }
+        conn.post();
+        if( conn.getResponseEntity() != null)
+            handler.obtainMessage(0, conn.responseToString()).sendToTarget();
+        else
+            handler.obtainMessage(9,"网络连接出错").sendToTarget();
+
     }
 }
 

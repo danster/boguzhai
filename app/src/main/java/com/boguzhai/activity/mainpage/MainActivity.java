@@ -10,8 +10,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.App;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 
 public class MainActivity extends BaseActivity {
     private final String TAG = "MainActivity";
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 Fragment fragment = FragmentFactory.getInstanceByIndex(checkedId);
-                App.mainTabIndex = checkedId;
+                Variable.mainTabIndex = checkedId;
                 transaction.replace(R.id.content, fragment);
                 transaction.commit();
             }
@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity {
         tips = new AlertDialog.Builder(this);
         tips.setTitle("提示").setPositiveButton("确定", null);
 
-        RadioButton radio = (RadioButton)findViewById(App.mainTabIndex);
+        RadioButton radio = (RadioButton)findViewById(Variable.mainTabIndex);
         radio.setChecked(true);
 
     }

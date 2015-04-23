@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.StaticData;
+import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.search.SearchResultActivity;
 import com.boguzhai.logic.utils.Utility;
 
@@ -66,16 +66,16 @@ public class SearchFragment extends Fragment {
         lot_deal_type.replace(0,lot_deal_type.length(),"不限");
 
 //        listen(R.id.auction);
-//        listen(R.id.session);
+//        listen(R.id.sessionid);
 
         utility.setSpinner(context, view, R.id.type1, list_type1, type1);
         utility.setSpinner(context, view, R.id.type2, list_type2, type2);
         utility.setSpinner(context, view, R.id.type3, list_type3, type3);
 
-        utility.setSpinner(context, view, R.id.auction_status, StaticData.auction_status, auction_status);
-        utility.setSpinner(context, view, R.id.auction_type, StaticData.auction_type, auction_type);
-        utility.setSpinner(context, view, R.id.lot_status, StaticData.lot_status, lot_status);
-        utility.setSpinner(context, view, R.id.lot_deal_type, StaticData.lot_deal_type, lot_deal_type);
+        utility.setSpinner(context, view, R.id.auction_status, Constant.auction_status, auction_status);
+        utility.setSpinner(context, view, R.id.auction_type, Constant.auction_type, auction_type);
+        utility.setSpinner(context, view, R.id.lot_status, Constant.lot_status, lot_status);
+        utility.setSpinner(context, view, R.id.lot_deal_type, Constant.lot_deal_type, lot_deal_type);
 
         utility.setSpinner(context, view, R.id.auction, list_auction, auction);
         utility.setSpinner(context, view, R.id.session, list_session, session);

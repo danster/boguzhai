@@ -18,6 +18,7 @@ import com.boguzhai.logic.utils.Utility;
 public abstract class BaseActivity extends Activity implements OnClickListener {
     public static String TAG = "BaseActivity";
     public Context context;
+    public BaseActivity baseActivity;
     public LinearLayout content, title_bar;
     public TextView title_left, title, title_right;
     public Utility utility = new Utility();
@@ -28,7 +29,10 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         this.context = this;
+        this.baseActivity = this;
         this.setContentView(R.layout.base_frame);
+        this.tips = new AlertDialog.Builder(this);
+        this.tips = getAlert("");
 		
 		title_bar = (LinearLayout)findViewById(R.id.title);
         title = (TextView)findViewById(R.id.title_center);
@@ -41,7 +45,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
         listen(title_right);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //禁止手机横屏
-        createAlertDialog();
+
 
 	}
 
@@ -62,23 +66,27 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	public void listen( int[] ids){ for(int id: ids){ this.listen(id);}}    // 监听一组 View Ids
 
     /************************* Information Display Utility **************/
-    private void createAlertDialog(){
-        tips = new AlertDialog.Builder(this);
-        tips.setIcon(android.R.drawable.ic_dialog_info);
-        tips.setTitle("提示").setMessage("");
+    public AlertDialog.Builder getAlert(String msg){
+        this.tips.setIcon(android.R.drawable.ic_dialog_info);
+        this.tips.setTitle("提示").setMessage(msg);
 //        tips.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 //            public void onClick(DialogInterface dialog, int which) { }
 //        }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 //            public void onClick(DialogInterface dialog, int which) { }
 //        });
+        return this.tips;
     }
 
     public void alertMessage(String msg){
-        tips.setMessage(msg).show();
+        this.tips.setMessage(msg).show();
     }
 
     public void toastMessage(String msg, int time){
         Toast.makeText(context.getApplicationContext(), msg, time).show();
+    }
+
+    public void toastMessage(String msg){
+        Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
 	/********************* Override  & Activity Manager *****************/

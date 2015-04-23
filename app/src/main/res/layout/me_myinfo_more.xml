@@ -16,7 +16,7 @@
 
         <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="座机"/>
-            <TextView android:id="@+id/tele"
+            <TextView android:id="@+id/telephone"
                 style="@style/myinfo_middle_text"
                 android:text="021-78265632"/>
         </LinearLayout>
@@ -30,7 +30,7 @@
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="QQ"/>
             <TextView style="@style/myinfo_middle_text"
-                android:id="@+id/QQ"/>
+                android:id="@+id/qq"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">

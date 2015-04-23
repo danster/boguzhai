@@ -21,7 +21,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
     private StringBuffer addr_2=new StringBuffer();
     private StringBuffer addr_3=new StringBuffer();
 
-    EditText name, addr_4, mobile, telephone, zip;
+    EditText name, address, mobile, telephone, zip;
     CheckBox isDefault;
     Boolean is_default=false;
 
@@ -41,7 +41,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
         oldAddress = (DeliveryAddress) bundle.getSerializable("address");
 
         name = (EditText) findViewById(R.id.name);
-        addr_4 = (EditText) findViewById(R.id.addr_4);
+        address = (EditText) findViewById(R.id.address);
         mobile = (EditText) findViewById(R.id.mobile);
         telephone = (EditText) findViewById(R.id.telephone);
         zip = (EditText) findViewById(R.id.zip);
@@ -61,7 +61,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             title_right.setVisibility(View.VISIBLE);
 
             name.setText(oldAddress.receiver);
-            addr_4.setText(oldAddress.addr_4);
+            address.setText(oldAddress.address);
             mobile.setText(oldAddress.mobile);
             telephone.setText(oldAddress.telephone);
             zip.setText(oldAddress.zip);
@@ -81,7 +81,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
         utility.setSpinner(this, R.id.addr_2, list_addr_2, addr_2);
         utility.setSpinner(this, R.id.addr_3, list_addr_3, addr_3);
 
-        int[] ids = {R.id.ok, R.id.name_clear, R.id.addr_4_clear, R.id.mobile_clear,
+        int[] ids = {R.id.ok, R.id.name_clear, R.id.address_clear, R.id.mobile_clear,
                 R.id.telephone_clear, R.id.zip_clear};
         this.listen(ids);
     }
@@ -97,13 +97,13 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             newAddress.addr_1 = addr_1.toString();
             newAddress.addr_2 = addr_2.toString();
             newAddress.addr_3 = addr_3.toString();
-            newAddress.addr_4 = addr_4.getText().toString();
+            newAddress.address = address.getText().toString();
             newAddress.mobile = mobile.getText().toString();
             newAddress.telephone = telephone.getText().toString();
             newAddress.zip = zip.getText().toString();
             Log.i("new address", newAddress.toString());
 
-            if(newAddress.receiver=="" || newAddress.addr_4 == "" || newAddress.mobile==""){
+            if(newAddress.receiver=="" || newAddress.address == "" || newAddress.mobile==""){
                 tips.setMessage("必填项不能为空！");
                 tips.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
@@ -150,7 +150,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             break;
 
         case R.id.name_clear: name.setText(""); break;
-        case R.id.addr_4_clear: addr_4.setText(""); break;
+        case R.id.address_clear: address.setText(""); break;
         case R.id.mobile_clear: mobile.setText(""); break;
         case R.id.telephone_clear: telephone.setText(""); break;
         case R.id.zip_clear: zip.setText(""); break;

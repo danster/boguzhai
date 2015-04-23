@@ -1,7 +1,6 @@
 package com.boguzhai.activity.mainpage;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,9 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.thread.HttpPostHandler;
+import com.boguzhai.logic.dao.Session;
+import com.boguzhai.logic.thread.HttpJsonHandler;
+import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import org.json.JSONArray;
@@ -31,59 +34,66 @@ public class HomeFragment extends Fragment {
     private View view;
     private MainActivity context;
 
-    ViewGroup viewGroup;
-    ViewPager viewPager;
-    int[] imgIdArray;
-    ImageView[] mImageViews, tips;
-    TextView viewInfo;
-    int index=0;
+    private int adsCount =4;
 
-    private ArrayList<Lot> list;
+    // 拍卖会展示
+    private ArrayList<Session> sessionList;
+    private ViewGroup viewGroup;
+    private ViewPager viewPager;
+    private TextView viewInfo;
+    private int currentIndex =0;
+
+    private ImageView[] mImageViews, tips;
+
+    // 拍品展示
+    private ArrayList<Lot> lotList;
     private ListViewForScrollView listview;
-    LotListAdapter adapter;
+    private LotListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_fg_home, null);
         context = (MainActivity)getActivity(); //getApplicationContext()
+        pullDynamicInfo();
         showSessionAds();
         showLotList();
         return view;
     }
 
-    // 展示拍卖会广告位
+    // 从网络获取首页的拍卖会和拍品信息
+    private void pullDynamicInfo(){
+        HttpClient conn_session = new HttpClient();
+        conn_session.setUrl(Constant.url+"");
+        new Thread(new HttpPostRunnable(conn_session, new MyHandler()));
+
+        HttpClient conn_lot = new HttpClient();
+        conn_lot.setUrl(Constant.url+"");
+        new Thread(new HttpPostRunnable(conn_lot, new MyHandler()));
+    }
+
+    // 展示拍卖会专场广告位
     public void showSessionAds(){
         viewGroup = (ViewGroup) view.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewInfo = (TextView)view.findViewById(R.id.viewInfo);
-        imgIdArray = new int[] { R.drawable.default_image,
-                                 R.drawable.default_image,
-                                 R.drawable.default_image,
-                                 R.drawable.default_image };
+
+        mImageViews = new ImageView[adsCount];
+        tips = new ImageView[adsCount];
 
         // 将静态图片ID装载到数组中
-        mImageViews = new ImageView[imgIdArray.length];
         for (int i = 0; i < mImageViews.length; i++) {
-            ImageView imageView = new ImageView(getActivity());
-            mImageViews[i] = imageView;
-            imageView.setBackgroundResource(imgIdArray[i]);
+            mImageViews[i] = new ImageView(getActivity());
+            mImageViews[i].setBackgroundResource(R.drawable.default_image);
         }
 
         // 将导航小图标加入到ViewGroup中
-        tips = new ImageView[imgIdArray.length];
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20,20);
         layoutParams.leftMargin = 3;
         layoutParams.rightMargin = 3;
 
-        for (int i = 0; i < tips.length; i++) {
-            ImageView imageView = new ImageView(getActivity());
-            tips[i] = imageView;
-            if (i == 0) {
-                tips[i].setBackgroundResource(R.drawable.circle_selected);
-            } else {
-                tips[i].setBackgroundResource(R.drawable.circle_unselected);
-            }
-            viewGroup.addView(imageView, layoutParams);
+        for (int i = 0; i < adsCount; i++) {
+            tips[i] = new ImageView(getActivity());
+            viewGroup.addView(tips[i], layoutParams);
         }
 
         viewPager.setAdapter(new PagerAdapter() {
@@ -104,22 +114,20 @@ public class HomeFragment extends Fragment {
                 container.addView(mImageViews[position % mImageViews.length], 0);
                 return mImageViews[position % mImageViews.length];
             }
-
         });
 
-        // 设置监听，主要是设置点点的背景
+        // 设置监听，主要是设置点点的背景和专场名称
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()  {
             @Override
             public void onPageScrollStateChanged(int arg0) {}
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {}
-
             @Override
             public void onPageSelected(int position) {
-                index=position;
-                int selectItems = position % mImageViews.length;
-                for (int i = 0; i < tips.length; i++) {
-                    if (i == selectItems) {
+                currentIndex=position;
+                viewInfo.setText("2015拍卖会字画专场"+(position%adsCount));
+                for (int i = 0; i < adsCount; i++) {
+                    if (i == position % adsCount) {
                         tips[i].setBackgroundResource(R.drawable.circle_selected_little);
                     } else {
                         tips[i].setBackgroundResource(R.drawable.circle_unselected_little);
@@ -128,15 +136,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         // 设置ViewPager的默认项, 如果想往左边滑动, index初始化要是大整数才行
-        viewPager.setCurrentItem(1000*mImageViews.length);
+        viewPager.setCurrentItem(1000* adsCount);
 
         // 设置ViewPager的滑动策略
         new Handler() {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                viewPager.setCurrentItem(index);
-                index++;
+                viewPager.setCurrentItem(currentIndex);
+                currentIndex++;
                 sendEmptyMessageDelayed(0, 3000);
             }
         }.sendEmptyMessageDelayed(0, 3000);
@@ -145,74 +154,37 @@ public class HomeFragment extends Fragment {
     // 展示首页拍品列表
     public void showLotList(){
         listview = (ListViewForScrollView) view.findViewById(R.id.lotlist);
-        list = new ArrayList<Lot>();
+        lotList = new ArrayList<Lot>();
 
-        for(int i=0; i<9; i++){
-            Lot lot = new Lot();
-            lot.name="景德镇瓷器"+i;
-            list.add(lot);
-        }
-
-        adapter = new LotListAdapter(context, list, true);
+        adapter = new LotListAdapter(context, lotList, true);
         listview.setAdapter(adapter);
-
-//        HttpRequestApi conn = new HttpRequestApi();
-//        conn.setUrl("http://115.231.94.51/phones/pSessionAction!getMainAuctionInfoList.htm");
-//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
-//
-//        conn.setUrl("http://115.231.94.51/phones/pSessionAction!getMainAuctionSessionList.htm");
-//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
     }
 
-
-    public class MyHandler extends HttpPostHandler {
-        public MyHandler(Context context){ super(context);}
+    public class MyHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
             try {
                 switch (code){
                     case 0:
-                    if(data.has("auctionInfoIdList")){
-                        JSONArray auctionInfoIdList = data.getJSONArray("auctionInfoIdList");
-
-
-                    }
-                    if(data.has("auctionSessionIdList")){
-                        JSONArray auctionSessionIdList = data.getJSONArray("auctionSessionIdList");
-
-
-                    }
+                        if(data.has("auctionInfoList")){
+                            JSONArray ids = data.getJSONArray("auctionInfoList");
+                            for(int i=0; i < ids.length(); ++i){
+                            }
+                        }
+                        if(data.has("auctionSessionList")){
+                            JSONArray ids = data.getJSONArray("auctionSessionList");
+                            for(int i=0; i < ids.length(); ++i){
+                            }
+                        }
                     break;
                     default:
                     break;
                 }
             }catch(JSONException ex) {
-                this.context.alertMessage("抱歉, 解析信息时报错了");
+                context.toastMessage("网络数据错误");
             }
         }
     }
 
-    // 初始化动态广告栏中导航小图标样式
-    public void setTipPic(ViewGroup vGroup, int selected, int regular) {
-        tips = new ImageView[imgIdArray.length];
-
-        for (int i = 0; i < tips.length; i++) {
-            ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(10, 10));
-            tips[i] = imageView;
-            if (i == 0) {
-                tips[i].setBackgroundResource(selected);
-            } else {
-                tips[i].setBackgroundResource(regular);
-            }
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                               ViewGroup.LayoutParams.WRAP_CONTENT));
-            layoutParams.leftMargin = 7;
-            layoutParams.rightMargin = 7;
-            vGroup.addView(imageView, layoutParams);
-        }
-    }
 
 }

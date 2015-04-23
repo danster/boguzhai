@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.boguzhai"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.boguzhai" android:versionCode="1" android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="21" />
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,80 +15,88 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+
+
     <application
-        android:name=".activity.base.App"
+        android:name=".activity.base.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name=".activity.AvtivityEntry" >
+
+        <!-- Service在AndroidManifest中的声明语法参考 http://developer.android.com/guide/topics/manifest/service-element.html -->
+        <service android:enabled="true" android:name=".logic.service.NetworkStateService" />
+
+        <!-- activity entry of app -->
+        <activity android:name=".activity.base.ActivityEntry" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+         </activity>
 
         <!-- activities belong part of app start -->
-        <activity android:name=".activity.mainpage.MainActivity" > </activity>
-        <activity android:name=".activity.base.AppGuideActivity" > </activity>
-        <activity android:name=".activity.base.AppStartActivity" > </activity>
+        <activity android:name=".activity.mainpage.MainActivity" >  </activity>
+        <activity android:name=".activity.mainpage.AppGuideActivity" >  </activity>
+        <activity android:name=".activity.mainpage.AppStartActivity" >  </activity>
 
         <!-- activities belong part of search -->
-        <activity android:name=".activity.search.SearchResultActivity"></activity>
+        <activity android:name=".activity.search.SearchResultActivity">  </activity>
 
         <!-- activities belong part of auction -->
-        <activity android:name=".activity.auction.AuctionPreviewActivity"></activity>
-        <activity android:name=".activity.auction.LotInfoActivity"></activity>
-        <activity android:name=".activity.auction.LotFilterActivity"></activity>
-        <activity android:name=".activity.auction.AuctionActiveActivity"></activity>
+        <activity android:name=".activity.auction.AuctionPreviewActivity">  </activity>
+        <activity android:name=".activity.auction.LotInfoActivity">  </activity>
+        <activity android:name=".activity.auction.LotFilterActivity">  </activity>
+        <activity android:name=".activity.auction.AuctionActiveActivity">  </activity>
 
 
-        <activity android:name=".activity.auction.apply.ApplyForAuctionActivity"></activity>
-        <activity android:name=".activity.auction.apply.ShowSpecialLotsActivity"></activity>
-        <activity android:name=".activity.auction.apply.PayBailActivity"></activity>
-        <activity android:name=".activity.auction.apply.PayBailResultActivity"></activity>
+        <activity android:name=".activity.auction.apply.ApplyForAuctionActivity"> </activity>
+        <activity android:name=".activity.auction.apply.ShowSpecialLotsActivity"> </activity>
+        <activity android:name=".activity.auction.apply.PayBailActivity"> </activity>
+        <activity android:name=".activity.auction.apply.PayBailResultActivity"> </activity>
 
         <!-- activities belong part of login -->
-        <activity android:name=".activity.login.LoginActivity"></activity>
-        <activity android:name=".activity.login.RegisterActivity"></activity>
-        <activity android:name=".activity.login.ForgetPwdActivity"></activity>
+        <activity android:name=".activity.login.LoginActivity"> </activity>
+        <activity android:name=".activity.login.RegisterActivity"> </activity>
+        <activity android:name=".activity.login.ForgetPwdActivity"> </activity>
 
         <!-- activities belong part of me info -->
-        <activity android:name=".activity.me.info.AccountInfoActivity"></activity>
-        <activity android:name=".activity.me.info.AccountInfoMoreActivity"></activity>
-        <activity android:name=".activity.me.info.AccountInfoEditActivity"></activity>
-        <activity android:name=".activity.me.info.IdentityVerifyActivity"></activity>
-        <activity android:name=".activity.me.info.DeliveryAddressManageActivity"></activity>
-        <activity android:name=".activity.me.info.DeliveryAddressEditActivity"></activity>
+        <activity android:name=".activity.me.info.AccountInfoActivity"> </activity>
+        <activity android:name=".activity.me.info.AccountInfoMoreActivity"> </activity>
+        <activity android:name=".activity.me.info.AccountInfoEditActivity"> </activity>
+        <activity android:name=".activity.me.info.AccountBindEmailActivity"> </activity>
+        <activity android:name=".activity.me.info.AccountBindMobileActivity"> </activity>
+        <activity android:name=".activity.me.info.IdentityVerifyActivity"> </activity>
+        <activity android:name=".activity.me.info.DeliveryAddressManageActivity"> </activity>
+        <activity android:name=".activity.me.info.DeliveryAddressEditActivity"> </activity>
 
         <!-- activities belong part of me capital -->
-        <activity android:name=".activity.me.capital.CapitalShowActivity"></activity>
-        <activity android:name=".activity.me.capital.CapitalBindbankActivity"></activity>
-        <activity android:name=".activity.me.capital.CapitalDetailActivity"></activity>
-        <activity android:name=".activity.me.capital.CapitalChargeActivity"></activity>
-        <activity android:name=".activity.me.capital.CapitalWithdrawalActivity"></activity>
+        <activity android:name=".activity.me.capital.CapitalShowActivity"> </activity>
+        <activity android:name=".activity.me.capital.CapitalBindbankActivity"> </activity>
+        <activity android:name=".activity.me.capital.CapitalDetailActivity"> </activity>
+        <activity android:name=".activity.me.capital.CapitalChargeActivity"> </activity>
+        <activity android:name=".activity.me.capital.CapitalWithdrawalActivity"> </activity>
 
         <!-- activities belong part of me myauction -->
-        <activity android:name=".activity.me.myauction.MyAuctionActivity"></activity>
+        <activity android:name=".activity.me.myauction.MyAuctionActivity"> </activity>
 
         <!-- activities belong part of me bidding -->
-        <activity android:name=".activity.me.bidding.BiddingActivity"></activity>
+        <activity android:name=".activity.me.bidding.BiddingActivity"> </activity>
 
         <!-- activities belong part of me order -->
-        <activity android:name=".activity.me.order.PayOrderActivity"></activity>
+        <activity android:name=".activity.me.order.PayOrderActivity"> </activity>
 
         <!-- activities belong part of me proxy -->
         <activity android:name=".activity.me.proxy.ProxyPricingActivity"></activity>
-        <activity android:name=".activity.me.proxy.SetProxyPricingActivity"></activity>
 
         <!-- activities belong part of me collect -->
-        <activity android:name=".activity.me.collect.MyCollectionActivity"></activity>
+        <activity android:name=".activity.me.collect.MyCollectionActivity"> </activity>
 
         <!-- activities belong part of me upload -->
-        <activity android:name=".activity.me.upload.UploadLotActivity"></activity>
+        <activity android:name=".activity.me.upload.UploadLotActivity"> </activity>
 
         <!-- activities belong part of me setting -->
-        <activity android:name=".activity.me.settings.SystemSettingsActivity"></activity>
+        <activity android:name=".activity.me.settings.SystemSettingsActivity"> </activity>
 
     </application>
 

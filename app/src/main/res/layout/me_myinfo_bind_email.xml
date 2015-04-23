@@ -5,10 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
+        <TextView style="@style/login_l_ev" android:layout_width="wrap_content"
+            android:text="当前状态: "/>
+        <TextView android:id="@+id/status"
+            style="@style/myinfo_middle_text"
+            android:textColor="@color/dark_black"
+            android:text="未绑定"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar">
         <EditText style="@style/login_l_ev"
-            android:id="@+id/mobile"
-            android:hint="填写绑定的手机号码"/>
+            android:id="@+id/email"
+            android:hint="填写绑定的邮箱"/>
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -23,27 +32,9 @@
     <LinearLayout style="@style/base_bar">
         <EditText style="@style/login_l_ev"
             android:id="@+id/check_code"
-            android:hint="请填写手机验证码"/>
+            android:hint="输入邮箱验证码"/>
         <ImageView style="@style/base_right_clear"
             android:id="@+id/check_code_clear"/>
-    </LinearLayout>
-    <View style="@style/longline"/>
-    <LinearLayout style="@style/base_bar">
-        <EditText style="@style/login_l_ev"
-            android:id="@+id/pwd_input"
-            android:inputType="textPassword"
-            android:hint="请填写新密码"/>
-        <ImageView style="@style/base_right_clear"
-            android:id="@+id/pwd_input_clear"/>
-    </LinearLayout>
-    <View style="@style/longline"/>
-    <LinearLayout style="@style/base_bar">
-        <EditText style="@style/login_l_ev"
-            android:id="@+id/pwd_confirm"
-            android:inputType="textPassword"
-            android:hint="请确认新密码"/>
-        <ImageView style="@style/base_right_clear"
-            android:id="@+id/pwd_confirm_clear"/>
     </LinearLayout>
 
     <LinearLayout style="@style/base_bar"
@@ -58,7 +49,7 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:text="重置密码"/>
+            android:text="确 认"/>
     </LinearLayout>
 
 </LinearLayout>
