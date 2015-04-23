@@ -16,7 +16,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <com.boguzhai.logic.widget.ListViewForScrollView
+                <com.boguzhai.logic.view.XListViewForSrollView
                     android:id="@+id/bidding_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

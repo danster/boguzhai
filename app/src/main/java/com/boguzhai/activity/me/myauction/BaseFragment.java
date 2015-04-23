@@ -19,6 +19,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.me.proxy.ProxyPricingActivity;
+import com.boguzhai.activity.me.proxy.SetProxyPricingActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
 import com.boguzhai.logic.thread.HttpPostHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
@@ -254,7 +255,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             View view;
             if (convertView == null) {
@@ -281,7 +282,9 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "设置/修改代理出价");
-                    startActivity(new Intent(context, ProxyPricingActivity.class));
+                    Intent intent = new Intent(context, SetProxyPricingActivity.class);
+                    intent.putExtra("auctionId", myAuctions.get(position).name);
+                    startActivity(intent);
                 }
             });
             return view;

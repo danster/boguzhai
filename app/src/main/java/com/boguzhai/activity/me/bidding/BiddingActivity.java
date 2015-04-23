@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
@@ -22,7 +23,7 @@ import java.util.List;
 public class BiddingActivity extends BaseActivity implements XListViewForSrollView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
 
 
-    private ListViewForScrollView lv_bidding;//整个竞价列表
+    private XListViewForSrollView lv_bidding;//整个竞价列表
     private BiddingListAdapter adaper;
     private List<Auction> mAuctionList;
     private List<BiddingAuctionList> mList;
@@ -43,7 +44,10 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
         swipe_refresh.setOnRefreshListener(this);
 
 
-        lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
+        lv_bidding = (XListViewForSrollView) findViewById(R.id.bidding_list);
+        lv_bidding.setXListViewListener(this);
+        lv_bidding.setPullLoadEnable(true);
+        lv_bidding.setPullRefreshEnable(false);
         mAuctionList = new ArrayList<>();
         testData();
         adaper = new BiddingListAdapter(this, mAuctionList);
@@ -103,18 +107,19 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
 
     @Override
     public void onRefresh() {
+        swipe_refresh.setRefreshing(true);
         Log.i(TAG, "下拉刷新");
         new Thread() {
             @Override
             public void run() {
                 SystemClock.sleep(2000);
-                swipe_refresh.setRefreshing(false);
-//                BiddingActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        onLoad();
-//                    }
-//                });
+                BiddingActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BiddingActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
+                        swipe_refresh.setRefreshing(false);
+                    }
+                });
             }
         }.start();
     }
@@ -127,33 +132,15 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
             @Override
             public void run() {
                 SystemClock.sleep(2000);
-//                BiddingActivity.this.runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        onLoad();
-//                    }
-//                });
-//
+                BiddingActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BiddingActivity.this, "加载更多", Toast.LENGTH_SHORT).show();
+                        lv_bidding.stopLoadMore();
+                    }
+                });
             }
         }.start();
 
     }
-
-    /**
-     * 得到刷新的时间
-     * @return
-     */
-    private String getLastTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return dateFormat.format(new Date());
-    }
-
-//    /**
-//     * 停止刷新
-//     */
-//    private void onLoad() {
-//        lv_bidding.stopRefresh();
-//        lv_bidding.stopLoadMore();
-//        lv_bidding.setRefreshTime(getLastTime());
-//    }
 }
