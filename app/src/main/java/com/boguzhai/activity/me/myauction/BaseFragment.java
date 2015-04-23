@@ -1,10 +1,9 @@
 package com.boguzhai.activity.me.myauction;
 
 
-import android.content.Context;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +17,9 @@ import android.widget.Toast;
 import com.boguzhai.R;
 import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.login.LoginActivity;
-import com.boguzhai.activity.me.proxy.ProxyPricingActivity;
 import com.boguzhai.activity.me.proxy.SetProxyPricingActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
-import com.boguzhai.logic.thread.HttpPostHandler;
-import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.utils.HttpRequestApi;
+import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONArray;
@@ -134,11 +130,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     }
 
 
-    private class MyAuctionHandler extends HttpPostHandler {
-
-        public MyAuctionHandler(Context context) {
-            super(context);
-        }
+    private class MyAuctionHandler extends HttpJsonHandler {
 
         @Override
         public void handlerData(int code, JSONObject data) {

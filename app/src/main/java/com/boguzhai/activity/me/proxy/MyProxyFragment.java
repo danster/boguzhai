@@ -1,17 +1,15 @@
 package com.boguzhai.activity.me.proxy;
 
 
-import android.content.Context;
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,9 +32,10 @@ import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.auction.LotInfoActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.ProxyLot;
-import com.boguzhai.logic.thread.HttpPostHandler;
+import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.utils.DensityUtils;
 import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.view.XListView;
@@ -45,9 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -586,21 +583,17 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
 
 
-    class MyProxyHandler extends HttpPostHandler {
-
-        public MyProxyHandler(Context context) {
-            super(context);
-        }
+    class MyProxyHandler extends HttpJsonHandler {
 
         @Override
         public void handlerData(int code, JSONObject data) {
             switch (code) {
                 case 1:
-                    Toast.makeText(context, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Variable.app_context, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
-                    Toast.makeText(context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(context, LoginActivity.class));
+                    Toast.makeText(Variable.app_context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(mContext, LoginActivity.class));
                     break;
                 case 0:
                     Log.i(TAG, "获取信息成功");

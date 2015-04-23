@@ -1,8 +1,5 @@
 package com.boguzhai.activity.me.proxy;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,20 +9,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.login.LoginActivity;
-import com.boguzhai.logic.gaobo.MyAuction;
-import com.boguzhai.logic.thread.HttpPostHandler;
+import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.utils.HttpRequestApi;
+import com.boguzhai.logic.utils.HttpClient;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SetProxyPricingActivity extends BaseActivity {
@@ -93,21 +85,17 @@ public class SetProxyPricingActivity extends BaseActivity {
      * @param proxyPrice
      */
     private void setProxy(String useProxy, String proxyPrice) {
-        HttpRequestApi conn = new HttpRequestApi();
-        conn.addParam("sessionid", "");
-        conn.addParam("auctionId", auctionId);
-        conn.addParam("useProxy", useProxy);
-        conn.addParam("proxyPrice", proxyPrice);
+        HttpClient conn = new HttpClient();
+        conn.setParam("sessionid", "");
+        conn.setParam("auctionId", auctionId);
+        conn.setParam("useProxy", useProxy);
+        conn.setParam("proxyPrice", proxyPrice);
         conn.setUrl("url");
-        new Thread(new HttpPostRunnable(conn, new MySetProxyHandler(SetProxyPricingActivity.this))).start();
+        new Thread(new HttpPostRunnable(conn, new MySetProxyHandler())).start();
     }
 
 
-    private class MySetProxyHandler extends HttpPostHandler {
-
-        public MySetProxyHandler(Context context) {
-            super(context);
-        }
+    private class MySetProxyHandler extends HttpJsonHandler {
 
         @Override
         public void handlerData(int code, JSONObject data) {
