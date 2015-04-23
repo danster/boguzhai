@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.App;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.login.RegisterActivity;
 import com.boguzhai.activity.me.bidding.BiddingActivity;
@@ -53,14 +53,12 @@ public class MeFragment extends Fragment {
     }
 
     public void showMyInfo(){
-        if( App.isLogin == false ){
-            context.toastMessage("未登录",1);
+        if( Variable.isLogin == false ){
             ((TextView)view.findViewById(R.id.title_right)).setText("注册");
             view.findViewById(R.id.title_right).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.GONE);
             view.findViewById(R.id.me_login_view).setVisibility(View.VISIBLE);
         } else {
-            context.toastMessage("已登录",1);
             view.findViewById(R.id.title_right).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_login_view).setVisibility(View.GONE);
@@ -113,7 +111,7 @@ public class MeFragment extends Fragment {
     }
 
     public void startActivityByLogin(Class<?> cls){
-        if(App.isLogin == true)
+        if(Variable.isLogin == true)
             context.startActivity(new Intent(context, cls));
         else {
             Intent intent = new Intent(context, LoginActivity.class);

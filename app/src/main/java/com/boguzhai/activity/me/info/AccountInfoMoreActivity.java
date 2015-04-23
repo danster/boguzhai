@@ -5,21 +5,20 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 
 public class AccountInfoMoreActivity extends BaseActivity {
-	protected TextView tele, fax, QQ, address;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_info_more);
+        this.setScrollView(R.layout.me_myinfo_more);
         title.setText("更多个人信息");
 
-        tele = (TextView)findViewById(R.id.tele);
-        fax = (TextView)findViewById(R.id.fax);
-        QQ = (TextView)findViewById(R.id.QQ);
-        address = (TextView)findViewById(R.id.address);
-
+        ((TextView)findViewById(R.id.telephone)).setText(Variable.account.telephone);
+        ((TextView)findViewById(R.id.fax)).setText(Variable.account.fax);
+        ((TextView)findViewById(R.id.qq)).setText(Variable.account.qq);
+        ((TextView)findViewById(R.id.address)).setText(Variable.account.address);
 	}
 
 }

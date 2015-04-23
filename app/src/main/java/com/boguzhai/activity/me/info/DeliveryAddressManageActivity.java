@@ -1,13 +1,8 @@
 package com.boguzhai.activity.me.info;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
@@ -66,31 +61,6 @@ public class DeliveryAddressManageActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    public DeliveryAddress createAddressDialog(DeliveryAddress address){
-        Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.me_myinfo_addr_edit);
-        dialog.setTitle("添加地址");
-        dialog.show();
-
-        DeliveryAddress newAddress = new DeliveryAddress();
-
-        EditText name = (EditText) dialog.findViewById(R.id.name);
-        EditText addr_4 = (EditText) dialog.findViewById(R.id.addr_4);
-        EditText mobile = (EditText) dialog.findViewById(R.id.mobile);
-        EditText tele = (EditText) dialog.findViewById(R.id.tele);
-        EditText zip = (EditText) dialog.findViewById(R.id.zip);
-        Spinner addr_1 = (Spinner) dialog.findViewById(R.id.addr_1);
-        Spinner addr_2 = (Spinner) dialog.findViewById(R.id.addr_2);
-        Spinner addr_3 = (Spinner) dialog.findViewById(R.id.addr_3);
-        CheckBox is_default = (CheckBox) dialog.findViewById(R.id.is_default);
-        Button ok = (Button)dialog.findViewById(R.id.ok);
-
-        ok.setOnClickListener(null);
-
-        return  newAddress;
-
     }
 
     protected void onActivityResult (int requestCode, int resultCode, Intent data){

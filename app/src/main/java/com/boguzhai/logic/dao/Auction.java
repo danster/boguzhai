@@ -1,5 +1,7 @@
 package com.boguzhai.logic.dao;
 
+import java.util.ArrayList;
+
 /**
  * Created by danster on 3/2/15.
  */
@@ -16,7 +18,7 @@ public class Auction {
     public int showCount = 0;
     public int dealCount = 0;
 
-    public String[] sessionIds;
+    public ArrayList<Session> sessionList = new ArrayList<Session>();
 
     public Auction() {
     }

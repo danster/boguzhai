@@ -1,4 +1,4 @@
-package com.boguzhai.activity.base;
+package com.boguzhai.activity.mainpage;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
-import com.boguzhai.activity.mainpage.MainActivity;
 
 public class AppGuideActivity extends Activity implements View.OnClickListener {
 	ViewPager viewPager;
@@ -117,12 +117,12 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.app_enter:
-                App.mainTabIndex = R.id.rb_1;
+                Variable.mainTabIndex = R.id.rb_1;
                 startActivity(new Intent(this, MainActivity.class));
                 break;
 
             case R.id.app_sign:
-                App.mainTabIndex = R.id.rb_1;
+                Variable.mainTabIndex = R.id.rb_1;
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
         }

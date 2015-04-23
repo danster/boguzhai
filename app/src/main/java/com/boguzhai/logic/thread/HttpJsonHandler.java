@@ -1,24 +1,17 @@
 package com.boguzhai.logic.thread;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
-import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by danster on 4/15/15.
- */
-public abstract class HttpPostHandler extends Handler {
-    public BaseActivity context;
-
-    public HttpPostHandler(Context context){
-        super();
-        this.context = (BaseActivity)context;
-    }
+public abstract class HttpJsonHandler extends Handler {
+    public HttpJsonHandler(){super();}
+    public void handlerData(int code, JSONObject data){}
 
     @Override
     public void handleMessage(Message msg) {
@@ -30,16 +23,17 @@ public abstract class HttpPostHandler extends Handler {
                     int code = -9;
                     JSONObject data = null;
                     code = result.getInt("code");
-                    if(result.has("data")){  data = result.getJSONObject("data");}
-
+                    if(result.has("data")){
+                        data = result.getJSONObject("data");
+                    }
                     handlerData(code, data);
                 } catch (JSONException ex) {
-                    context.alertMessage("抱歉, 数据解析报错");
+                    Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
                 }
                 break;
-            default: context.alertMessage((String)msg.obj); break;
+            default:
+                Toast.makeText(Variable.app_context, (String) msg.obj, Toast.LENGTH_LONG).show();
+                break;
         }
     }
-
-    public abstract void handlerData(int code, JSONObject data);
 }

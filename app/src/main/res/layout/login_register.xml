@@ -12,7 +12,7 @@
             android:background="@drawable/sign_user"/>
 		<EditText style="@style/register_ev"
 		    android:id="@+id/username"
-            android:text="手机/邮箱"/>
+            android:hint="手机/邮箱"/>
 		<TextView
             android:id="@+id/get_check_code"
             android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
             android:background="@drawable/sign_id"/>
         <EditText style="@style/register_ev"
             android:id="@+id/check_code"
-            android:text="验证码"/>
+            android:hint="验证码"/>
     </LinearLayout>
 
     <LinearLayout style="@style/login_bar">
@@ -37,7 +37,8 @@
             android:background="@drawable/sign_code"/>
         <EditText style="@style/register_ev"
             android:id="@+id/password"
-            android:text="密码"/>
+            android:inputType="textPassword"
+            android:hint="密码"/>
     </LinearLayout>
 
     <LinearLayout style="@style/login_bar"

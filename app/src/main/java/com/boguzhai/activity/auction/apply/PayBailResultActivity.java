@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.App;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.mainpage.MainActivity;
 
 public class PayBailResultActivity extends BaseActivity {
@@ -53,7 +53,7 @@ public class PayBailResultActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.title_right:
-                App.mainTabIndex = 1;
+                Variable.mainTabIndex = 1;
                 startActivity(new Intent(this, MainActivity.class));
                 break;
             default:

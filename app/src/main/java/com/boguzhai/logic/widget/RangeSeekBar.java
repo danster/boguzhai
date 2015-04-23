@@ -560,9 +560,9 @@ public class RangeSeekBar<T extends Number> extends ImageView {
     }
 
     /**
-     * Draws the "normal" resp. "pressed" thumb image on specified x-coordinate.
+     * Draws the "normal" resp. "pressed" thumb imageUrl on specified x-coordinate.
      *
-     * @param screenCoord The x-coordinate in screen space where to draw the image.
+     * @param screenCoord The x-coordinate in screen space where to draw the imageUrl.
      * @param pressed     Is the thumb currently in "pressed" state?
      * @param canvas      The canvas to draw upon.
      */

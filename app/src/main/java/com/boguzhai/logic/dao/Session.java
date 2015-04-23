@@ -1,5 +1,9 @@
 package com.boguzhai.logic.dao;
 
+import android.graphics.Bitmap;
+
+import java.util.ArrayList;
+
 /**
  * Created by danster on 3/2/15.
  */
@@ -12,14 +16,15 @@ public class Session {
     public String location = "";
     public String preLocation = "";
     public String remark = "";
-    public String image = "";
+    public String imageUrl = "";
+    public Bitmap image = null;
     public String auctionTime = "";
     public String previewTime = "";
 
     public int showCount = 0;
     public int dealCount = 0;
 
-    public String auctionId = "";
+    public ArrayList<Lot> lotArrayList = new ArrayList<Lot>();
 
     public Session() {
     }

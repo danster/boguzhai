@@ -22,23 +22,20 @@
             <View android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1" />
-            <ImageView android:id="@+id/photo"
+            <ImageView android:id="@+id/image"
                 android:layout_height="90dp"
                 android:layout_width="90dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_gravity="center"
-                android:background="@drawable/image"
-                />
+                android:layout_gravity="center"/>
             <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
 
         <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="姓名"/>
-            <EditText android:id="@+id/name"
+            <TextView android:id="@+id/name"
                 style="@style/myinfo_middle_text"
                 android:text="张三"/>
-            <ImageView style="@style/myinfo_right_clear" android:id="@+id/name_clear"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
@@ -84,9 +81,9 @@
 
         <LinearLayout style="@style/base_bar"  android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="座机"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/tele"
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/telephone"
                 android:text="021-78265632"/>
-            <ImageView style="@style/myinfo_right_clear" android:id="@+id/tele_clear"/>
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/telephone_clear"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
@@ -98,9 +95,9 @@
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="QQ"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/QQ"
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/qq"
                 android:text="1434151541"/>
-            <ImageView style="@style/myinfo_right_clear" android:id="@+id/QQ_clear" />
+            <ImageView style="@style/myinfo_right_clear" android:id="@+id/qq_clear" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

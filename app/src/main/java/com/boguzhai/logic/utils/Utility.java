@@ -41,7 +41,7 @@ public class Utility {
 
 
     // 给spinner设置自定义Listener
-    public void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result, AdapterView.OnItemSelectedListener listener){
+    public static void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result, AdapterView.OnItemSelectedListener listener){
         Spinner spinner;
         if(v == null){ spinner = (Spinner) activity.findViewById(view_id);
         }else {  spinner = (Spinner) v.findViewById(view_id);}
@@ -59,28 +59,13 @@ public class Utility {
     }
 
     // 给spinner设置初始环境
-    public void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result){
+    public static void setSpinner(BaseActivity activity, View v, int view_id, String[] list, StringBuffer result){
         setSpinner(activity,v,view_id,list,result,null);
     }
 
     // Activity环境下，给spinner设置初始环境
-    public void setSpinner(BaseActivity activity, int view_id, String[] list, StringBuffer result){
+    public static void setSpinner(BaseActivity activity, int view_id, String[] list, StringBuffer result){
         setSpinner(activity,null,view_id,list,result, null);
-    }
-
-    // 使用数组形式操作spinner
-    class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
-        private String[] list;
-        StringBuffer result;
-
-        public SpinnerSelectedListener(String[] list, StringBuffer result){
-            this.list=list; this.result=result;
-        }
-
-        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            result.replace(0,result.length(),list[arg2]);
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {}
     }
 
 }
