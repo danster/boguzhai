@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.boguzhai.R;
@@ -30,10 +31,14 @@ public class ActivityEntry extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+        Log.i("TAG","ActivityEntry");
+        System.out.print("ActivityEntry2222");
         init();
     }
 
     private void init(){
+
+        Log.i("TAG","ActivityEntry init");
         Variable.app = this.getApplication();
         Variable.app_context = this.getApplicationContext();
         Variable.account.image = BitmapFactory.decodeResource(getResources(), R.drawable.image);

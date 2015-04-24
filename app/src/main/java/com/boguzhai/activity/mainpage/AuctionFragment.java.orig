@@ -68,13 +68,16 @@ public class AuctionFragment extends Fragment {
     }
 
     public void updateDynamicAuctions(int checkedId){
+<<<<<<< HEAD
 //        HttpRequestApi conn = new HttpRequestApi();
 //        conn.setParam("status", "");
 //        conn.setRequestUrl("http://test.shbgz.com/tradingsys/phones/pMainAction!getAuctionList.htm");
-//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
+//        new Thread(new HttpPostRunnable(conn,new MyHandler(mContext))).start();
 
-        list.clear();
+        list_show.clear();
+=======
         HttpClient conn = new HttpClient();
+>>>>>>> hmf
         switch (checkedId){
             case R.id.auction_status_all:     conn.setParam("status", "");      break;
             case R.id.auction_status_preview: conn.setParam("status","预展中"); break;

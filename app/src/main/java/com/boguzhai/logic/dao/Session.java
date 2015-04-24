@@ -1,6 +1,12 @@
 package com.boguzhai.logic.dao;
 
 import android.graphics.Bitmap;
+import android.widget.Toast;
+
+import com.boguzhai.activity.base.Variable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -11,22 +17,52 @@ import java.util.ArrayList;
 public class Session {
     public String id = "";
     public String name = "";
-    public String type = "";       //"古籍书刊"等
-    public String status = "";     //1:预展中 2:拍卖中 3:已成交
-    public String location = "";
-    public String preLocation = "";
-    public String remark = "";
+    public String status = "";     //"" "预展中" "拍卖中" "已结束"
     public String imageUrl = "";
     public Bitmap image = null;
+
+    public String auctionLocation = "";
+    public String previewLocation = "";
     public String auctionTime = "";
     public String previewTime = "";
 
-    public int showCount = 0;
-    public int dealCount = 0;
+    public String remark = "";
+    public String auctionId = ""; // 专场所在拍卖会ID
+
+    public int showNum = 0; // 上拍件数
+    public int dealNum = 0; // 成交件数
+    public double dealSum = 0.00; // 成交金额
 
     public ArrayList<Lot> lotArrayList = new ArrayList<Lot>();
 
     public Session() {
+    }
+
+    public static Session parseJson(JSONObject sessionObj){
+        Session session = null;
+
+        try {
+            session = new Session();
+
+            session.id = sessionObj.getString("id");
+            session.name = sessionObj.getString("name");
+            session.imageUrl = sessionObj.getString("image");
+            session.status = sessionObj.getString("status");
+            session.auctionId = sessionObj.getString("auctionMainId");
+            session.auctionTime = sessionObj.getString("auctionDate");
+            session.auctionLocation = sessionObj.getString("auctionLocation");
+            session.previewTime = sessionObj.getString("previewDate");
+            session.previewLocation = sessionObj.getString("previewLocation");
+            session.remark = sessionObj.getString("remark");
+            session.dealNum = Integer.parseInt(sessionObj.getString("dealNum"));
+            session.dealSum = Double.parseDouble(sessionObj.getString("dealSum"));
+            session.showNum = Integer.parseInt(sessionObj.getString("showNum"));
+
+        }catch(JSONException ex) {
+            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
+        }
+
+        return session;
     }
 
 }

@@ -8,7 +8,9 @@ import android.content.pm.PackageInfo;
 import com.boguzhai.R;
 import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.Address_1;
+import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lottype_1;
+import com.boguzhai.logic.dao.Session;
 
 import java.util.ArrayList;
 
@@ -34,5 +36,9 @@ public class Variable {
     /** 下列信息需要在用户登录后实时从服务器端获取 **/
     /** 下列信息需要在 SD 卡里进行缓存          **/
     /** 下列信息需要在 SQlite 数据库里进行缓存   **/
+
+    // 响应用户不同的选择
+    public static Auction currentAuction = null;
+    public static Session currentSession = null;
 
 }
