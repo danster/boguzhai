@@ -35,11 +35,38 @@ class MyProxyAdapter extends BaseAdapter {
     public List<ProxyLot> lots;
     private Context mContext;
     private LayoutInflater inflater;
+    private final int baseCount = 5;//设置每页显示5个
+    private int currentCount = 0;//当前需要展示的个数
+
 
     MyProxyAdapter(Context context, List<ProxyLot> lots) {
         this.mContext = context;
         this.lots = lots;
         inflater = LayoutInflater.from(mContext);
+    }
+
+    /**
+     * 设置索引，根据索引分页显示
+     * @param index 索引
+     */
+    public void setPageIndex(int index) {
+        if(lots.size() >= baseCount*(index + 1)) {
+            currentCount = baseCount*(index + 1);
+        }else {
+            currentCount = lots.size();
+        }
+    }
+
+    public int getCurrentCount() {
+        return currentCount;
+    }
+    /**
+     * 判断是否是最后一页
+     * @return true 是  <br>  false 否
+     */
+    public boolean isLastPage() {
+        boolean result = ((currentCount == lots.size()) ? true : false);
+        return result;
     }
 
     @Override

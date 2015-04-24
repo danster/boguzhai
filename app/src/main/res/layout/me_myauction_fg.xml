@@ -5,11 +5,69 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
-
-    <com.boguzhai.logic.view.XListView
-        android:id="@+id/lv_myauctions"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            style="@style/base_bar"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/base_search" />
+
+            <EditText
+                android:id="@+id/et_my_auction_keyword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:gravity="center|left"
+                android:hint="输入关键字查询"
+                android:lines="1" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_my_auction_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="确定" />
+
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+    <LinearLayout style="@style/base_bar">
+
+        <TextView
+            style="@style/search_left_text"
+            android:text="请选择拍卖形式 " />
+
+        <Spinner
+            android:id="@+id/sp_my_auction_choose"
+            style="@style/lot_filter_spinner"></Spinner>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/base_arrow_right" />
+    </LinearLayout>
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout_my_auction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.boguzhai.logic.view.XListView
+            android:id="@+id/lv_myauctions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

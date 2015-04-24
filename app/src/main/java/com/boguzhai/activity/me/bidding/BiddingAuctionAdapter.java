@@ -18,10 +18,10 @@ import java.util.List;
 /**
  * Created by bobo on 15/4/7.
  */
-public class BiddingListAdapter extends BaseAdapter {
+public class BiddingAuctionAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<Auction> mAuctionList;
+    private List<BiddingAuction> biddingAuctionList;
     private LayoutInflater inflater;
 
     private String[] type = {"现场", "同步", "网络"};
@@ -34,10 +34,10 @@ public class BiddingListAdapter extends BaseAdapter {
 
     }
 
-    public BiddingListAdapter(Context context, List<Auction> auctionList) {
+    public BiddingAuctionAdapter(Context context, List<BiddingAuction> list) {
         inflater = LayoutInflater.from(context);
         mContext = context;
-        mAuctionList = auctionList;
+        biddingAuctionList = list;
 
     }
 
@@ -45,9 +45,7 @@ public class BiddingListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-
-
-        return mAuctionList.size();
+        return biddingAuctionList.size();
     }
 
 
@@ -67,36 +65,13 @@ public class BiddingListAdapter extends BaseAdapter {
             view = convertView;
             holder = (ViewHolder) view.getTag();
         }
-        holder.auction_type.setText(type[Integer.parseInt(mAuctionList.get(position).type) - 1]);
-        holder.auction_name.setText(mAuctionList.get(position).name);
-        holder.bidding_count.setText(String.valueOf(mAuctionList.get(position).dealCount));
+        holder.auction_type.setText(biddingAuctionList.get(position).auction.type);
+        holder.auction_name.setText(biddingAuctionList.get(position).auction.name);
+        holder.bidding_count.setText(String.valueOf(biddingAuctionList.get(position).auction.dealCount));
 
-        ArrayList<BiddingLot> lotList = new ArrayList<>();
-        BiddingLot lot = new BiddingLot();
-        lot.isLeader = 0;
-        lot.No = 123;
-        lot.name = "明代唐伯虎书法作品";
-        lot.priceCount = 5;
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.nowPrice = 4000;
-        lot.topPrice = 4000;
-        lotList.add(lot);
 
-        lot = new BiddingLot();
-        lot.isLeader = 1;
-        lot.No = 312;
-        lot.name = "唐代瓷器";
-        lot.priceCount = 5;
-        lot.apprisal1 = 8000;
-        lot.apprisal2 = 10000;
-        lot.startPrice = 5000;
-        lot.nowPrice = 9000;
-        lot.topPrice = 8000;
-        lotList.add(lot);
 
-        LotInMyBiddingAdapter adapter = new LotInMyBiddingAdapter(mContext, lotList);
+        LotInBiddingAuctionAdapter adapter = new LotInBiddingAuctionAdapter(mContext, biddingAuctionList.get(position).lotList);
         holder.lotList.setAdapter(adapter);
         return view;
     }

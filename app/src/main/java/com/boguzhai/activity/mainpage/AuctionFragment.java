@@ -80,7 +80,7 @@ public class AuctionFragment extends Fragment {
 //        HttpRequestApi conn = new HttpRequestApi();
 //        conn.setParam("status", "");
 //        conn.setRequestUrl("http://test.shbgz.com/tradingsys/phones/pMainAction!getAuctionList.htm");
-//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
+//        new Thread(new HttpPostRunnable(conn,new MyHandler(mContext))).start();
 
         list_show.clear();
         switch (checkedId){

@@ -38,7 +38,7 @@ public abstract class HttpBaseHandler extends Handler {
                     intent.setComponent(comp);
                     intent.setAction("android.intent.action.VIEW");
                 }
-                context.startActivity(intent);
+                mContext.startActivity(intent);
                 */
                 break;
 

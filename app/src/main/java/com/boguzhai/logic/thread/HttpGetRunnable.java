@@ -32,7 +32,7 @@ public class HttpGetRunnable implements Runnable{
             return;
         }
 
-//        if(NetworkApi.isWifiConnected(conn.context) == false){
+//        if(NetworkApi.isWifiConnected(conn.mContext) == false){
 //            handler.obtainMessage(1,"当前在非WIFI网络下, 建议使用WIFI").sendToTarget();
 //            return;
 //        }

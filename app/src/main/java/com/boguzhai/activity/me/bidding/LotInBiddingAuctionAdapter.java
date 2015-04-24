@@ -13,18 +13,19 @@ import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.BiddingLot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bobo on 15/4/8.
  */
-public class LotInMyBiddingAdapter extends BaseAdapter {
+public class LotInBiddingAuctionAdapter extends BaseAdapter {
 
 
     private Context mContext;
-    private ArrayList<BiddingLot> mLotList;
+    private List<BiddingLot> mLotList;
     private LayoutInflater inflater;
     private String[] isLeader = {"出局", "领先"};
-    public LotInMyBiddingAdapter(Context context, ArrayList<BiddingLot> lotList){
+    public LotInBiddingAuctionAdapter(Context context, List<BiddingLot> lotList){
         inflater = LayoutInflater.from(context);
         mContext = context;
         mLotList = lotList;

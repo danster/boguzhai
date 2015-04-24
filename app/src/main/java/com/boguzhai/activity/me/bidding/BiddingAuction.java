@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by bobo on 15/4/22.
  */
-public class BiddingAuctionList {
+public class BiddingAuction {
 
     public Auction auction;//拍卖会
     public List<BiddingLot> lotList;//拍卖会下的所有拍品

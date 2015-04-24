@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Variable {
 
     public static Account account = new Account(); //用户的账号信息
-    public static boolean isLogin = false;      //用户的登录状态
+    public static boolean isLogin = true;      //用户的登录状态
     public static int mainTabIndex = R.id.rb_1; //首页的tab位置
 
     // 启动程序(Application)时初始化或重新赋值

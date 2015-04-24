@@ -2,53 +2,77 @@ package com.boguzhai.activity.me.myauction;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.AuctionActiveActivity;
 import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.login.LoginActivity;
-import com.boguzhai.activity.me.proxy.SetProxyPricingActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
 import com.boguzhai.logic.thread.HttpJsonHandler;
+import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BaseFragment extends Fragment implements XListView.IXListViewListener {
+public class BaseFragment extends Fragment implements XListView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "BaseFragment";
+
+    private final int baseCount = 5;
     private String status = ""; //拍卖会状态 "" "预展中" "拍卖中" "已结束"
+
+    //    private List<MyAuction> myOriginAuctions;//从网络获取的我的拍卖会集合
+    private List<MyAuction> myAuctions;//需要展示的我的拍卖会集合
+    private int pageIndex = 0;//分页显示的页数，从 "0" 开始
+    private boolean isSearch = false;//是否处于搜索下的显示
+    private List<MyAuction> searchAuctions;
+    private int searchPageIndex = 0;
+    private String key;//搜索关键字
+
     public BaseFragment(String status) {
         this.status = status;
     }
 
-    private List<MyAuction> myAuctions;
-    public MyAuctionActivity context;
+    public MyAuctionActivity mContext;//与fragment对应的activity上下文
     public View view;//fragment对应布局
     public LayoutInflater inflater;
-    public MyAuctionAdapter myAuctionAdapter;//适配器
-    public XListView lv_my_auction;//布局中的listview
-    public String[] types = {"现场拍卖", "同步拍卖", "网络拍卖"};
+    public MyAuctionAdapter myAuctionAdapter;//拍卖会集合的适配器
+    public XListView lv_my_auction;//布局中的listview 支持上拉加载更多地listview
+    private SwipeRefreshLayout swipe_layout;//支持下拉刷新的布局
+    private Button btn_my_auction_search;//点击进行搜索
+    private EditText et_my_auction_keyword;//关键字
+    private Spinner sp_my_auction_choose;
+
+
+    public Utility utility = new Utility();
+    public String[] types = {"全部", "现场拍卖", "同步拍卖", "网络拍卖"};
+    private StringBuffer choose_type = new StringBuffer();
 
     /**
      * fragment对应布局
@@ -62,33 +86,55 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     }
 
 
-    /**
-     * 初始化数据
-     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        context = (MyAuctionActivity) getActivity();
+        mContext = (MyAuctionActivity) getActivity();
         initData(status);
     }
 
     /**
-     * 初始化适配器，子类直接传递需要展示的拍卖会信息集合
+     * 初始化适配器
      *
      * @param myAuctions 需要展示的拍卖会信息集合
      * @return 适配器
      */
     public void initAdapter(List<MyAuction> myAuctions) {
-        myAuctionAdapter = new MyAuctionAdapter(myAuctions);
+        myAuctionAdapter = new MyAuctionAdapter(mContext, myAuctions);
     }
 
 
-
+    /**
+     * 初始化数据
+     */
     public void initData(String type) {
+        /**
+         * 从网络获取数据
+         */
+        HttpClient conn = new HttpClient();
+        conn.setParam("sessionid", "");
+        conn.setParam("status", "");
+        conn.setUrl("url");
+        new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
 
+
+        /**
+         * 支持下拉刷新的layout，设置监听，重写onRefresh()方法
+         */
+        swipe_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout_my_auction);
+        swipe_layout.setColorSchemeResources(R.color.gold);
+        swipe_layout.setOnRefreshListener(this);
+
+
+        /**
+         * 支持上拉加载更多的listView，设置不可以下拉刷新，可以上拉加载更多，重写onLoadMore()方法
+         */
         lv_my_auction = (XListView) view.findViewById(R.id.lv_myauctions);
         lv_my_auction.setPullLoadEnable(true);
+        lv_my_auction.setPullRefreshEnable(false);
         lv_my_auction.setXListViewListener(this);
+
+
         switch (type) {
             case "":
                 myAuctions = testData1();
@@ -107,40 +153,193 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                 Log.i(TAG, "已结束");
                 break;
         }
+
+
+        /**
+         * 初始化适配器
+         */
         initAdapter(myAuctions);
         lv_my_auction.setAdapter(myAuctionAdapter);
+        myAuctionAdapter.setPageIndex(pageIndex);
+
+
+        /**
+         * 设置listview条目的点击事件，跳转到相应的拍卖会
+         */
         lv_my_auction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(TAG, "跳转至第" + position + "个拍品");
-                Intent intent = new Intent(context, LotInfoActivity.class);
+                Intent intent = new Intent(mContext, AuctionActiveActivity.class);
                 intent.putExtra("auctionId", myAuctions.get(position - 1).id);
                 startActivity(intent);
             }
         });
 
-        /*
-         * 请求网络数据
+
+        sp_my_auction_choose = (Spinner) view.findViewById(R.id.sp_my_auction_choose);
+        /**
+         * 设置spinner， 每选择一项，就会在原始数据中筛选对应的拍卖会集合并展示，
          */
-//        HttpRequestApi conn = new HttpRequestApi();
-//        conn.addParam("sessionid", "");
-//        conn.addParam("status", "");
-//        conn.setUrl("url");
-//        new Thread(new HttpPostRunnable(conn, new MyAuctionHandler(context))).start();
+        utility.setSpinner(mContext, view, R.id.sp_my_auction_choose, types, choose_type, new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "Spinner Position:" + position);
+                if(position == 0) {
+                    key = "";
+                }else {
+                    key = types[position];
+                }
+                searchByKey();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        /**
+         * 点击搜索进行关键字匹配，在原始数据中筛选符合条件的拍卖会集合并展示
+         */
+        et_my_auction_keyword = (EditText) view.findViewById(R.id.et_my_auction_keyword);
+        btn_my_auction_search = (Button) view.findViewById(R.id.btn_my_auction_search);
+        btn_my_auction_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp_my_auction_choose.setSelection(0);
+                key = et_my_auction_keyword.getText().toString().trim();
+                searchByKey();
+            }
+        });
+    }
+
+    /**
+     * 通过关键字进行过滤并显示
+     */
+    private void searchByKey() {
+        if (TextUtils.isEmpty(key)) {
+            isSearch = false;
+            myAuctionAdapter = new MyAuctionAdapter(mContext, myAuctions);
+            myAuctionAdapter.setPageIndex(pageIndex);
+            lv_my_auction.setAdapter(myAuctionAdapter);
+        } else {
+            isSearch = true;
+            searchAuctions = new ArrayList<>();
+            int count = 0;
+            if (myAuctions.size() >= baseCount * ((pageIndex + 1))) {
+                count = baseCount * (pageIndex + 1);
+            } else {
+                count = myAuctions.size();
+            }
+            for (int i = 0; i < count; i++) {
+                if (myAuctions.get(i).name.indexOf(key) >= 0 || myAuctions.get(i).type.indexOf(key) >= 0 || myAuctions.get(i).status.indexOf(key) >= 0
+                        || myAuctions.get(i).auctionTime.indexOf(key) >= 0 || (String.valueOf(myAuctions.get(i).deposit)).indexOf(key) >= 0) {
+                    searchAuctions.add(myAuctions.get(i));
+                }
+            }
+            myAuctionAdapter = new MyAuctionAdapter(mContext, searchAuctions);
+            searchPageIndex = 0;
+            myAuctionAdapter.setPageIndex(searchPageIndex);
+            lv_my_auction.setAdapter(myAuctionAdapter);
+        }
     }
 
 
+    /**
+     * 下拉刷新，执行网络数据请求，清空原来的拍卖会集合，并更新。展示之前，判断spinner所选内容，进行筛选
+     */
+    @Override
+    public void onRefresh() {
+        Log.i(TAG, "下拉刷新");
+
+        new Thread() {
+            @Override
+            public void run() {
+                swipe_layout.setRefreshing(true);
+                SystemClock.sleep(2000);
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipe_layout.setRefreshing(false);
+                        Toast.makeText(mContext, "刷新成功", Toast.LENGTH_SHORT).show();
+                        isSearch = false;
+                        myAuctionAdapter = new MyAuctionAdapter(mContext, myAuctions);//请求网络重新获取到myAuctions
+                        pageIndex = 0;
+                        myAuctionAdapter.setPageIndex(pageIndex);
+                        lv_my_auction.setAdapter(myAuctionAdapter);
+                    }
+                });
+            }
+        }.start();
+    }
+
+
+    /**
+     * 不进行网络数据请求，只进行分页处理
+     */
+    @Override
+    public void onLoadMore() {
+        Log.i(TAG, "加载更多");
+        new Thread() {
+            @Override
+            public void run() {
+                SystemClock.sleep(200);
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if((pageIndex + 1)> (myAuctions.size()/5)) {
+                            if(isSearch && !myAuctionAdapter.isLastPage()) {
+                                myAuctionAdapter.setPageIndex(++searchPageIndex);
+                            }else {
+                                Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            if (isSearch) {
+                                Log.i(TAG, "搜索中加载更多");
+                                int count = 0;
+                                if (myAuctions.size() >= baseCount * ((++pageIndex + 1) + 1)) {
+                                    count = baseCount * (pageIndex + 1);
+                                } else {
+                                    count = myAuctions.size();
+                                }
+                                for (int i = (baseCount * pageIndex); i < count; i++) {
+                                    if (myAuctions.get(i).name.indexOf(key) >= 0 || myAuctions.get(i).type.indexOf(key) >= 0 || myAuctions.get(i).status.indexOf(key) >= 0
+                                            || myAuctions.get(i).auctionTime.indexOf(key) >= 0 || (String.valueOf(myAuctions.get(i).deposit)).indexOf(key) >= 0) {
+                                        searchAuctions.add(myAuctions.get(i));
+                                    }
+                                }
+                                Log.i(TAG, "条目个数:" + myAuctionAdapter.getCurrentCount());
+                                myAuctionAdapter.notifyDataSetChanged();
+                                myAuctionAdapter.setPageIndex(++searchPageIndex);
+                            } else {
+                                myAuctionAdapter.setPageIndex(++pageIndex);
+                            }
+                        }
+                        lv_my_auction.stopLoadMore();
+                    }
+                });
+            }
+        }.start();
+
+    }
+
+
+    /**
+     * handler，处理从网络返回的数据
+     */
     private class MyAuctionHandler extends HttpJsonHandler {
 
         @Override
         public void handlerData(int code, JSONObject data) {
             switch (code) {
                 case 1:
-                    Toast.makeText(context, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
-                    Toast.makeText(context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(context, LoginActivity.class));
+                    Toast.makeText(mContext, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(mContext, LoginActivity.class));
                     break;
                 case 0:
                     Log.i(TAG, "获取信息成功");
@@ -148,7 +347,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     try {
                         jArray = data.getJSONArray("auctionList");
                         MyAuction myAction;
-                        for(int i = 0; i < jArray.length(); i++) {
+                        for (int i = 0; i < jArray.length(); i++) {
                             myAction = new MyAuction();
                             myAction.name = jArray.getJSONObject(i).getString("name");
                             myAction.id = jArray.getJSONObject(i).getString("type");
@@ -162,147 +361,15 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                         Log.i(TAG, "json解析异常");
                         e.printStackTrace();
                     }
-
                     break;
             }
         }
     }
 
 
-    @Override
-    public void onRefresh() {
-        Log.i(TAG, "下拉刷新");
-
-        new Thread() {
-            @Override
-            public void run() {
-                SystemClock.sleep(2000);
-
-
-                context.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoad();
-                    }
-                });
-            }
-        }.start();
-    }
-
-
-    @Override
-    public void onLoadMore() {
-        Log.i(TAG, "加载更多");
-        new Thread() {
-            @Override
-            public void run() {
-                SystemClock.sleep(2000);
-                context.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        onLoad();
-                    }
-                });
-//
-            }
-        }.start();
-
-    }
-
-    private String getLastTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return dateFormat.format(new Date());
-    }
-
-    private void onLoad() {
-        lv_my_auction.stopRefresh();
-        lv_my_auction.stopLoadMore();
-        lv_my_auction.setRefreshTime(getLastTime());
-    }
-
-
-    public static class ViewHolder {
-        public static TextView tv_my_auction_status;
-        public static TextView tv_my_auction_name;
-        public static TextView tv_my_auction_type;
-        public static TextView tv_my_auction_date;
-        public static TextView tv_my_auction_deposit;
-        public static TextView tv_my_auction_set_deposit;
-    }
-
-    /**
-     * 适配器
-     */
-    public class MyAuctionAdapter extends BaseAdapter {
-
-        private List<MyAuction> myAuctions;//要展示的拍卖会信息
-
-        private MyAuctionAdapter(List<MyAuction> myAuctions) {
-            this.myAuctions = myAuctions;
-        }
-
-        @Override
-        public int getCount() {
-            return myAuctions.size();
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            View view;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                view = inflater.inflate(R.layout.me_my_auction_item, null);
-                holder.tv_my_auction_status = (TextView) view.findViewById(R.id.tv_my_auction_status);
-                holder.tv_my_auction_name = (TextView) view.findViewById(R.id.tv_my_auction_name);
-                holder.tv_my_auction_type = (TextView) view.findViewById(R.id.tv_my_auction_type);
-                holder.tv_my_auction_date = (TextView) view.findViewById(R.id.tv_my_auction_date);
-                holder.tv_my_auction_deposit = (TextView) view.findViewById(R.id.tv_my_auction_deposit);
-                holder.tv_my_auction_set_deposit = (TextView) view.findViewById(R.id.tv_my_auction_set_deposit);
-                view.setTag(holder);
-            } else {
-                view = convertView;
-                holder = (ViewHolder) view.getTag();
-
-            }
-            holder.tv_my_auction_status.setText("[" + myAuctions.get(position).status + "] ");
-            holder.tv_my_auction_name.setText(myAuctions.get(position).name);
-            holder.tv_my_auction_type.setText(types[Integer.parseInt(myAuctions.get(position).type) - 1]);
-            holder.tv_my_auction_date.setText(myAuctions.get(position).auctionTime);
-            holder.tv_my_auction_deposit.setText(String.valueOf(myAuctions.get(position).deposit));
-            holder.tv_my_auction_set_deposit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i(TAG, "设置/修改代理出价");
-                    Intent intent = new Intent(context, SetProxyPricingActivity.class);
-                    intent.putExtra("auctionId", myAuctions.get(position).name);
-                    startActivity(intent);
-                }
-            });
-            return view;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-
-    }
-
-
     /**
      * 以下为测试模拟数据
      */
-
-
-
-
 
     /*
      * "已结束"
@@ -313,7 +380,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
         myAuction.name = "2014冬季艺术品大拍";
         myAuction.status = "已结束";
-        myAuction.type = "3";
+        myAuction.type = "网络拍卖";
         myAuction.deposit = 500;
         myAuctions1.add(myAuction);
         return myAuctions1;
@@ -328,7 +395,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
         myAuction.name = "2014冬季艺术品大拍";
         myAuction.status = "预展中";
-        myAuction.type = "1";
+        myAuction.type = "现场拍卖";
         myAuction.deposit = 500;
         myAuctions1.add(myAuction);
         return myAuctions1;
@@ -344,7 +411,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
         myAuction.name = "2014冬季艺术品大拍";
         myAuction.status = "拍卖中";
-        myAuction.type = "2";
+        myAuction.type = "同步拍卖";
         myAuction.deposit = 500;
         myAuctions1.add(myAuction);
         return myAuctions1;
@@ -359,7 +426,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
         myAuction.name = "2014冬季艺术品大拍";
         myAuction.status = "预展中";
-        myAuction.type = "1";
+        myAuction.type = "现场拍卖";
         myAuction.deposit = 500;
         myAuctions1.add(myAuction);
 
@@ -367,7 +434,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
         myAuction.name = "2014冬季艺术品大拍";
         myAuction.status = "拍卖中";
-        myAuction.type = "2";
+        myAuction.type = "同步拍卖";
         myAuction.deposit = 500;
         myAuctions1.add(myAuction);
 
@@ -375,7 +442,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
         myAuction.name = "2014冬季艺术品大拍";
         myAuction.status = "已结束";
-        myAuction.type = "3";
+        myAuction.type = "网络拍卖";
         myAuction.deposit = 500;
         myAuctions1.add(myAuction);
 
@@ -383,11 +450,106 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
         myAuction.name = "2014冬季艺术品大拍";
         myAuction.status = "预展中";
-        myAuction.type = "1";
+        myAuction.type = "现场拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "拍卖中";
+        myAuction.type = "同步拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "已结束";
+        myAuction.type = "网络拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "预展中";
+        myAuction.type = "现场拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "拍卖中";
+        myAuction.type = "同步拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "已结束";
+        myAuction.type = "网络拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "预展中";
+        myAuction.type = "现场拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "拍卖中";
+        myAuction.type = "同步拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "已结束";
+        myAuction.type = "网络拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "预展中";
+        myAuction.type = "现场拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "拍卖中";
+        myAuction.type = "同步拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "已结束";
+        myAuction.type = "网络拍卖";
+        myAuction.deposit = 500;
+        myAuctions1.add(myAuction);
+
+        myAuction = new MyAuction();
+        myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
+        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.status = "预展中";
+        myAuction.type = "现场拍卖";
         myAuction.deposit = 500;
         myAuctions1.add(myAuction);
 
         return myAuctions1;
     }
-
 }

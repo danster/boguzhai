@@ -26,7 +26,7 @@ public class NetworkStateService extends Service{
                     // Log.i(TAG, "当前网络名称：" + name);
 
                     // 经过测试，BroadcastReceiver里的Toast可以在非本APP运行的界面上显示
-                    // Toast.makeText(context.getApplicationContext(), "当前网络名称：" + name, Toast.LENGTH_LONG).show();
+                    // Toast.makeText(mContext.getApplicationContext(), "当前网络名称：" + name, Toast.LENGTH_LONG).show();
 
                     //doSomething()
                 } else {

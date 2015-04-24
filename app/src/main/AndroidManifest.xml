@@ -78,7 +78,8 @@
         <activity android:name=".activity.me.capital.CapitalWithdrawalActivity"> </activity>
 
         <!-- activities belong part of me myauction -->
-        <activity android:name=".activity.me.myauction.MyAuctionActivity"> </activity>
+        <activity android:name=".activity.me.myauction.MyAuctionActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" > </activity>
 
         <!-- activities belong part of me bidding -->
         <activity android:name=".activity.me.bidding.BiddingActivity"> </activity>
@@ -87,7 +88,9 @@
         <activity android:name=".activity.me.order.PayOrderActivity"> </activity>
 
         <!-- activities belong part of me proxy -->
-        <activity android:name=".activity.me.proxy.ProxyPricingActivity"></activity>
+        <activity android:name=".activity.me.proxy.ProxyPricingActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity android:name=".activity.me.proxy.SetProxyPricingActivity"></activity>
 
         <!-- activities belong part of me collect -->
         <activity android:name=".activity.me.collect.MyCollectionActivity"> </activity>

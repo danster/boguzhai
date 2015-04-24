@@ -111,12 +111,13 @@ public class MeFragment extends Fragment {
     }
 
     public void startActivityByLogin(Class<?> cls){
-        if(Variable.isLogin == true)
-            context.startActivity(new Intent(context, cls));
-        else {
-            Intent intent = new Intent(context, LoginActivity.class);
-            context.startActivity(intent);
-        }
+        context.startActivity(new Intent(context, cls));
+//        if(Variable.isLogin == true)
+//            mContext.startActivity(new Intent(mContext, cls));
+//        else {
+//            Intent intent = new Intent(mContext, LoginActivity.class);
+//            mContext.startActivity(intent);
+//        }
     }
 
 }
