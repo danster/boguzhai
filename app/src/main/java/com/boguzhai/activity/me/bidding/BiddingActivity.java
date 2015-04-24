@@ -5,19 +5,14 @@ import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.logic.dao.Auction;
-import com.boguzhai.logic.dao.BiddingLot;
 import com.boguzhai.logic.view.XListViewForSrollView;
-import com.boguzhai.logic.widget.ListViewForScrollView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class BiddingActivity extends BaseActivity implements XListViewForSrollView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
@@ -88,13 +83,13 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
         Auction auction = new Auction();
         auction.type = "1";
         auction.name = "2015新春大拍";
-        auction.dealCount = 8;
+        auction.dealNum = 8;
         mAuctionList.add(auction);
 
         auction = new Auction();
         auction.type = "2";
         auction.name = "2014年终拍卖会";
-        auction.dealCount = 5;
+        auction.dealNum = 5;
         mAuctionList.add(auction);
     }
 

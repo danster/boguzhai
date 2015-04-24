@@ -69,7 +69,7 @@ public class BiddingListAdapter extends BaseAdapter {
         }
         holder.auction_type.setText(type[Integer.parseInt(mAuctionList.get(position).type) - 1]);
         holder.auction_name.setText(mAuctionList.get(position).name);
-        holder.bidding_count.setText(String.valueOf(mAuctionList.get(position).dealCount));
+        holder.bidding_count.setText(String.valueOf(mAuctionList.get(position).dealNum));
 
         ArrayList<BiddingLot> lotList = new ArrayList<>();
         BiddingLot lot = new BiddingLot();

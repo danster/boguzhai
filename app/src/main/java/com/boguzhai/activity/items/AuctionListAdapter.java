@@ -16,7 +16,6 @@ import com.boguzhai.logic.widget.ListViewForScrollView;
 import java.util.ArrayList;
 
 public class AuctionListAdapter extends BaseAdapter {
-    private final String TAG = "LotListAdapter";
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<Auction> list;
@@ -51,15 +50,8 @@ public class AuctionListAdapter extends BaseAdapter {
         holder.auctionType.setText("同步");
         holder.auctionName.setText("2015博古斋新年大拍");
 
-        ArrayList<Session> session_list = new ArrayList<Session>();
-        for(int i=0; i<2; i++){
-            Session session = new Session();
-            session.status=list.get(position).status;
-            session.type=list.get(position).type;
-            session_list.add(session);
-        }
-
-        SessionListAdapter adapter = new SessionListAdapter(context, session_list);
+        ArrayList<Session> session_list = list.get(position).sessionList;
+        SessionListAdapter adapter = new SessionListAdapter(context, session_list, list.get(position));
         holder.sessionList.setAdapter(adapter);
 
         return convertView;    
@@ -69,17 +61,5 @@ public class AuctionListAdapter extends BaseAdapter {
         public TextView auctionType, auctionName;
         public ListViewForScrollView sessionList;
     }
-    
-    protected class MyOnClickListener implements View.OnClickListener{
-		private int position;
-		public MyOnClickListener(int position){
-			this.position = position;
-		}
-		@Override
-		public void onClick(View v) {
-
-		}
-    }
-
 
 }  

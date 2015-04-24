@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setScrollView(R.layout.login_page);
         title.setText("会员登录");
+        Log.i("TAG","会员登录中。。。。。。。。");
 		init();
 	}
 
