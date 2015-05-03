@@ -116,8 +116,8 @@ public class MyCollectionAdapter extends BaseAdapter{
         }
         holder.my_collection_lot_name.setText(lots.get(position).name);
         holder.my_collection_lot_status.setText(lots.get(position).status);
-        holder.my_collection_lot_no.setText(String.valueOf(lots.get(position).No));
-        holder.my_collection_lot_appraisal.setText(String.valueOf(lots.get(position).apprisal1) + "-" + String.valueOf(lots.get(position).apprisal2));
+        holder.my_collection_lot_no.setText(String.valueOf(lots.get(position).no));
+        holder.my_collection_lot_appraisal.setText(String.valueOf(lots.get(position).appraisal1) + "-" + String.valueOf(lots.get(position).appraisal2));
         holder.my_collection_lot_startprice.setText(String.valueOf(lots.get(position).startPrice));
         if("已成交".equals(lots.get(position).status)) {
             holder.my_collection_lot_price.setText(String.valueOf(lots.get(position).dealPrice));

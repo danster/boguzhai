@@ -16,9 +16,7 @@ import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.BiddingLot;
-import com.boguzhai.logic.gaobo.MyAuction;
 import com.boguzhai.logic.thread.HttpJsonHandler;
-import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.view.XListViewForSrollView;
 
@@ -109,11 +107,11 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
             for(int i = 1; i < 3; i++)  {
                 BiddingLot lot = new BiddingLot();
                 lot.isLeader = 0;
-                lot.No = 123;
+                lot.no = "123";
                 lot.name = "明代唐伯虎书法作品";
-                lot.priceCount = 5;
-                lot.apprisal1 = 5000;
-                lot.apprisal2 = 8000;
+                lot.biddingCount = 5;
+                lot.appraisal1 = 5000;
+                lot.appraisal2 = 8000;
                 lot.startPrice = 3000;
                 lot.currentPrice = 4000;
                 lot.topPrice = 4000;
@@ -218,13 +216,13 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
 
                             for (int i = 0; i < array.length(); i++) {
                                 BiddingLot lot = new BiddingLot();
-                                lot.id = array.getJSONObject(j).getInt("id");
+                                lot.id = array.getJSONObject(j).getString("id");
                                 lot.isLeader = array.getJSONObject(j).getInt("isLeader");
-                                lot.No = Integer.parseInt(array.getJSONObject(j).getString("no"));
+                                lot.no = array.getJSONObject(j).getString("no");
                                 lot.name = array.getJSONObject(j).getString("name");
                                 lot.biddingCount = array.getJSONObject(j).getInt("biddingCount");
-                                lot.apprisal1 = Double.parseDouble(array.getJSONObject(j).getString("apprisal1"));
-                                lot.apprisal2 = Double.parseDouble(array.getJSONObject(j).getString("apprisal2"));
+                                lot.appraisal1 = Double.parseDouble(array.getJSONObject(j).getString("apprisal1"));
+                                lot.appraisal2 = Double.parseDouble(array.getJSONObject(j).getString("apprisal2"));
                                 lot.startPrice = Double.parseDouble(array.getJSONObject(j).getString("startPrice"));
                                 lot.currentPrice = Double.parseDouble(array.getJSONObject(j).getString("currentPrice"));
                                 lot.topPrice = Double.parseDouble(array.getJSONObject(j).getString("myTopPrice"));

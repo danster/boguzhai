@@ -60,9 +60,9 @@ public class LotInBiddingAuctionAdapter extends BaseAdapter {
         }
         holder.my_bidding_lot_name.setText(mLotList.get(position).name);
         holder.my_bidding_lot_isleader.setText(isLeader[mLotList.get(position).isLeader]);
-        holder.my_bidding_lot_no.setText(String.valueOf(mLotList.get(position).No));
-        holder.my_bidding_lot_pricecount.setText(String.valueOf(mLotList.get(position).priceCount));
-        holder.my_bidding_lot_appraisal.setText(mLotList.get(position).apprisal1 + "-" + mLotList.get(position).apprisal2);
+        holder.my_bidding_lot_no.setText(mLotList.get(position).no);
+        holder.my_bidding_lot_pricecount.setText(String.valueOf(mLotList.get(position).biddingCount));
+        holder.my_bidding_lot_appraisal.setText(mLotList.get(position).appraisal1 + "-" + mLotList.get(position).appraisal2);
         holder.my_bidding_lot_startprice.setText(String.valueOf(mLotList.get(position).startPrice));
         holder.my_bidding_lot_nowprice.setText(String.valueOf(mLotList.get(position).currentPrice));
         holder.my_bidding_lot_topprice.setText(String.valueOf(mLotList.get(position).topPrice));

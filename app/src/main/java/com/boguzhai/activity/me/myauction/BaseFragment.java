@@ -24,7 +24,6 @@ import com.boguzhai.activity.auction.AuctionActiveActivity;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
 import com.boguzhai.logic.thread.HttpJsonHandler;
-import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.view.XListView;
@@ -69,7 +68,6 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     private Spinner sp_my_auction_choose;
 
 
-    public Utility utility = new Utility();
     public String[] types = {"全部", "现场拍卖", "同步拍卖", "网络拍卖"};
     private StringBuffer choose_type = new StringBuffer();
 
@@ -200,7 +198,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         /**
          * 设置spinner， 每选择一项，就会在原始数据中筛选对应的拍卖会集合并展示，
          */
-        utility.setSpinner(mContext, (Spinner)view.findViewById(R.id.sp_my_auction_choose), types, new AdapterView.OnItemSelectedListener() {
+        Utility.setSpinner(mContext, (Spinner)view.findViewById(R.id.sp_my_auction_choose), types, new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(TAG, "Spinner Position:" + position);

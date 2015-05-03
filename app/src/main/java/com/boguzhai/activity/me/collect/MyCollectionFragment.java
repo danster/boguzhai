@@ -371,7 +371,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                     tempLots = new ArrayList<>();
 
                     for (Lot lot : myCollections) {
-                        if ((lot.name.indexOf(key) >= 0) || (String.valueOf(lot.No).indexOf(key) >= 0) || (lot.status.indexOf(key) >= 0)) {
+                        if ((lot.name.indexOf(key) >= 0) || (String.valueOf(lot.no).indexOf(key) >= 0) || (lot.status.indexOf(key) >= 0)) {
                             tempLots.add(lot);
                         }
                     }
@@ -519,111 +519,111 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     private List<Lot> testData() {
         ArrayList<Lot> lotList = new ArrayList<>();
         ProxyLot lot = new ProxyLot();
-        lot.No = 1233;
+        lot.no = "1233";
         lot.name = "明代唐伯虎书法作品";
         lot.status = "已成交";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2= 8000;
         lot.startPrice = 3000;
         lot.dealPrice = 10000;
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1234;
+        lot.no = "1234";
         lot.name = "张曦之书法作品";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 4000;
         lotList.add(lot);
 
 
         lot = new ProxyLot();
-        lot.No = 1235;
+        lot.no = "1235";
         lot.name = "景德镇陶瓷";
         lot.status = "预展中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1236;
+        lot.no = "1236";
         lot.name = "光绪丁未年双龙寿字币";
         lot.status = "已流拍";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1237;
+        lot.no = "1237";
         lot.name = "吴月亭款紫砂壶";
         lot.status = "已成交";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.dealPrice = 10000;
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1238;
+        lot.no = "1238";
         lot.name = "冰种描金翡翠手镯";
         lot.status = "已成交";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.dealPrice = 11000;
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1239;
+        lot.no = "1239";
         lot.name = "乾隆五彩盘";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 5000;
         lotList.add(lot);
 
 
         lot = new ProxyLot();
-        lot.No = 1230;
+        lot.no = "1230";
         lot.name = "青花葫芦瓶";
         lot.status = "预展中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
 
         lot = new ProxyLot();
-        lot.No = 1231;
+        lot.no = "1231";
         lot.name = "叶圣陶书法";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 5000;
         lotList.add(lot);
 
 
         lot = new ProxyLot();
-        lot.No = 1232;
+        lot.no = "1232";
         lot.name = "宋占魁虎字书法";
         lot.status = "已流拍";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1240;
+        lot.no = "1240";
         lot.name = "拍品2";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 5000;
         lotList.add(lot);
@@ -638,21 +638,21 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
 
         lot = new ProxyLot();
-        lot.No = 1235;
+        lot.no = "1235";
         lot.name = "景德镇陶瓷";
         lot.status = "预展中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
 
         lot = new ProxyLot();
-        lot.No = 1230;
+        lot.no = "1230";
         lot.name = "青花葫芦瓶";
         lot.status = "预展中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
@@ -665,22 +665,22 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         ProxyLot lot = new ProxyLot();
 
         lot = new ProxyLot();
-        lot.No = 1234;
+        lot.no = "1234";
         lot.name = "张曦之书法作品";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 4000;
         lotList.add(lot);
 
 
         lot = new ProxyLot();
-        lot.No = 1239;
+        lot.no = "1239";
         lot.name = "乾隆五彩盘";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 5000;
         lotList.add(lot);
@@ -689,11 +689,11 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
 
         lot = new ProxyLot();
-        lot.No = 1231;
+        lot.no = "1231";
         lot.name = "叶圣陶书法";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 5000;
         lotList.add(lot);
@@ -701,11 +701,11 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
 
         lot = new ProxyLot();
-        lot.No = 1240;
+        lot.no = "1240";
         lot.name = "拍品2";
         lot.status = "拍卖中";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.currentPrice = 5000;
         lotList.add(lot);
@@ -717,32 +717,32 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     private List<Lot> testData3() {
         ArrayList<Lot> lotList = new ArrayList<>();
         ProxyLot lot = new ProxyLot();
-        lot.No = 1233;
+        lot.no = "1233";
         lot.name = "明代唐伯虎书法作品";
         lot.status = "已成交";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.dealPrice = 10000;
         lotList.add(lot);
 
 
         lot = new ProxyLot();
-        lot.No = 1237;
+        lot.no = "1237";
         lot.name = "吴月亭款紫砂壶";
         lot.status = "已成交";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.dealPrice = 10000;
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1238;
+        lot.no = "1238";
         lot.name = "冰种描金翡翠手镯";
         lot.status = "已成交";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.dealPrice = 11000;
         lotList.add(lot);
@@ -757,11 +757,11 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         ProxyLot lot = new ProxyLot();
 
         lot = new ProxyLot();
-        lot.No = 1236;
+        lot.no = "1236";
         lot.name = "光绪丁未年双龙寿字币";
         lot.status = "已流拍";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
@@ -770,11 +770,11 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
 
         lot = new ProxyLot();
-        lot.No = 1232;
+        lot.no = "1232";
         lot.name = "宋占魁虎字书法";
         lot.status = "已流拍";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lotList.add(lot);
 
