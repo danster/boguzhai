@@ -68,11 +68,8 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
             for(int i = 1; i < 3; i++)  {
                 BiddingLot lot = new BiddingLot();
                 lot.isLeader = 0;
-                lot.No = 123;
                 lot.name = "明代唐伯虎书法作品";
                 lot.priceCount = 5;
-                lot.apprisal1 = 5000;
-                lot.apprisal2 = 8000;
                 lot.startPrice = 3000;
                 lot.nowPrice = 4000;
                 lot.topPrice = 4000;

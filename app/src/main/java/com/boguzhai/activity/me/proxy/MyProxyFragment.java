@@ -261,7 +261,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         /**
          * 设置spinner，及监听事件
          */
-        utility.setSpinner(mContext, view, R.id.sp_my_proxy_choose_auction, list_type1, type1, new AdapterView.OnItemSelectedListener() {
+        utility.setSpinner(mContext, (Spinner)view.findViewById(R.id.sp_my_proxy_choose_auction), list_type1, new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view0, int position,
                                                long id) {
@@ -326,7 +326,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                         adapter = new MyProxyAdapter(mContext, newLots);
                         lv_my_proxy.setAdapter(adapter);
 
-                        utility.setSpinner(mContext, view, R.id.sp_my_proxy_choose_session, list_type2, type2, new AdapterView.OnItemSelectedListener() {
+                        utility.setSpinner(mContext, (Spinner)view.findViewById(R.id.sp_my_proxy_choose_session), list_type2, new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -604,7 +604,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                         for (int i = 0; i < jArray.length(); i++) {
                             lot = new ProxyLot();
                             lot.name = jArray.getJSONObject(i).getString("auctionName");
-                            lot.id = jArray.getJSONObject(i).getInt("id");
+                            lot.id = jArray.getJSONObject(i).getString("id");
                             lot.auctionId = jArray.getJSONObject(i).getString("auctionMain");
                             lot.sessionId = jArray.getJSONObject(i).getString("auctionSession");
                             //lot.appraisal = jArray.getJSONObject(i).getString("appraisal");
@@ -671,10 +671,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
     private List<ProxyLot> testData() {
         ArrayList<ProxyLot> lotList = new ArrayList<>();
         ProxyLot lot = new ProxyLot();
-        lot.No = 1233;
+        lot.no = "1233";
         lot.name = "明代唐伯虎书法作品";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2015新春大拍";
@@ -682,10 +682,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1234;
+        lot.no = "1234";
         lot.name = "张曦之书法作品";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2015新春大拍";
@@ -694,10 +694,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
 
         lot = new ProxyLot();
-        lot.No = 1235;
+        lot.no = "1235";
         lot.name = "景德镇陶瓷";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2015新春大拍";
@@ -705,10 +705,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1236;
+        lot.no = "1236";
         lot.name = "光绪丁未年双龙寿字币";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2015新春大拍";
@@ -716,10 +716,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1237;
+        lot.no = "1238";
         lot.name = "吴月亭款紫砂壶";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2015新春大拍";
@@ -727,10 +727,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1238;
+        lot.no = "1238";
         lot.name = "冰种描金翡翠手镯";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2014年终大拍";
@@ -738,10 +738,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         lotList.add(lot);
 
         lot = new ProxyLot();
-        lot.No = 1239;
+        lot.no = "1239";
         lot.name = "乾隆五彩盘";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2014年终大拍";
@@ -750,10 +750,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
 
         lot = new ProxyLot();
-        lot.No = 1230;
+        lot.no = "1230";
         lot.name = "青花葫芦瓶";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2014年终大拍";
@@ -762,10 +762,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
 
         lot = new ProxyLot();
-        lot.No = 1231;
+        lot.no = "1231";
         lot.name = "叶圣陶书法";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2014年终大拍";
@@ -774,10 +774,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
 
         lot = new ProxyLot();
-        lot.No = 1232;
+        lot.no = "1232";
         lot.name = "宋占魁虎字书法";
-        lot.apprisal1 = 5000;
-        lot.apprisal2 = 8000;
+        lot.appraisal1 = 5000;
+        lot.appraisal2 = 8000;
         lot.startPrice = 3000;
         lot.proxyPrice = "4000";
         lot.auctionId = "2014年终大拍";

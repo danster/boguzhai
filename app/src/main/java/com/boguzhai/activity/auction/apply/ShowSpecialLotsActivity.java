@@ -33,11 +33,6 @@ public class ShowSpecialLotsActivity extends BaseActivity {
         for(int i=0; i<9; i++){
             Lot lot = new Lot();
             lot.name = "明朝景德镇花瓶 "+i;
-            lot.id = i;
-            lot.No = 100 - i;
-            lot.apprisal1 = Math.random()*10000;
-            lot.apprisal1 = Math.random()*20000;
-            lot.startPrice = Math.random()*5000;
             list.add(lot);
         }
 

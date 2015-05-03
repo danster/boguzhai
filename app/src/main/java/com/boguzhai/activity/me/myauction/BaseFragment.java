@@ -2,7 +2,6 @@ package com.boguzhai.activity.me.myauction;
 
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.auction.AuctionActiveActivity;
-import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
 import com.boguzhai.logic.thread.HttpJsonHandler;
@@ -181,7 +178,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         /**
          * 设置spinner， 每选择一项，就会在原始数据中筛选对应的拍卖会集合并展示，
          */
-        utility.setSpinner(mContext, view, R.id.sp_my_auction_choose, types, choose_type, new AdapterView.OnItemSelectedListener() {
+        utility.setSpinner(mContext, (Spinner)view.findViewById(R.id.sp_my_auction_choose), types, new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(TAG, "Spinner Position:" + position);

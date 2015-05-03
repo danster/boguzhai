@@ -138,9 +138,7 @@ public class HttpClient {
         }
 
         this.httpRequest = new HttpGet(url);
-        Log.i(TAG,"http get: start ... ");
         this.httpClientExecute(); // 执行客户端请求
-        Log.i(TAG,"http get: end.");
     }
 
     public void post(){ this.post(this.url); }
@@ -156,27 +154,26 @@ public class HttpClient {
                         ContentType.create("text/plain", MIME.UTF8_CHARSET));
 			}
 		}
-        HttpEntity httpEntity = this.getMultipartEntityBuilder().build();
-
         if(!checkUrl()){
+            Log.i(TAG,"http request: url is illegal !");
             httpResponse = null;
             statusCode = -1;
             return;
         }
 
         this.httpRequest = new HttpPost(url);
+        HttpEntity httpEntity = this.getMultipartEntityBuilder().build();
         ((HttpPost)this.httpRequest).setEntity(httpEntity); //设置POST Content
 
-        Log.i(TAG,"http post: start ... ");
         this.httpClientExecute(); // 执行客户端请求
-        Log.i(TAG,"http post: end.");
     }
 
     // 判断url是否合法
     private boolean checkUrl(){
+        if(url.equals("")){ return false;}
         if(!( url.startsWith("http://") || url.startsWith("https://") )){ url = "http://" + url;}
         if(url.equals("") || url.contains(" ")){ return false;}
-        if (!pattern.matcher(url).matches()){ return false;}
+        // if (!pattern.matcher(url).matches()){ return false;} 匹配表达式不正确
         return true;
     }
 
@@ -218,7 +215,7 @@ public class HttpClient {
         	Log.i(TAG,"http connect: start ... ");
 			this.httpResponse = this.httpClient.execute(this.httpRequest); // 发送HTTP请求并获取服务端响应
         } catch (IOException e) {
-			Log.i(TAG,"Error: IO Exception !");
+			Log.i(TAG,"http connect: IO Exception when executing request !");
             this.responseEntity = null;
             return;
 		}
@@ -227,10 +224,10 @@ public class HttpClient {
         this.statusCode = this.httpResponse.getStatusLine().getStatusCode(); // 获取 HTTP 响应的状态码
         
         if (this.statusCode == HttpStatus.SC_OK) {
-        	Log.i(TAG,"Connect successed");
+        	Log.i(TAG,"http result: succeed !");
         	this.responseEntity = httpResponse.getEntity();
         } else {
-        	Log.i(TAG,"Connect error, status code is :"+this.statusCode);
+        	Log.i(TAG,"http result: error, status code is :"+this.statusCode);
         	this.responseEntity = null;
         }
     }
@@ -251,7 +248,6 @@ public class HttpClient {
 			// responseEntity 是HTTP请求的响应体
 			String result = EntityUtils.toString(responseEntity, charset);
 			result = StringEscapeUtils.unescapeHtml(result);
-			Log.i(TAG, "Response string : "+result);
 			return result;
 		} catch (IOException e) {
 			Log.e(TAG, "EntityUtils cannot convert HttpEntity to String");

@@ -2,9 +2,9 @@ package com.boguzhai.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
@@ -15,9 +15,9 @@ import com.boguzhai.logic.dao.SharedKeys;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.StringApi;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends BaseActivity {
@@ -30,7 +30,6 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setScrollView(R.layout.login_page);
         title.setText("会员登录");
-        Log.i("TAG","会员登录中。。。。。。。。");
 		init();
 	}
 
@@ -86,38 +85,17 @@ public class LoginActivity extends BaseActivity {
     public class LoginHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            try {
-                switch (code){
+            switch (code){
                 case 0:
                     Variable.isLogin = true;
                     Variable.account.password = password;
-                    Variable.account.sessionid = data.has("sessionid") ? data.getString("sessionid") : "";
-
-                    JSONObject account = data.getJSONObject("account");
-                    Log.i(TAG, account.toString());
-
-                    Variable.account.name = account.has("name") ? account.getString("name") : "";
-                    Variable.account.nickname = account.has("nickname") ? account.getString("nickname"): "";
-                    Variable.account.address_1 = account.has("address_1") ? account.getString("address_1"): "";
-                    Variable.account.address_2 = account.has("address_2") ? account.getString("address_2"): "";
-                    Variable.account.address_3 = account.has("address_3") ? account.getString("address_3"): "";
-                    Variable.account.address = account.has("address") ? account.getString("address"): "";
-                    Variable.account.email = account.has("email") ? account.getString("email"): "";
-                    Variable.account.mobile = account.has("mobile") ? account.getString("mobile"): "";
-                    Variable.account.imageUrl = account.has("image") ? account.getString("image"): "";
-                    Variable.account.telephone = account.has("telephone") ? account.getString("telephone"): "";
-                    Variable.account.fax = account.has("fax") ? account.getString("fax"): "";
-                    Variable.account.qq = account.has("qq") ? account.getString("qq"): "";
-
+                    JsonApi.getAccountInfo(data);
                     Variable.mainTabIndex = R.id.rb_1;
                     context.startActivity(new Intent(context, MainActivity.class));
                 break;
                 case 1:
-                    ((BaseActivity)context).alertMessage("登录失败: 用户名或者密码错误！");
+                    Toast.makeText(Variable.app_context, "登录失败: 用户名或者密码错误！", Toast.LENGTH_LONG).show();
                     break;
-            }
-            }catch(JSONException ex) {
-                ((BaseActivity)context).alertMessage("抱歉, 解析信息时报错了");
             }
         }
 	}

@@ -87,7 +87,7 @@ public class AccountBindMobileActivity extends BaseActivity {
                 HttpClient conn = new HttpClient();
                 conn.setParam("mobile", mobile.getText().toString());
                 conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
-                new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler(this))).start();
+                new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();
                 new Timer().schedule(task, 0, 1000); // 一秒后启动task
                 break;
             case R.id.submit:

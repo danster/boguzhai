@@ -98,8 +98,8 @@ class MyProxyAdapter extends BaseAdapter {
         holder.tv_my_proxy_lot_name.setText(lots.get(position).name);
         holder.tv_my_proxy_auction_name.setText(lots.get(position).auctionId);
         holder.tv_my_proxy_session_name.setText(lots.get(position).sessionId);
-        holder.tv_my_proxy_lot_no.setText(String.valueOf(lots.get(position).No));
-        holder.tv_my_proxy_appraisal.setText(String.valueOf(lots.get(position).apprisal1) + "-" + String.valueOf(lots.get(position).apprisal2));
+        holder.tv_my_proxy_lot_no.setText(lots.get(position).no);
+        holder.tv_my_proxy_appraisal.setText(String.valueOf(lots.get(position).appraisal1) + "-" + String.valueOf(lots.get(position).appraisal2));
         holder.tv_my_proxy_startprice.setText(String.valueOf(lots.get(position).startPrice));
         holder.tv_my_proxy_price.setText(lots.get(position).proxyPrice);
 

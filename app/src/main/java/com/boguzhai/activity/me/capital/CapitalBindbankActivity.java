@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.logic.utils.Utility;
 
 public class CapitalBindbankActivity extends BaseActivity {
 
@@ -23,7 +24,7 @@ public class CapitalBindbankActivity extends BaseActivity {
 
 	protected void init(){
         bank_name.replace(0, bank_name.length(), "中国工商银行");
-        utility.setSpinner(this, R.id.bank_name, list_bank, bank_name);
+        Utility.setSpinner(this, R.id.bank_name, list_bank, bank_name);
         ((TextView)findViewById(R.id.name)).setText("张三");
 
         listen(R.id.get_check_code);

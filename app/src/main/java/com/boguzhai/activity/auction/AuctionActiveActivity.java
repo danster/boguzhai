@@ -26,11 +26,14 @@ public class AuctionActiveActivity extends BaseActivity {
 
     private ArrayList<Record> list;
     private ListViewForScrollView listview;
-    AuctionRecordAdapter adapter;
+    private AuctionRecordAdapter adapter;
+
+    private boolean isBothBid = true;
 
     TextView auction_name, auction_type;
     LinearLayout lot_info_layout_1, lot_info_layout_2;
     ImageView lot_info_image_1, lot_info_image_2;
+
     TextView lot_info_special_1, lot_info_special_2, lot_info_bail_1, lot_info_bail_2,
             lot_info_name_1, lot_info_name_2, lot_info_apprisal_1, lot_info_apprisal_2,
             lot_info_start_price_1, lot_info_start_price_2, lot_info_type_1, lot_info_type_2,

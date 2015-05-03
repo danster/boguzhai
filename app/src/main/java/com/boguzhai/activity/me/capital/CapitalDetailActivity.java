@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.text.DateFormat;
@@ -65,13 +66,13 @@ public class CapitalDetailActivity extends BaseActivity {
                 title.setText("我的余额明细");
                 ((TextView)findViewById(R.id.type_name)).setText("业务类别");
                 balance_type.replace(0,balance_type.length(),"不限");
-                utility.setSpinner(this, R.id.type_list, list_balance, balance_type);
+                Utility.setSpinner(this, R.id.type_list, list_balance, balance_type);
                 break;
             case  "bail":
                 title.setText("我的保证金明细");
                 ((TextView)findViewById(R.id.type_name)).setText("资金来源");
                 bail_from.replace(0,bail_from.length(),"不限");
-                utility.setSpinner(this, R.id.type_list, list_bail, bail_from);
+                Utility.setSpinner(this, R.id.type_list, list_bail, bail_from);
                 break;
             default:
                 break;

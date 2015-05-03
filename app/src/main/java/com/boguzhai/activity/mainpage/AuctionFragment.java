@@ -8,20 +8,17 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Constant;
-import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.AuctionListAdapter;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -68,12 +65,6 @@ public class AuctionFragment extends Fragment {
     }
 
     public void updateDynamicAuctions(int checkedId){
-//        HttpRequestApi conn = new HttpRequestApi();
-//        conn.setParam("status", "");
-//        conn.setRequestUrl("http://test.shbgz.com/tradingsys/phones/pMainAction!getAuctionList.htm");
-//        new Thread(new HttpPostRunnable(conn,new MyHandler(context))).start();
-
-        list.clear();
         HttpClient conn = new HttpClient();
         switch (checkedId){
             case R.id.auction_status_all:     conn.setParam("status", "");      break;
@@ -82,31 +73,21 @@ public class AuctionFragment extends Fragment {
             case R.id.auction_status_over:    conn.setParam("status","已结束"); break;
             default: break;
         }
-
-        conn.setUrl(Constant.url + "pMainAction!getAuctionList.htm");
+        conn.setUrl(Constant.url + "pMainAction!getAuctionMainList.htm");
         new Thread(new HttpPostRunnable(conn,new AuctionListHandler())).start();
     }
 
-    public class AuctionListHandler extends HttpJsonHandler {
+    class AuctionListHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            try {
-                switch (code){
-                    case 0:
-                        JSONArray auctionArray = data.getJSONArray("auctionMainList");
-                        list.clear();
-                        for(int i=0; i<auctionArray.length(); ++i){
-                            JSONObject auctionObj = auctionArray.getJSONObject(i);
-                            Auction auction = Auction.parseJson(auctionObj);
-                            list.add(auction);
-                        }
-                        adapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
-                }
-            }catch(JSONException ex) {
-                Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
+            switch (code){
+                case 0:
+                    list.clear();
+                    list.addAll(JsonApi.getAuctionList(data));
+                    adapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
             }
         }
     }

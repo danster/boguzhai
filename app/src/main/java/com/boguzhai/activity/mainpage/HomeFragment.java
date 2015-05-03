@@ -15,16 +15,20 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
+import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.dao.Session;
+import com.boguzhai.logic.thread.HttpGetRunnable;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.ShowImageHandler;
+import com.boguzhai.logic.thread.ShowLotListHandler;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.JsonApi;
+import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,16 +37,14 @@ public class HomeFragment extends Fragment {
     private static String TAG = "HomeFragment";
     private View view;
     private MainActivity context;
-
-    private int adsCount =4;
+    private int adsCount = 0;
 
     // 拍卖会展示
-    private ArrayList<Session> sessionList;
+    private ArrayList<Auction> auctionList;
     private ViewGroup viewGroup;
     private ViewPager viewPager;
     private TextView viewInfo;
     private int currentIndex =0;
-
     private ImageView[] mImageViews, tips;
 
     // 拍品展示
@@ -50,47 +52,46 @@ public class HomeFragment extends Fragment {
     private ListViewForScrollView listview;
     private LotListAdapter adapter;
 
+    private int index_i;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_fg_home, null);
         context = (MainActivity)getActivity(); //getApplicationContext()
-        pullDynamicInfo();
-        showSessionAds();
-        showLotList();
+        init();
         return view;
+    }
+
+    private void init(){
+        pullDynamicInfo();
+        showListView();
     }
 
     // 从网络获取首页的拍卖会和拍品信息
     private void pullDynamicInfo(){
-        HttpClient conn_session = new HttpClient();
-        conn_session.setUrl(Constant.url+"");
-        new Thread(new HttpPostRunnable(conn_session, new MyHandler()));
+        HttpClient conn = new HttpClient();
+        conn.setParam("status", "拍卖中");
+        conn.setUrl(Constant.url + "pMainAction!getAuctionMainList.htm");
+        new Thread(new HttpPostRunnable(conn,new AuctionListHandler())).start();
 
-        HttpClient conn_lot = new HttpClient();
-        conn_lot.setUrl(Constant.url+"");
-        new Thread(new HttpPostRunnable(conn_lot, new MyHandler()));
     }
 
     // 展示拍卖会专场广告位
     public void showSessionAds(){
+        if(adsCount <= 0){
+            return;
+        }
+
         viewGroup = (ViewGroup) view.findViewById(R.id.viewGroup);
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewInfo = (TextView)view.findViewById(R.id.viewInfo);
 
-        mImageViews = new ImageView[adsCount];
-        tips = new ImageView[adsCount];
-
-        // 将静态图片ID装载到数组中
-        for (int i = 0; i < mImageViews.length; i++) {
-            mImageViews[i] = new ImageView(getActivity());
-            mImageViews[i].setBackgroundResource(R.drawable.default_image);
-        }
-
-        // 将导航小图标加入到ViewGroup中
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20,20);
         layoutParams.leftMargin = 3;
         layoutParams.rightMargin = 3;
 
+        // 将导航小图标加入到ViewGroup中
+        tips = new ImageView[adsCount];
         for (int i = 0; i < adsCount; i++) {
             tips[i] = new ImageView(getActivity());
             viewGroup.addView(tips[i], layoutParams);
@@ -125,7 +126,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 currentIndex=position;
-                viewInfo.setText("2015拍卖会字画专场"+(position%adsCount));
+                viewInfo.setText(auctionList.get(position % adsCount).name);
                 for (int i = 0; i < adsCount; i++) {
                     if (i == position % adsCount) {
                         tips[i].setBackgroundResource(R.drawable.circle_selected_little);
@@ -135,7 +136,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
 
         // 设置ViewPager的默认项, 如果想往左边滑动, index初始化要是大整数才行
         viewPager.setCurrentItem(1000* adsCount);
@@ -152,36 +152,52 @@ public class HomeFragment extends Fragment {
     }
 
     // 展示首页拍品列表
-    public void showLotList(){
+    public void showListView(){
         listview = (ListViewForScrollView) view.findViewById(R.id.lotlist);
         lotList = new ArrayList<Lot>();
 
         adapter = new LotListAdapter(context, lotList, true);
         listview.setAdapter(adapter);
+
+        HttpClient conn = new HttpClient();
+        conn.setUrl(Constant.url+"pMainAction!getHomeAuctionMainList.htm");
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(lotList, adapter))).start();
     }
 
-    public class MyHandler extends HttpJsonHandler {
+    public class AuctionListHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            try {
-                switch (code){
-                    case 0:
-                        if(data.has("auctionInfoList")){
-                            JSONArray ids = data.getJSONArray("auctionInfoList");
-                            for(int i=0; i < ids.length(); ++i){
+            switch (code){
+                case 0:
+                    auctionList = JsonApi.getAuctionList(data);
+                    adsCount = auctionList.size();
+
+                    if (adsCount <= 0)
+                        break;
+
+                    // 将静态图片ID装载到数组中
+                    mImageViews = new ImageView[adsCount];
+                    for (int i = 0; i < mImageViews.length; i++) {
+                        index_i = i;
+                        mImageViews[i] = new ImageView(getActivity());
+                        // 设置广告图片的点击响应
+                        mImageViews[i].setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Variable.currentAuction = auctionList.get(index_i);
+                                Variable.currentSession =  auctionList.get(index_i).sessionList.get(0);
+                                Utility.gotoAuction(context, Variable.currentSession.status);
                             }
-                        }
-                        if(data.has("auctionSessionList")){
-                            JSONArray ids = data.getJSONArray("auctionSessionList");
-                            for(int i=0; i < ids.length(); ++i){
-                            }
-                        }
+                        });
+                        mImageViews[i].setBackgroundResource(R.drawable.default_image);
+                        HttpClient conn = new HttpClient();
+                        conn.setUrl( auctionList.get(i).sessionList.get(0).imageUrl );
+                        new Thread(new HttpGetRunnable(conn, new ShowImageHandler(mImageViews[i]))).start();
+                    }
+                    showSessionAds();
                     break;
-                    default:
+                default:
                     break;
-                }
-            }catch(JSONException ex) {
-                context.toastMessage("网络数据错误");
             }
         }
     }
