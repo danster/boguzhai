@@ -4,11 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.util.Pair;
 
 import com.boguzhai.R;
 import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.Address_1;
 import com.boguzhai.logic.dao.Auction;
+import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Lottype_1;
 import com.boguzhai.logic.dao.Session;
 
@@ -29,8 +31,11 @@ public class Variable {
     // 第一次进入Activity(ActivityEntry)时初始化
     public static Context app_context = null;
     public static Application app = null;
-    public static ArrayList<Address_1> zoneMap = null;
-    public static ArrayList<Lottype_1> lottypeMap = null;
+    public static ArrayList<Address_1> mapZone = null;
+    public static ArrayList<Lottype_1> mapLottype = null;
+    public static ArrayList< Pair<String,String> > mapProvince = null;
+    public static ArrayList< Pair<String,String> > mapLottype1 = null;
+
 
     /** 下列信息需要在用户登录时立刻从服务器端获取 **/
     /** 下列信息需要在用户登录后实时从服务器端获取 **/
@@ -40,5 +45,6 @@ public class Variable {
     // 响应用户不同的选择
     public static Auction currentAuction = null;
     public static Session currentSession = null;
+    public static Lot currentLot = null;
 
 }

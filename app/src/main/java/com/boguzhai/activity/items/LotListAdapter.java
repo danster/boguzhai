@@ -13,7 +13,11 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.auction.LotInfoActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.thread.HttpBaseHandler;
+import com.boguzhai.logic.thread.HttpGetRunnable;
+import com.boguzhai.logic.utils.HttpClient;
 
 import java.util.ArrayList;
 
@@ -64,25 +68,40 @@ public class LotListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();    
         }
 
-        holder.leftImage.setBackgroundResource(R.drawable.default_image);
         holder.leftLotName.setText(list.get(2*position).name);
         holder.leftLotID.setText("拍品号: "+list.get(2*position).id);
-        holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).apprisal1
-                                        +" - ￥"+list.get(2*position).apprisal2);
+        holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).appraisal1
+                                        +" - ￥"+list.get(2*position).appraisal2);
         holder.leftLotStartPrice.setText("起拍价: ￥"+list.get(2*position).startPrice);
 
         holder.leftLot.setOnClickListener(new MyOnClickListener(2 * position));
+        // 下载并显示左侧拍品图片
+        if(list.get(2*position).image==null){
+            HttpClient connLeft = new HttpClient();
+            connLeft.setUrl(list.get(2*position).imageUrl);
+            new Thread(new HttpGetRunnable(connLeft, new ShowImageHandler(holder.leftImage, list.get(2*position)))).start();
+        }else {
+            holder.leftImage.setBackgroundResource(R.drawable.default_image);
+        }
 
         holder.rightLot.setVisibility(View.VISIBLE);
         if(position*2+2 > list.size()){
             holder.rightLot.setVisibility(View.INVISIBLE);
         } else {
             holder.rightLot.setOnClickListener(new MyOnClickListener(2*position+1));
-            holder.rightImage.setBackgroundResource(R.drawable.default_image);
+            // 下载并显示右侧拍品图片
+            if(list.get(2*position+1).image==null){
+                HttpClient connLeft = new HttpClient();
+                connLeft.setUrl(list.get(2*position+1).imageUrl);
+                new Thread(new HttpGetRunnable(connLeft, new ShowImageHandler(holder.rightImage,list.get(2*position+1) ))).start();
+            }else {
+                holder.rightImage.setBackgroundResource(R.drawable.default_image);
+            }
+
             holder.rightLotName.setText(list.get(2*position+1).name);
             holder.rightLotID.setText("拍品号: "+list.get(2*position+1).id);
-            holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).apprisal1
-                    +" - ￥"+list.get(2*position+1).apprisal2);
+            holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).appraisal1
+                    +" - ￥"+list.get(2*position+1).appraisal2);
             holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
         }
 
@@ -119,9 +138,26 @@ public class LotListAdapter extends BaseAdapter {
 		}
 		@Override
 		public void onClick(View v) {
-            Intent intent = new Intent( context,  LotInfoActivity.class);
-            intent.putExtra("lotId", list.get(position).id);
-            context.startActivity(intent);
+            Variable.currentLot = list.get(position);
+            context.startActivity(new Intent(context, LotInfoActivity.class));
 		}
+    }
+
+    protected class ShowImageHandler extends HttpBaseHandler {
+        private ImageView imageView;
+        private Lot lot;
+
+        public ShowImageHandler(ImageView imageView, Lot lot) {
+            this.imageView = imageView;
+            this.lot = lot;
+        }
+
+        @Override
+        public void handlerData(HttpClient conn) {
+            if (conn.responseToBitmap() != null) {
+                imageView.setImageBitmap(conn.responseToBitmap());
+                lot.image = conn.responseToBitmap();
+            }
+        }
     }
 }  

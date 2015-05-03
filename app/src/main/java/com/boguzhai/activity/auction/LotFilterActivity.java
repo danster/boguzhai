@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
-import com.boguzhai.activity.base.Constant;
 import com.boguzhai.logic.widget.RangeSeekBar;
 
 public class LotFilterActivity extends BaseActivity {
@@ -65,11 +64,11 @@ public class LotFilterActivity extends BaseActivity {
         status.replace(0,status.length(),"不限");
         deal_type.replace(0,deal_type.length(),"不限");
 
-        utility.setSpinner(this, R.id.type1, list_type1, type1);
-        utility.setSpinner(this, R.id.type2, list_type2, type2);
-        utility.setSpinner(this, R.id.type3, list_type3, type3);
-        utility.setSpinner(this, R.id.status, Constant.lot_status, status);
-        utility.setSpinner(this, R.id.deal_type, Constant.lot_deal_type, deal_type);
+//        utility.setSpinner(this, R.id.type1, list_type1, type1);
+//        utility.setSpinner(this, R.id.type2, list_type2, type2);
+//        utility.setSpinner(this, R.id.type3, list_type3, type3);
+//        utility.setSpinner(this, R.id.status, Constant.lot_status, status);
+//        utility.setSpinner(this, R.id.deal_type, Constant.lot_deal_type, deal_type);
     }
 
     public void setRangeSeekBar(){

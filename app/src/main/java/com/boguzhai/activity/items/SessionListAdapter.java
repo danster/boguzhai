@@ -1,20 +1,21 @@
 package com.boguzhai.activity.items;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.AuctionActiveActivity;
-import com.boguzhai.activity.auction.AuctionOverActivity;
-import com.boguzhai.activity.auction.AuctionPreviewActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Session;
+import com.boguzhai.logic.thread.HttpGetRunnable;
+import com.boguzhai.logic.thread.ShowImageHandler;
+import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 
 import java.util.ArrayList;
 
@@ -44,28 +45,35 @@ public class SessionListAdapter extends BaseAdapter {
         if (convertView == null) { 
             holder = new ViewHolder();    
             convertView = inflater.inflate(R.layout.item_info_session, null);
-            holder.sessionName = (TextView) convertView.findViewById(R.id.session_name);
-            holder.sessionPretime = (TextView) convertView.findViewById(R.id.session_pretime);
-            holder.sessionPreLocation = (TextView) convertView.findViewById(R.id.session_prelocation);
-            holder.sessionTime = (TextView) convertView.findViewById(R.id.session_time);
-            holder.sessionLocation = (TextView) convertView.findViewById(R.id.session_location);
+            holder.image = (ImageView)convertView.findViewById(R.id.session_image);
+            holder.name = (TextView) convertView.findViewById(R.id.session_name);
+            holder.previewTime = (TextView) convertView.findViewById(R.id.session_pretime);
+            holder.previewLocation = (TextView) convertView.findViewById(R.id.session_prelocation);
+            holder.auctionTime = (TextView) convertView.findViewById(R.id.session_time);
+            holder.auctionLocation = (TextView) convertView.findViewById(R.id.session_location);
             convertView.setTag(holder); 
         } else {    
             holder = (ViewHolder) convertView.getTag();    
         }
         Session session = list.get(position);
-        holder.sessionName.setText(session.name);
-        holder.sessionPretime.setText(session.previewTime);
-        holder.sessionPreLocation.setText(session.previewLocation);
-        holder.sessionTime.setText(session.auctionTime);
-        holder.sessionLocation.setText(session.auctionLocation);
+        holder.image.setBackgroundResource(R.drawable.default_image);
+        holder.name.setText(session.name);
+        holder.previewTime.setText("预展:" + session.previewTime);
+        holder.previewLocation.setText("地点:" + session.previewLocation);
+        holder.auctionTime.setText("拍卖:" + session.auctionTime);
+        holder.auctionLocation.setText("地点:" + session.auctionLocation);
+
+        HttpClient conn = new HttpClient();
+        conn.setUrl( session.imageUrl );
+        new Thread(new HttpGetRunnable(conn, new ShowImageHandler(holder.image))).start();
 
         convertView.setOnClickListener(new MyOnClickListener(position));
         return convertView;    
     }  
 
     public final class ViewHolder {  
-        public TextView sessionName, sessionPretime, sessionPreLocation, sessionTime, sessionLocation;
+        public TextView name, previewTime, previewLocation, auctionTime, auctionLocation;
+        public ImageView image;
     }
     
     protected class MyOnClickListener implements View.OnClickListener{
@@ -77,15 +85,7 @@ public class SessionListAdapter extends BaseAdapter {
 		public void onClick(View v) {
             Variable.currentAuction = auction;
             Variable.currentSession = list.get(position);
-
-            if (list.get(position).status == "已开拍" ){
-                context.startActivity(new Intent(context, AuctionActiveActivity.class));
-            }else if(list.get(position).status == "未开拍" ){
-                context.startActivity(new Intent(context, AuctionPreviewActivity.class));
-            }else if(list.get(position).status == "已结束" ){
-                context.startActivity(new Intent(context, AuctionOverActivity.class));
-            }else{
-            }
+            Utility.gotoAuction(context, list.get(position).status);
 		}
     }
 

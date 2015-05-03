@@ -6,8 +6,14 @@ import android.view.View;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.ShowLotListHandler;
+import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
@@ -25,7 +31,11 @@ public class AuctionPreviewActivity extends BaseActivity {
         title.setText("拍卖预展");
         title_right.setText("筛选");
         title_right.setVisibility(View.VISIBLE);
+        init();
+    }
 
+    private void init(){
+        Utility.showAuctionInfo(baseActivity, Variable.currentAuction, Variable.currentSession);
         showListView();
     }
 
@@ -44,20 +54,12 @@ public class AuctionPreviewActivity extends BaseActivity {
     public void showListView(){
         listview = (ListViewForScrollView) findViewById(R.id.lotlist);
         list = new ArrayList<Lot>();
-
-        for(int i=0; i<9; i++){
-            Lot lot = new Lot();
-            lot.name = "明朝景德镇花瓶 "+i;
-            lot.id = i;
-            lot.No = 100 - i;
-            lot.apprisal1 = Math.random()*10000;
-            lot.apprisal1 = Math.random()*20000;
-            lot.startPrice = Math.random()*5000;
-            list.add(lot);
-        }
-
         adapter = new LotListAdapter(this, list);
         listview.setAdapter(adapter);
+
+        HttpClient conn = new HttpClient();
+        conn.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoListBySessionId.htm?auctionSessionId="+Variable.currentSession.id);
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter))).start();
     }
 
 }

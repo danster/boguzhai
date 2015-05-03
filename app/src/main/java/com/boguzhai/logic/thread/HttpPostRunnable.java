@@ -2,6 +2,7 @@ package com.boguzhai.logic.thread;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.utils.HttpClient;

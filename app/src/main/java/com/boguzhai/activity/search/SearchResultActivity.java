@@ -3,12 +3,16 @@ package com.boguzhai.activity.search;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.ShowLotListHandler;
+import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
@@ -17,10 +21,9 @@ import java.util.Comparator;
 
 public class SearchResultActivity extends BaseActivity {
     private static final String TAG = "SearchResultActivity";
-    private ArrayList<Lot> list;
+    private ArrayList<Lot> list_lot, list;
     private ListViewForScrollView listview;
-    LotListAdapter adapter;
-
+    private LotListAdapter adapter;
 
     private String[] sortTypes = {"按拍品名称","按拍品号",
                                   "按拍品起拍价升序", "按拍品起拍价降序",
@@ -33,11 +36,23 @@ public class SearchResultActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLinearView(R.layout.search_result);
         title.setText("搜索结果");
-
         title_right.setText("排序");
         title_right.setVisibility(View.VISIBLE);
 
-        showLotList();
+        init();
+    }
+
+    private void init(){
+        listview = (ListViewForScrollView) findViewById(R.id.lotlist);
+        list = new ArrayList<Lot>();
+        adapter = new LotListAdapter(this, list);
+        listview.setAdapter(adapter);
+
+        String url=getIntent().getStringExtra("url");
+        HttpClient conn = new HttpClient();
+        conn.setUrl(url);
+        Log.i("TAG",url);
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter))).start();
     }
 
     @Override
@@ -49,7 +64,8 @@ public class SearchResultActivity extends BaseActivity {
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int index) {
                             sortType = index;
-                            sortLots();
+                            Collections.sort(list, new LotComparator());
+                            adapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
                     }).setNegativeButton("取消", null).show();
@@ -59,103 +75,74 @@ public class SearchResultActivity extends BaseActivity {
         }
     }
 
-    public void sortLots(){
-        LotComparator comparator = new LotComparator();
-        Collections.sort(list, comparator);
-        adapter.notifyDataSetChanged();
-    }
-
     class LotComparator implements Comparator<Lot>{
         public int compare(Lot l1, Lot l2) {
             switch (sortType){
                 case 0:
                     if(!l1.name.equals(l2.name)){
                         return l1.name.compareTo(l2.name);
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 1:
-                    if(l1.No != l2.No){
-                        return l1.No - l2.No;
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    if(l1.no.equals(l2.no)){
+                        return l1.no.compareTo(l2.no);
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 2:
                     if(l1.startPrice != l2.startPrice){
                         double gap = l1.startPrice - l2.startPrice;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 3:
                     if(l1.startPrice != l2.startPrice){
                         double gap = l2.startPrice - l1.startPrice;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 4:
-                    if(l1.apprisal1 != l2.apprisal1){
-                        double gap = l1.apprisal1 - l2.apprisal1;
+                    if(l1.appraisal1 != l2.appraisal1){
+                        double gap = l1.appraisal1 - l2.appraisal1;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 5:
-                    if(l1.apprisal1 != l2.apprisal1){
-                        double gap = l2.apprisal1 - l1.apprisal1;
+                    if(l1.appraisal1 != l2.appraisal1){
+                        double gap = l2.appraisal1 - l1.appraisal1;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 6:
-                    if(l1.apprisal2 != l2.apprisal2){
-                        double gap = l1.apprisal2 - l2.apprisal2;
+                    if(l1.appraisal2 != l2.appraisal2){
+                        double gap = l1.appraisal2 - l2.appraisal2;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 7:
-                    if(l1.apprisal2 != l2.apprisal2){
-                        double gap = l2.apprisal2 - l1.apprisal2;
+                    if(l1.appraisal2 != l2.appraisal2){
+                        double gap = l2.appraisal2 - l1.appraisal2;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(l1.id != l2.id){
-                        return l1.id - l2.id;
+                    } else if(!l1.id.equals(l2.id)){
+                        return l1.id.compareTo(l2.id);
                     }
                     break;
             }
-
             return 0;
         }
-
     }
-
-    // 展示专场的拍品列表
-    public void showLotList(){
-        listview = (ListViewForScrollView) findViewById(R.id.lotlist);
-        list = new ArrayList<Lot>();
-
-        for(int i=0; i<10; i++){
-            Lot lot = new Lot();
-            lot.name = "明朝景德镇花瓶 "+i;
-            lot.id = i;
-            lot.No = 100 - i;
-            lot.apprisal1 = Math.random()*10000;
-            lot.apprisal1 = Math.random()*20000;
-            lot.startPrice = Math.random()*5000;
-            list.add(lot);
-        }
-
-        adapter = new LotListAdapter(this, list);
-        listview.setAdapter(adapter);
-    }
-
 
 }

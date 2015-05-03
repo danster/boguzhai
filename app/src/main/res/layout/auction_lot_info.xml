@@ -16,10 +16,11 @@
         android:orientation="vertical"
         android:background="@color/white">
         <ImageView
+            android:id="@+id/lot_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
-            android:src="@drawable/image"/>
+            android:src="@drawable/default_image"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -29,6 +30,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/lot_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -36,9 +38,10 @@
                 android:textSize="16sp"
                 android:textColor="@color/dark_black"
                 android:lines="1"
-                android:text="羊年芙蓉童子挂件"/>
+                android:text=""/>
 
             <TextView
+                android:id="@+id/favor"
                 android:layout_width="50sp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -48,15 +51,15 @@
                 android:background="#957A4D"
                 android:text="收藏"/>
 
-            <TextView
-                android:layout_width="50sp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:background="#957A4D"
-                android:text="分享"/>
+            <!--<TextView-->
+                <!--android:layout_width="50sp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="16sp"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:background="#957A4D"-->
+                <!--android:text="分享"/>-->
 
         </LinearLayout>
     </LinearLayout>
@@ -86,10 +89,10 @@
                 android:text="拍品详情"/>
         </LinearLayout>
         <TextView
+            android:id="@+id/lot_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="拍品分类: 古籍书刊 > 写书札记 > 名人札记 \n拍品编号: ASC210409140
-预估价: 12000元 - 15000元\n起拍价: 3000元\n尺寸: 134厘米*60厘米\n年代: 明朝\n折损度: 完整"/>
+            android:text=""/>
     </LinearLayout>
 
     <!-- 拍品简介 -->
@@ -117,10 +120,10 @@
                 android:text="拍品简介"/>
         </LinearLayout>
         <TextView
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="   《双鉴行窝图》是唐寅商品画之代表作，由画幅左下角“与汪君虽未伸晤言”、“双鉴行窝吴郡唐寅为富溪汪君作”一句可知，是唐寅受安徽新安某人而作。唐寅不少画作是友情赠送的祝寿礼物。
-      此幅作品极具收藏价值，它历经数百年而保存完整，可见其多么难得，历代珍藏家、鉴赏家都视其为书法中的珍宝。"/>
+            android:text=""/>
     </LinearLayout>
 
     <!-- 拍卖会信息 -->

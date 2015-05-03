@@ -47,8 +47,8 @@ public class AuctionListAdapter extends BaseAdapter {
         } else {    
             holder = (ViewHolder) convertView.getTag();    
         }
-        holder.auctionType.setText("同步");
-        holder.auctionName.setText("2015博古斋新年大拍");
+        holder.auctionType.setText(list.get(position).type);
+        holder.auctionName.setText(list.get(position).name);
 
         ArrayList<Session> session_list = list.get(position).sessionList;
         SessionListAdapter adapter = new SessionListAdapter(context, session_list, list.get(position));

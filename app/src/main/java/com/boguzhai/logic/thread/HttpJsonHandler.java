@@ -28,11 +28,11 @@ public abstract class HttpJsonHandler extends Handler {
                     }
                     handlerData(code, data);
                 } catch (JSONException ex) {
-                    Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Variable.app_context, "HttpJsonHandler 数据解析报错", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
-                Toast.makeText(Variable.app_context, (String) msg.obj, Toast.LENGTH_LONG).show();
+                Toast.makeText(Variable.app_context, (String) msg.obj, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

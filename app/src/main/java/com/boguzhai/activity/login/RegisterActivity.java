@@ -101,7 +101,7 @@ public class RegisterActivity extends BaseActivity {
             HttpClient conn = new HttpClient();
             conn.setParam("mobile", username.getText().toString());
             conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
-            new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler(this))).start();
+            new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();
 
             new Timer().schedule(task, 0, 1000); // 一秒后启动task
             break;

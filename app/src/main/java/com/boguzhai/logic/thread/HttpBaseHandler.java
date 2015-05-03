@@ -12,7 +12,7 @@ public abstract class HttpBaseHandler extends Handler {
     public Context context = null; //需要被子类继承使用
     public HttpBaseHandler(){super();}
     public HttpBaseHandler(Context context){ this(); this.context = context;}
-    public abstract void handlerData(HttpClient conn);
+    public void handlerData(HttpClient conn){};
 
     @Override
     public void handleMessage(Message msg) {
@@ -44,7 +44,6 @@ public abstract class HttpBaseHandler extends Handler {
 
             // 网络连接出错, 连接状态不是200
             case 9:
-                Toast.makeText(Variable.app_context,(String)msg.obj,Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
