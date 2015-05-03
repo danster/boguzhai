@@ -1,13 +1,18 @@
 package com.boguzhai.activity.me.bidding;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.AuctionActiveActivity;
+import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.List;
@@ -20,8 +25,35 @@ public class BiddingAuctionAdapter extends BaseAdapter {
     private Context mContext;
     private List<BiddingAuction> biddingAuctionList;
     private LayoutInflater inflater;
+    private final int baseCount = 3;//设置每页显示5个
+    private int currentCount = 0;//当前需要展示的个数
 
     private String[] type = {"现场", "同步", "网络"};
+
+
+    /**
+     * 设置索引，根据索引分页显示
+     * @param index 索引
+     */
+    public void setPageIndex(int index) {
+        if(biddingAuctionList.size() >= baseCount*(index + 1)) {
+            currentCount = baseCount*(index + 1);
+        }else {
+            currentCount = biddingAuctionList.size();
+        }
+    }
+
+    public int getCurrentCount() {
+        return currentCount;
+    }
+    /**
+     * 判断是否是最后一页
+     * @return true 是  <br>  false 否
+     */
+    public boolean isLastPage() {
+        return ((currentCount == biddingAuctionList.size()) ? true : false);
+    }
+
 
     private final class ViewHolder {
         TextView auction_type;
@@ -42,12 +74,12 @@ public class BiddingAuctionAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return biddingAuctionList.size();
+        return currentCount;
     }
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view;
         ViewHolder holder;
         if (convertView == null) {
@@ -62,14 +94,28 @@ public class BiddingAuctionAdapter extends BaseAdapter {
             view = convertView;
             holder = (ViewHolder) view.getTag();
         }
-        holder.auction_type.setText(type[Integer.parseInt(biddingAuctionList.get(position).auction.type) - 1]);
+        holder.auction_type.setText(biddingAuctionList.get(position).auction.type);
         holder.auction_name.setText(biddingAuctionList.get(position).auction.name);
+        holder.auction_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AuctionActiveActivity.class);
+                intent.putExtra("auctionId", biddingAuctionList.get(position).auction.id);
+                mContext.startActivity(intent);
+            }
+        });
         holder.bidding_count.setText(String.valueOf(biddingAuctionList.get(position).auction.dealNum));
-
-
 
         LotInBiddingAuctionAdapter adapter = new LotInBiddingAuctionAdapter(mContext, biddingAuctionList.get(position).lotList);
         holder.lotList.setAdapter(adapter);
+        holder.lotList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position2, long id) {
+                Intent intent = new Intent(mContext, LotInfoActivity.class);
+                intent.putExtra("auctionId", biddingAuctionList.get(position).lotList.get(position2).name);
+                mContext.startActivity(intent);
+            }
+        });
         return view;
     }
 

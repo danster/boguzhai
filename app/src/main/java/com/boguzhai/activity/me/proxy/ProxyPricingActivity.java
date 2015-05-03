@@ -18,8 +18,12 @@ public class ProxyPricingActivity extends BaseActivity {
     private FragmentManager fm;
     private RadioGroup rg;
     private RadioButton rb;
+    private String aucctionName;
 
 
+    public String getAucctionName() {
+        return aucctionName;
+    }
 
 
 	@Override
@@ -32,6 +36,15 @@ public class ProxyPricingActivity extends BaseActivity {
 
 	protected void init(){
         Log.i(TAG, "init()");
+        if(null != getIntent()){
+            if(null != getIntent().getExtras()){
+                if(null != getIntent().getExtras().getString("auctionName")){
+                    aucctionName = getIntent().getExtras().getString("auctionName");
+                }
+            }
+        }
+        Log.i(TAG, "aucctionName:" + aucctionName);
+
         rg = (RadioGroup) findViewById(R.id.rg_my_proxy);
         rb = (RadioButton) findViewById(R.id.rb_my_proxy);
 

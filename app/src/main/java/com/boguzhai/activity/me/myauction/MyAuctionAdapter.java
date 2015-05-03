@@ -39,11 +39,14 @@ public class MyAuctionAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private final int baseCount = 5;//设置每页显示5个
     private int currentCount = 0;//当前需要展示的个数
+
     public MyAuctionAdapter(Context context, List<MyAuction> myAuctions) {
         this.mContext = context;
         this.inflater = LayoutInflater.from(mContext);
         this.myAuctions = myAuctions;
     }
+
+
 
     /**
      * 设置索引，根据索引分页显示
@@ -104,7 +107,7 @@ public class MyAuctionAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Log.i(TAG, "设置/修改代理出价");
                 Intent intent = new Intent(mContext, ProxyPricingActivity.class);
-                intent.putExtra("auctionId", myAuctions.get(position).name);
+                intent.putExtra("auctionName", myAuctions.get(position).name);
                 mContext.startActivity(intent);
             }
         });

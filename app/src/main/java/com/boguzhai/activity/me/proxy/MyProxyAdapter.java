@@ -37,7 +37,7 @@ class MyProxyAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private final int baseCount = 5;//设置每页显示5个
     private int currentCount = 0;//当前需要展示的个数
-
+    private int currentPageIndex = 0;//当前页索引
 
     MyProxyAdapter(Context context, List<ProxyLot> lots) {
         this.mContext = context;
@@ -45,6 +45,18 @@ class MyProxyAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(mContext);
     }
 
+    public List<ProxyLot> getLots() {
+        return this.lots;
+    }
+
+
+    /**
+     * 刷新当前页索引值
+     */
+    public void refreshCurrentPageIndex() {
+        this.currentPageIndex++;
+        setPageIndex(currentPageIndex);
+    }
     /**
      * 设置索引，根据索引分页显示
      * @param index 索引
@@ -56,6 +68,12 @@ class MyProxyAdapter extends BaseAdapter {
             currentCount = lots.size();
         }
     }
+
+    public void removeElem(int postion) {
+        this.lots.remove(postion);
+        currentCount--;
+    }
+
 
     public int getCurrentCount() {
         return currentCount;
@@ -72,7 +90,7 @@ class MyProxyAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 
-        return lots.size();
+        return currentCount;
     }
 
 

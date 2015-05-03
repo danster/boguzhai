@@ -18,12 +18,14 @@ public class Lot {
     public double apprisal2 = 0;  //预估价2
     public double startPrice = 0; //起拍价
     public double dealPrice = 0;  //成交价，没有成交则为空
+    public double currentPrice = 0.0;//当前价
     public String status = "";     //1:预展中 2:拍卖中 3:已成交 4:流拍
     public String auctionId = "";  //拍品所在的拍卖会ID
     public String sessionId = "";  //拍品所在的拍卖会专场ID
 
     public String imageUrl = "";   //图片url
     public Bitmap image = null;    //图片
+
 
     public ArrayList<Pair<String,String>> attributes = new ArrayList<Pair<String,String>>();
 

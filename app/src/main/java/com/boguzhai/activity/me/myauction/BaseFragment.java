@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -74,6 +76,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     public String[] types = {"全部", "现场拍卖", "同步拍卖", "网络拍卖"};
     private StringBuffer choose_type = new StringBuffer();
 
+    private HttpClient conn;
+
     /**
      * fragment对应布局
      */
@@ -90,7 +94,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = (MyAuctionActivity) getActivity();
-        initData(status);
+        init();
     }
 
     /**
@@ -104,38 +108,20 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     }
 
 
-    /**
-     * 初始化数据
-     */
-    public void initData(String type) {
-        /**
-         * 从网络获取数据
-         */
-        HttpClient conn = new HttpClient();
-        conn.setParam("sessionid", "");
-        conn.setParam("status", "");
-        conn.setUrl("url");
-        new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.i(TAG, "接收到<数据获取完成>的消息！");
+
+            initData();
+
+        }
+    };
 
 
-        /**
-         * 支持下拉刷新的layout，设置监听，重写onRefresh()方法
-         */
-        swipe_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout_my_auction);
-        swipe_layout.setColorSchemeResources(R.color.gold);
-        swipe_layout.setOnRefreshListener(this);
-
-
-        /**
-         * 支持上拉加载更多的listView，设置不可以下拉刷新，可以上拉加载更多，重写onLoadMore()方法
-         */
-        lv_my_auction = (XListView) view.findViewById(R.id.lv_myauctions);
-        lv_my_auction.setPullLoadEnable(true);
-        lv_my_auction.setPullRefreshEnable(false);
-        lv_my_auction.setXListViewListener(this);
-
-
-        switch (type) {
+    public void initData() {
+        switch (status) {
             case "":
                 myAuctions = testData1();
                 Log.i(TAG, "全部");
@@ -154,13 +140,49 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                 break;
         }
 
-
+        pageIndex = 0;
         /**
          * 初始化适配器
          */
         initAdapter(myAuctions);
         lv_my_auction.setAdapter(myAuctionAdapter);
         myAuctionAdapter.setPageIndex(pageIndex);
+
+
+    }
+
+    /**
+     * 初始化数据
+     */
+    public void init() {
+        /**
+         * 从网络获取数据
+         */
+//        conn = new HttpClient();
+//        conn.setParam("sessionid", "");
+//        conn.setParam("status", status);
+//        conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!getMyAuctionMainList.htm");
+//        new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
+
+
+        /**
+         * 支持下拉刷新的layout，设置监听，重写onRefresh()方法
+         */
+        swipe_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout_my_auction);
+        swipe_layout.setColorSchemeResources(R.color.gold);
+        swipe_layout.setOnRefreshListener(this);
+
+
+        /**
+         * 支持上拉加载更多的listView，设置不可以下拉刷新，可以上拉加载更多，重写onLoadMore()方法
+         */
+        lv_my_auction = (XListView) view.findViewById(R.id.lv_myauctions);
+        lv_my_auction.setPullLoadEnable(true);
+        lv_my_auction.setPullRefreshEnable(false);
+        lv_my_auction.setXListViewListener(this);
+
+        initData();
+
 
 
         /**
@@ -265,10 +287,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                         swipe_layout.setRefreshing(false);
                         Toast.makeText(mContext, "刷新成功", Toast.LENGTH_SHORT).show();
                         isSearch = false;
-                        myAuctionAdapter = new MyAuctionAdapter(mContext, myAuctions);//请求网络重新获取到myAuctions
-                        pageIndex = 0;
-                        myAuctionAdapter.setPageIndex(pageIndex);
-                        lv_my_auction.setAdapter(myAuctionAdapter);
+                        initData();
+
                     }
                 });
             }
@@ -350,13 +370,15 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                         for (int i = 0; i < jArray.length(); i++) {
                             myAction = new MyAuction();
                             myAction.name = jArray.getJSONObject(i).getString("name");
-                            myAction.id = jArray.getJSONObject(i).getString("type");
+                            myAction.id = jArray.getJSONObject(i).getString("id");
                             myAction.type = jArray.getJSONObject(i).getString("type");
                             myAction.status = jArray.getJSONObject(i).getString("status");
                             myAction.auctionTime = jArray.getJSONObject(i).getString("auctionTime");
                             myAction.deposit = jArray.getJSONObject(i).getInt("deposit");
                             myAuctions.add(myAction);
                         }
+                        Log.i(TAG, "数据获取完成！");
+                        handler.sendEmptyMessage(0);
                     } catch (JSONException e) {
                         Log.i(TAG, "json解析异常");
                         e.printStackTrace();
@@ -424,7 +446,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         List<MyAuction> myAuctions1 = new ArrayList<MyAuction>();
         MyAuction myAuction = new MyAuction();
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
-        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.name = "2015新春大拍";
         myAuction.status = "预展中";
         myAuction.type = "现场拍卖";
         myAuction.deposit = 500;
@@ -432,7 +454,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
 
         myAuction = new MyAuction();
         myAuction.auctionTime = "2014.7.15 18:00 - 2014.7.15 21:00";
-        myAuction.name = "2014冬季艺术品大拍";
+        myAuction.name = "2015新春大拍";
         myAuction.status = "拍卖中";
         myAuction.type = "同步拍卖";
         myAuction.deposit = 500;
