@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 
-public class XListViewForSrollView extends ListView implements OnScrollListener {
+public class XListViewForScrollView extends ListView implements OnScrollListener {
 
 	private float mLastY = -1; // save event y
 	private Scroller mScroller; // used for scroll back
@@ -60,17 +60,17 @@ public class XListViewForSrollView extends ListView implements OnScrollListener 
 	/**
 	 * @param context
 	 */
-	public XListViewForSrollView(Context context) {
+	public XListViewForScrollView(Context context) {
 		super(context);
 		initWithContext(context);
 	}
 
-	public XListViewForSrollView(Context context, AttributeSet attrs) {
+	public XListViewForScrollView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initWithContext(context);
 	}
 
-	public XListViewForSrollView(Context context, AttributeSet attrs, int defStyle) {
+	public XListViewForScrollView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initWithContext(context);
 	}

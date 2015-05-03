@@ -34,7 +34,7 @@ public class ActivityEntry extends Activity {
         init();
 
         //进入正式程序
-        Variable.mainTabIndex=R.id.rb_2;
+        Variable.mainTabIndex=R.id.rb_1;
         startActivity(new Intent(this, MainActivity.class));
 
     }

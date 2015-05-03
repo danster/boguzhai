@@ -18,7 +18,7 @@ import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.BiddingLot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.utils.HttpClient;
-import com.boguzhai.logic.view.XListViewForSrollView;
+import com.boguzhai.logic.view.XListViewForScrollView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,10 +27,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BiddingActivity extends BaseActivity implements XListViewForSrollView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
+public class BiddingActivity extends BaseActivity implements XListViewForScrollView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
 
 
-    private XListViewForSrollView lv_bidding;//竞价列表
+    private XListViewForScrollView lv_bidding;//竞价列表
     private BiddingAuctionAdapter adaper;
     private List<BiddingAuction> biddingAuctionList;
     private SwipeRefreshLayout swipe_refresh;
@@ -77,7 +77,7 @@ public class BiddingActivity extends BaseActivity implements XListViewForSrollVi
         /**
          * 支持上拉加载更多的listView，设置不可以下拉刷新，可以上拉加载更多，重写onLoadMore()方法
          */
-        lv_bidding = (XListViewForSrollView) findViewById(R.id.bidding_list);
+        lv_bidding = (XListViewForScrollView) findViewById(R.id.bidding_list);
         lv_bidding.setXListViewListener(this);
         lv_bidding.setPullLoadEnable(true);
         lv_bidding.setPullRefreshEnable(false);
