@@ -46,6 +46,10 @@ public class AccountBindMobileActivity extends BaseActivity {
         mobile = (EditText)findViewById(R.id.mobile);
         check_code = (EditText)findViewById(R.id.check_code);
 
+        if(Variable.account.mobile.equals("")){ //未绑定状态
+            findViewById(R.id.hideSwitch).setVisibility(View.GONE);
+        }
+
         this.listen(R.id.get_check_code);
         this.listen(R.id.submit);
         this.listen(R.id.check_code_clear);
@@ -84,37 +88,46 @@ public class AccountBindMobileActivity extends BaseActivity {
                     }
                 };
 
-                HttpClient conn = new HttpClient();
-                conn.setParam("mobile", mobile.getText().toString());
-                conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
-                new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();
+                HttpClient conn_check = new HttpClient();
+                conn_check.setParam("mobile", mobile.getText().toString());
+                conn_check.setUrl(Constant.url + "pLoginAction!getMobileCheckCode.htm");
+                new Thread(new HttpPostRunnable(conn_check, new GetCheckcodeHandler())).start();
                 new Timer().schedule(task, 0, 1000); // 一秒后启动task
                 break;
             case R.id.submit:
-                if(!StringApi.checkPhoneNumber(mobile.getText().toString())){
-                    this.alertMessage(StringApi.tips);
+                if(Variable.account.mobile.equals("")){
+                    if(password.getText().toString().equals("")){
+                        this.alertMessage("登录密码不能为空！");
+                        break;
+                    }else if(!password.getText().toString().equals(Variable.account.password)){
+                        this.alertMessage("登录密码错误！");
+                        break;
+                    }else if(old_mobile.getText().toString().equals("")){
+                        this.alertMessage("原绑定手机不能为空！");
+                        break;
+                    }else if(!old_mobile.getText().toString().equals(Variable.account.email)){
+                        this.alertMessage("原绑定手机错误！");
+                        break;
+                    }
+                }
+                if(mobile.getText().toString().equals("")){
+                    this.alertMessage("绑定手机不能为空！");
+                    break;
+                }else if(!StringApi.checkPhoneNumber(mobile.getText().toString())){
+                    this.alertMessage("绑定手机错误: "+StringApi.tips);
+                    break;
+                }else if(check_code.getText().toString().equals("")){
+                    this.alertMessage("手机验证码不能为空");
                     break;
                 }
-                if(password.getText().toString().equals("")){
-                    this.alertMessage("请输入登录密码");
-                    break;
-                }
-                if((!StringApi.checkPhoneNumber(old_mobile.getText().toString()))){
-                    this.alertMessage("请输入正确的原手机号码");
-                    break;
-                }
-                if(check_code.getText().toString().equals("")){
-                    this.alertMessage("请输入手机验证码");
-                    break;
-                }
-                HttpClient conn2 = new HttpClient();
-                conn2.setParam("sessionid", Variable.account.sessionid);
-                conn2.setParam("password", password.getText().toString());
-                conn2.setParam("oldMobile", old_mobile.getText().toString());
-                conn2.setParam("newMobile", mobile.getText().toString());
-                conn2.setParam("checkCode", check_code.getText().toString());
-                conn2.setUrl(Constant.url+"pClientInfoAction!rebindMobile.htm");
-                new Thread(new HttpPostRunnable(conn2, new SubmitHandler())).start();
+
+                HttpClient conn_bind = new HttpClient();
+                conn_bind.setParam("sessionid", Variable.account.sessionid);
+                conn_bind.setParam("oldMobile", old_mobile.getText().toString());
+                conn_bind.setParam("newMobile", mobile.getText().toString());
+                conn_bind.setParam("checkCode", check_code.getText().toString());
+                conn_bind.setUrl(Constant.url + "pClientInfoAction!rebindMobile.htm");
+                new Thread(new HttpPostRunnable(conn_bind, new SubmitHandler())).start();
                 break;
         }
     }
@@ -127,6 +140,7 @@ public class AccountBindMobileActivity extends BaseActivity {
                 baseActivity.getAlert("绑定手机成功")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            Variable.account.mobile = mobile.getText().toString();
                             baseActivity.startActivity(new Intent(baseActivity, AccountInfoActivity.class));
                         }
                     }).show();

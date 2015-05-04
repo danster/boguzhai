@@ -13,25 +13,33 @@
             android:textColor="@color/dark_black"
             android:text="已绑定手机：***21957605"/>
     </LinearLayout>
-    <View style="@style/longline"/>
-    <LinearLayout style="@style/base_bar">
-        <EditText style="@style/login_l_ev"
-            android:id="@+id/password"
-            android:inputType="textPassword"
-            android:hint="登录密码"/>
-        <ImageView style="@style/base_right_clear"
-            android:id="@+id/password_clear"/>
-    </LinearLayout>
-    <View style="@style/longline"/>
-    <LinearLayout style="@style/base_bar">
-        <EditText style="@style/login_l_ev"
-            android:id="@+id/old_mobile"
-            android:hint="请输入原绑定手机"/>
-        <ImageView style="@style/base_right_clear"
-            android:id="@+id/old_mobile_clear"/>
+
+    <LinearLayout
+        android:id="@+id/hideSwitch"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <EditText style="@style/login_l_ev"
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:hint="登录密码"/>
+            <ImageView style="@style/base_right_clear"
+                android:id="@+id/password_clear"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <EditText style="@style/login_l_ev"
+                android:id="@+id/old_mobile"
+                android:hint="请输入原绑定手机"/>
+            <ImageView style="@style/base_right_clear"
+                android:id="@+id/old_mobile_clear"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout style="@style/base_bar" android:layout_marginTop="5dp">
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
         <EditText style="@style/login_l_ev"
             android:id="@+id/mobile"
             android:hint="请输入新绑定手机"/>

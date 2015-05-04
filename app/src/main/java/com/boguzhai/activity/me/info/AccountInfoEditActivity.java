@@ -46,14 +46,9 @@ public class AccountInfoEditActivity extends BaseActivity {
     private Dialog setHeadDialog;
     private View mDialogView;
 
-
-    private static final String[] list_addr_1={"不限","北京","上海","江苏","浙江","其他"};
-    private static final String[] list_addr_2={"不限","南京","镇江","无锡","苏州","其他"};
-    private static final String[] list_addr_3={"不限","玄武","鼓楼","江宁","雨花","其他"};
-
-    private StringBuffer addr_1=new StringBuffer();
-    private StringBuffer addr_2=new StringBuffer();
-    private StringBuffer addr_3=new StringBuffer();
+    private StringBuffer addr_1=new StringBuffer("");
+    private StringBuffer addr_2=new StringBuffer("");
+    private StringBuffer addr_3=new StringBuffer("");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +64,6 @@ public class AccountInfoEditActivity extends BaseActivity {
 
         fillAccountInfo();
 
-//        utility.setSpinner(this, R.id.addr_1, list_addr_1, addr_1);
-//        utility.setSpinner(this, R.id.addr_2, list_addr_2, addr_2);
-//        utility.setSpinner(this, R.id.addr_3, list_addr_3, addr_3);
 
 		int[] ids = { R.id.my_email, R.id.my_mobile, R.id.ok, R.id.name_clear, R.id.nickname_clear,
                       R.id.my_photo, R.id.telephone_clear, R.id.fax_clear, R.id.qq_clear, R.id.address_clear};
