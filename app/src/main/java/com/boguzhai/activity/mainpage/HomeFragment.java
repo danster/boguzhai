@@ -170,14 +170,14 @@ public class HomeFragment extends Fragment {
             switch (code){
                 case 0:
                     auctionList = JsonApi.getAuctionList(data);
-                    adsCount = auctionList.size();
+                    adsCount = auctionList.size() > 4 ? 4 : auctionList.size();
 
                     if (adsCount <= 0)
                         break;
 
                     // 将静态图片ID装载到数组中
                     mImageViews = new ImageView[adsCount];
-                    for (int i = 0; i < mImageViews.length; i++) {
+                    for (int i = 0; i < adsCount; i++) {
                         index_i = i;
                         mImageViews[i] = new ImageView(getActivity());
                         // 设置广告图片的点击响应

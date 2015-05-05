@@ -6,38 +6,14 @@
     android:orientation="vertical" >
 
     <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
-        <TextView style="@style/login_l_ev" android:layout_width="wrap_content"
-            android:text="当前状态: "/>
+        <TextView style="@style/base_text"
+            android:layout_marginLeft="3dp"
+            android:text="当前状态  "/>
         <TextView android:id="@+id/status"
             style="@style/myinfo_middle_text"
-            android:textColor="@color/dark_black"
-            android:text="未绑定"/>
+            android:textColor="#ff555555"
+            android:text=""/>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/hideSwitch"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical">
-        <View style="@style/longline"/>
-        <LinearLayout style="@style/base_bar">
-            <EditText style="@style/login_l_ev"
-                android:id="@+id/password"
-                android:inputType="textPassword"
-                android:hint="登录密码"/>
-            <ImageView style="@style/base_right_clear"
-                android:id="@+id/password_clear"/>
-        </LinearLayout>
-        <View style="@style/longline"/>
-        <LinearLayout style="@style/base_bar">
-            <EditText style="@style/login_l_ev"
-                android:id="@+id/old_email"
-                android:hint="请输入原绑定邮箱"/>
-            <ImageView style="@style/base_right_clear"
-                android:id="@+id/old_email_clear"/>
-        </LinearLayout>
-    </LinearLayout>
-
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar">
         <EditText style="@style/login_l_ev"

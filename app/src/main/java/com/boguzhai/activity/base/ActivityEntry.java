@@ -8,7 +8,7 @@ import android.util.Pair;
 import android.widget.Toast;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.mainpage.MainActivity;
+import com.boguzhai.activity.me.info.AccountInfoEditActivity;
 import com.boguzhai.logic.dao.Address_1;
 import com.boguzhai.logic.dao.Address_2;
 import com.boguzhai.logic.dao.Address_3;
@@ -34,9 +34,8 @@ public class ActivityEntry extends Activity {
         init();
 
         //进入正式程序
-        Variable.mainTabIndex=R.id.rb_1;
-        startActivity(new Intent(this, MainActivity.class));
-
+        Variable.mainTabIndex=R.id.rb_4;
+        startActivity(new Intent(this, AccountInfoEditActivity.class));
     }
 
     private void init(){

@@ -9,30 +9,18 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout style="@style/base_bar"
-            android:layout_marginTop="10dp">
-            <TextView style="@style/verify_left_text"  android:text="姓名"/>
-            <EditText android:id="@+id/name"
+        <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
+            <TextView style="@style/verify_left_text" android:text="认证状态  "/>
+            <TextView android:id="@+id/status"
                 style="@style/myinfo_middle_text"
-                android:background="@color/transparent"
-                android:hint="必填"/>
-            <ImageView style="@style/myinfo_right_clear"
-                android:id="@+id/my_name_clear"/>
-        </LinearLayout>
-        <View style="@style/longline"/>
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/verify_left_text"  android:text="手机"/>
-            <EditText style="@style/myinfo_middle_text"
-                android:id="@+id/mobile"
-                android:background="@color/transparent"
-                android:hint="必填"/>/>
-            <ImageView style="@style/myinfo_right_clear"
-                android:id="@+id/my_mobile_clear"/>
+                android:textColor="@color/red"
+                android:text="未认证"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar"
@@ -40,50 +28,183 @@
             <TextView style="@style/verify_left_text"  android:text="用户性质"/>
             <TextView style="@style/myinfo_middle_text"
                 android:id="@+id/property"
-                android:text="个人"/>/>
-            <ImageView style="@style/myinfo_right_arrow" />
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/my_credential_type"
-            style="@style/base_bar"
-            android:layout_marginTop="10dp">
-            <TextView style="@style/verify_left_text"  android:text="证件类型"/>
-            <TextView style="@style/myinfo_middle_text"
-                android:id="@+id/credential_type"
                 android:text="个人"/>
             <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
-        <View style="@style/longline"/>
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/verify_left_text"  android:text="证件号码"/>
-            <EditText style="@style/myinfo_middle_text"
-                android:id="@+id/credential_number"
+
+        <LinearLayout style="@style/base_bar"  android:layout_marginTop="10dp">
+            <TextView style="@style/verify_left_text"  android:text="真实姓名/单位名称"/>
+            <EditText android:id="@+id/name"
+                style="@style/myinfo_middle_text"
                 android:background="@color/transparent"
-                android:hint="必填"/>
-            <ImageView style="@style/myinfo_right_clear"
-                android:id="@+id/my_credential_number_clear"/>
+                android:hint="必填(设定后不能修改)"/>
         </LinearLayout>
         <View style="@style/longline"/>
-        <LinearLayout style="@style/base_bar"
-            android:layout_height="200dp"
-            android:id="@+id/my_credential_image">
-            <TextView style="@style/verify_left_text"
-            android:singleLine="false"
-            android:text="上传证\n件照片"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|right">
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/verify_left_text"  android:text="手机"/>
+            <EditText style="@style/myinfo_middle_text"
+                android:id="@+id/mobile"
+                android:background="@color/transparent"
+                android:text="13812345678"/>
+        </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/credential_image"
-                    android:layout_height="180dp"
-                    android:layout_width="180dp"
-                    android:src="@drawable/image"/>
+        <LinearLayout  android:layout_width="match_parent" android:layout_height="10dp"/>
 
+        <LinearLayout android:id="@+id/layout_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout android:id="@+id/my_credential_type"
+                style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="证件类型"/>
+                <TextView style="@style/myinfo_middle_text"
+                    android:id="@+id/credential_type"
+                    android:text="二代身份证"/>
+                <ImageView style="@style/myinfo_right_arrow" />
             </LinearLayout>
-            <ImageView style="@style/myinfo_right_arrow"/>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="证件号码"/>
+                <EditText style="@style/myinfo_middle_text"
+                    android:id="@+id/credential_number"
+                    android:background="@color/transparent"
+                    android:hint="必填"/>
+            </LinearLayout>
+
+            <!-- 加载图片介绍 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp">
+                    <ImageView
+                        android:layout_width="5dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center|left"
+                        android:background="#957A4D"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center|left"
+                        android:text="上传证件照片"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="·身份证需正反两面及本人持有正面身份证的照片, 至少3张图片;\n·其他证件需要具有证件所有人照片的证件页, 及本人持有该页的照片, 至少2张图片"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/base_bar"
+                android:layout_height="wrap_content"
+                android:id="@+id/my_credential_image"
+                android:background="@color/transparent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left">
+                    <ImageView
+                        android:id="@+id/image1"
+                        android:layout_height="120dp"
+                        android:layout_width="120dp"
+                        android:src="@drawable/base_plus"/>
+                    <ImageView
+                        android:id="@+id/image2"
+                        android:layout_marginLeft="2dp"
+                        android:layout_height="120dp"
+                        android:layout_width="120dp"
+                        android:src="@drawable/base_plus"/>
+                    <ImageView
+                        android:id="@+id/image3"
+                        android:layout_marginLeft="2dp"
+                        android:layout_height="120dp"
+                        android:layout_width="120dp"
+                        android:src="@drawable/base_plus"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/layout_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="营业执照"/>
+                <EditText android:id="@+id/no_unit1" style="@style/myinfo_middle_text" android:hint="填写营业执照"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar" android:layout_height="100dp">
+                <TextView style="@style/myinfo_left_text"  android:text="上传营业执照"/>
+                <View android:layout_height="match_parent" android:layout_width="0dp" android:layout_weight="1" />
+                <ImageView android:id="@+id/image_unit1" style="@style/upload_image" android:src="@drawable/base_plus"/>
+            </LinearLayout>
+
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="税务登记证"/>
+                <EditText android:id="@+id/no_unit2" style="@style/myinfo_middle_text" android:hint="填写税务登记证"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar" android:layout_height="100dp">
+                <TextView style="@style/myinfo_left_text"  android:text="上传税务登记证"/>
+                <View android:layout_height="match_parent" android:layout_width="0dp" android:layout_weight="1" />
+                <ImageView android:id="@+id/image_unit2" style="@style/upload_image" android:src="@drawable/base_plus"/>
+            </LinearLayout>
+
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="组织机构代码"/>
+                <EditText android:id="@+id/no_unit4" style="@style/myinfo_middle_text" android:hint="填写组织机构代码"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar" android:layout_height="100dp">
+                <TextView style="@style/myinfo_left_text"  android:text="上传组织机构代码"/>
+                <View android:layout_height="match_parent" android:layout_width="0dp" android:layout_weight="1" />
+                <ImageView android:id="@+id/image_unit4" style="@style/upload_image" android:src="@drawable/base_plus"/>
+            </LinearLayout>
+
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="法人代表姓名"/>
+                <EditText android:id="@+id/legal_person_name"
+                    style="@style/myinfo_middle_text"
+                    android:background="@color/transparent"
+                    android:hint="必填(设定后不能修改)"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout android:id="@+id/my_legal_person_type"
+                style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="法人代表证件类型"/>
+                <TextView style="@style/myinfo_middle_text"
+                    android:id="@+id/legal_person_type"
+                    android:text="二代身份证"/>
+                <ImageView style="@style/myinfo_right_arrow" />
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="法人代表证件号码"/>
+                <EditText style="@style/myinfo_middle_text"
+                    android:id="@+id/legal_person_number"
+                    android:background="@color/transparent"
+                    android:hint="必填"/>
+            </LinearLayout>
+
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar" android:layout_height="100dp">
+                <TextView style="@style/myinfo_left_text"  android:text="上传法人代表证件"/>
+                <View android:layout_height="match_parent" android:layout_width="0dp" android:layout_weight="1" />
+                <ImageView android:id="@+id/image_unit5" style="@style/upload_image" android:src="@drawable/base_plus"/>
+            </LinearLayout>
+
+
+
         </LinearLayout>
 
     </LinearLayout>

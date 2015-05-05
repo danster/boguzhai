@@ -23,8 +23,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class AccountBindEmailActivity extends BaseActivity {
-    private TextView staus, get_check_code;
-    private EditText password,old_emial, email, check_code;
+    private TextView get_check_code;
+    private EditText email, check_code;
 
     int time = 30;
     TimerTask task;
@@ -39,22 +39,20 @@ public class AccountBindEmailActivity extends BaseActivity {
 	}
 
     public void init(){
-        staus = (TextView)findViewById(R.id.status);
         get_check_code = (TextView)findViewById(R.id.get_check_code);
-        password = (EditText)findViewById(R.id.password);
-        old_emial = (EditText)findViewById(R.id.old_email);
         email = (EditText)findViewById(R.id.email);
         check_code = (EditText)findViewById(R.id.check_code);
 
-        if(Variable.account.email.equals("")){ //未绑定状态
-            findViewById(R.id.hideSwitch).setVisibility(View.GONE);
+        TextView status = (TextView)findViewById(R.id.status);
+        if(Variable.account.email.equals("")){
+            status.setText("未绑定邮箱");
+        }else {
+            status.setText("已绑定邮箱：" + Variable.account.email);
         }
 
         this.listen(R.id.get_check_code);
         this.listen(R.id.submit);
         this.listen(R.id.check_code_clear);
-        this.listen(R.id.password_clear);
-        this.listen(R.id.old_email_clear);
     }
 
     @Override
@@ -62,8 +60,6 @@ public class AccountBindEmailActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.check_code_clear:  check_code.setText(""); break;
-            case R.id.password_clear:    password.setText(""); break;
-            case R.id.old_email_clear:   old_emial.setText(""); break;
 
             case R.id.get_check_code:
                 if(!StringApi.checkEmail(email.getText().toString())){
@@ -98,21 +94,6 @@ public class AccountBindEmailActivity extends BaseActivity {
                 new Timer().schedule(task, 0, 1000); // 一秒后启动task
                 break;
             case R.id.submit:
-                if(Variable.account.email.equals("")){
-                    if(password.getText().toString().equals("")){
-                        this.alertMessage("登录密码不能为空！");
-                        break;
-                    }else if(!password.getText().toString().equals(Variable.account.password)){
-                        this.alertMessage("登录密码错误！");
-                        break;
-                    }else if(old_emial.getText().toString().equals("")){
-                        this.alertMessage("原绑定邮箱不能为空！");
-                        break;
-                    }else if(!old_emial.getText().toString().equals(Variable.account.email)){
-                        this.alertMessage("原绑定邮箱错误！");
-                        break;
-                    }
-                }
                 if(email.getText().toString().equals("")){
                     this.alertMessage("绑定邮箱不能为空！");
                     break;
@@ -128,7 +109,7 @@ public class AccountBindEmailActivity extends BaseActivity {
                 conn_bind.setParam("sessionid", Variable.account.sessionid);
                 conn_bind.setParam("mobile", email.getText().toString());
                 conn_bind.setParam("checkCode", check_code.getText().toString());
-                conn_bind.setUrl(Constant.url + "pClientInfoAction!rebindEmail.htm");
+                conn_bind.setUrl(Constant.url + "pClientInfoAction!bindEmail.htm");
                 new Thread(new HttpPostRunnable(conn_bind, new SubmitHandler())).start();
                 break;
         }
@@ -142,8 +123,8 @@ public class AccountBindEmailActivity extends BaseActivity {
                 baseActivity.getAlert("绑定邮箱成功")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Variable.account.email = email.getText().toString();
-                            baseActivity.startActivity(new Intent(baseActivity, AccountInfoActivity.class));
+                        Variable.account.email = email.getText().toString();
+                        baseActivity.startActivity(new Intent(baseActivity, AccountInfoActivity.class));
                         }
                     }).show();
                 break;

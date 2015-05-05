@@ -40,7 +40,6 @@
     <!-- ************************************************ 常见的文字和图标式样 -->
 
     <!-- 条形栏的基本式样 -->
-    <!-- 条形栏的基本式样 -->
     <style name="base_itembar">
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -83,12 +82,21 @@
         <item name="android:background">@color/single_line</item>
     </style>
 
-    // 开关
+    <!-- 开关样式 -->
     <style name="filter_switch">
         <item name="android:layout_height">32dp</item>
         <item name="android:layout_width">50dp</item>
         <item name="android:gravity">center|right</item>
         <item name="android:background">@drawable/base_choose_on</item>
+    </style>
+
+    <!-- 上传照片样式 -->
+    <style name="upload_image">
+        <item name="android:layout_height">90dp</item>
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
 </resources>

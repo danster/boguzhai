@@ -1,5 +1,6 @@
 package com.boguzhai.activity.base;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.util.Pair;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.me.info.DeliveryAddress;
 import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.Address_1;
 import com.boguzhai.logic.dao.Auction;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 public class Variable {
 
     public static Account account = new Account(); //用户的账号信息
-    public static boolean isLogin = true;      //用户的登录状态
+    public static boolean isLogin = false;      //用户的登录状态
     public static int mainTabIndex = R.id.rb_1; //首页的tab位置
 
     // 启动程序(Application)时初始化或重新赋值
@@ -46,5 +48,7 @@ public class Variable {
     public static Auction currentAuction = null;
     public static Session currentSession = null;
     public static Lot currentLot = null;
+    public static DeliveryAddress currentDeliveryAddress = null; //修改收货地址时初始化
+    public static Activity currentActivity = null;
 
 }

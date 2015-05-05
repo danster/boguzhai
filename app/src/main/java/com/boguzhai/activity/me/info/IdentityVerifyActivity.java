@@ -2,6 +2,7 @@ package com.boguzhai.activity.me.info;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,16 +11,20 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
+import com.boguzhai.logic.thread.HttpJsonHandler;
+import com.boguzhai.logic.utils.HttpClient;
+
+import org.json.JSONObject;
 
 public class IdentityVerifyActivity extends BaseActivity {
-    protected TextView property, credential_type;
-    protected EditText name, mobile, credential_number;
-    protected ImageView credential_image;
+    protected TextView property;
+    protected ImageView image1,image2,image3;
 
     private String[] propertyList = {"个人","单位"};
     private int propertyIndex = 0;
     private String[] credentialTypeList = {"二代身份证","三代身份证","港澳台身份证","护照","其它"};
-    private int credentialTypeIndex = 0;
+    private int credentialTypeIndex = 0, legalTypeIndex=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,55 +32,79 @@ public class IdentityVerifyActivity extends BaseActivity {
         this.setScrollView(R.layout.me_identity_verify);
         title.setText("身份认证");
 
-        name = (EditText)findViewById(R.id.name);
-        mobile = (EditText)findViewById(R.id.mobile);
-        credential_number = (EditText)findViewById(R.id.credential_number);
         property = (TextView)findViewById(R.id.property);
-        credential_type = (TextView)findViewById(R.id.credential_type);
-        credential_image = (ImageView)findViewById(R.id.credential_image);
+        image1 = (ImageView)findViewById(R.id.image1);
+        image2 = (ImageView)findViewById(R.id.image2);
+        image3 = (ImageView)findViewById(R.id.image3);
 
-        int[] ids = { R.id.submit, R.id.my_name_clear, R.id.my_mobile_clear, R.id.my_property,
-                      R.id.my_credential_type, R.id.my_credential_number_clear,
-                      R.id.my_credential_image };
+        int[] ids = { R.id.submit, R.id.my_property, R.id.my_credential_type,
+                      R.id.image1, R.id.image3, R.id.image3};
         this.listen(ids);
-        setBaseEnv();
+        init();
 	}
 
-	protected void setBaseEnv(){
+	protected void init(){
+        findViewById(R.id.layout_person).setVisibility(View.VISIBLE);
+        findViewById(R.id.layout_unit).setVisibility(View.GONE);
+        ((EditText)findViewById(R.id.mobile)).setText(Variable.account.mobile);
 	}
 
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
 		switch (view.getId()) {
-            case R.id.my_name_clear:
-                name.setText("");
-            break;
-            case R.id.my_mobile_clear:
-                mobile.setText("");
-                break;
-            case R.id.my_credential_number_clear:
-                credential_number.setText("");
-                break;
             case R.id.my_property:
                 new AlertDialog.Builder(context).setSingleChoiceItems(propertyList, propertyIndex,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int index) {
+                            dialog.dismiss();
                             propertyIndex = index;
                             property.setText(propertyList[index]);
-                            dialog.dismiss();
+                            if(property.getText().toString().equals("个人")){
+                                findViewById(R.id.layout_person).setVisibility(View.VISIBLE);
+                                findViewById(R.id.layout_unit).setVisibility(View.GONE);
+                            } else if(property.getText().toString().equals("单位")){
+                                findViewById(R.id.layout_person).setVisibility(View.GONE);
+                                findViewById(R.id.layout_unit).setVisibility(View.VISIBLE);
+                            }
                         }
                     }).setNegativeButton("取消", null).show();
             break;
             case R.id.my_credential_type:
                 new AlertDialog.Builder(context).setSingleChoiceItems(credentialTypeList, credentialTypeIndex,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int index) {
-                                credentialTypeIndex = index;
-                                credential_type.setText(credentialTypeList[index]);
-                                dialog.dismiss();
-                            }
-                        }).setNegativeButton("取消", null).show();
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int index) {
+                            credentialTypeIndex = index;
+                            ((TextView)findViewById(R.id.credential_type)).setText(credentialTypeList[index]);
+                            dialog.dismiss();
+                        }
+                    }).setNegativeButton("取消", null).show();
+                break;
+            case R.id.my_legal_person_type:
+                new AlertDialog.Builder(context).setSingleChoiceItems(credentialTypeList, legalTypeIndex,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int index) {
+                            legalTypeIndex = index;
+                            ((TextView)findViewById(R.id.legal_person_type)).setText(credentialTypeList[index]);
+                            dialog.dismiss();
+                        }
+                    }).setNegativeButton("取消", null).show();
+                break;
+            case R.id.submit:
+                String prop = "1";
+                if(property.getText().toString().equals("个人")){
+                    prop = "1";
+                } else if(property.getText().toString().equals("单位")){
+                    prop = "2";
+                }
+
+                HttpClient conn = new HttpClient();
+                conn.setParam("sessionid", Variable.account.sessionid);
+                conn.setParam("property", prop);
+
+                //conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
+                //new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
+
                 break;
         default: break;
 		};
@@ -86,5 +115,23 @@ public class IdentityVerifyActivity extends BaseActivity {
         super.onResume();
     }
 
+    class SubmitHandler extends HttpJsonHandler {
+        @Override
+        public void handlerData(int code, JSONObject data){
+            switch(code){
+                case 0:
+                    baseActivity.getAlert("操作成功")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            baseActivity.startActivity(new Intent(baseActivity,AccountInfoActivity.class));
+                            }
+                        }).show();
+                    break;
+                default:
+                    baseActivity.alertMessage("操作失败");
+                    break;
+            }
+        }
+    }
 
 }

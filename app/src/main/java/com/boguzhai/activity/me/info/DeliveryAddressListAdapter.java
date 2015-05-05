@@ -2,7 +2,6 @@ package com.boguzhai.activity.me.info;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.base.Variable;
 
 import java.util.ArrayList;
 
@@ -60,13 +60,8 @@ public class DeliveryAddressListAdapter extends BaseAdapter {
 		}
 		@Override
 		public void onClick(View v) {
-            Intent intent = new Intent(context, DeliveryAddressEditActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("address", list.get(position));
-            intent.putExtras(bundle);
-
-            // 1 代表去往编辑收货地址页面
-            ((DeliveryAddressManageActivity)context).startActivityForResult(intent,1);
+            Variable.currentDeliveryAddress = list.get(position);
+            context.startActivity(new Intent(context, DeliveryAddressEditActivity.class));
 		}
     }
 }  

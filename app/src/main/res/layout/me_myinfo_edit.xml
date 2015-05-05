@@ -23,11 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1" />
             <ImageView android:id="@+id/image"
-                android:layout_height="90dp"
-                android:layout_width="90dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center"/>
+                style="@style/upload_image"/>
             <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
 
@@ -51,9 +47,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center|right">
-                <Spinner android:id="@+id/addr_1" style="@style/lot_filter_spinner"></Spinner>
-                <Spinner android:id="@+id/addr_2" style="@style/lot_filter_spinner"></Spinner>
-                <Spinner android:id="@+id/addr_3" style="@style/lot_filter_spinner"></Spinner>
+                <Spinner android:id="@+id/address_1" style="@style/lot_filter_spinner"></Spinner>
+                <Spinner android:id="@+id/address_2" style="@style/lot_filter_spinner"></Spinner>
+                <Spinner android:id="@+id/address_3" style="@style/lot_filter_spinner"></Spinner>
             </LinearLayout>
         </LinearLayout>
         <View style="@style/longline"/>

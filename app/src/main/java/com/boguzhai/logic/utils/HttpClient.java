@@ -51,11 +51,14 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InterruptedIOException;
+import java.io.OutputStreamWriter;
 import java.net.SocketTimeoutException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -111,6 +114,7 @@ public class HttpClient {
     public void setParamFile(String key, File file){
         MultipartEntityBuilder builder = this.getMultipartEntityBuilder();
         builder.addBinaryBody(key, file);
+        // builder.addBinaryBody(key, file, ContentType.create("image/jpeg"), null);
     }
 
     // 将图片压缩成Base64编码字符串，之后再addTextBody
@@ -120,6 +124,25 @@ public class HttpClient {
         byte[] data = bos.toByteArray();
         String bitmap_str= Base64.encodeToString(data, 0);
         this.setParam(key,bitmap_str);
+
+        // 检查 bitmap_str
+        File f = FileApi.createFile("test.txt");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+        try {
+            bw.write(bitmap_str);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /****** HTTP Get and Post ******/
