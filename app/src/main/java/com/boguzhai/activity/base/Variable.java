@@ -50,5 +50,6 @@ public class Variable {
     public static Lot currentLot = null;
     public static DeliveryAddress currentDeliveryAddress = null; //修改收货地址时初始化
     public static Activity currentActivity = null;
+    public static Activity lastActivity = null;
 
 }

@@ -2,6 +2,7 @@ package com.boguzhai.logic.thread;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
@@ -18,6 +19,7 @@ public abstract class HttpJsonHandler extends Handler {
         if(msg == null) return;
         switch (msg.what){
             case 0:
+                Log.i("JSON",(String)msg.obj);
                 try {
                     JSONObject result = new JSONObject((String)msg.obj);
                     int code = -9;
@@ -28,7 +30,7 @@ public abstract class HttpJsonHandler extends Handler {
                     }
                     handlerData(code, data);
                 } catch (JSONException ex) {
-                    Toast.makeText(Variable.app_context, "HttpJsonHandler 数据解析报错", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Variable.app_context, "网络数据错误", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

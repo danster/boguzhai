@@ -46,6 +46,7 @@ public class IdentityVerifyActivity extends BaseActivity {
 	protected void init(){
         findViewById(R.id.layout_person).setVisibility(View.VISIBLE);
         findViewById(R.id.layout_unit).setVisibility(View.GONE);
+        ((TextView)findViewById(R.id.my_name)).setText("真实姓名");
         ((EditText)findViewById(R.id.mobile)).setText(Variable.account.mobile);
 	}
 
@@ -53,7 +54,7 @@ public class IdentityVerifyActivity extends BaseActivity {
 	public void onClick(View view) {
 		super.onClick(view);
 		switch (view.getId()) {
-            case R.id.my_property:
+            case R.id.my_property: //选择个人或者单位
                 new AlertDialog.Builder(context).setSingleChoiceItems(propertyList, propertyIndex,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int index) {
@@ -63,14 +64,16 @@ public class IdentityVerifyActivity extends BaseActivity {
                             if(property.getText().toString().equals("个人")){
                                 findViewById(R.id.layout_person).setVisibility(View.VISIBLE);
                                 findViewById(R.id.layout_unit).setVisibility(View.GONE);
+                                ((TextView)findViewById(R.id.my_name)).setText("真实姓名");
                             } else if(property.getText().toString().equals("单位")){
                                 findViewById(R.id.layout_person).setVisibility(View.GONE);
                                 findViewById(R.id.layout_unit).setVisibility(View.VISIBLE);
+                                ((TextView)findViewById(R.id.my_name)).setText("真实单位名称");
                             }
                         }
                     }).setNegativeButton("取消", null).show();
             break;
-            case R.id.my_credential_type:
+            case R.id.my_credential_type: //选择个人证件类型
                 new AlertDialog.Builder(context).setSingleChoiceItems(credentialTypeList, credentialTypeIndex,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int index) {
@@ -80,7 +83,7 @@ public class IdentityVerifyActivity extends BaseActivity {
                         }
                     }).setNegativeButton("取消", null).show();
                 break;
-            case R.id.my_legal_person_type:
+            case R.id.my_legal_person_type: //选择法人证件类型
                 new AlertDialog.Builder(context).setSingleChoiceItems(credentialTypeList, legalTypeIndex,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int index) {
@@ -91,16 +94,15 @@ public class IdentityVerifyActivity extends BaseActivity {
                     }).setNegativeButton("取消", null).show();
                 break;
             case R.id.submit:
-                String prop = "1";
-                if(property.getText().toString().equals("个人")){
-                    prop = "1";
-                } else if(property.getText().toString().equals("单位")){
-                    prop = "2";
-                }
-
                 HttpClient conn = new HttpClient();
                 conn.setParam("sessionid", Variable.account.sessionid);
-                conn.setParam("property", prop);
+                if(property.getText().toString().equals("个人")){
+                    conn.setParam("property", "1");
+                } else if(property.getText().toString().equals("单位")){
+                    conn.setParam("property", "2");
+                }
+
+
 
                 //conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
                 //new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();

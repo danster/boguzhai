@@ -1,5 +1,6 @@
 package com.boguzhai.logic.utils;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
@@ -31,11 +32,10 @@ public class JsonApi {
 
     public static void getAccountInfo(JSONObject data){
         try {
-
             Variable.account.sessionid = data.has("sessionid") ? data.getString("sessionid") : "";
+            Log.i("sessionid", "new sessionid = "+Variable.account.sessionid);
 
             JSONObject account = data.getJSONObject("account");
-
             Variable.account.name = account.has("name") ? account.getString("name") : "";
             Variable.account.nickname = account.has("nickname") ? account.getString("nickname"): "";
             Variable.account.address_1 = account.has("address_1") ? account.getString("address_1"): "";

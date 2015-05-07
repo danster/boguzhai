@@ -30,14 +30,12 @@
         <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="姓名"/>
             <TextView android:id="@+id/name"
-                style="@style/myinfo_middle_text"
-                android:text="张三"/>
+                style="@style/myinfo_middle_text"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="昵称"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/nickname"
-                android:text="Jim"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/nickname"/>
             <ImageView style="@style/myinfo_right_clear" android:id="@+id/nickname_clear"/>
         </LinearLayout>
         <View style="@style/longline"/>

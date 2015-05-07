@@ -15,7 +15,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
+        <View style="@style/longline" android:layout_marginTop="10dp"/>
+        <LinearLayout style="@style/base_bar"
+            android:background="#fffee3dc">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="只有通过实名认证才能参加拍卖会！"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+
+        <LinearLayout style="@style/base_bar" >
             <TextView style="@style/verify_left_text" android:text="认证状态  "/>
             <TextView android:id="@+id/status"
                 style="@style/myinfo_middle_text"
@@ -33,7 +46,7 @@
         </LinearLayout>
 
         <LinearLayout style="@style/base_bar"  android:layout_marginTop="10dp">
-            <TextView style="@style/verify_left_text"  android:text="真实姓名/单位名称"/>
+            <TextView style="@style/verify_left_text"  android:id="@+id/my_name" android:text=""/>
             <EditText android:id="@+id/name"
                 style="@style/myinfo_middle_text"
                 android:background="@color/transparent"

@@ -18,7 +18,6 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.methods.HttpGet;
@@ -37,7 +36,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MIME;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
@@ -45,7 +43,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
@@ -142,7 +139,6 @@ public class HttpClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /****** HTTP Get and Post ******/
@@ -160,6 +156,7 @@ public class HttpClient {
             return;
         }
 
+        Log.i(TAG,"http get: "+url);
         this.httpRequest = new HttpGet(url);
         this.httpClientExecute(); // 执行客户端请求
     }
@@ -170,11 +167,12 @@ public class HttpClient {
         this.requestType = "POST";
 
         // 这里只能添加文本参数,上传文件等多媒体请另外添加
+        String para="";
 		if(params != null){
             MultipartEntityBuilder builder = this.getMultipartEntityBuilder();
 			for (NameValuePair param : params){
-				builder.addTextBody(param.getName(), param.getValue(),
-                        ContentType.create("text/plain", MIME.UTF8_CHARSET));
+                para += param.getName()+"="+param.getValue()+"&";
+				builder.addTextBody(param.getName(), param.getValue(), ContentType.create("text/plain", MIME.UTF8_CHARSET));
 			}
 		}
         if(!checkUrl()){
@@ -182,6 +180,11 @@ public class HttpClient {
             httpResponse = null;
             statusCode = -1;
             return;
+        }
+        if(!para.equals("")){
+            Log.i(TAG,"http post: "+url+"?"+para.substring(0,para.length()-1));
+        }else {
+            Log.i(TAG,"http post: "+url);
         }
 
         this.httpRequest = new HttpPost(url);
@@ -206,25 +209,22 @@ public class HttpClient {
             this.httpClient.getConnectionManager().shutdown(); //如果没有关闭客户端HTTPClient,需关闭启动垃圾回收机制
         }
 
+        // 添加 HTTP Header 参数列表
+        if(headerParams != null){
+            for (NameValuePair headerParam : headerParams){
+                this.httpRequest.addHeader(headerParam.getName(), headerParam.getValue());
+            }
+        }
+
         httpParameters = new BasicHttpParams(); // 新建并配置 HTTP 请求参数
-        HttpProtocolParams.setVersion(httpParameters, HttpVersion.HTTP_1_1);
-        HttpProtocolParams.setContentCharset(httpParameters, CHARSET);
         ConnManagerParams.setTimeout(httpParameters, connectionPoolTimeout); // 从连接池中取连接的超时时间
         HttpConnectionParams.setConnectionTimeout(httpParameters, connectionTimeout); // 客户端请求超时
         HttpConnectionParams.setSoTimeout(httpParameters, socketTimeout); // 服务器响应超时
-        httpParameters.setParameter(HTTP.CONTENT_TYPE, "multipart/form-data"); // 默认的POST数据提交方式
 
         // 设置我们的HttpClient支持HTTP和HTTPS两种模式
         SchemeRegistry schReg =new SchemeRegistry();
         schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
         schReg.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
-
-        // 添加 HTTP Header 参数列表
-        if(headerParams != null){
-            for (NameValuePair headerParam : headerParams){
-                httpParameters.setParameter(headerParam.getName(), headerParam.getValue());
-            }
-        }
 
         // 使用线程安全的连接管理来创建HttpClient
         ClientConnectionManager cm =new ThreadSafeClientConnManager(httpParameters, schReg);
@@ -232,7 +232,7 @@ public class HttpClient {
         // 创建一个客户端HTTP请求
         // 如果不使用连接管理器：this.httpClient =new DefaultHttpClient(httpParameters);
         this.httpClient =new DefaultHttpClient(cm, httpParameters);
-        ((AbstractHttpClient)this.httpClient ).setHttpRequestRetryHandler(requestRetryHandler);
+        // ((AbstractHttpClient)this.httpClient ).setHttpRequestRetryHandler(requestRetryHandler);
 
         try {
         	Log.i(TAG,"http connect: start ... ");

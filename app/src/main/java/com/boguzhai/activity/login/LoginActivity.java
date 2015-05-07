@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setScrollView(R.layout.login_page);
         title.setText("会员登录");
+        Variable.isLogin = false;
 		init();
 	}
 
@@ -74,7 +75,7 @@ public class LoginActivity extends BaseActivity {
                 HttpClient conn = new HttpClient();
                 conn.setParam("mobile", username);
                 conn.setParam("password", password);
-                conn.setUrl(Constant.url+"pClientInfoAction!login.htm");
+                conn.setUrl(Constant.url + "pClientInfoAction!login.htm");
         		new Thread(new HttpPostRunnable(conn, new LoginHandler())).start();
         	}
         break;
@@ -90,7 +91,7 @@ public class LoginActivity extends BaseActivity {
                     Variable.isLogin = true;
                     Variable.account.password = password;
                     JsonApi.getAccountInfo(data);
-                    Variable.mainTabIndex = R.id.rb_1;
+                    Variable.mainTabIndex = R.id.rb_4;
                     context.startActivity(new Intent(context, MainActivity.class));
                 break;
                 case 1:

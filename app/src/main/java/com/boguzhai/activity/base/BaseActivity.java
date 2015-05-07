@@ -28,6 +28,8 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        Variable.currentActivity = this;
+
         this.context = this;
         this.baseActivity = this;
         this.setContentView(R.layout.base_frame);

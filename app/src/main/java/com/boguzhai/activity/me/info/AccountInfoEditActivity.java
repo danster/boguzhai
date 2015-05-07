@@ -15,17 +15,17 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Address_1;
 import com.boguzhai.logic.dao.Address_2;
 import com.boguzhai.logic.dao.Address_3;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.utils.FileApi;
+import com.boguzhai.logic.thread.Tasks;
+import com.boguzhai.logic.thread.UploadImageHandler;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.ImageApi;
 import com.boguzhai.logic.utils.Utility;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,8 +33,7 @@ import java.util.ArrayList;
 public class AccountInfoEditActivity extends BaseActivity {
 
     private ImageView image;
-    private Bitmap newImage=null;
-    private String image_url="";
+    private StringBuffer image_url=new StringBuffer("");
 
     private ArrayList<Pair<String,String>> mapAddress1 = Variable.mapProvince;
     private ArrayList<Pair<String,String>> mapAddress2 = new ArrayList< Pair<String,String> >();
@@ -51,7 +50,6 @@ public class AccountInfoEditActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
         this.setScrollView(R.layout.me_myinfo_edit);
         title.setText("编辑个人信息");
-        Variable.currentActivity = this;
 
         init();
 	}
@@ -143,7 +141,7 @@ public class AccountInfoEditActivity extends BaseActivity {
             String qq = ((EditText)findViewById(R.id.qq)).getText().toString();
 
             HttpClient conn = new HttpClient();
-            conn.setParam("sessionid", Variable.account.sessionid);
+            conn.setHeader("sessionid", Variable.account.sessionid);
             conn.setParam("nickname", nickname);
             conn.setParam("address_1", addressId_1.toString());
             conn.setParam("address_2", addressId_2.toString());
@@ -152,12 +150,17 @@ public class AccountInfoEditActivity extends BaseActivity {
             conn.setParam("telephone", telephone);
             conn.setParam("fax", fax);
             conn.setParam("qq", qq);
-            conn.setParam("photo", image_url);
+
+//            conn.setUrl("http://danster.tunnel.mobi");
+//            new Thread(new HttpPostRunnable(conn, new HttpBaseHandler() {
+//                @Override
+//                public void handlerData(HttpClient conn) {
+//                    super.handlerData(conn);
+//                }
+//            })).start();
+
             conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
             new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
-            break;
-        case R.id.my_photo:
-            Utility.showUpdateImageDialog();
             break;
         case R.id.my_email:
             startActivity(new Intent(this, AccountBindEmailActivity.class));
@@ -165,6 +168,8 @@ public class AccountInfoEditActivity extends BaseActivity {
         case R.id.my_mobile:
             startActivity(new Intent(this, AccountBindMobileActivity.class));
             break;
+
+        case R.id.my_photo:       ImageApi.showUpdateImageDialog();                    break;
         case R.id.nickname_clear: ((EditText)findViewById(R.id.nickname)).setText(""); break;
         case R.id.telephone_clear:((EditText)findViewById(R.id.telephone)).setText("");break;
         case R.id.fax_clear:      ((EditText)findViewById(R.id.fax)).setText("");      break;
@@ -176,27 +181,18 @@ public class AccountInfoEditActivity extends BaseActivity {
 	}
 
 
-    private void updateImage(Bitmap bitmap){
-        if(bitmap.equals(null)){
-            return;
-        }
-        newImage = FileApi.compressBitmap(bitmap);
-
-        HttpClient conn = new HttpClient();
-        conn.setParam("sessionid", Variable.account.sessionid);
-        conn.setParam("type","当前头像");
-        conn.setParamBitmap("file", newImage);
-        conn.setUrl(Constant.url + "fileUploadAction!uploadImage.htm");
-        new Thread(new HttpPostRunnable(conn,new UpdateImageHandler())).start();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // requestCode: 1 相机取照片; 2 4.4以下版本相册取照片; 3 4.4及4.4以上版本相册取照片;
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK || data == null) {
+        if (resultCode != RESULT_OK || data == null)
             return;
-        }
-        updateImage(Utility.getBitmap(requestCode, data));
+
+        // 得到压缩过的照片,小于50KB
+        Bitmap newImage = ImageApi.getBitmap(requestCode, data);
+        if(newImage == null)
+            return;
+        Tasks.uploadImage("当前图像",newImage,new UploadImageHandler(image_url, image, newImage));
     }
 
     class SubmitHandler extends HttpJsonHandler {
@@ -204,40 +200,18 @@ public class AccountInfoEditActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
                 case 0:
-                    baseActivity.alertMessage("修改个人信息成功");
+                    Utility.alertMessage("修改个人信息成功");
                     break;
-
                 case -1:
-                    Variable.isLogin = false;
-                    startActivity(new Intent(baseActivity, LoginActivity.class));
-
+                    Utility.gotoLogin();
+                    break;
                 case 1:
-                    baseActivity.alertMessage("修改个人信息失败");
+                    Utility.alertMessage("修改个人信息失败");
                     break;
             }
         }
     }
 
-    class UpdateImageHandler extends HttpJsonHandler {
-        @Override
-        public void handlerData(int code, JSONObject data){
-            switch(code){
-                case 0:
-                    baseActivity.toastMessage("更新图像成功");
-                    try {
-                        image_url = data.getString("filepath");
-                        image.setImageBitmap(newImage);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    break;
-                default:
-                    baseActivity.toastMessage("更新图像失败");
-                    break;
-            }
-        }
-    }
 
 
 }

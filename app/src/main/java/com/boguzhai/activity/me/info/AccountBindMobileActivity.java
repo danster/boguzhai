@@ -72,15 +72,15 @@ public class AccountBindMobileActivity extends BaseActivity {
                         runOnUiThread(new Runnable() { // UI thread
                             @Override
                             public void run() {
-                                if (time <= 0) {
-                                    get_check_code.setEnabled(true);
-                                    get_check_code.setText("获取验证码");
-                                    time=30;
-                                    task.cancel();
-                                } else {
-                                    get_check_code.setText("获取验证码(" + time+")");
-                                }
-                                time--;
+                            if (time <= 0) {
+                                get_check_code.setEnabled(true);
+                                get_check_code.setText("获取验证码");
+                                time=30;
+                                task.cancel();
+                            } else {
+                                get_check_code.setText("获取验证码(" + time+")");
+                            }
+                            time--;
                             }
                         });
                     }

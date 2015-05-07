@@ -88,7 +88,7 @@ public class AccountBindEmailActivity extends BaseActivity {
                 };
 
                 HttpClient conn_check = new HttpClient();
-                conn_check.setParam("email", email.getText().toString());
+                conn_check.setParam("mobile", email.getText().toString());
                 conn_check.setUrl(Constant.url + "pLoginAction!getMobileCheckCode.htm");
                 new Thread(new HttpPostRunnable(conn_check, new GetCheckcodeHandler())).start();
                 new Timer().schedule(task, 0, 1000); // 一秒后启动task

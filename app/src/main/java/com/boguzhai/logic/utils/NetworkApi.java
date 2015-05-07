@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import java.util.List;
 
 public class NetworkApi {
+
     /**
      * 检测网络是否连接
      */
