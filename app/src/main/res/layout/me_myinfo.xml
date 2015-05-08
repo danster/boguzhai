@@ -103,9 +103,7 @@
         <LinearLayout style="@style/base_bar"
             android:id="@+id/my_delivery_address">
             <TextView style="@style/myinfo_left_text"  android:text="收货地址"/>
-            <TextView style="@style/myinfo_middle_text"
-                android:id="@+id/delivery_address"
-                android:text="上海市黄浦区福州路707号4楼4023室"/>
+            <TextView style="@style/myinfo_middle_text"/>
             <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
 

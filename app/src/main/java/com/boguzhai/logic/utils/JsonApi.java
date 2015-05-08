@@ -34,16 +34,17 @@ public class JsonApi {
             // 登录时返回有sessionid，更新时没有
             Variable.account.sessionid = data.has("sessionid") ? data.getString("sessionid") : Variable.account.sessionid ;
 
+            // 解析账户基本信息
             JSONObject account = data.getJSONObject("account");
             Variable.account.name = account.has("name") ? account.getString("name") : "";
             Variable.account.nickname = account.has("nickname") ? account.getString("nickname"): "";
 
             Variable.account.address_1 = account.has("address_1") ? account.getString("address_1"): "";
-            Variable.account.addressIndex1 = Utility.getAddressIndex1(Variable.account.address_1);
-            Variable.account.address_2 = account.has("address_2") ? account.getString("address_2"): "";;
-            Variable.account.addressIndex2 = Utility.getAddressIndex2(Variable.account.address_1, Variable.account.address_2);
-            Variable.account.address_3 = account.has("address_3") ? account.getString("address_3"): "";;
-            Variable.account.addressIndex3 = Utility.getAddressIndex3(Variable.account.address_1, Variable.account.address_2, Variable.account.address_3);
+            Variable.account.addressIndex1 = Utility.getAddressIndex(Variable.account.address_1);
+            Variable.account.address_2 = account.has("address_2") ? account.getString("address_2"): "";
+            Variable.account.addressIndex2 = Utility.getAddressIndex(Variable.account.address_1, Variable.account.address_2);
+            Variable.account.address_3 = account.has("address_3") ? account.getString("address_3"): "";
+            Variable.account.addressIndex3 = Utility.getAddressIndex(Variable.account.address_1, Variable.account.address_2, Variable.account.address_3);
 
             Variable.account.address = account.has("address") ? account.getString("address"): "";
             Variable.account.email = account.has("email") ? account.getString("email"): "";
@@ -53,17 +54,21 @@ public class JsonApi {
             Variable.account.fax = account.has("fax") ? account.getString("fax"): "";
             Variable.account.qq = account.has("qq") ? account.getString("qq"): "";
 
+            // 解析账户认证信息
             JSONObject authInfo = data.getJSONObject("authInfo");
 
+            // 解析资金账户信息
             JSONObject capitalInfo = data.getJSONObject("capitalInfo");
-
-            JSONArray deliveryAddressInfo = data.getJSONArray("deliveryAddressInfo");
-
+            Variable.account.capitalInfo.status = capitalInfo.getString("status");
+            Variable.account.capitalInfo.bankId = capitalInfo.getString("bankId");
+            Variable.account.capitalInfo.bankNumber = capitalInfo.getString("bankNumber");
+            Variable.account.capitalInfo.name = capitalInfo.getString("name");
+            Variable.account.capitalInfo.balance = capitalInfo.getString("balance");
+            Variable.account.capitalInfo.bail = capitalInfo.getString("bail");
 
         }catch(JSONException ex) {
             Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
         }
-
     }
 
     public static ArrayList<Lot> getLotList(JSONObject data){

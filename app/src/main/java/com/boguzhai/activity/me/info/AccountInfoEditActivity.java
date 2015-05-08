@@ -127,8 +127,14 @@ public class AccountInfoEditActivity extends BaseActivity {
 		super.onClick(view);
 		switch (view.getId()) {
 		case R.id.ok:
-            HttpClient conn = new HttpClient();
+            if(address_1.toString().equals("") || address_1.toString().equals("不限") ||
+                    address_2.toString().equals("") || address_2.toString().equals("不限") ||
+                    address_3.toString().equals("") || address_3.toString().equals("不限") ){
+                Utility.alertMessage("请完整填写地区信息");
+                break;
+            }
 
+            HttpClient conn = new HttpClient();
             conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
             conn.setParam("address_1", address_1.toString());
             conn.setParam("address_2", address_2.toString());

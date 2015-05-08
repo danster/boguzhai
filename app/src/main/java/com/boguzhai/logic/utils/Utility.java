@@ -37,9 +37,11 @@ public class Utility {
         Toast.makeText(Variable.app_context, msg, Toast.LENGTH_SHORT).show();
     }
     public static void alertMessage(String msg){
-        AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-        tips.setIcon(android.R.drawable.ic_dialog_info);
-        tips.setTitle("提示").setMessage(msg).show();
+        if(!Variable.currentActivity.isFinishing()){
+            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+            tips.setIcon(android.R.drawable.ic_dialog_info);
+            tips.setTitle("提示").setMessage(msg).setPositiveButton("确定",null).show();
+        }
     }
 
     // 由于sessionid不对或未登录状态，需要跳转到登陆页面
@@ -178,8 +180,55 @@ public class Utility {
     }
 
     /********************************* 根据条件获取省市区的名称 *************************/
+    public static String getAddressName(String address_id1){
+        String name="";
+        for(Address_1 address1 : Variable.mapZone){
+            if(address1.id.equals(address_id1)){
+                name = address1.name;
+                break;
+            }
+        }
+        return name;
+    }
 
-    public static int getAddressIndex1(String address_1){
+    public static String getAddressName(String address_id1, String address_id2){
+        String name="";
+        for(Address_1 address1 : Variable.mapZone){
+            if(address1.id.equals(address_id1)){
+                for(Address_2 address2 : address1.child){
+                    if(address2.id.equals(address_id2)){
+                        name = address2.name;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return name;
+    }
+
+    public static String getAddressName(String address_id1,String address_id2,String address_id3){
+        String name="";
+        for(Address_1 address1 : Variable.mapZone){
+            if(address1.id.equals(address_id1)){
+                for(Address_2 address2 : address1.child){
+                    if(address2.id.equals(address_id2)){
+                        for(Address_3 address3 : address2.child){
+                            if(address3.id.equals(address_id3)){
+                                name = address3.name;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return name;
+    }
+
+    public static int getAddressIndex(String address_1){
         int index = -1;
         for(Address_1 address1 : Variable.mapZone){
             if(address1.name.equals(address_1)){
@@ -190,7 +239,7 @@ public class Utility {
         return index;
     }
 
-    public static int getAddressIndex2(String address_1, String address_2){
+    public static int getAddressIndex(String address_1, String address_2){
         int index = -1;
         for(Address_1 address1 : Variable.mapZone){
             if(address1.name.equals(address_1)){
@@ -206,7 +255,7 @@ public class Utility {
         return index;
     }
 
-    public static int getAddressIndex3(String address_1, String address_2, String address_3){
+    public static int getAddressIndex(String address_1, String address_2, String address_3){
         int index = -1;
         for(Address_1 address1 : Variable.mapZone){
             if(address1.name.equals(address_1)){
@@ -226,6 +275,8 @@ public class Utility {
         }
         return index;
     }
+
+
 
 }
 

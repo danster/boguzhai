@@ -1,7 +1,6 @@
 package com.boguzhai.activity.me.info;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -18,6 +17,7 @@ import com.boguzhai.logic.dao.Address_1;
 import com.boguzhai.logic.dao.Address_2;
 import com.boguzhai.logic.dao.Address_3;
 import com.boguzhai.logic.thread.HttpJsonHandler;
+import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
 
@@ -31,14 +31,17 @@ public class DeliveryAddressEditActivity extends BaseActivity {
     private CheckBox isDefault;
     private DeliveryAddress oldAddress;
 
+    // 以下变量在实现“省市区选择器之间的联动”时使用
     private ArrayList<Pair<String,String>> mapAddress1 = Variable.mapProvince;
     private ArrayList<Pair<String,String>> mapAddress2 = new ArrayList< Pair<String,String> >();
     private ArrayList<Pair<String,String>> mapAddress3 = new ArrayList< Pair<String,String> >();
-    private StringBuffer addressId_1 =new StringBuffer("");
-    private StringBuffer addressId_2 =new StringBuffer("");
-    private StringBuffer addressId_3 =new StringBuffer("");
+    private StringBuffer address_1 =new StringBuffer("");
+    private StringBuffer address_2 =new StringBuffer("");
+    private StringBuffer address_3 =new StringBuffer("");
     private Address_1 currentAddress1;
     private Address_2 currentAddress2;
+    private int index1=-1, index2=-1,index3=-1;
+    private boolean index1boost=true, index2boost=true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,8 @@ public class DeliveryAddressEditActivity extends BaseActivity {
         telephone = (EditText) findViewById(R.id.telephone);
         zip = (EditText) findViewById(R.id.zip);
         isDefault = (CheckBox)findViewById(R.id.is_default);
+        isDefault.setChecked(false);
+
 
         if(oldAddress == null){
             title.setText("增加地址");
@@ -69,6 +74,10 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             telephone.setText(oldAddress.telephone);
             zip.setText(oldAddress.zip);
 
+            index1 = Utility.getAddressIndex(oldAddress.address_1);
+            index2 = Utility.getAddressIndex(oldAddress.address_1,oldAddress.address_2);
+            index3 = Utility.getAddressIndex(oldAddress.address_1,oldAddress.address_2,oldAddress.address_3);
+
             if(oldAddress.isDefault){
                 isDefault.setChecked(true);
             }else{
@@ -77,57 +86,52 @@ public class DeliveryAddressEditActivity extends BaseActivity {
         }
 
         // 省市区选择器之间的联动
-        Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_1), Utility.getValueList(mapAddress1),
-                new AdapterView.OnItemSelectedListener() {
-                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        currentAddress1 = Variable.mapZone.get(arg2);
-                        addressId_1.replace(0, addressId_1.length(), mapAddress1.get(arg2).first);
-                        addressId_2.replace(0, addressId_2.length(), "");
-                        addressId_3.replace(0, addressId_3.length(), "");
-
-                        mapAddress2.clear();
-                        for (Address_2 address_2 : currentAddress1.child) {
-                            mapAddress2.add(new Pair<String, String>(address_2.id, address_2.name));
-                        }
-
-                        Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_2), Utility.getValueList(mapAddress2),
-                                new AdapterView.OnItemSelectedListener() {
-                                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                                        currentAddress2 = currentAddress1.child.get(arg2);
-                                        addressId_2.replace(0, addressId_2.length(), mapAddress2.get(arg2).first);
-                                        addressId_3.replace(0, addressId_3.length(), "");
-
-                                        mapAddress3.clear();
-                                        for (Address_3 address_3 : currentAddress2.child) {
-                                            mapAddress3.add(new Pair<String, String>(address_3.id, address_3.name));
-                                        }
-
-                                        Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_3), Utility.getValueList(mapAddress3),
-                                                new AdapterView.OnItemSelectedListener() {
-                                                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                                                        addressId_3.replace(0, addressId_3.length(), mapAddress3.get(arg2).first);
-                                                    }
-
-                                                    public void onNothingSelected(AdapterView<?> arg0) {
-                                                        addressId_3.replace(0, addressId_3.length(), "");
-                                                    }
-                                                });
-
-                                    }
-
-                                    public void onNothingSelected(AdapterView<?> arg0) {
-                                        addressId_2.replace(0, addressId_2.length(), "");
-                                        addressId_3.replace(0, addressId_3.length(), "");
-                                    }
-                                });
+        Utility.setSpinner(baseActivity, (Spinner)findViewById(R.id.address_1), Utility.getValueList(mapAddress1),
+            new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    currentAddress1 = Variable.mapZone.get(arg2);
+                    address_1.replace(0, address_1.length(), mapAddress1.get(arg2).first);
+                    address_2.replace(0, address_2.length(), "");
+                    address_3.replace(0, address_3.length(), "");
+                    mapAddress2.clear();
+                    for (Address_2 address_2 : currentAddress1.child) {
+                        mapAddress2.add(new Pair<String, String>(address_2.id, address_2.name));
                     }
+                    Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_2), Utility.getValueList(mapAddress2),
+                            new AdapterView.OnItemSelectedListener() {
+                                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                                    currentAddress2 = currentAddress1.child.get(arg2);
+                                    address_2.replace(0, address_2.length(), mapAddress2.get(arg2).first);
+                                    address_3.replace(0, address_3.length(), "");
 
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        addressId_1.replace(0, addressId_1.length(), "");
-                        addressId_2.replace(0, addressId_2.length(), "");
-                        addressId_3.replace(0, addressId_3.length(), "");
+                                    mapAddress3.clear();
+                                    for (Address_3 address_3 : currentAddress2.child) {
+                                        mapAddress3.add(new Pair<String, String>(address_3.id, address_3.name));
+                                    }
+                                    Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_3), Utility.getValueList(mapAddress3),
+                                        new AdapterView.OnItemSelectedListener() {
+                                            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                                                address_3.replace(0, address_3.length(), mapAddress3.get(arg2).first);
+                                            }
+
+                                            public void onNothingSelected(AdapterView<?> arg0){}
+                                        });
+                                    if(index2boost) {
+                                        ((Spinner) findViewById(R.id.address_3)).setSelection(index3);
+                                        index2boost=false;
+                                    }
+                                }
+
+                                public void onNothingSelected(AdapterView<?> arg0) {}
+                            });
+                    if(index1boost) {
+                        ((Spinner) findViewById(R.id.address_2)).setSelection(index2);
+                        index1boost=false;
                     }
-                });
+                }
+                public void onNothingSelected(AdapterView<?> arg0) {}
+            });
+        ((Spinner) findViewById(R.id.address_1)).setSelection(index1);
 
         int[] ids = {R.id.ok, R.id.name_clear, R.id.address_clear, R.id.mobile_clear,
                      R.id.telephone_clear, R.id.zip_clear};
@@ -142,15 +146,16 @@ public class DeliveryAddressEditActivity extends BaseActivity {
 
             if(name.getText().toString().equals("") ||address.getText().toString().equals("") ||
                mobile.getText().toString().equals("")){
-                alertMessage("必填项不能为空！");
+                Utility.alertMessage("必填项不能为空！");
+                break;
             }
 
             HttpClient conn = new HttpClient();
-            conn.setParam("sessionid", Variable.account.sessionid);
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
             conn.setParam("receiver", name.getText().toString());
-            conn.setParam("address_1", addressId_1.toString());
-            conn.setParam("address_2", addressId_2.toString());
-            conn.setParam("address_3", addressId_3.toString());
+            conn.setParam("address_1", address_1.toString());
+            conn.setParam("address_2", address_2.toString());
+            conn.setParam("address_3", address_3.toString());
             conn.setParam("address", address.getText().toString());
             conn.setParam("mobile", mobile.getText().toString());
             conn.setParam("telephone", telephone.getText().toString());
@@ -158,13 +163,13 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             conn.setParam("isDefault", isDefault.isChecked()?"1":"0");
 
             if(oldAddress == null){ //新增收货信息
-                conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
-                //new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
+                conn.setUrl(Constant.url+"pClientInfoAction!addDeliveryAddress.htm");
+                new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
 
             } else { //修改收货信息
                 conn.setParam("addressId", Variable.currentDeliveryAddress.id);
-                conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
-                //new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
+                conn.setUrl(Constant.url + "pClientInfoAction!updateDeliveryAddress.htm");
+                new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
             }
 
             this.finish();
@@ -177,10 +182,10 @@ public class DeliveryAddressEditActivity extends BaseActivity {
                 public void onClick(DialogInterface dialog, int which) { //删除收货信息
                     dialog.dismiss();
                     HttpClient conn = new HttpClient();
-                    conn.setParam("sessionid", Variable.account.sessionid);
+                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
                     conn.setParam("addressId", Variable.currentDeliveryAddress.id);
-                    conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
-                    //new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
+                    conn.setUrl(Constant.url + "pClientInfoAction!removeDeliveryAddress.htm");
+                    new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
 
                 }
             });
@@ -207,12 +212,10 @@ public class DeliveryAddressEditActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
                 case 0:
-                    baseActivity.getAlert("操作成功")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                baseActivity.startActivity(new Intent(baseActivity, AccountInfoActivity.class));
-                            }
-                        }).show();
+                    finish();
+                    break;
+                case -1:
+                    Utility.gotoLogin();
                     break;
                 default:
                     baseActivity.alertMessage("操作失败");

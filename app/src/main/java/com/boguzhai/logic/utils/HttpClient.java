@@ -73,9 +73,9 @@ public class HttpClient {
     public org.apache.http.client.HttpClient httpClient = null;  //HTTP 客户端连接管理器
     public String url = "";
     public String requestType = "GET";
-    public int connectionPoolTimeout = 10000; //从ConnectionManager管理的连接池中取出连接的超时时间，毫秒
-    public int connectionTimeout = 20000; //通过网络与服务器建立连接的超时时间(请求超时)，毫秒
-    public int socketTimeout = 30000;//Socket读数据的超时时间，即从服务器获取响应数据需要等待的时间，毫秒
+    public int connectionPoolTimeout = 3000; //从ConnectionManager管理的连接池中取出连接的超时时间，毫秒
+    public int connectionTimeout = 6000; //通过网络与服务器建立连接的超时时间(请求超时)，毫秒
+    public int socketTimeout = 8000;//Socket读数据的超时时间，即从服务器获取响应数据需要等待的时间，毫秒
 
     public HttpRequestBase httpRequest = null; //HTTP 请求管理器
     public HttpParams httpParameters = null;   //HTTP 请求的配置参数

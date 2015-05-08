@@ -101,13 +101,9 @@ public class Lot {
     }
 
     public static Lot parseSimpleJson(JSONObject lotObj){
-        Lot lot = null;
+        Lot lot = new Lot();
         try {
-            lot = new Lot();
-            Log.i("JSON", "parse lot starting ...");
             JSONObject base = lotObj.getJSONObject("base");
-
-            Log.i("JSON", "parse lot base starting ...");
             lot.id = base.getString("id");
             lot.no = base.getString("no");
             lot.name = base.getString("name");
@@ -116,15 +112,12 @@ public class Lot {
             lot.dealType = base.getString("dealType");
             lot.auctionId = base.getString("auctionMainId");
             lot.sessionId = base.getString("auctionPartId");
-
             lot.description = base.getString("description");
 
             lot.appraisal1 = base.getString("appraisal1").equals("")?0.0:Double.parseDouble(base.getString("appraisal1"));
             lot.appraisal2 = base.getString("appraisal2").equals("")?0.0:Double.parseDouble(base.getString("appraisal2"));
             lot.startPrice = base.getString("startPrice").equals("")?0.0:Double.parseDouble(base.getString("startPrice"));
             lot.dealPrice = base.getString("dealPrice").equals("")?0.0:Double.parseDouble(base.getString("dealPrice"));
-
-            Log.i("JSON","parse lot end .");
 
         }catch(JSONException ex) {
             ex.printStackTrace();

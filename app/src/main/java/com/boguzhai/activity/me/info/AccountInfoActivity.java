@@ -18,7 +18,7 @@ import com.boguzhai.logic.thread.HttpGetRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 
 public class AccountInfoActivity extends BaseActivity {
-    private TextView verify, capital, delivery_address;
+    private TextView verify, capital;
     private HttpClient conn;
 
 	@Override
@@ -31,8 +31,6 @@ public class AccountInfoActivity extends BaseActivity {
 
         verify = (TextView)findViewById(R.id.verify);
         capital = (TextView)findViewById(R.id.capital);
-        delivery_address = (TextView)findViewById(R.id.delivery_address);
-
         init();
 	}
 
@@ -52,7 +50,6 @@ public class AccountInfoActivity extends BaseActivity {
         ((TextView)findViewById(R.id.zone)).setText(Variable.account.address_1+" "+Variable.account.address_2+" "+Variable.account.address_3);
         ((TextView)findViewById(R.id.email)).setText(Variable.account.email);
         ((TextView)findViewById(R.id.mobile)).setText(Variable.account.mobile);
-
     }
 
 	@Override
