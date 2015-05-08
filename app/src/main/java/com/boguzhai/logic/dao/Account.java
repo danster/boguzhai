@@ -17,8 +17,11 @@ public class Account implements Serializable {
     public String name="";      //姓名
     public String nickname="";  //昵称
     public String address_1=""; //省
+    public int addressIndex1=-1;
     public String address_2=""; //市
+    public int addressIndex2=-1;
     public String address_3=""; //区
+    public int addressIndex3=-1;
     public String address="";   //具体地址
 
     public String email="";     //邮箱

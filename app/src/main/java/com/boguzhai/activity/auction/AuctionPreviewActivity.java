@@ -5,22 +5,19 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.apply.ApplyForAuctionActivity;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
-import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
-import java.util.ArrayList;
-
 public class AuctionPreviewActivity extends BaseActivity {
 
-    private ArrayList<Lot> list;
     private ListViewForScrollView listview;
     LotListAdapter adapter;
 
@@ -29,7 +26,7 @@ public class AuctionPreviewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLinearView(R.layout.auction_preview);
         title.setText("拍卖预展");
-        title_right.setText("筛选");
+        title_right.setText("申请参拍");
         title_right.setVisibility(View.VISIBLE);
         init();
     }
@@ -37,6 +34,8 @@ public class AuctionPreviewActivity extends BaseActivity {
     private void init(){
         Utility.showAuctionInfo(baseActivity, Variable.currentAuction, Variable.currentSession);
         showListView();
+        this.listen(R.id.filter);
+        this.listen(R.id.search);
     }
 
     @Override
@@ -44,22 +43,28 @@ public class AuctionPreviewActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.title_right:
+                startActivity(new Intent(this, ApplyForAuctionActivity.class));
+                break;
+            case R.id.filter:
                 startActivity(new Intent(this, LotFilterActivity.class));
+                break;
+            case R.id.search:
+                startActivity(new Intent(this, LotFilterActivity.class));
+                break;
             default:
-            break;
+                break;
         }
     }
 
     // 展示专场的拍品列表
     public void showListView(){
         listview = (ListViewForScrollView) findViewById(R.id.lotlist);
-        list = new ArrayList<Lot>();
-        adapter = new LotListAdapter(this, list);
+        adapter = new LotListAdapter(this, Variable.currentSession.lotArrayList);
         listview.setAdapter(adapter);
 
         HttpClient conn = new HttpClient();
         conn.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoListBySessionId.htm?auctionSessionId="+Variable.currentSession.id);
-        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter))).start();
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(Variable.currentSession.lotArrayList, adapter))).start();
     }
 
 }

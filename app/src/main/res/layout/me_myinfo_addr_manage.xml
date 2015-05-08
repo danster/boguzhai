@@ -28,6 +28,6 @@
         android:background="@color/gold"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:id="@+id/add"
+        android:id="@+id/add_address"
         android:text="添加地址"/>
 </LinearLayout>

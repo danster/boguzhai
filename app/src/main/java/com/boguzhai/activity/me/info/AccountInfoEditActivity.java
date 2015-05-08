@@ -32,92 +32,86 @@ import java.util.ArrayList;
 
 public class AccountInfoEditActivity extends BaseActivity {
 
-    private ImageView image;
-    private StringBuffer image_url=new StringBuffer("");
-
+    // 以下变量在实现“省市区选择器之间的联动”时使用
     private ArrayList<Pair<String,String>> mapAddress1 = Variable.mapProvince;
     private ArrayList<Pair<String,String>> mapAddress2 = new ArrayList< Pair<String,String> >();
     private ArrayList<Pair<String,String>> mapAddress3 = new ArrayList< Pair<String,String> >();
-    private StringBuffer addressId_1 =new StringBuffer("");
-    private StringBuffer addressId_2 =new StringBuffer("");
-    private StringBuffer addressId_3 =new StringBuffer("");
+    private StringBuffer address_1 =new StringBuffer("");
+    private StringBuffer address_2 =new StringBuffer("");
+    private StringBuffer address_3 =new StringBuffer("");
     private Address_1 currentAddress1;
     private Address_2 currentAddress2;
-
+    boolean index1boost=true, index2boost=true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         this.setScrollView(R.layout.me_myinfo_edit);
         title.setText("编辑个人信息");
-
         init();
 	}
 
 	private void init(){
-        image = (ImageView)findViewById(R.id.image);
+        fillAccountInfo();
+
         // 省市区选择器之间的联动
         Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_1), Utility.getValueList(mapAddress1),
-                new AdapterView.OnItemSelectedListener() {
-                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        currentAddress1 = Variable.mapZone.get(arg2);
-                        addressId_1.replace(0, addressId_1.length(), mapAddress1.get(arg2).first);
-                        addressId_2.replace(0, addressId_2.length(), "");
-                        addressId_3.replace(0, addressId_3.length(), "");
+            new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    currentAddress1 = Variable.mapZone.get(arg2);
+                    address_1.replace(0, address_1.length(), mapAddress1.get(arg2).second);
+                    address_2.replace(0, address_2.length(), "");
+                    address_3.replace(0, address_3.length(), "");
+                    mapAddress2.clear();
+                    for (Address_2 address_2 : currentAddress1.child) {
+                        mapAddress2.add(new Pair<String, String>(address_2.id, address_2.name));
+                    }
 
-                        mapAddress2.clear();
-                        for (Address_2 address_2 : currentAddress1.child) {
-                            mapAddress2.add(new Pair<String, String>(address_2.id, address_2.name));
-                        }
+                    Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_2), Utility.getValueList(mapAddress2),
+                        new AdapterView.OnItemSelectedListener() {
+                            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                                currentAddress2 = currentAddress1.child.get(arg2);
+                                address_2.replace(0, address_2.length(), mapAddress2.get(arg2).second);
+                                address_3.replace(0, address_3.length(), "");
 
-                        Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_2), Utility.getValueList(mapAddress2),
-                                new AdapterView.OnItemSelectedListener() {
-                                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                                        currentAddress2 = currentAddress1.child.get(arg2);
-                                        addressId_2.replace(0, addressId_2.length(), mapAddress2.get(arg2).first);
-                                        addressId_3.replace(0, addressId_3.length(), "");
+                                mapAddress3.clear();
+                                for (Address_3 address_3 : currentAddress2.child) {
+                                    mapAddress3.add(new Pair<String, String>(address_3.id, address_3.name));
+                                }
 
-                                        mapAddress3.clear();
-                                        for (Address_3 address_3 : currentAddress2.child) {
-                                            mapAddress3.add(new Pair<String, String>(address_3.id, address_3.name));
+                                Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_3), Utility.getValueList(mapAddress3),
+                                    new AdapterView.OnItemSelectedListener() {
+                                        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                                            address_3.replace(0, address_3.length(), mapAddress3.get(arg2).second);
                                         }
+                                        public void onNothingSelected(AdapterView<?> arg0) {}
+                                    });
 
-                                        Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_3), Utility.getValueList(mapAddress3),
-                                                new AdapterView.OnItemSelectedListener() {
-                                                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                                                        addressId_3.replace(0, addressId_3.length(), mapAddress3.get(arg2).first);
-                                                    }
-
-                                                    public void onNothingSelected(AdapterView<?> arg0) {
-                                                        addressId_3.replace(0, addressId_3.length(), "");
-                                                    }
-                                                });
-
-                                    }
-
-                                    public void onNothingSelected(AdapterView<?> arg0) {
-                                        addressId_2.replace(0, addressId_2.length(), "");
-                                        addressId_3.replace(0, addressId_3.length(), "");
-                                    }
-                                });
+                                if (index2boost && arg2 == Variable.account.addressIndex2) {
+                                    ((Spinner) findViewById(R.id.address_3)).setSelection(Variable.account.addressIndex3);
+                                }
+                                index2boost = false;
+                            }
+                            public void onNothingSelected(AdapterView<?> arg0) {}
+                        });
+                    if (index1boost && arg2 == Variable.account.addressIndex1) {
+                        ((Spinner) findViewById(R.id.address_2)).setSelection(Variable.account.addressIndex2);
                     }
+                    index1boost = false;
+                }
+                public void onNothingSelected(AdapterView<?> arg0) {}
+            });
+        ((Spinner) findViewById(R.id.address_1)).setSelection(Variable.account.addressIndex1);
 
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        addressId_1.replace(0, addressId_1.length(), "");
-                        addressId_2.replace(0, addressId_2.length(), "");
-                        addressId_3.replace(0, addressId_3.length(), "");
-                    }
-                });
-
-        fillAccountInfo();
 		int[] ids = { R.id.my_email, R.id.my_mobile, R.id.ok, R.id.name_clear,
                       R.id.nickname_clear, R.id.my_photo, R.id.telephone_clear,
                       R.id.fax_clear, R.id.qq_clear, R.id.address_clear };
 		this.listen(ids);
 	}
 
+    // 修改之前先填充账户信息
     private void fillAccountInfo(){
-        image.setImageBitmap(Variable.account.image);
+        ((ImageView)findViewById(R.id.image)).setImageBitmap(Variable.account.image);
         ((TextView)findViewById(R.id.name)).setText(Variable.account.name);
         ((EditText)findViewById(R.id.nickname)).setText(Variable.account.nickname);
         ((EditText)findViewById(R.id.address)).setText(Variable.account.address);
@@ -126,7 +120,6 @@ public class AccountInfoEditActivity extends BaseActivity {
         ((EditText)findViewById(R.id.qq)).setText(Variable.account.qq);
         ((TextView)findViewById(R.id.email)).setText(Variable.account.email);
         ((TextView)findViewById(R.id.mobile)).setText(Variable.account.mobile);
-
     }
 
 	@Override
@@ -134,52 +127,32 @@ public class AccountInfoEditActivity extends BaseActivity {
 		super.onClick(view);
 		switch (view.getId()) {
 		case R.id.ok:
-            String nickname = ((EditText)findViewById(R.id.nickname)).getText().toString();
-            String address = ((EditText)findViewById(R.id.address)).getText().toString();
-            String telephone = ((EditText)findViewById(R.id.telephone)).getText().toString();
-            String fax = ((EditText)findViewById(R.id.fax)).getText().toString();
-            String qq = ((EditText)findViewById(R.id.qq)).getText().toString();
-
             HttpClient conn = new HttpClient();
-            conn.setHeader("sessionid", Variable.account.sessionid);
-            conn.setParam("nickname", nickname);
-            conn.setParam("address_1", addressId_1.toString());
-            conn.setParam("address_2", addressId_2.toString());
-            conn.setParam("address_3", addressId_3.toString());
-            conn.setParam("address", address);
-            conn.setParam("telephone", telephone);
-            conn.setParam("fax", fax);
-            conn.setParam("qq", qq);
 
-//            conn.setUrl("http://danster.tunnel.mobi");
-//            new Thread(new HttpPostRunnable(conn, new HttpBaseHandler() {
-//                @Override
-//                public void handlerData(HttpClient conn) {
-//                    super.handlerData(conn);
-//                }
-//            })).start();
-
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setParam("address_1", address_1.toString());
+            conn.setParam("address_2", address_2.toString());
+            conn.setParam("address_3", address_3.toString());
+            conn.setParam("nickname",  ((EditText)findViewById(R.id.nickname)).getText().toString());
+            conn.setParam("address",   ((EditText)findViewById(R.id.address)).getText().toString());
+            conn.setParam("telephone", ((EditText)findViewById(R.id.telephone)).getText().toString());
+            conn.setParam("fax",       ((EditText)findViewById(R.id.fax)).getText().toString());
+            conn.setParam("qq",        ((EditText)findViewById(R.id.qq)).getText().toString());
             conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
             new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
             break;
-        case R.id.my_email:
-            startActivity(new Intent(this, AccountBindEmailActivity.class));
-            break;
-        case R.id.my_mobile:
-            startActivity(new Intent(this, AccountBindMobileActivity.class));
-            break;
 
+        case R.id.my_email:  Utility.gotoActivity(AccountBindEmailActivity.class);     break;
+        case R.id.my_mobile: Utility.gotoActivity(AccountBindMobileActivity.class);    break;
         case R.id.my_photo:       ImageApi.showUpdateImageDialog();                    break;
         case R.id.nickname_clear: ((EditText)findViewById(R.id.nickname)).setText(""); break;
         case R.id.telephone_clear:((EditText)findViewById(R.id.telephone)).setText("");break;
         case R.id.fax_clear:      ((EditText)findViewById(R.id.fax)).setText("");      break;
         case R.id.qq_clear:       ((EditText)findViewById(R.id.qq)).setText("");       break;
         case R.id.address_clear:  ((EditText)findViewById(R.id.address)).setText("");  break;
-
         default: break;
 		};
 	}
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -189,10 +162,12 @@ public class AccountInfoEditActivity extends BaseActivity {
             return;
 
         // 得到压缩过的照片,小于50KB
-        Bitmap newImage = ImageApi.getBitmap(requestCode, data);
-        if(newImage == null)
-            return;
-        Tasks.uploadImage("当前图像",newImage,new UploadImageHandler(image_url, image, newImage));
+        Bitmap bitmap = ImageApi.getBitmap(requestCode, data);
+
+        if(bitmap != null) {
+            Tasks.uploadImage("当前图像", bitmap,
+                    new UploadImageHandler((ImageView)findViewById(R.id.image), bitmap));
+        }
     }
 
     class SubmitHandler extends HttpJsonHandler {
@@ -211,8 +186,6 @@ public class AccountInfoEditActivity extends BaseActivity {
             }
         }
     }
-
-
 
 }
 

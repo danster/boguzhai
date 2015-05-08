@@ -1,6 +1,5 @@
 package com.boguzhai.logic.utils;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
@@ -32,15 +31,20 @@ public class JsonApi {
 
     public static void getAccountInfo(JSONObject data){
         try {
-            Variable.account.sessionid = data.has("sessionid") ? data.getString("sessionid") : "";
-            Log.i("sessionid", "new sessionid = "+Variable.account.sessionid);
+            // 登录时返回有sessionid，更新时没有
+            Variable.account.sessionid = data.has("sessionid") ? data.getString("sessionid") : Variable.account.sessionid ;
 
             JSONObject account = data.getJSONObject("account");
             Variable.account.name = account.has("name") ? account.getString("name") : "";
             Variable.account.nickname = account.has("nickname") ? account.getString("nickname"): "";
+
             Variable.account.address_1 = account.has("address_1") ? account.getString("address_1"): "";
-            Variable.account.address_2 = account.has("address_2") ? account.getString("address_2"): "";
-            Variable.account.address_3 = account.has("address_3") ? account.getString("address_3"): "";
+            Variable.account.addressIndex1 = Utility.getAddressIndex1(Variable.account.address_1);
+            Variable.account.address_2 = account.has("address_2") ? account.getString("address_2"): "";;
+            Variable.account.addressIndex2 = Utility.getAddressIndex2(Variable.account.address_1, Variable.account.address_2);
+            Variable.account.address_3 = account.has("address_3") ? account.getString("address_3"): "";;
+            Variable.account.addressIndex3 = Utility.getAddressIndex3(Variable.account.address_1, Variable.account.address_2, Variable.account.address_3);
+
             Variable.account.address = account.has("address") ? account.getString("address"): "";
             Variable.account.email = account.has("email") ? account.getString("email"): "";
             Variable.account.mobile = account.has("mobile") ? account.getString("mobile"): "";
@@ -48,6 +52,13 @@ public class JsonApi {
             Variable.account.telephone = account.has("telephone") ? account.getString("telephone"): "";
             Variable.account.fax = account.has("fax") ? account.getString("fax"): "";
             Variable.account.qq = account.has("qq") ? account.getString("qq"): "";
+
+            JSONObject authInfo = data.getJSONObject("authInfo");
+
+            JSONObject capitalInfo = data.getJSONObject("capitalInfo");
+
+            JSONArray deliveryAddressInfo = data.getJSONArray("deliveryAddressInfo");
+
 
         }catch(JSONException ex) {
             Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();

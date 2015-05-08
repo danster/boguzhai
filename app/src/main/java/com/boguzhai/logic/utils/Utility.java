@@ -19,6 +19,9 @@ import com.boguzhai.activity.auction.AuctionPreviewActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Account;
+import com.boguzhai.logic.dao.Address_1;
+import com.boguzhai.logic.dao.Address_2;
+import com.boguzhai.logic.dao.Address_3;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lottype_1;
 import com.boguzhai.logic.dao.Lottype_2;
@@ -45,6 +48,11 @@ public class Utility {
         Variable.isLogin = false;
         Variable.lastActivity = Variable.currentActivity;
         Variable.currentActivity.startActivity(new Intent(Variable.currentActivity, LoginActivity.class));
+    }
+
+    public static void gotoActivity(Class<?> cls){
+        Variable.lastActivity = Variable.currentActivity;
+        Variable.currentActivity.startActivity(new Intent(Variable.currentActivity, cls));
     }
 
 
@@ -167,6 +175,56 @@ public class Utility {
             }
         }
         return type_3;
+    }
+
+    /********************************* 根据条件获取省市区的名称 *************************/
+
+    public static int getAddressIndex1(String address_1){
+        int index = -1;
+        for(Address_1 address1 : Variable.mapZone){
+            if(address1.name.equals(address_1)){
+                index = Variable.mapZone.indexOf(address1);
+                break;
+            }
+        }
+        return index;
+    }
+
+    public static int getAddressIndex2(String address_1, String address_2){
+        int index = -1;
+        for(Address_1 address1 : Variable.mapZone){
+            if(address1.name.equals(address_1)){
+                for(Address_2 address2 : address1.child){
+                    if(address2.name.equals(address_2)){
+                        index = address1.child.indexOf(address2);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return index;
+    }
+
+    public static int getAddressIndex3(String address_1, String address_2, String address_3){
+        int index = -1;
+        for(Address_1 address1 : Variable.mapZone){
+            if(address1.name.equals(address_1)){
+                for(Address_2 address2 : address1.child){
+                    if(address2.name.equals(address_2)){
+                        for(Address_3 address3 : address2.child){
+                            if(address3.name.equals(address_3)){
+                                index = address2.child.indexOf(address3);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return index;
     }
 
 }

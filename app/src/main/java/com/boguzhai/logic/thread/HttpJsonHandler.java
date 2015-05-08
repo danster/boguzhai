@@ -34,7 +34,13 @@ public abstract class HttpJsonHandler extends Handler {
                 }
                 break;
             default:
-                Toast.makeText(Variable.app_context, (String) msg.obj, Toast.LENGTH_SHORT).show();
+                if(Variable.app_context == null)
+                    Log.i("TAG", "Variable.app_context is null");
+
+                if(msg.obj == null)
+                    Log.i("TAG", "msg.obj is null");
+
+                Toast.makeText(Variable.app_context, (String)msg.obj, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -76,7 +76,8 @@ public class LoginActivity extends BaseActivity {
                 conn.setParam("mobile", username);
                 conn.setParam("password", password);
                 conn.setUrl(Constant.url + "pClientInfoAction!login.htm");
-        		new Thread(new HttpPostRunnable(conn, new LoginHandler())).start();
+
+           		new Thread(new HttpPostRunnable(conn, new LoginHandler())).start();
         	}
         break;
         default:  break;

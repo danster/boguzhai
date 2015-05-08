@@ -49,7 +49,9 @@ public class Variable {
     public static Session currentSession = null;
     public static Lot currentLot = null;
     public static DeliveryAddress currentDeliveryAddress = null; //修改收货地址时初始化
-    public static Activity currentActivity = null;
-    public static Activity lastActivity = null;
+
+    public static Activity currentActivity = null; //当前的Activity
+    public static Activity lastActivity = null;    //跳转进来之前的Activity
+    public static Activity nextActivity = null;    //即将跳转去的Activity
 
 }

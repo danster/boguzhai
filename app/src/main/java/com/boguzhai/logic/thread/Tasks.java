@@ -14,9 +14,9 @@ public class Tasks {
 
     public static void uploadImage(String type, Bitmap bitmap, HttpJsonHandler handler){
         HttpClient conn = new HttpClient();
-        conn.setHeader("sessionid", Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("type", type);
-        conn.setParamBitmap("file", bitmap);
+        conn.setParamBitmap("fileStr", bitmap);
         conn.setUrl(Constant.url.replace("/phones/","/") + "fileUploadAction!uploadImage.htm");
         new Thread(new HttpPostRunnable(conn, handler)).start();
     }

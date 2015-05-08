@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -97,7 +96,6 @@ public class RegisterActivity extends BaseActivity {
                 }
             };
 
-            Log.i(TAG, "去获取验证码");
             HttpClient conn = new HttpClient();
             conn.setParam("mobile", username.getText().toString());
             conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");

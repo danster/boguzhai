@@ -62,6 +62,18 @@ public class MeFragment extends Fragment {
             view.findViewById(R.id.title_right).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.me_myinfo).setVisibility(View.VISIBLE);
             view.findViewById(R.id.me_login_view).setVisibility(View.GONE);
+            ((TextView)view.findViewById(R.id.name)).setText(Variable.account.nickname);
+
+            String address = "";
+            if(Variable.account.address_1.equals(Variable.account.address_2)){
+                address = Variable.account.address_2+" "+Variable.account.address_3;
+            } else {
+                address = Variable.account.address_1+" "+Variable.account.address_2;
+            }
+
+            ((TextView)view.findViewById(R.id.address)).setText(address);
+            ((TextView)view.findViewById(R.id.mobile)).setText(Variable.account.mobile);
+
         }
     }
 
@@ -84,6 +96,7 @@ public class MeFragment extends Fragment {
                     startActivity(new Intent(context, AccountInfoActivity.class));
                     break;
                 case R.id.me_my_auctions:
+
                     startActivityByLogin(MyAuctionActivity.class);
                     break;
                 case R.id.me_biding:

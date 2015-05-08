@@ -37,7 +37,7 @@ public class Auction {
         Auction auction = null;
         try {
             auction = new Auction();
-            Log.i("JSON","parse auction starting ...");
+            Log.i("JSON","parse auction "+auctionObj.getString("id")+" starting ...");
 
             auction.id = auctionObj.getString("id");
             auction.name = auctionObj.getString("name");
@@ -47,11 +47,10 @@ public class Auction {
             auction.auctionTime = auctionObj.getString("auctionTime");
             auction.previewTime = auctionObj.getString("previewTime");
 
-            auction.dealNum = auctionObj.getString("dealNum").equals("")?0:Integer.parseInt(auctionObj.getString("dealNum"));
-            auction.dealSum = auctionObj.getString("dealSum").equals("")?0.0:Double.parseDouble(auctionObj.getString("dealSum"));
+            auction.dealNum = auctionObj.getString("dealNum").equals("") ? 0 : Integer.parseInt(auctionObj.getString("dealNum"));
+            auction.dealSum = auctionObj.getString("dealSum").equals("") ? 0.0 : Double.parseDouble(auctionObj.getString("dealSum"));
             auction.showNum = auctionObj.getString("showNum").equals("")?0:Integer.parseInt(auctionObj.getString("showNum"));
 
-            Log.i("JSON","parse session list starting ... ");
             if(auctionObj.has("auctionSessionList")){
                 JSONArray sessionArray = auctionObj.getJSONArray("auctionSessionList");
                 for(int i=0; i<sessionArray.length(); ++i){
@@ -60,11 +59,10 @@ public class Auction {
                     auction.sessionList.add(session);
                 }
             }
-            Log.i("JSON","parse session list end .");
-
             Log.i("JSON","parse auction end .");
 
         }catch(JSONException ex) {
+            ex.printStackTrace();
             Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
         }
 

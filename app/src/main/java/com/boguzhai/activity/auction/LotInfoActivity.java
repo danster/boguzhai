@@ -1,13 +1,11 @@
 package com.boguzhai.activity.auction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.apply.ApplyForAuctionActivity;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
@@ -29,8 +27,6 @@ public class LotInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLinearView(R.layout.auction_lot_info);
         title.setText("拍品信息");
-        title_right.setText("申请参拍");
-        title_right.setVisibility(View.VISIBLE);
         init();
     }
 
@@ -53,9 +49,6 @@ public class LotInfoActivity extends BaseActivity {
     public void onClick(View v){
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.title_right:
-                startActivity(new Intent(this, ApplyForAuctionActivity.class));
-                break;
             case R.id.favor:
                 //收藏该拍品
                 break;

@@ -24,7 +24,7 @@ public class DeliveryAddressManageActivity extends BaseActivity {
 
 	protected void init(){
         showListView();
-        this.listen(R.id.ok);
+        this.listen(R.id.add_address);
 	}
 
     public void showListView(){
@@ -37,7 +37,7 @@ public class DeliveryAddressManageActivity extends BaseActivity {
 	public void onClick(View view) {
 		super.onClick(view);
 		switch (view.getId()) {
-        case R.id.add:
+        case R.id.add_address:
             Variable.currentDeliveryAddress = null;
             startActivity(new Intent(this, DeliveryAddressEditActivity.class));
             break;

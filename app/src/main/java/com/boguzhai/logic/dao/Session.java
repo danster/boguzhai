@@ -1,7 +1,6 @@
 package com.boguzhai.logic.dao;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
@@ -43,8 +42,6 @@ public class Session {
         Session session = null;
 
         try {
-            Log.i("JSON", "parse session start ... ");
-
             session = new Session();
             session.id          = sessionObj.getString("id");
             session.name        = sessionObj.getString("name");
@@ -60,9 +57,8 @@ public class Session {
             session.dealSum = sessionObj.getString("dealSum").equals("")?0.0:Double.parseDouble(sessionObj.getString("dealSum"));
             session.showNum = sessionObj.getString("showNum").equals("")?0:Integer.parseInt(sessionObj.getString("showNum"));
 
-            Log.i("JSON", "parse session end.");
-
         }catch(JSONException ex) {
+            ex.printStackTrace();
             Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
         }
 

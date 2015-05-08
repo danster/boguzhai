@@ -170,30 +170,37 @@ public class HomeFragment extends Fragment {
             switch (code){
                 case 0:
                     auctionList = JsonApi.getAuctionList(data);
-                    adsCount = auctionList.size() > 4 ? 4 : auctionList.size();
 
-                    if (adsCount <= 0)
-                        break;
+                    int count = 0;
 
                     // 将静态图片ID装载到数组中
                     mImageViews = new ImageView[adsCount];
                     for (int i = 0; i < adsCount; i++) {
+                        if(auctionList.get(i).sessionList.size()==0)
+                            continue;
                         index_i = i;
-                        mImageViews[i] = new ImageView(getActivity());
+
+                        mImageViews[count] = new ImageView(getActivity());
                         // 设置广告图片的点击响应
-                        mImageViews[i].setOnClickListener(new View.OnClickListener() {
+                        mImageViews[count].setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Variable.currentAuction = auctionList.get(index_i);
-                                Variable.currentSession =  auctionList.get(index_i).sessionList.get(0);
+                                Variable.currentSession = auctionList.get(index_i).sessionList.get(0);
                                 Utility.gotoAuction(context, Variable.currentSession.status);
                             }
                         });
-                        mImageViews[i].setBackgroundResource(R.drawable.default_image);
+                        mImageViews[count].setBackgroundResource(R.drawable.default_image);
                         HttpClient conn = new HttpClient();
-                        conn.setUrl( auctionList.get(i).sessionList.get(0).imageUrl );
-                        new Thread(new HttpGetRunnable(conn, new ShowImageHandler(mImageViews[i]))).start();
+                        conn.setUrl( auctionList.get(count).sessionList.get(0).imageUrl );
+                        new Thread(new HttpGetRunnable(conn, new ShowImageHandler(mImageViews[count]))).start();
+
+                        count ++;
+                        if(count == 4)
+                            break;
                     }
+
+                    adsCount = count;
                     showSessionAds();
                     break;
                 default:

@@ -28,11 +28,20 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.base_frame);
+
         Variable.currentActivity = this;
+
+        if(Variable.app==null){
+            Variable.app = this.getApplication();
+        }
+
+        if(Variable.app_context==null){
+            Variable.app_context = this.getApplicationContext();
+        }
 
         this.context = this;
         this.baseActivity = this;
-        this.setContentView(R.layout.base_frame);
         this.tips = new AlertDialog.Builder(this);
         this.tips = getAlert("");
 		

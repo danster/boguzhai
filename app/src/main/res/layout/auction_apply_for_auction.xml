@@ -49,7 +49,7 @@
             android:layout_weight="0"
             android:background="@drawable/shape_border_gold"
             android:textColor="@color/white"
-            android:text=" 查看特殊保证金 "/>
+            android:text=" 查看特殊拍品 "/>
     </LinearLayout>
     <LinearLayout style="@style/base_itembar"
         android:id="@+id/tips"

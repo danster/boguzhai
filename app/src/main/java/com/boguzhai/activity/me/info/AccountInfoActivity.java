@@ -9,8 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.mainpage.MainActivity;
 import com.boguzhai.activity.me.capital.CapitalShowActivity;
 import com.boguzhai.logic.thread.HttpBaseHandler;
@@ -37,23 +37,23 @@ public class AccountInfoActivity extends BaseActivity {
 	}
 
 	protected void init(){
-        ((TextView)findViewById(R.id.name)).setText(Variable.account.name);
-        ((TextView)findViewById(R.id.nickname)).setText(Variable.account.nickname);
-        ((TextView)findViewById(R.id.zone)).setText(Variable.account.address_1+" "+
-                                                    Variable.account.address_2+" "+
-                                                    Variable.account.address_3);
-        ((TextView)findViewById(R.id.email)).setText(Variable.account.email);
-        ((TextView)findViewById(R.id.mobile)).setText(Variable.account.mobile);
-
-
+        this.fillAccountInfo();
         int[] ids = { R.id.logout, R.id.my_more_contact, R.id.my_delivery_address,
                       R.id.my_capital, R.id.my_verify};
         this.listen(ids);
-
         conn = new HttpClient();
         conn.setUrl(Variable.account.imageUrl);
         new Thread(new HttpGetRunnable(conn, new ShowImageHandler(this))).start();
 	}
+
+    private void fillAccountInfo(){
+        ((TextView)findViewById(R.id.name)).setText(Variable.account.name);
+        ((TextView)findViewById(R.id.nickname)).setText(Variable.account.nickname);
+        ((TextView)findViewById(R.id.zone)).setText(Variable.account.address_1+" "+Variable.account.address_2+" "+Variable.account.address_3);
+        ((TextView)findViewById(R.id.email)).setText(Variable.account.email);
+        ((TextView)findViewById(R.id.mobile)).setText(Variable.account.mobile);
+
+    }
 
 	@Override
 	public void onClick(View view) {

@@ -39,6 +39,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/base_search"/>
                 <EditText
+                    android:id="@+id/search_value"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -46,6 +47,7 @@
                     android:lines="1"
                     android:background="@color/transparent"/>
                 <TextView
+                    android:id="@+id/search"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -55,6 +57,7 @@
                     android:text="搜索"/>
             </LinearLayout>
             <TextView
+                android:id="@+id/filter"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
