@@ -2,7 +2,6 @@ package com.boguzhai.activity.me.bidding;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,35 +24,6 @@ public class BiddingAuctionAdapter extends BaseAdapter {
     private Context mContext;
     private List<BiddingAuction> biddingAuctionList;
     private LayoutInflater inflater;
-    private final int baseCount = 3;//设置每页显示5个
-    private int currentCount = 0;//当前需要展示的个数
-
-    private String[] type = {"现场", "同步", "网络"};
-
-
-    /**
-     * 设置索引，根据索引分页显示
-     * @param index 索引
-     */
-    public void setPageIndex(int index) {
-        if(biddingAuctionList.size() >= baseCount*(index + 1)) {
-            currentCount = baseCount*(index + 1);
-        }else {
-            currentCount = biddingAuctionList.size();
-        }
-    }
-
-    public int getCurrentCount() {
-        return currentCount;
-    }
-    /**
-     * 判断是否是最后一页
-     * @return true 是  <br>  false 否
-     */
-    public boolean isLastPage() {
-        return ((currentCount == biddingAuctionList.size()) ? true : false);
-    }
-
 
     private final class ViewHolder {
         TextView auction_type;
@@ -74,7 +44,7 @@ public class BiddingAuctionAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return currentCount;
+        return biddingAuctionList.size();
     }
 
 

@@ -40,6 +40,9 @@ public class MyAuctionActivity extends BaseActivity {
         radioGroup = (RadioGroup) findViewById(R.id.rg_my_auction_tab);
         rb_1 = (RadioButton) findViewById(R.id.rb_my_auction_all);
 
+        /**
+         * 默认选择第一个radioButton
+         */
         rb_1.setChecked(true);
         FragmentTransaction ft = fm.beginTransaction();
         showFragmentByTag(ft, "tag_all", R.id.rb_my_auction_all);

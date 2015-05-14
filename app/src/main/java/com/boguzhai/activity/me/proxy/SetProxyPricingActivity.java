@@ -67,12 +67,12 @@ public class SetProxyPricingActivity extends BaseActivity {
                     }else {
                         //网络请求，设置代理价格
                         Log.i(TAG, "网络请求，设置---" + auctionId +  "---的代理价格为:" +proxyPrice);
-//                        setProxy("1", proxyPrice);
+                        setProxy("1", proxyPrice);
                     }
                 }else {
                     //网络请求，取消代理
                     Log.i(TAG, "网络请求，取消---" + auctionId +  "---的代理");
-//                    setProxy("0", "");
+                    setProxy("0", "");
                 }
             }
         });
