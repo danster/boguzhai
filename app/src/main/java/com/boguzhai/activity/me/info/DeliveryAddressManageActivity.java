@@ -18,7 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DeliveryAddressManageActivity extends BaseActivity {
+public class DeliveryAddressManageActivity extends BaseActivity{
 
     private ListViewForScrollView listview;
     private DeliveryAddressListAdapter adapter;
@@ -32,13 +32,13 @@ public class DeliveryAddressManageActivity extends BaseActivity {
 	}
 
 	protected void init(){
+        this.showListView();
+        this.listen(R.id.add_address);
+
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pClientInfoAction!getDeliveryAddress.htm");
         new Thread(new HttpPostRunnable(conn, new UpdateAddressHandler())).start();
-
-        showListView();
-        this.listen(R.id.add_address);
 	}
 
     public void showListView(){
@@ -62,7 +62,11 @@ public class DeliveryAddressManageActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        init();
+        
+        HttpClient conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setUrl(Constant.url + "pClientInfoAction!getDeliveryAddress.htm");
+        new Thread(new HttpPostRunnable(conn, new UpdateAddressHandler())).start();
     }
 
     class UpdateAddressHandler extends HttpJsonHandler {
@@ -78,8 +82,8 @@ public class DeliveryAddressManageActivity extends BaseActivity {
                         for(int i=0; i<deliveryAddressInfo.length(); ++i){
                             JSONObject auctionObj = deliveryAddressInfo.getJSONObject(i);
                             Variable.account.deliveryAddressList.add(DeliveryAddress.parseJson(auctionObj));
-                            adapter.notifyDataSetChanged();
                         }
+                        adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -88,7 +92,7 @@ public class DeliveryAddressManageActivity extends BaseActivity {
                     Utility.gotoLogin();
                     break;
                 default:
-                    baseActivity.alertMessage("网络数据错误");
+                    Utility.alertMessage("网络数据错误");
                     break;
             }
         }

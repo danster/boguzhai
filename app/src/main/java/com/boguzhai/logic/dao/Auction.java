@@ -1,9 +1,8 @@
 package com.boguzhai.logic.dao;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import com.boguzhai.activity.base.Variable;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +62,7 @@ public class Auction {
 
         }catch(JSONException ex) {
             ex.printStackTrace();
-            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
+            Utility.toastMessage("数据解析报错");
         }
 
         return auction;

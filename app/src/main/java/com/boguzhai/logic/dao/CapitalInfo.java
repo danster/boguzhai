@@ -5,7 +5,7 @@ package com.boguzhai.logic.dao;
  */
 public class CapitalInfo {
     public String status = "";      //资金账户状态：1已绑定，0未绑定
-    public String bankId = "";      //开户行编号
+    public String bankName = "";      //开户行名称
     public String bankNumber = "";  //银行卡账户
     public String name = "";        //户名
     public String balance = "";     //可用余额

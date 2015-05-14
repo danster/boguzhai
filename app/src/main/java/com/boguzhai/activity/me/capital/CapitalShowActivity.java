@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 
 public class CapitalShowActivity extends BaseActivity {
 
@@ -20,12 +21,13 @@ public class CapitalShowActivity extends BaseActivity {
 
 	protected void init(){
 
-        ((TextView)findViewById(R.id.bank_name)).setText("中国工商银行");
-        ((TextView)findViewById(R.id.bind_bank)).setText("重新绑定银行卡");
-        ((TextView)findViewById(R.id.bank_number)).setText("6222139898913748119");
-        ((TextView)findViewById(R.id.name)).setText("张三");
-        ((TextView)findViewById(R.id.balance)).setText("￥23000.00");
-        ((TextView)findViewById(R.id.bail)).setText("￥3000.00");
+        ((TextView)findViewById(R.id.bank_name)).setText(Variable.account.capitalInfo.bankName);
+        String info = Variable.account.capitalInfo.status.equals("0")?"绑定银行卡":"重新绑定银行卡";
+        ((TextView) findViewById(R.id.bind_bank)).setText(info);
+        ((TextView)findViewById(R.id.bank_number)).setText(Variable.account.capitalInfo.bankNumber);
+        ((TextView)findViewById(R.id.name)).setText(Variable.account.capitalInfo.name);
+        ((TextView)findViewById(R.id.balance)).setText("￥"+Variable.account.capitalInfo.balance);
+        ((TextView)findViewById(R.id.bail)).setText("￥"+Variable.account.capitalInfo.bail);
 
 
         this.listen(R.id.bind_bank);

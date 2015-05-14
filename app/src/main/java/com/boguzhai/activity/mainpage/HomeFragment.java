@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +20,21 @@ import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.thread.HttpGetRunnable;
+import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.thread.ShowImageHandler;
 import com.boguzhai.logic.thread.ShowLotListHandler;
+import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.widget.ListViewForScrollView;
+import com.boguzhai.logic.view.XListViewForScrollView;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements XListViewForScrollView.IXListViewListener  {
     private static String TAG = "HomeFragment";
     private View view;
     private MainActivity context;
@@ -49,10 +50,13 @@ public class HomeFragment extends Fragment {
 
     // 拍品展示
     private ArrayList<Lot> lotList;
-    private ListViewForScrollView listview;
+    private XListViewForScrollView listview;
     private LotListAdapter adapter;
 
     private int index_i;
+
+    // 分页信息
+    private MyInt order = new MyInt(1);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -153,24 +157,51 @@ public class HomeFragment extends Fragment {
 
     // 展示首页拍品列表
     public void showListView(){
-        listview = (ListViewForScrollView) view.findViewById(R.id.lotlist);
-        lotList = new ArrayList<Lot>();
+        listview = (XListViewForScrollView) view.findViewById(R.id.lotlist);
+        listview.setPullLoadEnable(true);
+        listview.setPullRefreshEnable(false);
+        listview.setXListViewListener(this);
 
+        lotList = new ArrayList<Lot>();
         adapter = new LotListAdapter(context, lotList, true);
         listview.setAdapter(adapter);
-
-        HttpClient conn = new HttpClient();
-        conn.setUrl(Constant.url+"pMainAction!getHomeAuctionMainList.htm");
-        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(lotList, adapter))).start();
+        onRefresh();
     }
+
+
+    @Override
+    public void onRefresh() {
+        this.order.value = 1;
+        HttpClient conn = new HttpClient();
+        conn.setParam("number", this.order.value + "");
+        conn.setUrl(Constant.url + "pMainAction!getHomeAuctionMainList.htm");
+        new Thread(new HttpPostRunnable(conn, new ShowLotListHandler(lotList, adapter, order))).start();
+        listview.stopRefresh();
+    }
+
+    @Override
+    public void onLoadMore() {
+        Log.i("TAG", "order="+this.order.value);
+
+        if(order.value == -1) {
+            listview.stopLoadMore();
+            return;
+        }
+        HttpClient conn = new HttpClient();
+        conn.setParam("number", this.order.value+"");
+        conn.setUrl(Constant.url + "pMainAction!getHomeAuctionMainList.htm");
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(lotList, adapter, order))).start();
+        listview.stopLoadMore();
+    }
+
 
     public class AuctionListHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
             switch (code){
                 case 0:
-                    auctionList = JsonApi.getAuctionList(data);
 
+                    auctionList = JsonApi.getAuctionList(data);
                     int count = 0;
 
                     // 将静态图片ID装载到数组中
@@ -190,10 +221,9 @@ public class HomeFragment extends Fragment {
                                 Utility.gotoAuction(context, Variable.currentSession.status);
                             }
                         });
-                        mImageViews[count].setBackgroundResource(R.drawable.default_image);
-                        HttpClient conn = new HttpClient();
-                        conn.setUrl( auctionList.get(count).sessionList.get(0).imageUrl );
-                        new Thread(new HttpGetRunnable(conn, new ShowImageHandler(mImageViews[count]))).start();
+
+                        mImageViews[count].setImageResource(R.drawable.default_image);
+                        Tasks.showImage(auctionList.get(count).sessionList.get(0).imageUrl, mImageViews[count]);
 
                         count ++;
                         if(count == 4)

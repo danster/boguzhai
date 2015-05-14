@@ -38,6 +38,7 @@ public class Lot {
     public String description = "";  //详细描述
 
     public String imageUrl = "";   //图片url
+    public Boolean isLoaded = false; //是否已经加载图片
     public Bitmap image = null;    //图片
 
     public ArrayList<Pair<String,String>> specials = new ArrayList<Pair<String,String>>();

@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
-import com.boguzhai.logic.thread.GetCheckcodeHandler;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.StringApi;
 
@@ -32,8 +32,8 @@ public class RegisterActivity extends BaseActivity {
 
     private StringApi stringApi = new StringApi();
 
-    int time = 30;
-    TimerTask task;
+    private int time = 30;
+    private TimerTask task;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +96,7 @@ public class RegisterActivity extends BaseActivity {
                 }
             };
 
-            HttpClient conn = new HttpClient();
-            conn.setParam("mobile", username.getText().toString());
-            conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
-            new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();
-
+            Tasks.getCheckCode(username.getText().toString());
             new Timer().schedule(task, 0, 1000); // 一秒后启动task
             break;
 

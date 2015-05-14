@@ -39,12 +39,13 @@
 
     <!-- 展示各种拍品 -->
     <LinearLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.boguzhai.logic.widget.ListViewForScrollView
+            <com.boguzhai.logic.view.XListViewForScrollView
                 android:id="@+id/lotlist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

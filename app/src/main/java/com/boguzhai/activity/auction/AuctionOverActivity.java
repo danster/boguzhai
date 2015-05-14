@@ -10,6 +10,7 @@ import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
 import com.boguzhai.logic.utils.HttpClient;
@@ -22,7 +23,8 @@ public class AuctionOverActivity extends BaseActivity {
 
     private ArrayList<Lot> list;
     private ListViewForScrollView listview;
-    LotListAdapter adapter;
+    private LotListAdapter adapter;
+    private MyInt order = new MyInt(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class AuctionOverActivity extends BaseActivity {
 
         HttpClient conn = new HttpClient();
         conn.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoListBySessionId.htm?auctionSessionId="+Variable.currentSession.id);
-        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter))).start();
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter, order))).start();
     }
 
 }

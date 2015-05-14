@@ -18,7 +18,10 @@
     <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
         <TextView style="@style/myinfo_left_text" android:layout_width="60dp"
             android:layout_margin="0dp" android:text="开户行"/>
-        <Spinner android:id="@+id/bank_name" style="@style/lot_filter_spinner"></Spinner>
+        <EditText android:id="@+id/bank_name" style="@style/myinfo_middle_text"
+            android:gravity="center|left"
+            android:textSize="17sp"/>
+        <ImageView style="@style/myinfo_right_clear" android:id="@+id/bank_name_clear"/>
     </LinearLayout>
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar">

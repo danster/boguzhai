@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
@@ -17,6 +16,7 @@ import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.StringApi;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONObject;
 
@@ -95,8 +95,13 @@ public class LoginActivity extends BaseActivity {
                     Variable.mainTabIndex = R.id.rb_4;
                     context.startActivity(new Intent(context, MainActivity.class));
                 break;
+                case -1:
+                    Utility.gotoLogin();
+                    break;
                 case 1:
-                    Toast.makeText(Variable.app_context, "登录失败: 用户名或者密码错误！", Toast.LENGTH_LONG).show();
+                    Utility.alertMessage("登录失败: 用户名或者密码错误！");
+                    break;
+                default:
                     break;
             }
         }

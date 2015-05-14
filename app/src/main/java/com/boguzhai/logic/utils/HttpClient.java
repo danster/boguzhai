@@ -8,7 +8,6 @@ package com.boguzhai.logic.utils;
  */
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
@@ -73,9 +72,9 @@ public class HttpClient {
     public org.apache.http.client.HttpClient httpClient = null;  //HTTP 客户端连接管理器
     public String url = "";
     public String requestType = "GET";
-    public int connectionPoolTimeout = 3000; //从ConnectionManager管理的连接池中取出连接的超时时间，毫秒
-    public int connectionTimeout = 6000; //通过网络与服务器建立连接的超时时间(请求超时)，毫秒
-    public int socketTimeout = 8000;//Socket读数据的超时时间，即从服务器获取响应数据需要等待的时间，毫秒
+    public int connectionPoolTimeout = 5000; //从ConnectionManager管理的连接池中取出连接的超时时间，毫秒
+    public int connectionTimeout = 7500; //通过网络与服务器建立连接的超时时间(请求超时)，毫秒
+    public int socketTimeout = 10000; //Socket读数据的超时时间，即从服务器获取响应数据需要等待的时间，毫秒
 
     public HttpRequestBase httpRequest = null; //HTTP 请求管理器
     public HttpParams httpParameters = null;   //HTTP 请求的配置参数
@@ -238,7 +237,8 @@ public class HttpClient {
         	Log.i(TAG,"http connect: start ... ");
 			this.httpResponse = this.httpClient.execute(this.httpRequest); // 发送HTTP请求并获取服务端响应
         } catch (IOException e) {
-			Log.i(TAG,"http connect: IO Exception when executing request !");
+            Log.i(TAG,"http connect: IO Exception when executing request !");
+            e.printStackTrace();
             this.responseEntity = null;
             return;
 		}
@@ -258,6 +258,8 @@ public class HttpClient {
 
     /******* 对响应内容的简单操作 *********/
     public byte[] responseToByteArray(){
+        if(responseEntity == null){  return  null;}
+
 		try {
 			return EntityUtils.toByteArray(responseEntity);
 		} catch (IOException e) {
@@ -268,6 +270,10 @@ public class HttpClient {
 	}
 	
 	public String responseToString(String charset){
+        if(responseEntity==null){
+            return null;
+        }
+
 		try {
 			// responseEntity 是HTTP请求的响应体
 			String result = EntityUtils.toString(responseEntity, charset);
@@ -283,13 +289,12 @@ public class HttpClient {
     public String responseToString(){
         return responseToString(CHARSET);
     }
-	
-	public Bitmap responseToBitmap(){
-		byte[] data = responseToByteArray();
-		return BitmapFactory.decodeByteArray(data, 0, data.length);
-	}
-	 
+
 	public void responseToFile(File file){
+        if(responseEntity==null){
+            return;
+        }
+
 		FileOutputStream fileOS;
 		try {
 			fileOS = new FileOutputStream(file);

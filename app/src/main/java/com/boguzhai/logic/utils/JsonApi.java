@@ -3,6 +3,7 @@ package com.boguzhai.logic.utils;
 import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
 
@@ -31,6 +32,7 @@ public class JsonApi {
 
     public static void getAccountInfo(JSONObject data){
         try {
+            Variable.account = new Account();
             // 登录时返回有sessionid，更新时没有
             Variable.account.sessionid = data.has("sessionid") ? data.getString("sessionid") : Variable.account.sessionid ;
 
@@ -60,7 +62,7 @@ public class JsonApi {
             // 解析资金账户信息
             JSONObject capitalInfo = data.getJSONObject("capitalInfo");
             Variable.account.capitalInfo.status = capitalInfo.getString("status");
-            Variable.account.capitalInfo.bankId = capitalInfo.getString("bankId");
+            Variable.account.capitalInfo.bankName = capitalInfo.getString("bankName");
             Variable.account.capitalInfo.bankNumber = capitalInfo.getString("bankNumber");
             Variable.account.capitalInfo.name = capitalInfo.getString("name");
             Variable.account.capitalInfo.balance = capitalInfo.getString("balance");

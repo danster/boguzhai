@@ -3,6 +3,7 @@ package com.boguzhai.activity.auction;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boguzhai.R;
@@ -14,6 +15,7 @@ import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Session;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
 
@@ -64,6 +66,8 @@ public class LotInfoActivity extends BaseActivity {
         Lot lot = Variable.currentLot;
         ((TextView)findViewById(R.id.lot_name)).setText(lot.name);
         ((TextView)findViewById(R.id.description)).setText("    "+lot.description);
+        Tasks.showImage(lot.imageUrl, (ImageView)findViewById(R.id.lot_image));
+
         String info = "";
         info += "拍品分类: ";
         info += lot.type1.equals("")?"":Utility.getLottype1(lot.type1);
@@ -124,5 +128,4 @@ public class LotInfoActivity extends BaseActivity {
             }
         }
     }
-
 }

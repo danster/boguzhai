@@ -73,7 +73,6 @@ public class AuctionFragment extends Fragment implements XListViewForScrollView.
         });
 
         listview = (XListViewForScrollView) view.findViewById(R.id.auction_list);
-
         listview.setPullLoadEnable(true);
         listview.setPullRefreshEnable(false);
         listview.setXListViewListener(this);

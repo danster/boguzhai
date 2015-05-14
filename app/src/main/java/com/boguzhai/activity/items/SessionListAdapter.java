@@ -12,9 +12,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Session;
-import com.boguzhai.logic.thread.HttpGetRunnable;
-import com.boguzhai.logic.thread.ShowImageHandler;
-import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.Utility;
 
 import java.util.ArrayList;
@@ -63,9 +61,7 @@ public class SessionListAdapter extends BaseAdapter {
         holder.auctionTime.setText("拍卖:" + session.auctionTime);
         holder.auctionLocation.setText("地点:" + session.auctionLocation);
 
-        HttpClient conn = new HttpClient();
-        conn.setUrl( session.imageUrl );
-        new Thread(new HttpGetRunnable(conn, new ShowImageHandler(holder.image))).start();
+        Tasks.showImage(session.imageUrl, holder.image);
 
         convertView.setOnClickListener(new MyOnClickListener(position));
         return convertView;    

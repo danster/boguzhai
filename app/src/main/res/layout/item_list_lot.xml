@@ -26,7 +26,7 @@
                     android:id="@+id/leftImage"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/default_image"/>
+                    android:src="@drawable/default_image"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/leftLotName"
@@ -64,7 +64,7 @@
                     android:id="@+id/rightImage"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/default_image"/>
+                    android:src="@drawable/default_image"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/rightLotName"
@@ -72,7 +72,7 @@
                 android:layout_height="18dp"
                 android:textColor="@color/dark_black"
                 android:textSize="15sp"
-                android:text=" 景德镇瓷器"/>
+                android:text=" 景德镇瓷器 "/>
             <TextView
                 android:id="@+id/rightLotID"
                 style="@style/lot_info_text"

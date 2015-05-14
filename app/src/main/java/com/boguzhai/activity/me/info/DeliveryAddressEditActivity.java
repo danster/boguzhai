@@ -218,7 +218,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
                     Utility.gotoLogin();
                     break;
                 default:
-                    baseActivity.alertMessage("操作失败");
+                    Utility.alertMessage("操作失败");
                     break;
             }
         }

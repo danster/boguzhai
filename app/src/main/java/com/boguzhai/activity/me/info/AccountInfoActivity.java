@@ -1,24 +1,20 @@
 package com.boguzhai.activity.me.info;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.mainpage.MainActivity;
 import com.boguzhai.activity.me.capital.CapitalShowActivity;
-import com.boguzhai.logic.thread.HttpBaseHandler;
-import com.boguzhai.logic.thread.HttpGetRunnable;
+import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 
 public class AccountInfoActivity extends BaseActivity {
-    private TextView verify, capital;
     private HttpClient conn;
 
 	@Override
@@ -29,19 +25,14 @@ public class AccountInfoActivity extends BaseActivity {
         title_right.setText("编辑");
         title_right.setVisibility(View.VISIBLE);
 
-        verify = (TextView)findViewById(R.id.verify);
-        capital = (TextView)findViewById(R.id.capital);
         init();
 	}
 
 	protected void init(){
         this.fillAccountInfo();
-        int[] ids = { R.id.logout, R.id.my_more_contact, R.id.my_delivery_address,
-                      R.id.my_capital, R.id.my_verify};
+        int[] ids = { R.id.logout, R.id.my_more_contact, R.id.my_delivery_address, R.id.my_capital, R.id.my_verify};
         this.listen(ids);
-        conn = new HttpClient();
-        conn.setUrl(Variable.account.imageUrl);
-        new Thread(new HttpGetRunnable(conn, new ShowImageHandler(this))).start();
+        Tasks.showImage(Variable.account.imageUrl,(ImageView) findViewById(R.id.image));
 	}
 
     private void fillAccountInfo(){
@@ -50,6 +41,9 @@ public class AccountInfoActivity extends BaseActivity {
         ((TextView)findViewById(R.id.zone)).setText(Variable.account.address_1+" "+Variable.account.address_2+" "+Variable.account.address_3);
         ((TextView)findViewById(R.id.email)).setText(Variable.account.email);
         ((TextView)findViewById(R.id.mobile)).setText(Variable.account.mobile);
+
+        ((TextView)findViewById(R.id.verify)).setText("审核未通过");
+        ((TextView)findViewById(R.id.capital)).setText("￥"+Variable.account.capitalInfo.balance);
     }
 
 	@Override
@@ -86,19 +80,6 @@ public class AccountInfoActivity extends BaseActivity {
             default: break;
 		};
 	}
-
-    class ShowImageHandler extends HttpBaseHandler {
-        public ShowImageHandler(Context context){ super(context);}
-        @Override
-        public void handlerData(HttpClient conn){
-            if(conn.responseToBitmap() != null){
-                Variable.account.image = conn.responseToBitmap();
-                ((ImageView) findViewById(R.id.image)).setImageBitmap(Variable.account.image);
-            } else {
-                Toast.makeText(context, "无法得到网络头像", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 
 }
 

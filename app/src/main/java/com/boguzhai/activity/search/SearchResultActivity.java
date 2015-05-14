@@ -10,6 +10,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
 import com.boguzhai.logic.utils.HttpClient;
@@ -24,6 +25,7 @@ public class SearchResultActivity extends BaseActivity {
     private ArrayList<Lot> list_lot, list;
     private ListViewForScrollView listview;
     private LotListAdapter adapter;
+    private MyInt order = new MyInt(1);
 
     private String[] sortTypes = {"按拍品名称","按拍品号",
                                   "按拍品起拍价升序", "按拍品起拍价降序",
@@ -52,7 +54,7 @@ public class SearchResultActivity extends BaseActivity {
         HttpClient conn = new HttpClient();
         conn.setUrl(url);
         Log.i("TAG",url);
-        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter))).start();
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter, order))).start();
     }
 
     @Override
