@@ -10,9 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.proxy.ProxyPricingActivity;
-import com.boguzhai.activity.me.proxy.SetProxyPricingActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
+import com.boguzhai.logic.utils.Utility;
 
 import java.util.List;
 
@@ -37,7 +38,6 @@ public class MyAuctionAdapter extends BaseAdapter {
     private List<MyAuction> myAuctions;//要展示的拍卖会信息
     private Context mContext;
     private LayoutInflater inflater;
-    private final int baseCount = 5;//设置每页显示5个
     private int currentCount = 0;//当前需要展示的个数
 
     public MyAuctionAdapter(Context context, List<MyAuction> myAuctions) {
@@ -45,33 +45,6 @@ public class MyAuctionAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(mContext);
         this.myAuctions = myAuctions;
     }
-
-
-
-    /**
-     * 设置索引，根据索引分页显示
-     * @param index 索引
-     */
-    public void setPageIndex(int index) {
-        if(myAuctions.size() >= baseCount*(index + 1)) {
-            currentCount = baseCount*(index + 1);
-        }else {
-            currentCount = myAuctions.size();
-        }
-    }
-
-    public int getCurrentCount() {
-        return currentCount;
-    }
-    /**
-     * 判断是否是最后一页
-     * @return true 是  <br>  false 否
-     */
-    public boolean isLastPage() {
-        boolean result = ((currentCount == myAuctions.size()) ? true : false);
-        return result;
-    }
-
 
     @Override
     public int getCount() {
@@ -81,22 +54,20 @@ public class MyAuctionAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        View view;
         if (convertView == null) {
             holder = new ViewHolder();
-            view = inflater.inflate(R.layout.me_my_auction_item, null);
-            holder.tv_my_auction_status = (TextView) view.findViewById(R.id.tv_my_auction_status);
-            holder.tv_my_auction_name = (TextView) view.findViewById(R.id.tv_my_auction_name);
-            holder.tv_my_auction_type = (TextView) view.findViewById(R.id.tv_my_auction_type);
-            holder.tv_my_auction_date = (TextView) view.findViewById(R.id.tv_my_auction_date);
-            holder.tv_my_auction_deposit = (TextView) view.findViewById(R.id.tv_my_auction_deposit);
-            holder.tv_my_auction_set_deposit = (TextView) view.findViewById(R.id.tv_my_auction_set_deposit);
-            view.setTag(holder);
+            convertView = inflater.inflate(R.layout.me_my_auction_item, null);
+            holder.tv_my_auction_status = (TextView) convertView.findViewById(R.id.tv_my_auction_status);
+            holder.tv_my_auction_name = (TextView) convertView.findViewById(R.id.tv_my_auction_name);
+            holder.tv_my_auction_type = (TextView) convertView.findViewById(R.id.tv_my_auction_type);
+            holder.tv_my_auction_date = (TextView) convertView.findViewById(R.id.tv_my_auction_date);
+            holder.tv_my_auction_deposit = (TextView) convertView.findViewById(R.id.tv_my_auction_deposit);
+            holder.tv_my_auction_set_deposit = (TextView) convertView.findViewById(R.id.tv_my_auction_set_deposit);
+            convertView.setTag(holder);
         } else {
-            view = convertView;
-            holder = (ViewHolder) view.getTag();
-
+            holder = (ViewHolder) convertView.getTag();
         }
+
         holder.tv_my_auction_status.setText("[" + myAuctions.get(position).status + "] ");
         holder.tv_my_auction_name.setText(myAuctions.get(position).name);
         holder.tv_my_auction_type.setText(myAuctions.get(position).type);
@@ -111,7 +82,22 @@ public class MyAuctionAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
-        return view;
+
+        convertView.setOnClickListener(new MyOnClickListener(position));
+        return convertView;
+    }
+
+    protected class MyOnClickListener implements View.OnClickListener{
+        private int position;
+        public MyOnClickListener(int position){
+            this.position = position;
+        }
+        @Override
+        public void onClick(View v) {
+            Variable.currentAuction = myAuctions.get(position);
+//            Variable.currentSession = list.get(position);
+            Utility.gotoAuction(mContext, myAuctions.get(position).status);
+        }
     }
 
     @Override

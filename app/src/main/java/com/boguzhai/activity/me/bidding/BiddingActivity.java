@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -18,7 +16,7 @@ import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.BiddingLot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.utils.HttpClient;
-import com.boguzhai.logic.view.XListViewForScrollView;
+import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,14 +25,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BiddingActivity extends BaseActivity implements XListViewForScrollView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
+public class BiddingActivity extends BaseActivity {
 
 
-    private XListViewForScrollView lv_bidding;//竞价列表
+    private ListViewForScrollView lv_bidding;//竞价列表
     private BiddingAuctionAdapter adaper;
     private List<BiddingAuction> biddingAuctionList;
-    private SwipeRefreshLayout swipe_refresh;
-    private int pageIndex = 0;
     private HttpClient conn;
 
 
@@ -67,20 +63,9 @@ public class BiddingActivity extends BaseActivity implements XListViewForScrollV
 
 
         /**
-         * 支持下拉刷新的layout，设置监听，重写onRefresh()方法
-         */
-        swipe_refresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        swipe_refresh.setColorSchemeResources(R.color.gold);
-        swipe_refresh.setOnRefreshListener(this);
-
-
-        /**
          * 支持上拉加载更多的listView，设置不可以下拉刷新，可以上拉加载更多，重写onLoadMore()方法
          */
-        lv_bidding = (XListViewForScrollView) findViewById(R.id.bidding_list);
-        lv_bidding.setXListViewListener(this);
-        lv_bidding.setPullLoadEnable(true);
-        lv_bidding.setPullRefreshEnable(false);
+        lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
 
         initData();
 	}
@@ -88,7 +73,6 @@ public class BiddingActivity extends BaseActivity implements XListViewForScrollV
     public void initData() {
         biddingAuctionList = testData();
         adaper = new BiddingAuctionAdapter(this, biddingAuctionList);
-        adaper.setPageIndex(pageIndex);
         lv_bidding.setAdapter(adaper);
     }
     public List<BiddingAuction> testData() {
@@ -129,53 +113,6 @@ public class BiddingActivity extends BaseActivity implements XListViewForScrollV
         super.onClick(view);
     }
 
-    @Override
-    public void onRefresh() {
-        swipe_refresh.setRefreshing(true);
-        Log.i(TAG, "下拉刷新");
-        new Thread() {
-            @Override
-            public void run() {
-                biddingAuctionList = testData();
-                adaper = new BiddingAuctionAdapter(BiddingActivity.this, biddingAuctionList);
-                SystemClock.sleep(1000);
-                BiddingActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        pageIndex = 0;
-                        adaper.setPageIndex(pageIndex);
-                        lv_bidding.setAdapter(adaper);
-                        Toast.makeText(BiddingActivity.this, "刷新成功", Toast.LENGTH_SHORT).show();
-                        swipe_refresh.setRefreshing(false);
-                    }
-                });
-            }
-        }.start();
-    }
-
-
-    @Override
-    public void onLoadMore() {
-        Log.i(TAG, "加载更多");
-        new Thread() {
-            @Override
-            public void run() {
-                SystemClock.sleep(2000);
-                BiddingActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(adaper.isLastPage()) {
-                            Toast.makeText(BiddingActivity.this, "没有更多数据了", Toast.LENGTH_SHORT).show();
-                        }else {
-                            adaper.setPageIndex(++pageIndex);
-                        }
-                        lv_bidding.stopLoadMore();
-                    }
-                });
-            }
-        }.start();
-
-    }
 
 
     /**

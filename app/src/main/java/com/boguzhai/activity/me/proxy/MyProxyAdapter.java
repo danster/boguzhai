@@ -1,6 +1,7 @@
 package com.boguzhai.activity.me.proxy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.LotInfoActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.ProxyLot;
 
 import java.util.List;
@@ -120,9 +123,21 @@ class MyProxyAdapter extends BaseAdapter {
         holder.tv_my_proxy_appraisal.setText(String.valueOf(lots.get(position).appraisal1) + "-" + String.valueOf(lots.get(position).appraisal2));
         holder.tv_my_proxy_startprice.setText(String.valueOf(lots.get(position).startPrice));
         holder.tv_my_proxy_price.setText(lots.get(position).proxyPrice);
-
+        view.setOnClickListener(new MyOnClickListener(position));
 
         return view;
+    }
+
+    protected class MyOnClickListener implements View.OnClickListener{
+        private int position;
+        public MyOnClickListener(int position){
+            this.position = position;
+        }
+        @Override
+        public void onClick(View v) {
+            Variable.currentLot = lots.get(position);
+            mContext.startActivity(new Intent(mContext, LotInfoActivity.class));
+        }
     }
 
 

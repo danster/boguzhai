@@ -1,16 +1,19 @@
 package com.boguzhai.activity.me.proxy;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,11 +36,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.ProxyLot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
+import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.DensityUtils;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
@@ -56,21 +59,25 @@ import java.util.List;
 public class MyProxyFragment extends Fragment implements XListView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
 
     public static String TAG = "MyProxyFragment";
-
-
-    private final int baseCount = 5;
-    private List<ProxyLot> myProxyLots;//所有代理出价拍品集合，只有在刷新的情况下才会更新此集合。
-    private int pageIndex = 0;//分页显示的页数，从 "0" 开始
+    public final static int REFRESH = 0;//刷新
+    public final static int LOADMORE = 1;//加载更多
+    public int which = REFRESH;
+    private int totalCount = 0;//结果总数
+    private int currentCount = 0;//当前总数
+    private int number = 1;//分页序号，从1开始
+    private int size = 0;//每次分页数目
     private boolean isSearch = false;//是否处于搜索下的显示
-    private List<ProxyLot> searchProxyLots;//搜索时显示的集合
-    private int searchPageIndex = 0;//搜索状态下的页数
-    private String key;//搜索关键字
+
+    private List<ProxyLot> myProxyLots;//所有代理出价拍品集合，只有在刷新的情况下才会更新此集合。
+    //    private List<ProxyLot> searchProxyLots;//搜索时显示的集合
+    private String spinnerAuctionText = "";//选择拍卖会spinner显示的文字
+    private String spinnerSessionText = "";//选择专场spinner显示的文字
+    private String searchText = "";//搜索的关键字
     private List<ProxyLot> selectedAuctionLots;//通过选择的拍卖会过滤后的代理拍品
     private List<ProxyLot> tempLots;
     private int status = 1;//1可修改的代理出价(拍卖未结束) 2历史代理(不可修改)
 
     private ProxyPricingActivity mContext;//fragment关联的activity
-    //    private List<ProxyLot> lotList;//我的代理集合
     private MyProxyAdapter adapter;//适配器
 
 
@@ -84,14 +91,11 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
     private Button btn_my_proxy_search;//点击查询按钮
     private Spinner sp_my_proxy_choose_auction;//选择拍卖会
     private Spinner sp_my_proxy_choose_session;//选择专场
-    //    private List<ProxyLot> newLots;//用于与adapter绑定的数据
 
 
     public Utility utility = new Utility();
     private String[] list_type1 = {"不限"};
     private String[] list_type2 = {"不限"};
-    private StringBuffer type1 = new StringBuffer();
-    private StringBuffer type2 = new StringBuffer();
     private String selectedAuctionName = "不限";
     private String selectedSessionName = "不限";
 
@@ -101,7 +105,20 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         @Override
         public void handleMessage(Message msg) {
             Log.i(TAG, "接收到<数据获取完成>消息");
-            initData();
+            switch (which) {
+                case REFRESH:
+                    swipe_layout_my_proxy.setRefreshing(false);
+                    initData();
+                    break;
+                case LOADMORE:
+                    lv_my_proxy.stopLoadMore();
+                    if (isSearch) {
+                        proxyLotFilterByKey(searchText);
+                    } else {
+                        proxyLotFilterByKey("");
+                    }
+                    break;
+            }
         }
     };
 
@@ -127,6 +144,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         mContext = (ProxyPricingActivity) getActivity();
         listenPopupWindow(view);
         initView();
+        requestData();
         initData();
     }
 
@@ -181,21 +199,21 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         sp_my_proxy_choose_auction = (Spinner) view.findViewById(R.id.sp_my_proxy_choose_auction);
     }
 
+    /**
+     * 请求网络数据
+     */
+    private void requestData() {
+        /**
+         * 从网络获取数据,从第一页开始
+         */
+        conn = new HttpClient();
+        conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!getAuctionProxyList.htm");
+        conn.setParam("sessionid", "");//
+        conn.setParam("status", String.valueOf(status));//0可修改的代理出价(拍卖未结束) 1历史代理(不可修改)
+        conn.setParam("number", String.valueOf(number));//分页序号，从1开始
+        new Thread(new HttpPostRunnable(conn, new MyProxyHandler())).start();
+    }
 
-//        /**
-//         * 网络请求，获取代理拍品列表
-//         */
-//        utility.setSpinner(mContext, view, R.id.sp_my_proxy_choose_auction, list_type1, type1, new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view0, int position,
-//                                       long id) {
-//
-////        conn = new HttpClient();
-////        conn.setParam("sessionid", "");
-////        conn.setParam("status", String.valueOf(status));
-////        conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!getAuctionProxyList.htm");
-////        new Thread(new HttpPostRunnable(conn, new MyProxyHandler())).start();
-//            }
 
     /**
      * 初始化数据
@@ -203,20 +221,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
     private void initData() {
 
         isSearch = false;
-
-//
-//                Utility.setSpinner(mContext, (Spinner) view.findViewById(R.id.sp_my_proxy_choose_session), list_type2, new AdapterView.OnItemSelectedListener() {
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//
-        myProxyLots = testData();
-//
-////        newLots = new ArrayList<>();
-////        for (ProxyLot lot : lotList) {
-////            newLots.add(lot);
-////        }
-
+        myProxyLots = new ArrayList<>();
 
         /**
          * 解析所有代理拍品，得到所有拍卖会名称和专场名称，提供spinner选择
@@ -231,24 +236,6 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         for (int i = 1; i < list_type1.length; i++) {
             list_type1[i] = auctions.get(i - 1).auctionName;
         }
-
-
-        /**
-         * listview点击事件，跳转到相应的拍品信息
-         */
-        lv_my_proxy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (popupWindow != null) {
-                    dismissPopWindow();
-                } else {
-                    Intent intent = new Intent(mContext, LotInfoActivity.class);
-                    intent.putExtra("auctionId", myProxyLots.get(position - 1).name);
-                    Log.i(TAG, "代理拍品的id为:" + String.valueOf(myProxyLots.get(position - 1).name));
-                    startActivity(intent);
-                }
-            }
-        });
 
 
         /**
@@ -302,61 +289,31 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                                 dismissPopWindow();
                             }
                             //弹出对话框，询问是否确认删除
-                            //网络请求
-
-
-                            // 位移动画
-                            TranslateAnimation ta = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
-                                    Animation.RELATIVE_TO_SELF, -1.0f,
-                                    Animation.RELATIVE_TO_SELF, 0,
-                                    Animation.RELATIVE_TO_SELF, 0);
-                            ta.setDuration(200);
-                            view.startAnimation(ta);
-                            new Thread() {
-                                public void run() {
-                                    try {
-                                        Thread.sleep(200);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            if (isSearch) {//先在源数据中删除
-                                                for (int i = 0; i < myProxyLots.size(); i++) {
-                                                    if (adapter.getLots().get(position - 1).name.equals(myProxyLots.get(i).name)) {
-                                                        myProxyLots.remove(i);
-                                                        break;
-                                                    }
-                                                }
-                                                Log.i(TAG, "----------------------");
-                                                Log.i(TAG, adapter.getLots().toString());
-                                                Log.i(TAG, selectedAuctionLots.toString());
-
-                                                if (adapter.getLots() != selectedAuctionLots) {
-                                                    Log.i(TAG, "当前显示的数据不是“selectedAuctions”");
-                                                    for (int i = 0; i < adapter.getLots().size(); i++) {
-                                                        if (adapter.getLots().get(position - 1).name.equals(selectedAuctionLots.get(i).name)) {
-                                                            selectedAuctionLots.remove(i);
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-
-                                            }
-
-                                            Log.i(TAG, "----------------------");
-                                            Log.i(TAG, adapter.getLots().toString());
-                                            Log.i(TAG, selectedAuctionLots.toString());
-                                            //然后在当前显示的数据中删除
-                                            adapter.removeElem(position - 1);
-                                            Log.i(TAG, "----------------------");
-                                            Log.i(TAG, adapter.getLots().toString());
-                                            Log.i(TAG, selectedAuctionLots.toString());
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    });
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            builder.setMessage("确认删除该代理出价吗?");
+                            builder.setTitle("提示");
+                            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    //网络请求
+                                    conn = new HttpClient();
+                                    conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!removeAuctionProxyPrice.htm");
+                                    conn.setParam("sessionid", "");//
+                                    conn.setParam("number", adapter.getLots().get(position - 1).id);
+                                    new Thread(new HttpPostRunnable(conn, new MyProxyDeleteHandler(position, view))).start();
                                 }
-                            }.start();
+                            });
+                            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            builder.create().show();
+
+
                         }
                     });
 
@@ -388,8 +345,6 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                     return true;
                 }
             });
-
-
         }
 
 
@@ -400,11 +355,6 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view0, int position,
                                                long id) {
-//
-//                        if (popupWindow != null) {
-//                            dismissPopWindow();
-//                        }
-                        isSearch = true;
                         final List<String> sessionNames;
 
                         selectedAuctionLots = new ArrayList<>();
@@ -414,7 +364,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                          * 选中"不限"，遍历所有代理拍品所在拍卖会下的所有专场，
                          */
                         if (position == 0) {
-                            selectedAuctionName = "不限";
+                            spinnerAuctionText = "不限";
                             Log.i(TAG, "选中的拍卖会为:" + selectedAuctionName);
                             sessionNames = new ArrayList<>();
                             for (SelectedAuction auction : auctions) {
@@ -430,16 +380,11 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                             for (int i = 1; i < list_type2.length; i++) {
                                 list_type2[i] = sessionNames.get(i - 1);
                             }
-
-                            for (ProxyLot lot : myProxyLots) {
-                                selectedAuctionLots.add(lot);
-                            }
-
                             /**
                              * 选中某一拍卖会，遍历该专场下所有专场
                              */
                         } else if (position >= 1) {
-                            selectedAuctionName = auctions.get(position - 1).auctionName;
+                            spinnerAuctionText = auctions.get(position - 1).auctionName;
                             Log.i(TAG, "选中的拍卖会为:" + selectedAuctionName);
                             sessionNames = auctions.get(position - 1).sessionNames;
                             list_type2 = new String[sessionNames.size() + 1];
@@ -448,23 +393,16 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                             for (int i = 1; i < list_type2.length; i++) {
                                 list_type2[i] = auctions.get(position - 1).sessionNames.get(i - 1);
                             }
-                            for (ProxyLot lot : myProxyLots) {
-                                if (lot.auctionId.equals(selectedAuctionName)) {
-                                    selectedAuctionLots.add(lot);
-                                }
-                            }
                         } else {//防止后面用到sesionNames报might not have been initialized错误
                             sessionNames = null;//can't reach
                         }
 
 
-                        /**
-                         * 更新adapter，绑定新的数据，并且设置页面索引值为0
-                         */
-                        adapter = new MyProxyAdapter(mContext, selectedAuctionLots);
-                        adapter.setPageIndex(0);
-                        lv_my_proxy.setAdapter(adapter);
-
+                        if (isSearch) {
+                            proxyLotFilterByKey(searchText);
+                        } else {
+                            proxyLotFilterByKey("");
+                        }
 
                         /**
                          * 设置专场spinner，及监听事件
@@ -473,37 +411,23 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                                isSearch = true;
-                                tempLots = new ArrayList<>();
                                 /**
                                  * 选中"不限"，遍历对应拍卖会下的所有专场，
                                  */
                                 if (position == 0) {
-                                    selectedSessionName = "不限";
-                                    Log.i(TAG, "选中的专场为:" + selectedSessionName);
-                                    for (ProxyLot lot : selectedAuctionLots) {
-                                        tempLots.add(lot);
-                                    }
-
+                                    spinnerSessionText = "不限";
+                                    Log.i(TAG, "选中的专场为:" + spinnerSessionText);
                                 } else if (position > 0) { //选中某一专场
-                                    selectedSessionName = sessionNames.get(position - 1);
-                                    Log.i(TAG, "选中的专场为:" + selectedSessionName);
-
-                                    //从拍卖会中过滤出符合该专场的拍品
-                                    for (ProxyLot lot : selectedAuctionLots) {
-                                        if (lot.sessionId.equals(selectedSessionName)) {
-                                            tempLots.add(lot);
-                                        }
-                                    }
+                                    spinnerSessionText = sessionNames.get(position - 1);
+                                    Log.i(TAG, "选中的专场为:" + spinnerSessionText);
                                 }
-                                /**
-                                 * 更新adapter，绑定新的数据，并且设置页面索引值为0
-                                 */
-                                Log.i(TAG, "spinner结果，更新集合,线程名：" + Thread.currentThread().getName());
-                                adapter = new MyProxyAdapter(mContext, tempLots);
-                                adapter.setPageIndex(0);
-                                lv_my_proxy.setAdapter(adapter);
 
+
+                                if (isSearch) {
+                                    proxyLotFilterByKey(searchText);
+                                } else {
+                                    proxyLotFilterByKey("");
+                                }
                             }
 
                             @Override
@@ -528,45 +452,34 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
          * 设置数据适配器
          */
         adapter = new MyProxyAdapter(mContext, myProxyLots);
-        adapter.setPageIndex(0);
         lv_my_proxy.setAdapter(adapter);
 
 
+        btn_my_proxy_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                isSearch = false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         /**
          * 点击进行关键字搜索
          */
         btn_my_proxy_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sp_my_proxy_choose_auction.setSelection(0);
-                sp_my_proxy_choose_session.setSelection(0);
-
-
+                isSearch = true;
                 final String key = et_my_proxy_keyword.getText().toString().trim();
-                if (!TextUtils.isEmpty(key)) {
-                    tempLots = new ArrayList<>();
-
-                    for (ProxyLot lot : myProxyLots) {
-                        if ((lot.name.indexOf(key) >= 0) || (lot.auctionId.indexOf(key) >= 0) || (lot.sessionId.indexOf(key) >= 0)) {
-                            tempLots.add(lot);
-                        }
-                    }
-                    /**
-                     * 更新adapter，绑定新的数据，并且设置页面索引值为0
-                     */
-                    Log.i(TAG, "搜索结果，更新集合,线程名：" + Thread.currentThread().getName());
-                    adapter = new MyProxyAdapter(mContext, tempLots);
-                    adapter.setPageIndex(0);
-                    lv_my_proxy.setAdapter(adapter);
-
-                } else {
-                    /**
-                     * 更新adapter，绑定新的数据，并且设置页面索引值为0
-                     */
-                    adapter = new MyProxyAdapter(mContext, myProxyLots);
-                    adapter.setPageIndex(0);
-                    lv_my_proxy.setAdapter(adapter);
-                }
+                proxyLotFilterByKey(key);
             }
 
         });
@@ -579,14 +492,92 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
         }
 
-        /*
-         * 请求网络数据
-         */
-//        HttpRequestApi conn = new HttpRequestApi();
-//        conn.addParam("sessionid", "");
-//        conn.addParam("status", "");
-//        conn.setUrl("url");
-//        new Thread(new HttpPostRunnable(conn, new MyProxyHandler(mContext))).start();
+    }
+
+    /**
+     * 通过关键字进行过滤并显示
+     */
+    private void proxyLotFilterByKey(String key) {
+
+        tempLots = new ArrayList<>();
+        if (TextUtils.isEmpty(key)) {//搜索的关键字为""
+            isSearch = false;
+            if ("不限".equals(spinnerAuctionText)) {//拍卖会选择"不限"
+                if ("不限".equals(spinnerSessionText)) {//专场选择"不限"
+                    adapter = new MyProxyAdapter(mContext, myProxyLots);
+                } else {
+                    for (int i = 0; i < myProxyLots.size(); i++) {
+                        if (myProxyLots.get(i).auctionSessionName.indexOf(spinnerSessionText) >= 0) {
+                            tempLots.add(myProxyLots.get(i));
+                        }
+                    }
+                    adapter = new MyProxyAdapter(mContext, tempLots);
+                }
+            } else {
+                if ("不限".equals(spinnerSessionText)) {//专场选择"不限"
+                    for (int i = 0; i < myProxyLots.size(); i++) {
+                        if (myProxyLots.get(i).auctionMainName.indexOf(spinnerAuctionText) >= 0) {
+                            tempLots.add(myProxyLots.get(i));
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < myProxyLots.size(); i++) {
+                        if (myProxyLots.get(i).auctionSessionName.indexOf(spinnerSessionText) >= 0
+                                && myProxyLots.get(i).auctionMainName.indexOf(spinnerAuctionText) >= 0) {
+                            tempLots.add(myProxyLots.get(i));
+                        }
+                    }
+                }
+                adapter = new MyProxyAdapter(mContext, tempLots);
+            }
+            lv_my_proxy.setAdapter(adapter);
+        } else {//搜索的关键字不为空
+            isSearch = true;
+            tempLots = new ArrayList<>();
+            if ("不限".equals(spinnerAuctionText)) {//拍卖会选择"不限"
+                if ("不限".equals(spinnerSessionText)) {//专场选择"不限"
+                    for (int i = 0; i < myProxyLots.size(); i++) {
+                        if (myProxyLots.get(i).auctionSessionName.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).auctionMainName.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).name.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).id.indexOf(searchText) >= 0) {
+                            tempLots.add(myProxyLots.get(i));
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < myProxyLots.size(); i++) {
+                        if (myProxyLots.get(i).auctionSessionName.indexOf(spinnerSessionText) >= 0
+                                && (myProxyLots.get(i).auctionMainName.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).name.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).id.indexOf(searchText) >= 0)) {
+                            tempLots.add(myProxyLots.get(i));
+                        }
+                    }
+                }
+            } else {
+                if ("不限".equals(spinnerSessionText)) {//专场选择"不限"
+                    for (int i = 0; i < myProxyLots.size(); i++) {
+                        if (myProxyLots.get(i).auctionMainName.indexOf(spinnerAuctionText) >= 0
+                                && (myProxyLots.get(i).auctionMainName.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).name.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).id.indexOf(searchText) >= 0)) {
+                            tempLots.add(myProxyLots.get(i));
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < myProxyLots.size(); i++) {
+                        if (myProxyLots.get(i).auctionSessionName.indexOf(spinnerSessionText) >= 0
+                                && myProxyLots.get(i).auctionMainName.indexOf(spinnerAuctionText) >= 0
+                                && (myProxyLots.get(i).name.indexOf(searchText) >= 0
+                                || myProxyLots.get(i).id.indexOf(searchText) >= 0)) {
+                            tempLots.add(myProxyLots.get(i));
+                        }
+                    }
+                }
+            }
+            adapter = new MyProxyAdapter(mContext, tempLots);
+            lv_my_proxy.setAdapter(adapter);
+        }
     }
 
     /**
@@ -608,52 +599,28 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
     @Override
     public void onRefresh() {
+        which = REFRESH;
         swipe_layout_my_proxy.setRefreshing(true);
+        myProxyLots.clear();//清空之前所有数据
+        isSearch = false;
+        et_my_proxy_keyword.setText("");//清空搜索关键字
+        number = 1;//从第一页开始
         Log.i(TAG, "下拉刷新");
-
-//        new Thread(new HttpPostRunnable(conn, new MyProxyHandler())).start();
-        new Thread() {
-            @Override
-            public void run() {
-                SystemClock.sleep(1000);
-                mContext.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initData();
-                        Toast.makeText(mContext, "刷新成功", Toast.LENGTH_SHORT).show();
-                        swipe_layout_my_proxy.setRefreshing(false);
-                    }
-                });
-            }
-        }.start();
+        requestData();
     }
 
 
     @Override
     public void onLoadMore() {
+        which = LOADMORE;
         Log.i(TAG, "加载更多");
-        new Thread() {
-            @Override
-            public void run() {
-                SystemClock.sleep(1000);
-                mContext.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adapter.isLastPage()) {
-                            Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
-                        } else {
-                            adapter.refreshCurrentPageIndex();
-                        }
-                        lv_my_proxy.stopLoadMore();
-                    }
-                });
-            }
-        }.start();
-
+        if (totalCount == currentCount) {
+            Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
+        } else {
+            number++;//页数加1
+            requestData();
+        }
     }
-
-
-
 
 
     /**
@@ -709,17 +676,21 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         public void handlerData(int code, JSONObject data) {
             switch (code) {
                 case 1:
+                    number--;
                     Toast.makeText(Variable.app_context, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
                     break;
                 case -1:
+                    number--;
                     Toast.makeText(Variable.app_context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(mContext, LoginActivity.class));
                     break;
                 case 0:
                     Log.i(TAG, "获取信息成功");
-                    JSONArray jArray;
                     try {
-                        jArray = data.getJSONArray("proxyList");
+                        size = Integer.parseInt(data.getString(""));//每页的数目
+                        totalCount = Integer.parseInt(data.getString("count"));//总的数目
+                        currentCount += size;
+                        JSONArray jArray = data.getJSONArray("proxyList");
                         ProxyLot lot;
                         for (int i = 0; i < jArray.length(); i++) {
                             lot = new ProxyLot();
@@ -744,135 +715,52 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
     }
 
-    private List<ProxyLot> testData() {
-        ArrayList<ProxyLot> lotList = new ArrayList<>();
-        ProxyLot lot = new ProxyLot();
-        lot.no = "1233";
-        lot.name = "明代唐伯虎书法作品";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2015新春大拍";
-        lot.sessionId = "字画专场";
-        lotList.add(lot);
 
-        lot = new ProxyLot();
-        lot.no = "1234";
-        lot.name = "张曦之书法作品";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2015新春大拍";
-        lot.sessionId = "字画专场";
-        lotList.add(lot);
+    class MyProxyDeleteHandler extends HttpJsonHandler {
 
+        int position = 0;
+        View itemView;
+        MyProxyDeleteHandler(int position, View view) {
+            this.position = position;
+            this.itemView = view;
+        }
 
-        lot = new ProxyLot();
-        lot.no = "1235";
-        lot.name = "景德镇陶瓷";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2015新春大拍";
-        lot.sessionId = "瓷器专场";
-        lotList.add(lot);
-
-        lot = new ProxyLot();
-        lot.no = "1236";
-        lot.name = "光绪丁未年双龙寿字币";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2015新春大拍";
-        lot.sessionId = "瓷器专场";
-        lotList.add(lot);
-
-        lot = new ProxyLot();
-        lot.no = "1238";
-        lot.name = "吴月亭款紫砂壶";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2015新春大拍";
-        lot.sessionId = "瓷器专场";
-        lotList.add(lot);
-
-        lot = new ProxyLot();
-        lot.no = "1238";
-        lot.name = "冰种描金翡翠手镯";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2014年终大拍";
-        lot.sessionId = "玉器专场";
-        lotList.add(lot);
-
-        lot = new ProxyLot();
-        lot.no = "1239";
-        lot.name = "乾隆五彩盘";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2014年终大拍";
-        lot.sessionId = "瓷器专场";
-        lotList.add(lot);
-
-
-        lot = new ProxyLot();
-        lot.no = "1230";
-        lot.name = "青花葫芦瓶";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2014年终大拍";
-        lot.sessionId = "瓷器专场";
-        lotList.add(lot);
-
-
-        lot = new ProxyLot();
-        lot.no = "1231";
-        lot.name = "叶圣陶书法";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2014年终大拍";
-        lot.sessionId = "书画专场";
-        lotList.add(lot);
-
-
-        lot = new ProxyLot();
-        lot.no = "1232";
-        lot.name = "宋占魁虎字书法";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2014年终大拍";
-        lot.sessionId = "书画专场";
-        lotList.add(lot);
-
-        lot = new ProxyLot();
-        lot.no = "1240";
-        lot.name = "拍品2";
-        lot.appraisal1 = 5000;
-        lot.appraisal2 = 8000;
-        lot.startPrice = 3000;
-        lot.proxyPrice = "4000";
-        lot.auctionId = "2014年终大拍";
-        lot.sessionId = "书画专场";
-        lotList.add(lot);
-
-        return lotList;
-
+        @Override
+        public void handlerData(int code, JSONObject data) {
+            switch (code) {
+                case 1:
+                    Toast.makeText(Variable.app_context, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
+                    break;
+                case -1:
+                    Toast.makeText(Variable.app_context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                    break;
+                case 0:
+                    // 位移动画
+                    TranslateAnimation ta = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
+                            Animation.RELATIVE_TO_SELF, -1.0f,
+                            Animation.RELATIVE_TO_SELF, 0,
+                            Animation.RELATIVE_TO_SELF, 0);
+                    ta.setDuration(200);
+                    itemView.startAnimation(ta);
+                    getActivity().runOnUiThread(new Runnable() {
+                        public void run() {
+                            if (adapter.getLots() != myProxyLots) {
+                                for (int i = 0; i < myProxyLots.size(); i++) {
+                                    if (adapter.getLots().get(position - 1).name.equals(myProxyLots.get(i).name)) {
+                                        myProxyLots.remove(i);
+                                        break;
+                                    }
+                                }
+                            }
+                            //然后在当前显示的数据中删除
+                            adapter.removeElem(position - 1);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    break;
+            }
+        }
 
     }
 
