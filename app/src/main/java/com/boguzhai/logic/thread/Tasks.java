@@ -44,15 +44,23 @@ public class Tasks {
 
     public static void getCheckCode(String mobile){
         HttpClient conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("mobile", mobile);
         conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
+        new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();
+    }
+
+    public static void getCheckCodeNoLogin(String mobile){
+        HttpClient conn = new HttpClient();
+        conn.setParam("mobile", mobile);
+        conn.setUrl(Constant.url + "pLoginAction!getMobileCheckCodeNoLogin.htm");
         new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();
     }
 
     public static void showImage(String url, ImageView img){
         imageUrl = url;
         imageView = img;
-        Log.i("AsyncTask", "http get: "+url);
+        Log.i("AsyncTask", "image get: " + url);
         new AsyncTask<Void, Void, Void>() {
             Bitmap bmp;
             @Override
@@ -60,7 +68,7 @@ public class Tasks {
                 try {
                     BitmapFactory.Options options=new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
-                    options.inSampleSize = 10; //width，hight设为原来的十分之一
+                    options.inSampleSize = 4; //width，hight设为原来的..分之一
 
                     InputStream in = new URL(imageUrl).openStream();
                     bmp = BitmapFactory.decodeStream(in,null,options);
@@ -73,13 +81,30 @@ public class Tasks {
             @Override
             protected void onPostExecute(Void result) {
                 if (bmp != null) {
-                    Log.i("AsyncTask", "http get: succeed !");
+                    Log.i("AsyncTask", "image get: succeed !");
                     imageView.setImageBitmap(bmp);
+                } else {
+                    imageView.setImageBitmap(null);
                 }
             }
-
         }.execute();
 
+    }
+
+    public static void getMapZone(){
+        if(Variable.mapZone == null || Variable.mapProvince == null){
+            HttpClient conn_address = new HttpClient();
+            conn_address.setUrl(Constant.url + "pCommonAction!getAddressZoneMap.htm");
+            new Thread(new HttpPostRunnable(conn_address, new AddressHandler())).start();
+        }
+    }
+
+    public static void getMapLottype(){
+        if(Variable.mapLottype == null || Variable.mapLottype1 == null){
+            HttpClient conn_lotType = new HttpClient();
+            conn_lotType.setUrl(Constant.url+"pCommonAction!getAuctionTypeMap.htm");
+            new Thread(new HttpPostRunnable(conn_lotType, new LotTypeHandler())).start();
+        }
     }
 
 

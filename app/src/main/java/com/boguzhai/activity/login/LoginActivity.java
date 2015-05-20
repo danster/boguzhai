@@ -66,10 +66,10 @@ public class LoginActivity extends BaseActivity {
             Variable.settings_editor.commit();
 
             if(!StringApi.checkPhoneNumber(username)){
-                tips.setMessage(StringApi.tips).create().show();
+                Utility.alertMessage(StringApi.tips);
                 break;
             }else if(password.length() <= 0){
-                tips.setMessage("密码不能为空").create().show();
+                Utility.alertMessage("密码不能为空");
                 break;
             }else {
                 HttpClient conn = new HttpClient();

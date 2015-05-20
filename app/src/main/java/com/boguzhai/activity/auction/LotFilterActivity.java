@@ -14,10 +14,6 @@ public class LotFilterActivity extends BaseActivity {
     private TextView low_price, high_price;
     private RangeSeekBar<Integer> rangeSeekBar;
 
-    private static final String[] list_type1={"不限","北京","上海","江苏","浙江","其他"};
-    private static final String[] list_type2={"不限","南京","镇江","无锡","苏州","其他"};
-    private static final String[] list_type3={"不限","玄武","鼓楼","江宁","雨花","其他"};
-
     private StringBuffer type1=new StringBuffer();
     private StringBuffer type2=new StringBuffer();
     private StringBuffer type3=new StringBuffer();
@@ -63,12 +59,6 @@ public class LotFilterActivity extends BaseActivity {
         type3.replace(0,type3.length(),"不限");
         status.replace(0,status.length(),"不限");
         deal_type.replace(0,deal_type.length(),"不限");
-
-//        utility.setSpinner(this, R.id.type1, list_type1, type1);
-//        utility.setSpinner(this, R.id.type2, list_type2, type2);
-//        utility.setSpinner(this, R.id.type3, list_type3, type3);
-//        utility.setSpinner(this, R.id.status, Constant.lot_status, status);
-//        utility.setSpinner(this, R.id.deal_type, Constant.lot_deal_type, deal_type);
     }
 
     public void setRangeSeekBar(){
@@ -89,8 +79,7 @@ public class LotFilterActivity extends BaseActivity {
                 setRangeSeekBar();
                 break;
             case R.id.ok:
-                tips.setMessage("type1: "+type1+",type2: "+type2+",type3: "+type3+",status: "+status+",deal_type: "+deal_type);
-                tips.create().show();
+                // filter
                 break;
             default:
             break;

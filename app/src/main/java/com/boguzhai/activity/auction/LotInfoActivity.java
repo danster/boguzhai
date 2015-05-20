@@ -1,7 +1,11 @@
 package com.boguzhai.activity.auction;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,14 +19,19 @@ import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Session;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
+
 public class LotInfoActivity extends BaseActivity {
+
+    private Bitmap lotBitmap = null;
+    private ImageView image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +44,10 @@ public class LotInfoActivity extends BaseActivity {
     private void init(){
         this.listen(R.id.favor);
         this.listen(R.id.session_info);
+        this.listen(R.id.lot_image);
+
+        image=(ImageView)findViewById(R.id.lot_image);
+        image.setImageBitmap(Variable.currentLot.image);
 
         // 获取当前拍品的详细信息
         HttpClient con = new HttpClient();
@@ -43,7 +56,7 @@ public class LotInfoActivity extends BaseActivity {
 
         // 获取拍品所在拍卖会信息
         HttpClient conn = new HttpClient();
-        conn.setUrl(Constant.url+"pMainAction!getAuctionMainById.htm?auctionMainId="+Variable.currentLot.auctionId);
+        conn.setUrl(Constant.url + "pMainAction!getAuctionMainById.htm?auctionMainId=" + Variable.currentLot.auctionId);
         new Thread(new HttpPostRunnable(conn,new ShowAuctionInfoHandler())).start();
     }
 
@@ -57,16 +70,43 @@ public class LotInfoActivity extends BaseActivity {
             case R.id.session_info:
                 Utility.gotoAuction(baseActivity, Variable.currentSession.status);
                 break;
-
+            case R.id.lot_image:
+                // 显示大图
+                break;
             default: break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void showLotInfo(){
         Lot lot = Variable.currentLot;
         ((TextView)findViewById(R.id.lot_name)).setText(lot.name);
-        ((TextView)findViewById(R.id.description)).setText("    "+lot.description);
-        Tasks.showImage(lot.imageUrl, (ImageView)findViewById(R.id.lot_image));
+        ((TextView)findViewById(R.id.description)).setText("   " + lot.description);
+
+        // 网络下载拍品图片
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    BitmapFactory.Options options=new BitmapFactory.Options();
+                    options.inJustDecodeBounds = false;
+                    options.inSampleSize = 5;
+                    InputStream in = new URL(Variable.currentLot.imageUrl).openStream();
+                    image.setImageBitmap(BitmapFactory.decodeStream(in, null, options));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
 
         String info = "";
         info += "拍品分类: ";

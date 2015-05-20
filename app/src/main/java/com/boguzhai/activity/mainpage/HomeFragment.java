@@ -24,7 +24,6 @@ import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
-import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
@@ -71,7 +70,7 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
         showListView();
     }
 
-    // 从网络获取首页的拍卖会和拍品信息
+    // 从网络获取首页的拍卖会信息
     private void pullDynamicInfo(){
         HttpClient conn = new HttpClient();
         conn.setParam("status", "拍卖中");
@@ -155,19 +154,19 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
         }.sendEmptyMessageDelayed(0, 3000);
     }
 
-    // 展示首页拍品列表
+    // 刷新展示首页拍品列表
     public void showListView(){
         listview = (XListViewForScrollView) view.findViewById(R.id.lotlist);
+        Variable.currentListview = listview;
         listview.setPullLoadEnable(true);
-        listview.setPullRefreshEnable(false);
+        listview.setPullRefreshEnable(true);
         listview.setXListViewListener(this);
 
         lotList = new ArrayList<Lot>();
         adapter = new LotListAdapter(context, lotList, true);
         listview.setAdapter(adapter);
-        onRefresh();
+        //onRefresh();
     }
-
 
     @Override
     public void onRefresh() {
@@ -176,22 +175,14 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
         conn.setParam("number", this.order.value + "");
         conn.setUrl(Constant.url + "pMainAction!getHomeAuctionMainList.htm");
         new Thread(new HttpPostRunnable(conn, new ShowLotListHandler(lotList, adapter, order))).start();
-        listview.stopRefresh();
     }
 
     @Override
     public void onLoadMore() {
-        Log.i("TAG", "order="+this.order.value);
-
-        if(order.value == -1) {
-            listview.stopLoadMore();
-            return;
-        }
         HttpClient conn = new HttpClient();
-        conn.setParam("number", this.order.value+"");
+        conn.setParam("number", this.order.value + "");
         conn.setUrl(Constant.url + "pMainAction!getHomeAuctionMainList.htm");
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(lotList, adapter, order))).start();
-        listview.stopLoadMore();
     }
 
 
@@ -200,13 +191,25 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
         public void handlerData(int code, JSONObject data){
             switch (code){
                 case 0:
-
                     auctionList = JsonApi.getAuctionList(data);
-                    int count = 0;
+                    Log.i("TAG", "auction size = "+auctionList.size());
+
+                    // 查询含有专场的拍卖会数目（最大为4个）
+                    adsCount = 0;
+                    for (int i = 0; i < auctionList.size(); i++) {
+                        if(auctionList.get(i).sessionList.size()==0)
+                            continue;
+                        adsCount ++ ;
+                        if( adsCount == 4)
+                            break;
+                    }
+
+                    Log.i("TAG", "auction unnull size = "+adsCount);
 
                     // 将静态图片ID装载到数组中
                     mImageViews = new ImageView[adsCount];
-                    for (int i = 0; i < adsCount; i++) {
+                    int count = 0;
+                    for (int i = 0; i <  auctionList.size(); i++) {
                         if(auctionList.get(i).sessionList.size()==0)
                             continue;
                         index_i = i;
@@ -222,15 +225,15 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
                             }
                         });
 
+                        // 加载拍卖会专场图片
                         mImageViews[count].setImageResource(R.drawable.default_image);
-                        Tasks.showImage(auctionList.get(count).sessionList.get(0).imageUrl, mImageViews[count]);
+                        //Tasks.showImage(auctionList.get(count).sessionList.get(0).imageUrl, mImageViews[count]);
 
-                        count ++;
-                        if(count == 4)
+                        count ++ ;
+                        if( count == adsCount)
                             break;
-                    }
 
-                    adsCount = count;
+                    }
                     showSessionAds();
                     break;
                 default:

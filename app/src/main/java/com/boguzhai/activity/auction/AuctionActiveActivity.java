@@ -1,5 +1,6 @@
 package com.boguzhai.activity.auction;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.auction.apply.ApplyForAuctionActivity;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Record;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
@@ -194,6 +196,7 @@ public class AuctionActiveActivity extends BaseActivity {
                 break;
             case R.id.bid_info_set_proxy:
                 input_proxy.setText(bid_info_proxy.getText().toString());
+                AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
                 tips.setTitle("请输入").setIcon( android.R.drawable.ic_dialog_info).setView(input_proxy)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -211,7 +214,4 @@ public class AuctionActiveActivity extends BaseActivity {
             break;
         }
     }
-
-
-
 }

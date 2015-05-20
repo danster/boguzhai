@@ -15,7 +15,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.thread.Tasks;
 
 import java.util.ArrayList;
 
@@ -41,7 +40,7 @@ public class LotListAdapter extends BaseAdapter {
     @Override    
     public Object getItem(int position) { return null; }
     @Override    
-    public long getItemId(int position) { return position/2; }
+    public long getItemId(int position) { return position; }
     
     @Override    
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -67,34 +66,24 @@ public class LotListAdapter extends BaseAdapter {
         }
 
         // 下载并加载左侧拍品信息
-        if(list.get(2 * position).isLoaded == false){
-            Tasks.showImage(list.get(2 * position).imageUrl, holder.leftImage);
-            holder.leftLotName.setText(list.get(2*position).name);
-            holder.leftLotID.setText("拍品号: "+list.get(2*position).id);
-            holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).appraisal1+" - ￥"+list.get(2*position).appraisal2);
-            holder.leftLotStartPrice.setText("起拍价: ￥"+list.get(2 * position).startPrice);
-            holder.leftLot.setOnClickListener(new MyOnClickListener(2 * position));
-
-            list.get(2 * position).isLoaded = true;
-        }
-
+        holder.leftImage.setImageBitmap(list.get(2*position).image);
+        holder.leftLotName.setText(list.get(2*position).name);
+        holder.leftLotID.setText("拍品号: "+list.get(2*position).id);
+        holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).appraisal1+" - ￥"+list.get(2*position).appraisal2);
+        holder.leftLotStartPrice.setText("起拍价: ￥" + list.get(2 * position).startPrice);
+        holder.leftLot.setOnClickListener(new MyOnClickListener(2 * position));
 
         holder.rightLot.setVisibility(View.VISIBLE);
         if(position*2+2 > list.size()){
             holder.rightLot.setVisibility(View.INVISIBLE);
         } else {
             // 下载并加载右侧拍品信息
-            if(list.get(2*position+1).isLoaded == false){
-                Tasks.showImage(list.get(2*position+1).imageUrl, holder.rightImage);
-                holder.rightLot.setOnClickListener(new MyOnClickListener(2 * position + 1));
-                holder.rightLotName.setText(list.get(2*position+1).name);
-                holder.rightLotID.setText("拍品号: "+list.get(2*position+1).id);
-                holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).appraisal1+" - ￥"+list.get(2*position+1).appraisal2);
-                holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
-
-                list.get(2*position+1).isLoaded = true;
-            }
-
+            holder.rightImage.setImageBitmap(list.get(2*position+1).image);
+            holder.rightLot.setOnClickListener(new MyOnClickListener(2*position + 1));
+            holder.rightLotName.setText(list.get(2*position+1).name);
+            holder.rightLotID.setText("拍品号: "+list.get(2*position+1).id);
+            holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).appraisal1+" - ￥"+list.get(2*position+1).appraisal2);
+            holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
         }
 
         if(isMain){
@@ -125,9 +114,9 @@ public class LotListAdapter extends BaseAdapter {
     }
     
     protected class MyOnClickListener implements View.OnClickListener{
-		private int position;
+        int position;
 		public MyOnClickListener(int position){
-			this.position = position;
+            this.position = position;
 		}
 		@Override
 		public void onClick(View v) {

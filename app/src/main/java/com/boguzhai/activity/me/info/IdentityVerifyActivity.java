@@ -14,6 +14,7 @@ import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONObject;
 
@@ -122,7 +123,8 @@ public class IdentityVerifyActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
                 case 0:
-                    baseActivity.getAlert("操作成功")
+                    AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+                    tips.setTitle("请输入").setIcon( android.R.drawable.ic_dialog_info).setMessage("操作成功")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                             baseActivity.startActivity(new Intent(baseActivity,AccountInfoActivity.class));
@@ -130,7 +132,7 @@ public class IdentityVerifyActivity extends BaseActivity {
                         }).show();
                     break;
                 default:
-                    baseActivity.alertMessage("操作失败");
+                    Utility.alertMessage("操作失败");
                     break;
             }
         }

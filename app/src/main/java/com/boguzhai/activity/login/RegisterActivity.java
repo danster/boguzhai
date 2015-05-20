@@ -1,5 +1,6 @@
 package com.boguzhai.activity.login;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,11 +14,13 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.StringApi;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONObject;
 
@@ -72,7 +75,7 @@ public class RegisterActivity extends BaseActivity {
 		switch (v.getId()) {  
 		case R.id.get_check_code:
             if(! stringApi.checkPhoneNumber(username.getText().toString())){
-                this.alertMessage(stringApi.tips);
+                Utility.alertMessage(stringApi.tips);
                 break;
             }
             get_check_code.setEnabled(false);
@@ -96,25 +99,25 @@ public class RegisterActivity extends BaseActivity {
                 }
             };
 
-            Tasks.getCheckCode(username.getText().toString());
+            Tasks.getCheckCodeNoLogin(username.getText().toString());
             new Timer().schedule(task, 0, 1000); // 一秒后启动task
             break;
 
         case R.id.register:
             if(!stringApi.checkPhoneNumber(username.getText().toString())){
-                this.alertMessage(stringApi.tips);
+                Utility.alertMessage(stringApi.tips);
                 break;
             }
             if(check_code.getText().toString().equals("")){
-                this.alertMessage("请输入手机验证码");
+                Utility.alertMessage("请输入手机验证码");
                 break;
             }
             if(password.getText().toString().length() < 6){
-                this.alertMessage("请输入6位有效密码");
+                Utility.alertMessage("请输入6位有效密码");
                 break;
             }
             if(!isAgreed){
-                this.alertMessage("同意博古斋拍卖网注册协议后，才能注册");
+                Utility.alertMessage("同意博古斋拍卖网注册协议后，才能注册");
                 break;
             }
 
@@ -142,7 +145,8 @@ public class RegisterActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
                 case 0:
-                    baseActivity.getAlert("恭喜您，注册成功，请重新登录")
+                    AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+                    tips.setTitle("请输入").setIcon( android.R.drawable.ic_dialog_info).setMessage("恭喜您，注册成功，请重新登录")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 baseActivity.startActivity(new Intent(baseActivity, LoginActivity.class));
@@ -150,7 +154,7 @@ public class RegisterActivity extends BaseActivity {
                         }).show();
                     break;
                 default:
-                    baseActivity.alertMessage("注册失败, 请检查您的注册信息");
+                    Utility.alertMessage("注册失败, 请检查您的注册信息");
                     break;
             }
         }

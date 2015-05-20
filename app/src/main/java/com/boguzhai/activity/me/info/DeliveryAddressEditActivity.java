@@ -1,5 +1,6 @@
 package com.boguzhai.activity.me.info;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Pair;
@@ -176,7 +177,8 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             break;
 
         case R.id.title_right:
-            tips.setMessage("确定删除该收货地址？");
+            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+            tips.setTitle("提示").setIcon( android.R.drawable.ic_dialog_info).setMessage("确定删除该收货地址？");
             tips.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) { //删除收货信息

@@ -40,6 +40,10 @@
         <activity android:name=".activity.mainpage.AppGuideActivity" >  </activity>
         <activity android:name=".activity.mainpage.AppStartActivity" >  </activity>
 
+
+        <!-- activities belong part of base and item -->
+        <activity android:name=".activity.items.ShowImageActivity" >  </activity>
+
         <!-- activities belong part of search -->
         <activity android:name=".activity.search.SearchResultActivity">  </activity>
 

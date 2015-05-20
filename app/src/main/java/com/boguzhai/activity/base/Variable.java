@@ -15,6 +15,7 @@ import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Lottype_1;
 import com.boguzhai.logic.dao.Session;
+import com.boguzhai.logic.view.XListViewForScrollView;
 
 import java.util.ArrayList;
 
@@ -48,10 +49,12 @@ public class Variable {
     public static Auction currentAuction = null;
     public static Session currentSession = null;
     public static Lot currentLot = null;
+    public static XListViewForScrollView currentListview=null;
     public static DeliveryAddress currentDeliveryAddress = null; //修改收货地址时初始化
 
     public static Activity currentActivity = null; //当前的Activity
     public static Activity lastActivity = null;    //跳转进来之前的Activity
-    public static Activity nextActivity = null;    //即将跳转去的Activity
+    public static Class<?> nextClass = null;    //即将跳转去的Class
+
 
 }
