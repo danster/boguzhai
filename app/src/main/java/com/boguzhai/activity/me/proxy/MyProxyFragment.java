@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.ProxyLot;
@@ -62,18 +63,18 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
     public final static int REFRESH = 0;//刷新
     public final static int LOADMORE = 1;//加载更多
     public int which = REFRESH;
-    private int totalCount = 0;//结果总数
-    private int currentCount = 0;//当前总数
+    private int totalCount = 0;//代理出价拍品的总数
+    private int currentCount = 0;//当前已经获取的个数
     private int number = 1;//分页序号，从1开始
     private int size = 0;//每次分页数目
     private boolean isSearch = false;//是否处于搜索下的显示
 
     private List<ProxyLot> myProxyLots;//所有代理出价拍品集合，只有在刷新的情况下才会更新此集合。
-    //    private List<ProxyLot> searchProxyLots;//搜索时显示的集合
+
     private String spinnerAuctionText = "";//选择拍卖会spinner显示的文字
     private String spinnerSessionText = "";//选择专场spinner显示的文字
     private String searchText = "";//搜索的关键字
-    private List<ProxyLot> selectedAuctionLots;//通过选择的拍卖会过滤后的代理拍品
+
     private List<ProxyLot> tempLots;
     private int status = 1;//1可修改的代理出价(拍卖未结束) 2历史代理(不可修改)
 
@@ -97,7 +98,6 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
     private String[] list_type1 = {"不限"};
     private String[] list_type2 = {"不限"};
     private String selectedAuctionName = "不限";
-    private String selectedSessionName = "不限";
 
 
     private HttpClient conn;
@@ -144,15 +144,15 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
         mContext = (ProxyPricingActivity) getActivity();
         listenPopupWindow(view);
         initView();
+        myProxyLots = new ArrayList<>();
         requestData();
-        initData();
     }
 
 
     /**
      * 触摸监听事件，用来关闭已经显示的popupwindow
      *
-     * @param v
+     * @param v 需要监听的view
      */
     private void listenPopupWindow(View v) {
         v.setOnTouchListener(new View.OnTouchListener() {
@@ -167,6 +167,9 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
     }
 
 
+    /**
+     * 初始化view
+     */
     private void initView() {
         /**
          * 支持上拉加载更多地listview，设置上拉监听事件，重写onLoadMore()方法
@@ -207,8 +210,8 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
          * 从网络获取数据,从第一页开始
          */
         conn = new HttpClient();
-        conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!getAuctionProxyList.htm");
-        conn.setParam("sessionid", "");//
+        conn.setUrl(Constant.url + "pAuctionUserAction!getAuctionProxyList.htm");
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("status", String.valueOf(status));//0可修改的代理出价(拍卖未结束) 1历史代理(不可修改)
         conn.setParam("number", String.valueOf(number));//分页序号，从1开始
         new Thread(new HttpPostRunnable(conn, new MyProxyHandler())).start();
@@ -221,7 +224,6 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
     private void initData() {
 
         isSearch = false;
-        myProxyLots = new ArrayList<>();
 
         /**
          * 解析所有代理拍品，得到所有拍卖会名称和专场名称，提供spinner选择
@@ -280,6 +282,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                             Intent intent = new Intent(mContext, SetProxyPricingActivity.class);
                             intent.putExtra("auctionId", myProxyLots.get(position - 1).name);
                             startActivity(intent);
+                            //startactivityforresult,如果返回修改成功，则重新刷新数据
                         }
                     });
                     tv_popupwindow_delete.setOnClickListener(new View.OnClickListener() {
@@ -298,8 +301,8 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                                     dialog.dismiss();
                                     //网络请求
                                     conn = new HttpClient();
-                                    conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!removeAuctionProxyPrice.htm");
-                                    conn.setParam("sessionid", "");//
+                                    conn.setUrl(Constant.url + "pAuctionUserAction!removeAuctionProxyPrice.htm");
+                                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
                                     conn.setParam("number", adapter.getLots().get(position - 1).id);
                                     new Thread(new HttpPostRunnable(conn, new MyProxyDeleteHandler(position, view))).start();
                                 }
@@ -310,10 +313,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                                     dialog.dismiss();
                                 }
                             });
-
                             builder.create().show();
-
-
                         }
                     });
 
@@ -330,7 +330,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                     int px_x = DensityUtils.dip2px(mContext.getApplicationContext(), dp_x);
                     int px_y = DensityUtils.dip2px(mContext.getApplicationContext(), dp_y);
                     popupWindow.showAtLocation(parent,
-                            Gravity.TOP + Gravity.LEFT, dp_x, pos[1] + dp_y);
+                            Gravity.TOP + Gravity.LEFT, px_x, pos[1] + px_y);
 
                     ScaleAnimation sa = new ScaleAnimation(0.5f, 1.0f, 0.5f,
                             1.0f, Animation.RELATIVE_TO_SELF, 0.1f,
@@ -356,16 +356,11 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                     public void onItemSelected(AdapterView<?> parent, View view0, int position,
                                                long id) {
                         final List<String> sessionNames;
-
-                        selectedAuctionLots = new ArrayList<>();
-
-
                         /**
                          * 选中"不限"，遍历所有代理拍品所在拍卖会下的所有专场，
                          */
                         if (position == 0) {
                             spinnerAuctionText = "不限";
-                            Log.i(TAG, "选中的拍卖会为:" + selectedAuctionName);
                             sessionNames = new ArrayList<>();
                             for (SelectedAuction auction : auctions) {
                                 for (String name : auction.sessionNames) {
@@ -385,10 +380,8 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                              */
                         } else if (position >= 1) {
                             spinnerAuctionText = auctions.get(position - 1).auctionName;
-                            Log.i(TAG, "选中的拍卖会为:" + selectedAuctionName);
                             sessionNames = auctions.get(position - 1).sessionNames;
                             list_type2 = new String[sessionNames.size() + 1];
-                            Log.i(TAG, "该拍卖会中有:" + sessionNames.size() + "个专场");
                             list_type2[0] = "不限";
                             for (int i = 1; i < list_type2.length; i++) {
                                 list_type2[i] = auctions.get(position - 1).sessionNames.get(i - 1);
@@ -416,10 +409,8 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                                  */
                                 if (position == 0) {
                                     spinnerSessionText = "不限";
-                                    Log.i(TAG, "选中的专场为:" + spinnerSessionText);
                                 } else if (position > 0) { //选中某一专场
                                     spinnerSessionText = sessionNames.get(position - 1);
-                                    Log.i(TAG, "选中的专场为:" + spinnerSessionText);
                                 }
 
 
@@ -432,14 +423,14 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
-                                Log.i(TAG, "Spinner2: Nothing selected!");
+                                Log.i(TAG, "Session_Spinner: Nothing selected!");
                             }
                         });
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-                        Log.i(TAG, "Spinner1: Nothing selected!");
+                        Log.i(TAG, "Auction_Spinner: Nothing selected!");
                     }
 
                 }
@@ -720,6 +711,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
         int position = 0;
         View itemView;
+
         MyProxyDeleteHandler(int position, View view) {
             this.position = position;
             this.itemView = view;

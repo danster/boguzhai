@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <WebView
+    android:id="@+id/wv_about_bo_gu_zhai"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"/>
+
+    <LinearLayout
+        style="@style/base_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+
+        <RadioGroup
+            android:id="@+id/rg_about_bo_gu_zhai"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <RadioButton
+                android:id="@+id/rb_about_bo_gu_1"
+                android:textColor="@color/my_auction_tab_text_selector"
+                android:button="@null"
+                android:gravity="center_horizontal"
+                android:text="公司简介"
+                android:textSize="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_about_bo_gu_2"
+                android:textColor="@color/my_auction_tab_text_selector"
+                android:button="@null"
+                android:text="联系我们"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+
+            <RadioButton
+                android:id="@+id/rb_about_bo_gu_3"
+                android:textColor="@color/my_auction_tab_text_selector"
+                android:button="@null"
+                android:text="业务范围"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_about_bo_gu_4"
+                android:textColor="@color/my_auction_tab_text_selector"
+                android:button="@null"
+                android:text="诚聘英才"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+    </LinearLayout>
+
+
+</LinearLayout>

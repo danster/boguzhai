@@ -4,17 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.BiddingLot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
+import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
@@ -25,22 +28,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BiddingActivity extends BaseActivity {
+public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
 
     private ListViewForScrollView lv_bidding;//竞价列表
     private BiddingAuctionAdapter adaper;
     private List<BiddingAuction> biddingAuctionList;
     private HttpClient conn;
-
+    private SwipeRefreshLayout swipe_layout;
 
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             Log.i(TAG, "接收到<数据获取完成>的消息！");
-
-//            initData();
-
+            initData();
         }
     };
 	@Override
@@ -52,60 +53,28 @@ public class BiddingActivity extends BaseActivity {
 	}
 
 	protected void init(){
-//        conn = new HttpClient();
-//        conn.setParam("sessionid", "");
-//        conn.setUrl("http://60.191.203.80/phones/pClientInfoAction!getBiddingLotList.htm");
-//        new Thread(new HttpPostRunnable(conn, new BiddingHandler())).start();
 
+        swipe_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout_me_bidding);
+        swipe_layout.setColorSchemeColors(R.color.gold);
+        swipe_layout.setOnRefreshListener(this);
+        biddingAuctionList = new ArrayList<>();
 
-
-
-
-
-        /**
-         * 支持上拉加载更多的listView，设置不可以下拉刷新，可以上拉加载更多，重写onLoadMore()方法
-         */
-        lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
+        requestData();
 
         initData();
 	}
 
     public void initData() {
-        biddingAuctionList = testData();
         adaper = new BiddingAuctionAdapter(this, biddingAuctionList);
         lv_bidding.setAdapter(adaper);
     }
-    public List<BiddingAuction> testData() {
-        List<BiddingAuction> biddingAuctionList = new ArrayList<>();
-        BiddingAuction biddingAuction;
 
-        for(int j = 1; j < 11; j++) {
-            biddingAuction = new BiddingAuction();
-            biddingAuction.auction = new Auction();
-            biddingAuction.lotList = new ArrayList<>();
-
-            biddingAuction.auction.name = "2015新春大拍" + j;
-            biddingAuction.auction.type = "同步";
-            biddingAuction.auction.id = "ASC1231" + j;
-            biddingAuction.auction.dealNum = 4;
-            for(int i = 1; i < 3; i++)  {
-                BiddingLot lot = new BiddingLot();
-                lot.isLeader = 0;
-                lot.no = "123";
-                lot.name = "明代唐伯虎书法作品";
-                lot.biddingCount = 5;
-                lot.appraisal1 = 5000;
-                lot.appraisal2 = 8000;
-                lot.startPrice = 3000;
-                lot.currentPrice = 4000;
-                lot.topPrice = 4000;
-                biddingAuction.lotList.add(lot);
-            }
-            biddingAuctionList.add(biddingAuction);
-        }
-        return biddingAuctionList;
+    public void requestData() {
+        conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setUrl(Constant.url + "pClientInfoAction!getBiddingLotList.htm");
+        new Thread(new HttpPostRunnable(conn, new BiddingHandler())).start();
     }
-
 
 
 	@Override
@@ -113,6 +82,12 @@ public class BiddingActivity extends BaseActivity {
         super.onClick(view);
     }
 
+    @Override
+    public void onRefresh() {
+        swipe_layout.setRefreshing(true);
+        biddingAuctionList.clear();
+        requestData();
+    }
 
 
     /**

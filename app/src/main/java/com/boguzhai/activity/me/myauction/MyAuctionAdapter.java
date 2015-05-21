@@ -38,7 +38,6 @@ public class MyAuctionAdapter extends BaseAdapter {
     private List<MyAuction> myAuctions;//要展示的拍卖会信息
     private Context mContext;
     private LayoutInflater inflater;
-    private int currentCount = 0;//当前需要展示的个数
 
     public MyAuctionAdapter(Context context, List<MyAuction> myAuctions) {
         this.mContext = context;
@@ -48,7 +47,7 @@ public class MyAuctionAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return currentCount;
+        return myAuctions.size();
     }
 
     @Override

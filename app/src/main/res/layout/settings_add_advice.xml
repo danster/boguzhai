@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        style="@style/base_bar"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/base_text"
+            android:layout_width="100dp"
+            android:text="标题" />
+
+        <EditText
+            android:id="@+id/et_advice_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:gravity="center_vertical|left"
+            android:hint="必填"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_advice_delete_title"
+            style="@style/base_right_clear" />
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+    <LinearLayout
+        android:id="@+id/ll_advice_type"
+        style="@style/base_bar">
+
+        <TextView
+            style="@style/base_text"
+            android:text="请选择分类一" />
+
+        <Spinner
+            android:id="@+id/sp_advice_type"
+            style="@style/lot_filter_spinner"></Spinner>
+
+        <ImageView style="@style/search_right_arrow" />
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+
+    <LinearLayout style="@style/base_bar">
+
+        <TextView
+            style="@style/base_text"
+            android:layout_width="100dp"
+            android:text="订单编号" />
+
+        <EditText
+            android:id="@+id/et_advice_order_no"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:gravity="center_vertical|left"
+            android:hint="非必填"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_advice_delete_order_no"
+            style="@style/base_right_clear" />
+    </LinearLayout>
+
+
+
+    <EditText
+        android:id="@+id/et_advice"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:background="@color/white"
+        android:gravity="left"
+        android:hint="请在这里详细填写您遇到的问题"
+        android:maxLines="20"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="15sp" />
+
+
+    <Button
+        android:id="@+id/btn_advice_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</LinearLayout>

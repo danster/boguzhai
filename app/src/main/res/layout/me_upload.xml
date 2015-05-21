@@ -5,4 +5,85 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/base_text"
+            android:layout_width="100dp"
+            android:text="拍品名称"/>
+        <EditText
+            android:hint="必填"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:textSize="15sp"
+            android:background="@color/transparent"/>
+        <ImageView style="@style/base_right_clear" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/base_text" android:text="请选择分类一"/>
+        <Spinner android:id="@+id/type1" style="@style/lot_filter_spinner"></Spinner>
+        <ImageView style="@style/search_right_arrow" />
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+    <LinearLayout style="@style/base_bar" >
+        <TextView style="@style/base_text" android:text="请选择分类二"/>
+        <Spinner android:id="@+id/type2" style="@style/lot_filter_spinner"></Spinner>
+        <ImageView style="@style/search_right_arrow" />
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+    <LinearLayout style="@style/base_bar" >
+        <TextView style="@style/base_text" android:text="请选择分类三"/>
+        <Spinner android:id="@+id/type3" style="@style/lot_filter_spinner"></Spinner>
+        <ImageView style="@style/search_right_arrow" />
+    </LinearLayout>
+
+
+    <LinearLayout style="@style/base_bar"
+        android:layout_marginTop="10dp">
+        <TextView style="@style/base_text"
+            android:layout_width="100dp"
+            android:text="底价"/>
+        <EditText
+            android:hint="必填"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:textSize="15sp"
+            android:background="@color/transparent"/>
+        <ImageView style="@style/base_right_clear" />
+    </LinearLayout>
+    <View style="@style/longline" />
+
+    <LinearLayout style="@style/base_bar" >
+        <TextView style="@style/base_text" android:text="佣金"/>
+    </LinearLayout>
+
+
+    <View style="@style/longline" />
+    <LinearLayout style="@style/base_bar" >
+        <TextView style="@style/base_text"
+            android:layout_width="100dp"
+            android:text="联系人"/>
+        <EditText
+            android:hint="必填"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:textSize="15sp"
+            android:background="@color/transparent"/>
+        <ImageView style="@style/base_right_clear" />
+    </LinearLayout>
+
+
 </LinearLayout>

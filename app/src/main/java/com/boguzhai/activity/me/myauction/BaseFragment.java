@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
 import com.boguzhai.logic.thread.HttpJsonHandler;
@@ -56,7 +58,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     private List<MyAuction> myAuctions;//需要展示的我的拍卖会集合
     private List<MyAuction> tempAuctions;//临时的拍卖会集合，用于搜索过滤后的
     private boolean isSearch = false;//是否处于关键字查询下的显示
-    private String spinnerText = "";//spinner显示的文字
+    private String spinnerText = "全部";//spinner显示的文字
     private String searchText = "";//搜索的关键字
     public View view;//fragment对应布局
     public LayoutInflater inflater;
@@ -123,8 +125,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
          * 从网络获取数据,从第一页开始
          */
         conn = new HttpClient();
-        conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!getMyAuctionMainList.htm");
-        conn.setParam("sessionid", "");//
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
         conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
         conn.setParam("number", String.valueOf(number));//分页序号，从1开始
         new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
@@ -205,6 +207,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
 
         if (TextUtils.isEmpty(key)) {//搜索的关键字为""
             isSearch = false;
+            Log.i(TAG, spinnerText);
             if ("全部".equals(spinnerText)) {//选择"全部"
                 myAuctionAdapter = new MyAuctionAdapter(mContext, myAuctions);
             } else {
@@ -254,8 +257,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         Log.i(TAG, "下拉刷新");
 
         conn = new HttpClient();
-        conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!getMyAuctionMainList.htm");
-        conn.setParam("sessionid", "");//
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
         conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
         conn.setParam("number", String.valueOf(number));//分页序号，从1开始
         new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
@@ -263,7 +266,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
 
 
     /**
-     * 不进行网络数据请求，只进行分页处理
+     * 加载更多
      */
     @Override
     public void onLoadMore() {
@@ -273,8 +276,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         } else {
             number++;//页数加1
             conn = new HttpClient();
-            conn.setUrl("http://60.191.203.80/phones/pAuctionUserAction!getMyAuctionMainList.htm");
-            conn.setParam("sessionid", "");//
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
             conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
             conn.setParam("number", String.valueOf(number));
             new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
@@ -301,6 +304,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     break;
                 case 0:
                     Log.i(TAG, "获取信息成功");
+                    Log.i(TAG, data.toString());
                     try {
                         size = Integer.parseInt(data.getString("size"));//每页的数目
                         totalCount = Integer.parseInt(data.getString("count"));//总的数目
