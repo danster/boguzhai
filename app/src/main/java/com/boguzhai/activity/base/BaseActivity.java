@@ -95,6 +95,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
             case KeyEvent.KEYCODE_VOLUME_UP:
             break;
             case KeyEvent.KEYCODE_BACK:
+                finish();
             break;
             case KeyEvent.KEYCODE_MENU:
             break;

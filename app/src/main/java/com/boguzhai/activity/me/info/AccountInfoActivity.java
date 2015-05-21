@@ -32,7 +32,8 @@ public class AccountInfoActivity extends BaseActivity {
         this.fillAccountInfo();
         int[] ids = { R.id.logout, R.id.my_more_contact, R.id.my_delivery_address, R.id.my_capital, R.id.my_verify};
         this.listen(ids);
-        Tasks.showImage(Variable.account.imageUrl,(ImageView)findViewById(R.id.image), 2);
+        Tasks.showImage(Variable.account.imageUrl, (ImageView) findViewById(R.id.image), 2);
+        Tasks.showBigImage(Variable.account.imageUrl,(ImageView)findViewById(R.id.image), 1);
 	}
 
     private void fillAccountInfo(){

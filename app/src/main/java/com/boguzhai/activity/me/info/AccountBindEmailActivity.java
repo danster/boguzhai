@@ -117,9 +117,9 @@ public class AccountBindEmailActivity extends BaseActivity {
     public class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code,data);
             switch(code){
             case 0:
-
                 AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
                 tips.setTitle("请输入").setIcon( android.R.drawable.ic_dialog_info).setMessage("绑定邮箱成功")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -128,6 +128,9 @@ public class AccountBindEmailActivity extends BaseActivity {
                             baseActivity.startActivity(new Intent(baseActivity, AccountInfoActivity.class));
                         }
                     }).show();
+                break;
+            case 2:
+                Utility.alertMessage("验证码错误");
                 break;
             default:
                 Utility.alertMessage("绑定邮箱失败");

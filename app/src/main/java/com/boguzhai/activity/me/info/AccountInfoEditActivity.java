@@ -111,7 +111,8 @@ public class AccountInfoEditActivity extends BaseActivity {
 
     // 修改之前先填充账户信息
     private void fillAccountInfo(){
-        ((ImageView)findViewById(R.id.image)).setImageBitmap(Variable.account.image);
+        Tasks.showImage(Variable.account.imageUrl, (ImageView) findViewById(R.id.image), 2);
+
         ((TextView)findViewById(R.id.name)).setText(Variable.account.name);
         ((EditText)findViewById(R.id.nickname)).setText(Variable.account.nickname);
         ((EditText)findViewById(R.id.address)).setText(Variable.account.address);
@@ -171,8 +172,7 @@ public class AccountInfoEditActivity extends BaseActivity {
         Bitmap bitmap = ImageApi.getBitmap(requestCode, data);
 
         if(bitmap != null) {
-            Tasks.uploadImage("当前图像", bitmap,
-                    new UploadImageHandler((ImageView)findViewById(R.id.image), bitmap));
+            Tasks.uploadImage("当前图像", bitmap, new UploadImageHandler((ImageView)findViewById(R.id.image), bitmap));
         }
     }
 

@@ -48,7 +48,6 @@ public class Utility {
     public static void gotoLogin(){
         Variable.account = new Account();
         Variable.isLogin = false;
-        Variable.lastActivity = Variable.currentActivity;
         Variable.currentActivity.startActivity(new Intent(Variable.currentActivity, LoginActivity.class));
     }
 

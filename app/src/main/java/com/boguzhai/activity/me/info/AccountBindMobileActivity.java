@@ -115,6 +115,7 @@ public class AccountBindMobileActivity extends BaseActivity {
     public class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
             switch(code){
             case 0:
                 AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
@@ -125,6 +126,10 @@ public class AccountBindMobileActivity extends BaseActivity {
                             baseActivity.startActivity(new Intent(baseActivity, AccountInfoActivity.class));
                         }
                     }).show();
+                break;
+
+            case 2:
+                Utility.alertMessage("验证码错误");
                 break;
             default:
                 Utility.alertMessage("绑定手机失败");

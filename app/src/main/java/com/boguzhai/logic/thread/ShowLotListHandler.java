@@ -8,6 +8,7 @@ import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.utils.JsonApi;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,10 +31,19 @@ public class ShowLotListHandler extends HttpJsonHandler {
 
     @Override
     public void handlerData(int code, JSONObject data){
+
+        Variable.currentRefresh.setRefreshing(false);
+        Variable.currentListview.stopLoadMore();
+
         switch (code){
             case 0:
-                if(order.value == -1) {    break;             }
-                if(order.value == 1)  {    this.list.clear(); }
+                if(order.value == -1) {
+                    Utility.toastMessage("已无更多信息");
+                    break;
+                }
+                if(order.value == 1)  {
+                    this.list.clear();
+                }
 
                 try {
                     int count = Integer.parseInt(data.getString("count"));
@@ -41,6 +51,7 @@ public class ShowLotListHandler extends HttpJsonHandler {
 
                     if ((order.value-1)*size == count ) {
                         order.value = -1;
+                        Utility.toastMessage("已无更多信息");
                         break;
                     } else if (order.value*size > count ) {
                         order.value = -1;
@@ -49,10 +60,6 @@ public class ShowLotListHandler extends HttpJsonHandler {
                     }
 
                     lots = JsonApi.getLotList(data);
-                    Variable.currentListview.stopRefresh();
-                    Variable.currentListview.stopLoadMore();
-                    Variable.currentListview.setRefreshTime("刚刚");
-
                     list.addAll(lots);
                     adapter.notifyDataSetChanged();
 
@@ -90,4 +97,3 @@ public class ShowLotListHandler extends HttpJsonHandler {
         }
     }
 }
-
