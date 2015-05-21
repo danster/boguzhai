@@ -3,7 +3,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,8 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/white">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +22,8 @@
                 android:id="@+id/lot_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"/>
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"/>
         </LinearLayout>
 
         <LinearLayout
@@ -32,8 +31,8 @@
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
             android:gravity="center_vertical">
             <TextView
                 android:id="@+id/lot_name"
@@ -56,16 +55,6 @@
                 android:background="#957A4D"
                 android:text="收藏"/>
 
-            <!--<TextView-->
-                <!--android:layout_width="50sp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:gravity="center"-->
-                <!--android:textSize="16sp"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:background="#957A4D"-->
-                <!--android:text="分享"/>-->
-
         </LinearLayout>
     </LinearLayout>
 
@@ -74,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="2dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:background="@color/white">
@@ -105,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="2dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:background="@color/white">
@@ -136,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="2dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:background="@color/white">

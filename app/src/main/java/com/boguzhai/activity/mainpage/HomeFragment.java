@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
+import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
     private ViewGroup viewGroup;
     private ViewPager viewPager;
     private TextView viewInfo;
-    private int currentIndex =0;
+    private int currentIndex = 0;
     private ImageView[] mImageViews, tips;
 
     // 拍品展示
@@ -73,7 +73,8 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
     // 从网络获取首页的拍卖会信息
     private void pullDynamicInfo(){
         HttpClient conn = new HttpClient();
-        conn.setParam("status", "拍卖中");
+        conn.setParam("status", "");
+        conn.setParam("number", "1");
         conn.setUrl(Constant.url + "pMainAction!getAuctionMainList.htm");
         new Thread(new HttpPostRunnable(conn,new AuctionListHandler())).start();
 
@@ -115,6 +116,7 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
             //载入图片进去，用当前的position 除以 图片数组长度取余数是关键
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
+                container.removeView(mImageViews[position % mImageViews.length]);
                 container.addView(mImageViews[position % mImageViews.length], 0);
                 return mImageViews[position % mImageViews.length];
             }
@@ -165,7 +167,7 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
         lotList = new ArrayList<Lot>();
         adapter = new LotListAdapter(context, lotList, true);
         listview.setAdapter(adapter);
-        //onRefresh();
+        onRefresh();
     }
 
     @Override
@@ -192,47 +194,43 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
             switch (code){
                 case 0:
                     auctionList = JsonApi.getAuctionList(data);
-                    Log.i("TAG", "auction size = "+auctionList.size());
-
                     // 查询含有专场的拍卖会数目（最大为4个）
                     adsCount = 0;
                     for (int i = 0; i < auctionList.size(); i++) {
-                        if(auctionList.get(i).sessionList.size()==0)
-                            continue;
-                        adsCount ++ ;
-                        if( adsCount == 4)
-                            break;
+                        if(auctionList.get(i).sessionList.size() > 0){
+                            adsCount ++ ;
+                            if( adsCount == 4) {
+                                break;
+                            }
+                        }
                     }
 
-                    Log.i("TAG", "auction unnull size = "+adsCount);
+                    if(adsCount == 0){
+                        break;
+                    }
 
                     // 将静态图片ID装载到数组中
                     mImageViews = new ImageView[adsCount];
                     int count = 0;
-                    for (int i = 0; i <  auctionList.size(); i++) {
-                        if(auctionList.get(i).sessionList.size()==0)
-                            continue;
-                        index_i = i;
+                    for (int i = 0; i < auctionList.size() && count < adsCount; i++) {
+                        if(auctionList.get(i).sessionList.size() > 0){
+                            index_i = i;
+                            mImageViews[count] = new ImageView(getActivity());
 
-                        mImageViews[count] = new ImageView(getActivity());
-                        // 设置广告图片的点击响应
-                        mImageViews[count].setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Variable.currentAuction = auctionList.get(index_i);
-                                Variable.currentSession = auctionList.get(index_i).sessionList.get(0);
-                                Utility.gotoAuction(context, Variable.currentSession.status);
-                            }
-                        });
+                            // 设置广告图片的点击响应
+                            mImageViews[count].setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Variable.currentAuction = auctionList.get(index_i);
+                                    Variable.currentSession = auctionList.get(index_i).sessionList.get(0);
+                                    Utility.gotoAuction(context, Variable.currentSession.status);
+                                }
+                            });
 
-                        // 加载拍卖会专场图片
-                        mImageViews[count].setImageResource(R.drawable.default_image);
-                        //Tasks.showImage(auctionList.get(count).sessionList.get(0).imageUrl, mImageViews[count]);
-
-                        count ++ ;
-                        if( count == adsCount)
-                            break;
-
+                            // 加载拍卖会专场图片
+                            Tasks.showImage(auctionList.get(count).sessionList.get(0).imageUrl, mImageViews[count], 4);
+                            count ++ ;
+                        }
                     }
                     showSessionAds();
                     break;

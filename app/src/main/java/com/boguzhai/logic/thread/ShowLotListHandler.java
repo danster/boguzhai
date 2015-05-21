@@ -49,6 +49,12 @@ public class ShowLotListHandler extends HttpJsonHandler {
                     }
 
                     lots = JsonApi.getLotList(data);
+                    Variable.currentListview.stopRefresh();
+                    Variable.currentListview.stopLoadMore();
+                    Variable.currentListview.setRefreshTime("刚刚");
+
+                    list.addAll(lots);
+                    adapter.notifyDataSetChanged();
 
                     // 网络批量下载拍品图片
                     new AsyncTask<Void, Void, Void>() {
@@ -71,11 +77,6 @@ public class ShowLotListHandler extends HttpJsonHandler {
 
                         @Override
                         protected void onPostExecute(Void result) {
-                            Variable.currentListview.stopRefresh();
-                            Variable.currentListview.stopLoadMore();
-                            Variable.currentListview.setRefreshTime("刚刚");
-
-                            list.addAll(lots);
                             adapter.notifyDataSetChanged();
                         }
                     }.execute();
