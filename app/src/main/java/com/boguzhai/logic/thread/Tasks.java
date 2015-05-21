@@ -42,6 +42,7 @@ public class Tasks {
 
     public static void updateAccount(){
         HttpClient conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pClientInfoAction!getAccountInfo.htm");
         new Thread(new HttpPostRunnable(conn, new UpdateHandler())).start();
 
@@ -76,6 +77,7 @@ public class Tasks {
                     return null;
                 }
                 try {
+                    Log.i("AsyncTask", "image get: " + imageUrl);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = imageRatio; // height, width 变为原来的ratio分之一
@@ -115,6 +117,7 @@ public class Tasks {
                     return null;
                 }
                 try {
+                    Log.i("AsyncTask", "image get: "+imageUrl);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = imageRatio; // height, width 变为原来的ratio分之一
@@ -145,7 +148,6 @@ public class Tasks {
                                     dialog.cancel();
                                 }
                             });
-
                         }
                     });
                 } else {
@@ -171,18 +173,15 @@ public class Tasks {
         }
     }
 
-
 }
 
 class UpdateHandler extends HttpJsonHandler {
     @Override
     public void handlerData(int code, JSONObject data){
+        super.handlerData(code, data);
         switch (code){
             case 0:
                 JsonApi.getAccountInfo(data);
-                break;
-            case -1:
-                Utility.gotoLogin();
                 break;
             default:
                 break;
@@ -193,6 +192,7 @@ class UpdateHandler extends HttpJsonHandler {
 class GetCheckcodeHandler extends HttpJsonHandler {
     @Override
     public void handlerData(int code, JSONObject data){
+        super.handlerData(code, data);
         switch(code){
             case 0:
                 Utility.toastMessage("发送验证码成功，请注意查收");

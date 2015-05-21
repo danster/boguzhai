@@ -109,12 +109,13 @@ public class CapitalBindbankActivity extends BaseActivity {
     class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code,data);
             switch(code){
                 case 0:
                     Utility.alertMessage("绑定成功");
                     break;
-                case -1:
-                    Utility.gotoLogin();
+                case 2:
+                    Utility.alertMessage("验证码错误");
                     break;
                 default:
                     Utility.alertMessage("绑定失败");

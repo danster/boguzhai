@@ -2,7 +2,6 @@ package com.boguzhai.activity.auction;
 
 import android.os.Bundle;
 import android.util.Pair;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ import org.json.JSONObject;
 
 public class LotInfoActivity extends BaseActivity {
 
+    private TextView collectText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,9 @@ public class LotInfoActivity extends BaseActivity {
         this.listen(R.id.favor);
         this.listen(R.id.session_info);
         this.listen(R.id.lot_image);
+        collectText = (TextView)findViewById(R.id.favor);
+
+        checkCollectInfo();
 
         ImageView image = (ImageView)findViewById(R.id.lot_image);
         image.setImageBitmap(Variable.currentLot.image);
@@ -49,11 +52,15 @@ public class LotInfoActivity extends BaseActivity {
         HttpClient con = new HttpClient();
         con.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoById.htm?auctionId="+Variable.currentLot.id);
         new Thread(new HttpPostRunnable(con,new ShowLotInfoHandler())).start();
+    }
 
-        // 获取拍品所在拍卖会信息
-        HttpClient conn = new HttpClient();
-        conn.setUrl(Constant.url + "pMainAction!getAuctionMainById.htm?auctionMainId=" + Variable.currentLot.auctionId);
-        new Thread(new HttpPostRunnable(conn,new ShowAuctionInfoHandler())).start();
+    public void checkCollectInfo(){
+        if(Variable.isLogin == true){
+            HttpClient conn = new HttpClient();
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setUrl(Constant.url+"pCommonAction!checkAuctionIsCollected.htm?auctionId="+Variable.currentLot.id);
+            new Thread(new HttpPostRunnable(conn,new CheckCollectInfoHandler())).start();
+        }
     }
 
     @Override
@@ -61,22 +68,21 @@ public class LotInfoActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.favor:
-                // 收藏该拍品
+                if(Variable.isLogin == false ){
+                    Utility.gotoLogin();
+                } else if(collectText.getText().toString().equals("收藏")){
+                    HttpClient conn = new HttpClient();
+                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                    conn.setUrl(Constant.url+"pCommonAction!collectAuction.htm?auctionId="+Variable.currentLot.id);
+                    new Thread(new HttpPostRunnable(conn,new CollectInfoHandler())).start();
+                } else {
+                }
                 break;
             case R.id.session_info:
                 Utility.gotoAuction(Variable.currentActivity, Variable.currentSession.status);
                 break;
             default: break;
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     public void showLotInfo(){
@@ -102,13 +108,58 @@ public class LotInfoActivity extends BaseActivity {
         ((TextView)findViewById(R.id.lot_info)).setText(info);
     }
 
+    class CollectInfoHandler extends HttpJsonHandler {
+        @Override
+        public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
+            switch (code){
+                case 0:
+                    collectText.setText("已收藏");
+                    Utility.toastMessage("收藏成功");
+                    break;
+                case 1:
+                    collectText.setText("收藏");
+                    Utility.toastMessage("收藏失败");
+                    break;
+                case 2:
+                    collectText.setText("已收藏");
+                    Utility.toastMessage("该拍品已被收藏");
+                    break;
+                default: break;
+            }
+        }
+    }
+
+    class CheckCollectInfoHandler extends HttpJsonHandler {
+        @Override
+        public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
+            switch (code){
+                case 0:
+                    collectText.setText("已收藏");
+                    break;
+                case 1:
+                    collectText.setText("收藏");
+                    break;
+                default: break;
+            }
+        }
+    }
+
     class ShowLotInfoHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
             switch (code){
                 case 0:
                     try {
                         Variable.currentLot = Lot.parseJson(data.getJSONObject("auctionInfo"));
+
+                        // 获取拍品所在拍卖会信息
+                        HttpClient conn = new HttpClient();
+                        conn.setUrl(Constant.url + "pMainAction!getAuctionMainById.htm?auctionMainId=" + Variable.currentLot.auctionId);
+                        new Thread(new HttpPostRunnable(conn,new ShowAuctionInfoHandler())).start();
+
                         showLotInfo();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -122,6 +173,7 @@ public class LotInfoActivity extends BaseActivity {
     class ShowAuctionInfoHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
             switch (code){
                 case 0:
                     try {

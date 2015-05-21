@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +28,13 @@ import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListViewForScrollView;
+import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements XListViewForScrollView.IXListViewListener  {
+public class HomeFragment extends Fragment implements XListView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener {
     private static String TAG = "HomeFragment";
     private View view;
     private MainActivity context;
@@ -49,18 +50,19 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
 
     // 拍品展示
     private ArrayList<Lot> lotList;
-    private XListViewForScrollView listview;
     private LotListAdapter adapter;
+
+    // 分页信息必备条件
+    private SwipeRefreshLayout swipe_layout;
+    private MyInt order = new MyInt(1);
 
     private int index_i;
 
-    // 分页信息
-    private MyInt order = new MyInt(1);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_fg_home, null);
-        context = (MainActivity)getActivity(); //getApplicationContext()
+        context = (MainActivity)getActivity();
         init();
         return view;
     }
@@ -158,20 +160,34 @@ public class HomeFragment extends Fragment implements XListViewForScrollView.IXL
 
     // 刷新展示首页拍品列表
     public void showListView(){
-        listview = (XListViewForScrollView) view.findViewById(R.id.lotlist);
+        XListView listview = (XListView) view.findViewById(R.id.lotlist);
         Variable.currentListview = listview;
         listview.setPullLoadEnable(true);
-        listview.setPullRefreshEnable(true);
+        listview.setPullRefreshEnable(false);
         listview.setXListViewListener(this);
 
         lotList = new ArrayList<Lot>();
         adapter = new LotListAdapter(context, lotList, true);
         listview.setAdapter(adapter);
-        onRefresh();
+
+
+        // 支持下拉刷新的布局，设置下拉监听事件，重写onRefresh()方法
+        swipe_layout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipe_layout.setColorSchemeResources(R.color.gold);
+        swipe_layout.setOnRefreshListener(this);
+        Variable.currentRefresh = swipe_layout;
+
+
+        this.order.value = 1;
+        HttpClient conn = new HttpClient();
+        conn.setParam("number", this.order.value + "");
+        conn.setUrl(Constant.url + "pMainAction!getHomeAuctionMainList.htm");
+        new Thread(new HttpPostRunnable(conn, new ShowLotListHandler(lotList, adapter, order))).start();
     }
 
     @Override
     public void onRefresh() {
+        swipe_layout.setRefreshing(true);
         this.order.value = 1;
         HttpClient conn = new HttpClient();
         conn.setParam("number", this.order.value + "");

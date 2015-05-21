@@ -3,28 +3,33 @@ package com.boguzhai.activity.search;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
 import com.boguzhai.logic.utils.HttpClient;
-import com.boguzhai.logic.widget.ListViewForScrollView;
+import com.boguzhai.logic.view.XListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class SearchResultActivity extends BaseActivity {
+public class SearchResultActivity extends BaseActivity implements XListView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener{
     private static final String TAG = "SearchResultActivity";
-    private ArrayList<Lot> list_lot, list;
-    private ListViewForScrollView listview;
+    private ArrayList<Lot> list;
+    private XListView listview;
     private LotListAdapter adapter;
+    private String searchUrl=null;
+
+    // 分页信息必备条件
+    private SwipeRefreshLayout swipe_layout;
     private MyInt order = new MyInt(1);
 
     private String[] sortTypes = {"按拍品名称","按拍品号",
@@ -45,15 +50,42 @@ public class SearchResultActivity extends BaseActivity {
     }
 
     private void init(){
-        listview = (ListViewForScrollView) findViewById(R.id.lotlist);
+        listview = (XListView) findViewById(R.id.lotlist);
         list = new ArrayList<Lot>();
         adapter = new LotListAdapter(this, list);
         listview.setAdapter(adapter);
 
-        String url=getIntent().getStringExtra("url");
+        listview.setPullLoadEnable(true);
+        listview.setPullRefreshEnable(false);
+        listview.setXListViewListener(this);
+        Variable.currentListview = listview;
+
+        swipe_layout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        swipe_layout.setColorSchemeResources(R.color.gold);
+        swipe_layout.setOnRefreshListener(this);
+        Variable.currentRefresh = swipe_layout;
+
+        searchUrl=getIntent().getStringExtra("url");
+
         HttpClient conn = new HttpClient();
-        conn.setUrl(url);
-        Log.i("TAG",url);
+        order.value = 1;
+        conn.setUrl(searchUrl + "&number=1");
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter, order))).start();
+    }
+
+
+    @Override
+    public void onRefresh() {
+        swipe_layout.setRefreshing(true);HttpClient conn = new HttpClient();
+        order.value = 1;
+        conn.setUrl(searchUrl + "&number=1");
+        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter, order))).start();
+    }
+
+    @Override
+    public void onLoadMore() {
+        swipe_layout.setRefreshing(true);HttpClient conn = new HttpClient();
+        conn.setUrl(searchUrl + "&number=" + order.value);
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(list, adapter, order))).start();
     }
 

@@ -32,9 +32,11 @@ public class JsonApi {
 
     public static void getAccountInfo(JSONObject data){
         try {
+            String sessionid = Variable.account.sessionid;
             Variable.account = new Account();
-            // 登录时返回有sessionid，更新时没有
-            Variable.account.sessionid = data.has("sessionid") ? data.getString("sessionid") : Variable.account.sessionid ;
+
+            // 登录时返回有sessionid，更新时不返回sessionid
+            Variable.account.sessionid = data.has("sessionid")?data.getString("sessionid"):sessionid;
 
             // 解析账户基本信息
             JSONObject account = data.getJSONObject("account");
@@ -57,7 +59,7 @@ public class JsonApi {
             Variable.account.qq = account.has("qq") ? account.getString("qq"): "";
 
             // 解析账户认证信息
-            JSONObject authInfo = data.getJSONObject("authInfo");
+            // JSONObject authInfo = data.getJSONObject("authInfo");
 
             // 解析资金账户信息
             JSONObject capitalInfo = data.getJSONObject("capitalInfo");

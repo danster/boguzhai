@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Pair;
 
 import com.boguzhai.R;
@@ -15,7 +16,7 @@ import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Lottype_1;
 import com.boguzhai.logic.dao.Session;
-import com.boguzhai.logic.view.XListViewForScrollView;
+import com.boguzhai.logic.view.XListView;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,8 @@ public class Variable {
     public static Auction currentAuction = null;
     public static Session currentSession = null;
     public static Lot currentLot = null;
-    public static XListViewForScrollView currentListview=null;
+    public static XListView currentListview=null; // 加载更多
+    public static SwipeRefreshLayout currentRefresh=null; // 下拉更新
     public static DeliveryAddress currentDeliveryAddress = null; //修改收货地址时初始化
 
     public static Activity currentActivity = null; //当前的Activity

@@ -104,7 +104,6 @@ public class IdentityVerifyActivity extends BaseActivity {
                 }
 
 
-
                 //conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
                 //new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
 

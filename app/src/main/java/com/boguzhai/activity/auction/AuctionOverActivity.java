@@ -15,14 +15,14 @@ import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.widget.ListViewForScrollView;
+import com.boguzhai.logic.view.XListView;
 
 import java.util.ArrayList;
 
 public class AuctionOverActivity extends BaseActivity {
 
     private ArrayList<Lot> list;
-    private ListViewForScrollView listview;
+    private XListView listview;
     private LotListAdapter adapter;
     private MyInt order = new MyInt(1);
 
@@ -56,7 +56,7 @@ public class AuctionOverActivity extends BaseActivity {
 
     // 展示专场的拍品列表
     public void showListView(){
-        listview = (ListViewForScrollView) findViewById(R.id.lotlist);
+        listview = (XListView) findViewById(R.id.lotlist);
         list = new ArrayList<Lot>();
         adapter = new LotListAdapter(this, list);
         listview.setAdapter(adapter);

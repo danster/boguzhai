@@ -6,13 +6,20 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public abstract class HttpJsonHandler extends Handler {
     public HttpJsonHandler(){super();}
-    public void handlerData(int code, JSONObject data){}
+    public void handlerData(int code, JSONObject data){
+        // sessionid 错误
+        if(code == -1){
+            Utility.gotoLogin();
+            return;
+        }
+    }
 
     @Override
     public void handleMessage(Message msg) {
