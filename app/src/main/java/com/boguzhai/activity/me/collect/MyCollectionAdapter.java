@@ -6,9 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boguzhai.R;
-import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.dao.CollectionLot;
 
 import java.util.List;
 
@@ -18,85 +19,40 @@ import java.util.List;
 
 
 final class ViewHolder {
-    public  TextView my_collection_lot_name;
-    public  TextView my_collection_lot_status;
-    public  TextView my_collection_lot_no;
-    public  TextView my_collection_lot_appraisal;
-    public  TextView my_collection_lot_startprice;
-    public  TextView my_collection_lot_price;
-    public  TextView tv_my_collection_lot_price;
-
-
+    public  TextView my_collection_lot_name;//拍品名
+    public  TextView my_collection_lot_id;//拍品编号
+    public  TextView my_collection_lot_startprice;//起拍价
+    public  TextView my_collection_lot_status;//拍品状态
+    public  TextView my_collection_lot_appraisal;//预估价
+    public  TextView my_collection_lot_dealprice;//成交价
+    public  TextView tv_my_collection_lot_dealprice;//"成交价:"
+    public  TextView my_collection_biddingTime;//"开拍时间"
+    public  TextView my_collection_forBidding;//是否参拍
 }
 
 
 public class MyCollectionAdapter extends BaseAdapter{
 
-
-    public List<Lot> lots;
+    public List<CollectionLot> lots;
     private Context mContext;
     private LayoutInflater inflater;
-    private final int baseCount = 5;//设置每页显示5个
-    private int currentCount = 0;//当前需要展示的个数
-    private int currentPageIndex = 0;//当前页索引
 
-    MyCollectionAdapter(Context context, List<Lot> lots) {
+    MyCollectionAdapter(Context context, List<CollectionLot> lots) {
         this.mContext = context;
         this.lots = lots;
         inflater = LayoutInflater.from(mContext);
     }
 
-    public List<Lot> getLots() {
-        return this.lots;
-    }
-
-
-    /**
-     * 刷新当前页索引值
-     */
-    public void refreshCurrentPageIndex() {
-        this.currentPageIndex++;
-        setPageIndex(currentPageIndex);
-    }
-    /**
-     * 设置索引，根据索引分页显示
-     * @param index 索引
-     */
-    public void setPageIndex(int index) {
-        if(lots.size() >= baseCount*(index + 1)) {
-            currentCount = baseCount*(index + 1);
-        }else {
-            currentCount = lots.size();
-        }
-    }
-
-    public void removeElem(int postion) {
-        this.lots.remove(postion);
-        currentCount--;
-    }
-
-
-    public int getCurrentCount() {
-        return currentCount;
-    }
-    /**
-     * 判断是否是最后一页
-     * @return true 是  <br>  false 否
-     */
-    public boolean isLastPage() {
-        boolean result = ((currentCount == lots.size()) ? true : false);
-        return result;
-    }
 
     @Override
     public int getCount() {
 
-        return currentCount;
+        return lots.size();
     }
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         View view;
         if (convertView == null) {
@@ -104,35 +60,52 @@ public class MyCollectionAdapter extends BaseAdapter{
             view = inflater.inflate(R.layout.me_my_collection_item, null);
             holder.my_collection_lot_name = (TextView) view.findViewById(R.id.my_collection_lot_name);
             holder.my_collection_lot_status = (TextView) view.findViewById(R.id.my_collection_lot_status);
-            holder.my_collection_lot_no = (TextView) view.findViewById(R.id.my_collection_lot_no);
+            holder.my_collection_lot_id = (TextView) view.findViewById(R.id.my_collection_lot_id);
             holder.my_collection_lot_appraisal = (TextView) view.findViewById(R.id.my_collection_lot_appraisal);
             holder.my_collection_lot_startprice = (TextView) view.findViewById(R.id.my_collection_lot_startprice);
-            holder.my_collection_lot_price = (TextView) view.findViewById(R.id.my_collection_lot_price);
-            holder.tv_my_collection_lot_price = (TextView) view.findViewById(R.id.tv_my_collection_lot_price);
+            holder.my_collection_lot_dealprice = (TextView) view.findViewById(R.id.my_collection_lot_dealprice);
+            holder.my_collection_forBidding = (TextView) view.findViewById(R.id.my_collection_forBidding);
+            holder.tv_my_collection_lot_dealprice = (TextView) view.findViewById(R.id.tv_my_collection_lot_dealprice);
+            holder.my_collection_biddingTime = (TextView) view.findViewById(R.id.my_collection_biddingTime);
             view.setTag(holder);
         } else {
             view = convertView;
             holder = (ViewHolder) view.getTag();
         }
+
         holder.my_collection_lot_name.setText(lots.get(position).name);
-        holder.my_collection_lot_status.setText(lots.get(position).status);
-        holder.my_collection_lot_no.setText(String.valueOf(lots.get(position).no));
-        holder.my_collection_lot_appraisal.setText(String.valueOf(lots.get(position).appraisal1) + "-" + String.valueOf(lots.get(position).appraisal2));
+        holder.my_collection_lot_id.setText(String.valueOf(lots.get(position).id));
         holder.my_collection_lot_startprice.setText(String.valueOf(lots.get(position).startPrice));
-        if("已成交".equals(lots.get(position).status)) {
-            holder.my_collection_lot_price.setText(String.valueOf(lots.get(position).dealPrice));
-            holder.my_collection_lot_price.setVisibility(View.VISIBLE);
-            holder.tv_my_collection_lot_price.setText("成交价:");
-            holder.tv_my_collection_lot_price.setVisibility(View.VISIBLE);
-        }else if("拍卖中".equals(lots.get(position).status)) {
-            holder.my_collection_lot_price.setText(String.valueOf(lots.get(position).currentPrice));
-            holder.my_collection_lot_price.setVisibility(View.VISIBLE);
-            holder.tv_my_collection_lot_price.setText("当前价:");
-            holder.tv_my_collection_lot_price.setVisibility(View.VISIBLE);
+        holder.my_collection_lot_status.setText(lots.get(position).status);
+        holder.my_collection_lot_appraisal.setText(lots.get(position).apprisal);
+        holder.my_collection_biddingTime.setText(lots.get(position).biddingTime);
+
+
+        holder.my_collection_lot_dealprice.setVisibility(View.VISIBLE);
+        holder.tv_my_collection_lot_dealprice.setVisibility(View.VISIBLE);
+
+        if("已成交".equals(lots.get(position).status)) {//已成交的拍品需要显示成交价
+            holder.my_collection_lot_dealprice.setText(String.valueOf(lots.get(position).dealPrice));
         }else {
-            holder.my_collection_lot_price.setVisibility(View.INVISIBLE);
-            holder.tv_my_collection_lot_price.setVisibility(View.INVISIBLE);
+            holder.my_collection_lot_dealprice.setVisibility(View.INVISIBLE);
+            holder.tv_my_collection_lot_dealprice.setVisibility(View.INVISIBLE);
         }
+
+
+        if(lots.get(position).forBidding == 1) {
+            holder.my_collection_forBidding.setText("已参拍");
+        }else {
+            holder.my_collection_forBidding.setText("未参拍");
+        }
+
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转到该拍品信息界面
+                Toast.makeText(mContext, "跳转到" + lots.get(position).name, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         return view;

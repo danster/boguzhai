@@ -4,8 +4,6 @@ package com.boguzhai.activity.me.myauction;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -67,7 +65,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     private SwipeRefreshLayout swipe_layout;//支持下拉刷新的布局
     private Button btn_my_auction_search;//点击进行搜索
     private EditText et_my_auction_keyword;//关键字
-    public String[] types = {"全部", "现场拍卖", "同步拍卖", "网络拍卖"};
+    public String[] types = {"全部", "同步", "网络"};
     private HttpClient conn;
 
     /**
@@ -93,44 +91,30 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = (MyAuctionActivity) getActivity();
-        init();
+
+        initView();
+        requestData();
     }
 
 
-
-    public Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Log.i(TAG, "接收到<数据获取完成>的消息！");
-            swipe_layout.setRefreshing(false);
-            lv_my_auction.stopLoadMore();
-            Toast.makeText(mContext, "获取数据成功", Toast.LENGTH_SHORT).show();
-            if (isSearch) {
-                auctionFilterByKey(searchText);
-            } else {
-                auctionFilterByKey("");
-            }
-        }
-    };
-
-
-
     /**
-     * 初始化数据
+     * 从网络获取数据,从第一页开始
      */
-    public void init() {
-
-        myAuctions = new ArrayList<>();
-        /**
-         * 从网络获取数据,从第一页开始
-         */
+    public void requestData() {
         conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
         conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
         conn.setParam("number", String.valueOf(number));//分页序号，从1开始
         new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
+    }
 
+
+
+    public void initView() {
+
+        myAuctions = new ArrayList<>();
+        tempAuctions = new ArrayList<>();
 
         /**
          * 支持下拉刷新的layout，设置监听，重写onRefresh()方法
@@ -148,25 +132,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         lv_my_auction.setPullRefreshEnable(false);
         lv_my_auction.setXListViewListener(this);
 
-        myAuctionAdapter = new MyAuctionAdapter(mContext, myAuctions);
-        lv_my_auction.setAdapter(myAuctionAdapter);
 
-        /**
-         * 设置spinner， 每选择一项，就会在原始数据中筛选对应的拍卖会集合并展示，
-         */
-        Utility.setSpinner(mContext, (Spinner) view.findViewById(R.id.sp_my_auction_choose), types, new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "Spinner Position:" + position);
-                spinnerText = types[position];
-                auctionFilterByKey("");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         /**
@@ -201,6 +167,36 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     }
 
     /**
+     * 初始化数据
+     */
+    public void initData() {
+
+        for(MyAuction auction : myAuctions) {
+            tempAuctions.add(auction);
+        }
+        myAuctionAdapter = new MyAuctionAdapter(mContext, tempAuctions);
+        lv_my_auction.setAdapter(myAuctionAdapter);
+
+
+        /**
+         * 设置spinner， 每选择一项，就会在原始数据中筛选对应的拍卖会集合并展示，
+         */
+        Utility.setSpinner(mContext, (Spinner) view.findViewById(R.id.sp_my_auction_choose), types, new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "Spinner Position:" + position);
+                spinnerText = types[position];
+                auctionFilterByKey("");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    /**
      * 通过关键字进行过滤并显示
      */
     private void auctionFilterByKey(String key) {
@@ -208,21 +204,22 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         if (TextUtils.isEmpty(key)) {//搜索的关键字为""
             isSearch = false;
             Log.i(TAG, spinnerText);
+            tempAuctions.clear();
             if ("全部".equals(spinnerText)) {//选择"全部"
-                myAuctionAdapter = new MyAuctionAdapter(mContext, myAuctions);
+                for(MyAuction auction : myAuctions) {
+                    tempAuctions.add(auction);
+                }
             } else {
-                tempAuctions = new ArrayList<>();
                 for (int i = 0; i < myAuctions.size(); i++) {
                     if (myAuctions.get(i).type.indexOf(spinnerText) >= 0) {
                         tempAuctions.add(myAuctions.get(i));
                     }
                 }
-                myAuctionAdapter = new MyAuctionAdapter(mContext, tempAuctions);
             }
-            lv_my_auction.setAdapter(myAuctionAdapter);
+            myAuctionAdapter.notifyDataSetChanged();
         } else {//搜索的关键字不为空
             isSearch = true;
-            tempAuctions = new ArrayList<>();
+            tempAuctions.clear();
             if ("全部".equals(spinnerText)) {
                 for (int i = 0; i < myAuctions.size(); i++) {
                     if (myAuctions.get(i).name.indexOf(key) >= 0 || myAuctions.get(i).type.indexOf(key) >= 0 || myAuctions.get(i).status.indexOf(key) >= 0
@@ -232,14 +229,14 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                 }
             } else {
                 for (int i = 0; i < myAuctions.size(); i++) {
-                    if (myAuctions.get(i).name.indexOf(key) >= 0 || myAuctions.get(i).type.indexOf(spinnerText) >= 0 || myAuctions.get(i).status.indexOf(key) >= 0
-                            || myAuctions.get(i).auctionTime.indexOf(key) >= 0 || (String.valueOf(myAuctions.get(i).deposit)).indexOf(key) >= 0) {
+                    if ((myAuctions.get(i).name.indexOf(key) >= 0 || myAuctions.get(i).status.indexOf(key) >= 0
+                            || myAuctions.get(i).auctionTime.indexOf(key) >= 0 || (String.valueOf(myAuctions.get(i).deposit)).indexOf(key) >= 0)
+                            && myAuctions.get(i).type.indexOf(spinnerText) >= 0) {
                         tempAuctions.add(myAuctions.get(i));
                     }
                 }
             }
-            myAuctionAdapter = new MyAuctionAdapter(mContext, tempAuctions);
-            lv_my_auction.setAdapter(myAuctionAdapter);
+            myAuctionAdapter.notifyDataSetChanged();
         }
     }
 
@@ -249,19 +246,15 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
      */
     @Override
     public void onRefresh() {
+        Log.i(TAG, "下拉刷新");
         myAuctions.clear();//清空之前所有数据
+        currentCount = 0;
         isSearch = false;
         et_my_auction_keyword.setText("");//清空搜索关键字
         swipe_layout.setRefreshing(true);//设置正在刷新
         number = 1;//从第一页开始
-        Log.i(TAG, "下拉刷新");
 
-        conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-        conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
-        conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
-        conn.setParam("number", String.valueOf(number));//分页序号，从1开始
-        new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
+        requestData();
     }
 
 
@@ -271,16 +264,13 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
     @Override
     public void onLoadMore() {
         Log.i(TAG, "加载更多");
+        Log.i(TAG, "当前个数:" + currentCount + "总个数:" + totalCount);
         if (totalCount == currentCount) {
             Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            lv_my_auction.stopLoadMore();
         } else {
             number++;//页数加1
-            conn = new HttpClient();
-            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-            conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
-            conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
-            conn.setParam("number", String.valueOf(number));
-            new Thread(new HttpPostRunnable(conn, new MyAuctionHandler())).start();
+            requestData();
         }
     }
 
@@ -303,13 +293,15 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     startActivity(new Intent(mContext, LoginActivity.class));
                     break;
                 case 0:
-                    Log.i(TAG, "获取信息成功");
                     Log.i(TAG, data.toString());
                     try {
                         size = Integer.parseInt(data.getString("size"));//每页的数目
                         totalCount = Integer.parseInt(data.getString("count"));//总的数目
-                        currentCount += size;
                         JSONArray jArray = data.getJSONArray("auctionList");
+                        currentCount += jArray.length();
+                        if(jArray.length() == 0) {
+                            number--;
+                        }
                         MyAuction myAction;
                         for (int i = 0; i < jArray.length(); i++) {
                             myAction = new MyAuction();
@@ -322,8 +314,20 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                             myAction.location = jArray.getJSONObject(i).getString("location");
                             myAuctions.add(myAction);
                         }
-                        Log.i(TAG, "数据获取完成！");
-                        handler.sendEmptyMessage(0);
+                        if(number == 1) {//刷新
+                            swipe_layout.setRefreshing(false);
+                            Toast.makeText(mContext, "刷新成功", Toast.LENGTH_SHORT).show();
+                            initData();
+                        }else {//加载更多
+                            lv_my_auction.stopLoadMore();
+                        }
+
+                        if (isSearch) {
+                            auctionFilterByKey(searchText);
+                        } else {
+                            auctionFilterByKey("");
+                        }
+
                     } catch (JSONException e) {
                         Log.i(TAG, "json解析异常");
                         e.printStackTrace();

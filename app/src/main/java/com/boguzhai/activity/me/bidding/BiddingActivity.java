@@ -2,8 +2,6 @@ package com.boguzhai.activity.me.bidding;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
@@ -37,13 +35,6 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
     private HttpClient conn;
     private SwipeRefreshLayout swipe_layout;
 
-    public Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            Log.i(TAG, "接收到<数据获取完成>的消息！");
-            initData();
-        }
-    };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,9 +50,9 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
         swipe_layout.setOnRefreshListener(this);
         biddingAuctionList = new ArrayList<>();
 
-        requestData();
+        lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
 
-        initData();
+        requestData();
 	}
 
     public void initData() {
@@ -142,8 +133,7 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
                             }
                             biddingAuctionList.add(biddingAuction);
                         }
-                        Log.i(TAG, "数据获取完成！");
-                        handler.sendEmptyMessage(0);
+                        initData();
                     } catch (JSONException e) {
                         Log.i(TAG, "json解析异常");
                         e.printStackTrace();

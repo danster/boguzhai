@@ -211,8 +211,6 @@ public class SearchFragment extends Fragment {
                     mapAuction = getAuctionKeyValueList(list_auction);
                     Utility.setSpinner(context, (Spinner)view.findViewById(R.id.auction),
                             Utility.getValueList(mapAuction), new AuctionListener());
-
-
                     break;
                 default:
                     break;
