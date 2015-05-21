@@ -2,6 +2,7 @@ package com.boguzhai.activity.auction;
 
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 
 public class LotInfoActivity extends BaseActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,13 @@ public class LotInfoActivity extends BaseActivity {
     private void init(){
         this.listen(R.id.favor);
         this.listen(R.id.session_info);
+        this.listen(R.id.lot_image);
+
+        ImageView image = (ImageView)findViewById(R.id.lot_image);
+        image.setImageBitmap(Variable.currentLot.image);
+
+        // 点击缩略图时显示大图
+        Tasks.showBigImage(Variable.currentLot.imageUrl, image, 1);
 
         // 获取当前拍品的详细信息
         HttpClient con = new HttpClient();
@@ -43,7 +52,7 @@ public class LotInfoActivity extends BaseActivity {
 
         // 获取拍品所在拍卖会信息
         HttpClient conn = new HttpClient();
-        conn.setUrl(Constant.url+"pMainAction!getAuctionMainById.htm?auctionMainId="+Variable.currentLot.auctionId);
+        conn.setUrl(Constant.url + "pMainAction!getAuctionMainById.htm?auctionMainId=" + Variable.currentLot.auctionId);
         new Thread(new HttpPostRunnable(conn,new ShowAuctionInfoHandler())).start();
     }
 
@@ -52,22 +61,28 @@ public class LotInfoActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.favor:
-                //收藏该拍品
+                // 收藏该拍品
                 break;
             case R.id.session_info:
-                Utility.gotoAuction(baseActivity, Variable.currentSession.status);
+                Utility.gotoAuction(Variable.currentActivity, Variable.currentSession.status);
                 break;
-
             default: break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void showLotInfo(){
         Lot lot = Variable.currentLot;
         ((TextView)findViewById(R.id.lot_name)).setText(lot.name);
-        ((TextView)findViewById(R.id.description)).setText("    "+lot.description);
-        Tasks.showImage(lot.imageUrl, (ImageView)findViewById(R.id.lot_image));
-
+        ((TextView)findViewById(R.id.description)).setText("  " + lot.description);
         String info = "";
         info += "拍品分类: ";
         info += lot.type1.equals("")?"":Utility.getLottype1(lot.type1);
@@ -118,7 +133,7 @@ public class LotInfoActivity extends BaseActivity {
                                 break;
                             }
                         }
-                        Utility.showAuctionInfo(baseActivity, Variable.currentAuction, Variable.currentSession);
+                        Utility.showAuctionInfo(Variable.currentActivity, Variable.currentAuction, Variable.currentSession);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -128,4 +143,5 @@ public class LotInfoActivity extends BaseActivity {
             }
         }
     }
+
 }

@@ -41,7 +41,7 @@ public class CapitalDetailActivity extends BaseActivity {
         type = getIntent().getStringExtra("type");
 
         if(type.equals("balance") || type.equals("bail")) {
-            toastMessage(type,1);
+            Utility.toastMessage(type);
             init();
         }
 

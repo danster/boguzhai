@@ -1,5 +1,6 @@
 package com.boguzhai.activity.login;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +11,13 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.StringApi;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONObject;
 
@@ -61,7 +64,7 @@ public class ForgetPwdActivity extends BaseActivity {
         case R.id.pwd_confirm_clear: pwd_confirm.setText(""); break;
         case R.id.get_check_code:
             if(! stringApi.checkPhoneNumber(mobile.getText().toString())){
-                this.alertMessage(stringApi.tips);
+                Utility.alertMessage(stringApi.tips);
                 break;
             }
             get_check_code.setEnabled(false);
@@ -85,25 +88,25 @@ public class ForgetPwdActivity extends BaseActivity {
                 }
             };
 
-            Tasks.getCheckCode(mobile.getText().toString());
+            Tasks.getCheckCodeNoLogin(mobile.getText().toString());
             new Timer().schedule(task, 0, 1000); // 一秒后启动task
             break;
 
         case R.id.submit:
             if(!stringApi.checkPhoneNumber(mobile.getText().toString())){
-                this.alertMessage(stringApi.tips);
+                Utility.alertMessage(stringApi.tips);
                 break;
             }
             if(check_code.getText().toString().equals("")){
-                this.alertMessage("请输入手机验证码");
+                Utility.alertMessage("请输入手机验证码");
                 break;
             }
             if(pwd_input.getText().toString().length() < 6){
-                this.alertMessage("请输入6位有效密码");
+                Utility.alertMessage("请输入6位有效密码");
                 break;
             }
             if(!pwd_confirm.getText().toString().equals(pwd_input.getText().toString())){
-                this.alertMessage("请确认您的新密码");
+                Utility.alertMessage("请确认您的新密码");
                 break;
             }
 
@@ -125,7 +128,8 @@ public class ForgetPwdActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
                 case 0:
-                    baseActivity.getAlert("修改密码成功，请重新登录")
+                    AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+                    tips.setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage("修改密码成功，请重新登录")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 baseActivity.startActivity(new Intent(baseActivity, LoginActivity.class));
@@ -133,7 +137,7 @@ public class ForgetPwdActivity extends BaseActivity {
                         }).show();
                     break;
                 default:
-                    baseActivity.alertMessage("修改密码失败, 请检查您的密码修改信息");
+                    Utility.alertMessage("修改密码失败, 请检查您的密码修改信息");
                     break;
             }
         }

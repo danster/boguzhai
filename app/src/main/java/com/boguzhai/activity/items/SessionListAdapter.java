@@ -61,7 +61,7 @@ public class SessionListAdapter extends BaseAdapter {
         holder.auctionTime.setText("拍卖:" + session.auctionTime);
         holder.auctionLocation.setText("地点:" + session.auctionLocation);
 
-        Tasks.showImage(session.imageUrl, holder.image);
+        Tasks.showImage(session.imageUrl, holder.image, 2);
 
         convertView.setOnClickListener(new MyOnClickListener(position));
         return convertView;    

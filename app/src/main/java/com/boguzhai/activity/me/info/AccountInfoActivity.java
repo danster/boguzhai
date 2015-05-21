@@ -32,7 +32,7 @@ public class AccountInfoActivity extends BaseActivity {
         this.fillAccountInfo();
         int[] ids = { R.id.logout, R.id.my_more_contact, R.id.my_delivery_address, R.id.my_capital, R.id.my_verify};
         this.listen(ids);
-        Tasks.showImage(Variable.account.imageUrl,(ImageView) findViewById(R.id.image));
+        Tasks.showImage(Variable.account.imageUrl,(ImageView)findViewById(R.id.image), 2);
 	}
 
     private void fillAccountInfo(){
@@ -42,7 +42,7 @@ public class AccountInfoActivity extends BaseActivity {
         ((TextView)findViewById(R.id.email)).setText(Variable.account.email);
         ((TextView)findViewById(R.id.mobile)).setText(Variable.account.mobile);
 
-        ((TextView)findViewById(R.id.verify)).setText("审核未通过");
+        ((TextView)findViewById(R.id.verify)).setText("");
         ((TextView)findViewById(R.id.capital)).setText("￥"+Variable.account.capitalInfo.balance);
     }
 

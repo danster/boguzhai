@@ -1,5 +1,6 @@
 package com.boguzhai.activity.me.info;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.StringApi;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONObject;
 
@@ -62,7 +64,7 @@ public class AccountBindMobileActivity extends BaseActivity {
             case R.id.check_code_clear:  check_code.setText(""); break;
             case R.id.get_check_code:
                 if(!StringApi.checkPhoneNumber(mobile.getText().toString())){
-                    this.alertMessage(StringApi.tips);
+                    Utility.alertMessage(StringApi.tips);
                     break;
                 }
                 get_check_code.setEnabled(false);
@@ -90,13 +92,13 @@ public class AccountBindMobileActivity extends BaseActivity {
                 break;
             case R.id.submit:
                 if(mobile.getText().toString().equals("")){
-                    this.alertMessage("绑定手机不能为空！");
+                    Utility.alertMessage("绑定手机不能为空！");
                     break;
                 }else if(!StringApi.checkPhoneNumber(mobile.getText().toString())){
-                    this.alertMessage("绑定手机错误: "+StringApi.tips);
+                    Utility.alertMessage("绑定手机错误: " + StringApi.tips);
                     break;
                 }else if(check_code.getText().toString().equals("")){
-                    this.alertMessage("手机验证码不能为空");
+                    Utility.alertMessage("手机验证码不能为空");
                     break;
                 }
 
@@ -115,7 +117,8 @@ public class AccountBindMobileActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
             case 0:
-                baseActivity.getAlert("绑定手机成功")
+                AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+                tips.setTitle("请输入").setIcon( android.R.drawable.ic_dialog_info).setMessage("绑定手机成功")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Variable.account.mobile = mobile.getText().toString();
@@ -124,7 +127,7 @@ public class AccountBindMobileActivity extends BaseActivity {
                     }).show();
                 break;
             default:
-                baseActivity.alertMessage("绑定手机失败");
+                Utility.alertMessage("绑定手机失败");
                 break;
             }
         }
