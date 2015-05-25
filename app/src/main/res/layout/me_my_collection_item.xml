@@ -65,7 +65,7 @@
                     android:text="拍品号："
                     android:textSize="15sp" />
                 <TextView
-                    android:id="@+id/my_collection_lot_id"
+                    android:id="@+id/my_collection_lot_no"
                     android:layout_width="60dp"
                     android:layout_height="20dp"
                     android:gravity="center|left"

@@ -15,14 +15,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="---"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
         <TextView
             android:layout_toRightOf="@id/tv_my_auction_status"
             android:id="@+id/tv_my_auction_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="---"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
         <TextView
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
@@ -63,7 +63,7 @@
             android:textSize="16sp"/>
         <TextView
             android:id="@+id/tv_my_auction_deposit"
-            android:layout_width="60dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="---"
             android:gravity="left"
@@ -73,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置/修改代理出价"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:background="@color/blue"
             android:clickable="true"/>

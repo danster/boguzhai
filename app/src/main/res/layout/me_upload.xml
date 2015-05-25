@@ -20,6 +20,7 @@
                 android:text="拍品名称" />
 
             <EditText
+                android:id="@+id/me_upload_lot_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -28,7 +29,9 @@
                 android:hint="必填"
                 android:textSize="15sp" />
 
-            <ImageView style="@style/base_right_clear" />
+            <ImageView
+                android:id="@+id/me_upload_lot_name_delete"
+                style="@style/base_right_clear" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,6 +90,7 @@
                 android:text="底价" />
 
             <EditText
+                android:id="@+id/me_upload_bottom_price"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -95,7 +99,9 @@
                 android:hint="必填"
                 android:textSize="15sp" />
 
-            <ImageView style="@style/base_right_clear" />
+            <ImageView
+                android:id="@+id/me_upload_bottom_price_delete"
+                style="@style/base_right_clear" />
         </LinearLayout>
 
         <View style="@style/longline" />
@@ -106,6 +112,7 @@
                 style="@style/base_text"
                 android:text="佣金" />
             <EditText
+                android:id="@+id/me_upload_commission"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -114,7 +121,7 @@
                 android:hint="15"
                 android:textSize="15sp" />
 
-            <EditText
+            <TextView
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -136,6 +143,7 @@
                 android:text="联系人" />
 
             <EditText
+                android:id="@+id/me_upload_contact"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -144,9 +152,33 @@
                 android:hint="必填"
                 android:textSize="15sp" />
 
-            <ImageView style="@style/base_right_clear" />
+            <ImageView
+                android:id="@+id/me_upload_contact_delete"
+                style="@style/base_right_clear" />
         </LinearLayout>
+        <View style="@style/longline" />
 
+        <LinearLayout style="@style/base_bar">
+
+            <TextView
+                style="@style/base_text"
+                android:layout_width="100dp"
+                android:text="联系方式" />
+
+            <EditText
+                android:id="@+id/me_upload_contact_number"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:gravity="center_vertical|left"
+                android:hint="必填"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/me_upload_contact_number_delete"
+                style="@style/base_right_clear" />
+        </LinearLayout>
 
         <LinearLayout
             style="@style/base_bar"
@@ -155,6 +187,7 @@
             android:layout_marginTop="10dp">
 
             <EditText
+                android:id="@+id/me_upload_remark"
                 android:background="@color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -164,21 +197,29 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <CheckBox style="@style/register_l_iv"
+                android:textColor="@color/gold"
+                android:id="@+id/me_upload_agree"/>
+            <TextView style="@style/base_text"
+                android:textColor="@color/gold"
+                android:text="已阅读"/>
+            <TextView style="@style/register_ev"
+                android:id="@+id/protocol"
+                android:autoLink="web"
+                android:textColor="@color/gold"
+                android:text="拍卖公司征集说明"/>
             </LinearLayout>
 
-        <CheckBox
-            android:paddingLeft="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="已阅读拍卖公司征集说明"/>
 
 
         <Button
+            android:id="@+id/me_upload_commit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="提交"

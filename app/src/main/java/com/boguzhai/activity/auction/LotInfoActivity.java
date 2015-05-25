@@ -42,11 +42,17 @@ public class LotInfoActivity extends BaseActivity {
 
         checkCollectInfo();
 
-        ImageView image = (ImageView)findViewById(R.id.lot_image);
+        final ImageView image = (ImageView)findViewById(R.id.lot_image);
         image.setImageBitmap(Variable.currentLot.image);
 
-        // 点击缩略图时显示大图
-        Tasks.showBigImage(Variable.currentLot.imageUrl, image, 1);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 点击缩略图时显示大图
+                Tasks.showBigImage(Variable.currentLot.imageUrl, image, 1);
+            }
+        });
+
 
         // 获取当前拍品的详细信息
         HttpClient con = new HttpClient();
