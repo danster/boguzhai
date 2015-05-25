@@ -16,19 +16,19 @@ public class FragmentFactory {
         Fragment fragment = null;
         switch (index) {
             case R.id.rb_my_collection_all:
-                fragment = new MyCollectionFragment("");
+                fragment = new MyCollectionFragment("", "");
                 break;
             case R.id.rb_my_collection_display:
-                fragment = new MyCollectionFragment("预展中");
+                fragment = new MyCollectionFragment("预展中", "");
                 break;
             case R.id.rb_my_collection_onauction:
-                fragment = new MyCollectionFragment("拍卖中");
+                fragment = new MyCollectionFragment("竞拍中", "");
                 break;
             case R.id.rb_my_collection_history:
-                fragment = new MyCollectionFragment("已成交");
+                fragment = new MyCollectionFragment("", "成交");
                 break;
             case R.id.rb_my_collection_abort:
-                fragment = new MyCollectionFragment("已流拍");
+                fragment = new MyCollectionFragment("", "流拍");
                 break;
         }
         return fragment;

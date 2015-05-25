@@ -1,10 +1,17 @@
 package com.boguzhai.activity.me.upload;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
@@ -33,6 +40,23 @@ public class UploadLotActivity extends BaseActivity {
     private ArrayList<Pair<String,String>> mapLottype2 = new ArrayList< Pair<String,String> >();
     private ArrayList<Pair<String,String>> mapLottype3 = new ArrayList< Pair<String,String> >();
 
+    private TextView me_upload_lot_name;
+    private TextView me_upload_bottom_price;
+    private TextView me_upload_commission;
+    private TextView me_upload_contact;
+    private TextView me_upload_contact_number;
+    private TextView me_upload_remark;
+
+    private ImageView me_upload_lot_name_delete;
+    private ImageView me_upload_bottom_price_delete;
+    private ImageView me_upload_contact_delete;
+    private ImageView me_upload_contact_number_delete;
+
+    private CheckBox me_upload_agree;
+
+    private Button me_upload_commit;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,7 +68,94 @@ public class UploadLotActivity extends BaseActivity {
 	protected void init(){
         setSpinners();
 
+        me_upload_lot_name = (TextView) findViewById(R.id.me_upload_lot_name);
+        me_upload_bottom_price = (TextView) findViewById(R.id.me_upload_bottom_price);
+        me_upload_commission = (TextView) findViewById(R.id.me_upload_commission);
+        me_upload_contact = (TextView) findViewById(R.id.me_upload_contact);
+        me_upload_contact_number = (TextView) findViewById(R.id.me_upload_contact_number);
+        me_upload_remark = (TextView) findViewById(R.id.me_upload_remark);
+
+        me_upload_lot_name_delete = (ImageView) findViewById(R.id.me_upload_lot_name_delete);
+        me_upload_bottom_price_delete = (ImageView) findViewById(R.id.me_upload_bottom_price_delete);
+        me_upload_contact_delete = (ImageView) findViewById(R.id.me_upload_contact_delete);
+        me_upload_contact_number_delete = (ImageView) findViewById(R.id.me_upload_contact_number_delete);
+
+        me_upload_agree = (CheckBox) findViewById(R.id.me_upload_agree);
+
+        me_upload_commit = (Button) findViewById(R.id.me_upload_commit);
+
+        listen(me_upload_commit);
+        listen(me_upload_lot_name_delete);
+        listen(me_upload_bottom_price_delete);
+        listen(me_upload_contact_delete);
+        listen(me_upload_contact_number_delete);
+
+
+        me_upload_agree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    me_upload_commit.setEnabled(true);
+                }else {
+                    me_upload_commit.setEnabled(false);
+                }
+            }
+        });
+
 	}
+
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.me_upload_commit:
+                String lot_name = me_upload_lot_name.getText().toString().trim();
+                String bottom_price = me_upload_bottom_price.getText().toString().trim();
+                String commission = me_upload_commission.getText().toString().trim();
+                String contact = me_upload_contact.getText().toString().trim();
+                String contact_number = me_upload_contact_number.getText().toString().trim();
+                String remark = me_upload_remark.getText().toString().trim();
+
+
+                if(TextUtils.isEmpty(lot_name)) {
+                    Toast.makeText(Variable.app_context, "请输入拍品名称", Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(bottom_price)){
+                    Toast.makeText(Variable.app_context, "请输入底价", Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(contact)) {
+                    Toast.makeText(Variable.app_context, "请输入联系人", Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(contact_number)) {
+                    Toast.makeText(Variable.app_context, "请输入联系方式", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(Variable.app_context, "正在上传拍品信息", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+                break;
+            case R.id.me_upload_lot_name_delete:
+                me_upload_lot_name.setText("");
+                break;
+            case R.id.me_upload_bottom_price_delete:
+                me_upload_bottom_price.setText("");
+                break;
+            case R.id.me_upload_contact_delete:
+                me_upload_contact.setText("");
+                break;
+            case R.id.me_upload_contact_number_delete:
+                me_upload_contact_number.setText("");
+                break;
+        }
+
+
+    }
+
+
+
+
+
+
+
 
 
 
@@ -106,8 +217,5 @@ public class UploadLotActivity extends BaseActivity {
     }
 
 
-	@Override
-	public void onClick(View view) {
-        super.onClick(view);
-    }
+
 }

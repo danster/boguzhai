@@ -31,31 +31,31 @@ public class Tasks {
     private static ImageView imageView;
     private static int imageRatio=1;
 
-    public static void uploadImage(String type, Bitmap bitmap, HttpJsonHandler handler){
+    public static void uploadImage(String type, Bitmap bitmap, HttpJsonHandler handler) {
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("type", type);
         conn.setParamBitmap("fileStr", bitmap);
-        conn.setUrl(Constant.url.replace("/phones/","/") + "fileUploadAction!uploadImage.htm");
+        conn.setUrl(Constant.url.replace("/phones/", "/") + "fileUploadAction!uploadImage.htm");
         new Thread(new HttpPostRunnable(conn, handler)).start();
     }
 
-    public static void updateAccount(){
+    public static void updateAccount() {
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pClientInfoAction!getAccountInfo.htm");
         new Thread(new HttpPostRunnable(conn, new UpdateHandler())).start();
     }
 
-    public static void getCheckCode(String mobile){
+    public static void getCheckCode(String mobile) {
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("mobile", mobile);
-        conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
+        conn.setUrl(Constant.url + "pLoginAction!getMobileCheckCode.htm");
         new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();
     }
 
-    public static void getCheckCodeNoLogin(String mobile){
+    public static void getCheckCodeNoLogin(String mobile) {
         HttpClient conn = new HttpClient();
         conn.setParam("mobile", mobile);
         conn.setUrl(Constant.url + "pLoginAction!getMobileCheckCodeNoLogin.htm");
@@ -63,16 +63,16 @@ public class Tasks {
     }
 
     // 下载图片并在ImageView上加载, ratio为下载原图时的缩放比
-    public static void showImage(String url, ImageView img, int ratio){
+    public static void showImage(String url, ImageView img, int ratio) {
         imageUrl = url;
         imageView = img;
         imageRatio = ratio;
         new AsyncTask<Void, Void, Void>() {
-            Bitmap bmp=null;
+            Bitmap bmp = null;
+
             @Override
             protected Void doInBackground(Void... params) {
                 if(imageUrl.equals("")){
-                    Log.i("AsyncTask", "image get: null string");
                     return null;
                 }
                 try {
@@ -102,20 +102,39 @@ public class Tasks {
     }
 
     // 点击缩略图时下载高清原图并用弹出框查看, ratio为下载原图时的缩放比
-    public static void showBigImage(String url, ImageView img, int ratio){
+    public static void showBigImage(String url, ImageView img, int ratio) {
         imageUrl = url;
         imageView = img;
         imageRatio = ratio;
 
+        LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
+        final View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
+        ((ImageView) imgEntryView.findViewById(R.id.large_image)).setImageResource(R.drawable.preview_image); // 设置图片
+        final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
+        dialog.setView(imgEntryView); // 自定义dialog
+        // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
+        imgEntryView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View paramView) {
+                dialog.cancel();
+            }
+        });
         new AsyncTask<Void, Void, Void>() {
-            Bitmap bmp=null;
+            Bitmap bmp = null;
+
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                dialog.show();
+            }
+
             @Override
             protected Void doInBackground(Void... params) {
-                if(imageUrl.equals("")){
+                if (imageUrl.equals("")) {
                     return null;
                 }
                 try {
-                    Log.i("AsyncTask", "image get: "+imageUrl);
+                    Log.i("AsyncTask", "image get: " + imageUrl);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = imageRatio; // height, width 变为原来的ratio分之一
@@ -131,23 +150,9 @@ public class Tasks {
             protected void onPostExecute(Void result) {
                 if (bmp != null) {
                     Log.i("AsyncTask", "image get: succeed !");
-                    imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
-                        public void onClick(View paramView) {
-                            LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
-                            View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
-                            ((ImageView)imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
-                            final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
-                            dialog.setView(imgEntryView); // 自定义dialog
-                            dialog.show();
-
-                            // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-                            imgEntryView.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View paramView) {
-                                    dialog.cancel();
-                                }
-                            });
-                        }
-                    });
+                    ((ImageView) imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
+                    dialog.setView(imgEntryView); // 自定义dialog
+                    dialog.show();
                 } else {
                     Log.i("AsyncTask", "image get: failed !");
                 }
@@ -163,10 +168,10 @@ public class Tasks {
         }
     }
 
-    public static void getMapLottype(){
-        if(Variable.mapLottype == null || Variable.mapLottype1 == null){
+    public static void getMapLottype() {
+        if (Variable.mapLottype == null || Variable.mapLottype1 == null) {
             HttpClient conn_lotType = new HttpClient();
-            conn_lotType.setUrl(Constant.url+"pCommonAction!getAuctionTypeMap.htm");
+            conn_lotType.setUrl(Constant.url + "pCommonAction!getAuctionTypeMap.htm");
             new Thread(new HttpPostRunnable(conn_lotType, new LotTypeHandler())).start();
         }
     }
@@ -175,9 +180,9 @@ public class Tasks {
 
 class UpdateHandler extends HttpJsonHandler {
     @Override
-    public void handlerData(int code, JSONObject data){
+    public void handlerData(int code, JSONObject data) {
         super.handlerData(code, data);
-        switch (code){
+        switch (code) {
             case 0:
                 JsonApi.getAccountInfo(data);
                 break;
@@ -189,9 +194,9 @@ class UpdateHandler extends HttpJsonHandler {
 
 class GetCheckcodeHandler extends HttpJsonHandler {
     @Override
-    public void handlerData(int code, JSONObject data){
+    public void handlerData(int code, JSONObject data) {
         super.handlerData(code, data);
-        switch(code){
+        switch (code) {
             case 0:
                 Utility.toastMessage("发送验证码成功，请注意查收");
                 break;

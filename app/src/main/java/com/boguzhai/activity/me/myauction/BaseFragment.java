@@ -102,6 +102,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
      */
     public void requestData() {
         conn = new HttpClient();
+        Log.i(TAG, "sessionId" + Variable.account.sessionid);
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
         conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
@@ -216,7 +217,6 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     }
                 }
             }
-            myAuctionAdapter.notifyDataSetChanged();
         } else {//搜索的关键字不为空
             isSearch = true;
             tempAuctions.clear();
@@ -236,8 +236,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     }
                 }
             }
-            myAuctionAdapter.notifyDataSetChanged();
         }
+        myAuctionAdapter.notifyDataSetChanged();
     }
 
 
@@ -253,10 +253,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         et_my_auction_keyword.setText("");//清空搜索关键字
         swipe_layout.setRefreshing(true);//设置正在刷新
         number = 1;//从第一页开始
-
         requestData();
     }
-
 
     /**
      * 加载更多
@@ -300,7 +298,9 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                         JSONArray jArray = data.getJSONArray("auctionList");
                         currentCount += jArray.length();
                         if(jArray.length() == 0) {
-                            number--;
+                            if(number != 1) {
+                                number--;
+                            }
                         }
                         MyAuction myAction;
                         for (int i = 0; i < jArray.length(); i++) {
@@ -310,11 +310,12 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                             myAction.type = jArray.getJSONObject(i).getString("type");
                             myAction.status = jArray.getJSONObject(i).getString("status");
                             myAction.auctionTime = jArray.getJSONObject(i).getString("auctionTime");
-                            myAction.deposit = jArray.getJSONObject(i).getInt("deposit");
+                            myAction.deposit = jArray.getJSONObject(i).getString("deposit");
                             myAction.location = jArray.getJSONObject(i).getString("location");
                             myAuctions.add(myAction);
                         }
                         if(number == 1) {//刷新
+                            Log.i(TAG, "刷新成功");
                             swipe_layout.setRefreshing(false);
                             Toast.makeText(mContext, "刷新成功", Toast.LENGTH_SHORT).show();
                             initData();
@@ -336,7 +337,4 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
             }
         }
     }
-
-
-
 }

@@ -29,6 +29,7 @@ public abstract class HttpJsonHandler extends Handler {
                 Log.i("JSON",(String)msg.obj);
                 try {
                     JSONObject result = new JSONObject((String)msg.obj);
+                    Log.i("HttpJsonHandler", result.toString());
                     int code = -9;
                     JSONObject data = null;
                     code = result.getInt("code");

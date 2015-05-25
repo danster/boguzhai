@@ -4,10 +4,6 @@ import android.app.Fragment;
 import android.util.Log;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.mainpage.AuctionFragment;
-import com.boguzhai.activity.mainpage.HomeFragment;
-import com.boguzhai.activity.mainpage.MeFragment;
-import com.boguzhai.activity.mainpage.SearchFragment;
 
 public class FragmentFactory {
 
