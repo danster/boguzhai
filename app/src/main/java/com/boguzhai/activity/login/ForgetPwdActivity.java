@@ -39,7 +39,7 @@ public class ForgetPwdActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setScrollView(R.layout.login_forget_pwd);
-		title.setText("忘记密码");
+		title.setText("重置密码");
 		setBaseEnv();
 	}
 	

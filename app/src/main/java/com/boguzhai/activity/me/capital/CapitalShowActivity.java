@@ -20,7 +20,6 @@ public class CapitalShowActivity extends BaseActivity {
 	}
 
 	protected void init(){
-
         ((TextView)findViewById(R.id.bank_name)).setText(Variable.account.capitalInfo.bankName);
         String info = Variable.account.capitalInfo.status.equals("0")?"绑定银行卡":"重新绑定银行卡";
         ((TextView) findViewById(R.id.bind_bank)).setText(info);

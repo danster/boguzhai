@@ -43,10 +43,8 @@ public class LotInfoActivity extends BaseActivity {
         checkCollectInfo();
 
         ImageView image = (ImageView)findViewById(R.id.lot_image);
-        image.setImageBitmap(Variable.currentLot.image);
-
-        // 点击缩略图时显示大图
-        Tasks.showBigImage(Variable.currentLot.imageUrl, image, 1);
+        Tasks.showImage(Variable.currentLot.imageUrl, image, 4);    // 显示缩略图
+        Tasks.showBigImage(Variable.currentLot.imageUrl, image, 1); // 点击缩略图时显示大图
 
         // 获取当前拍品的详细信息
         HttpClient con = new HttpClient();
@@ -79,7 +77,7 @@ public class LotInfoActivity extends BaseActivity {
                 }
                 break;
             case R.id.session_info:
-                Utility.gotoAuction(Variable.currentActivity, Variable.currentSession.status);
+                Utility.gotoSession();
                 break;
             default: break;
         }

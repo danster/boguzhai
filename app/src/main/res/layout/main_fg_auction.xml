@@ -35,15 +35,14 @@
     </LinearLayout>
 
     <!-- 展示各种拍卖会 -->
-
-    <android.support.v4.widget.SwipeRefreshLayout
+    <ScrollView
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.boguzhai.logic.view.XListView
+        <com.boguzhai.logic.widget.ListViewForScrollView
             android:id="@+id/auction_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </ScrollView>
 
 </LinearLayout>

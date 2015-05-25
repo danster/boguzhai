@@ -1,6 +1,5 @@
 package com.boguzhai.activity.me.info;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Pair;
@@ -31,6 +30,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
     private EditText name, address, mobile, telephone, zip;
     private CheckBox isDefault;
     private DeliveryAddress oldAddress;
+    private String tipsStr = "";
 
     // 以下变量在实现“省市区选择器之间的联动”时使用
     private ArrayList<Pair<String,String>> mapAddress1 = Variable.mapProvince;
@@ -60,7 +60,6 @@ public class DeliveryAddressEditActivity extends BaseActivity {
         zip = (EditText) findViewById(R.id.zip);
         isDefault = (CheckBox)findViewById(R.id.is_default);
         isDefault.setChecked(false);
-
 
         if(oldAddress == null){
             title.setText("增加地址");
@@ -145,8 +144,9 @@ public class DeliveryAddressEditActivity extends BaseActivity {
 		switch (view.getId()) {
         case R.id.ok:
 
-            if(name.getText().toString().equals("") ||address.getText().toString().equals("") ||
-               mobile.getText().toString().equals("")){
+            if(name.getText().toString().equals("")   || address.getText().toString().equals("") ||
+               mobile.getText().toString().equals("") || address_1.toString().equals("") ||
+               address_2.toString().equals("")        || address_3.toString().equals("") ){
                 Utility.alertMessage("必填项不能为空！");
                 break;
             }
@@ -164,47 +164,38 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             conn.setParam("isDefault", isDefault.isChecked()?"1":"0");
 
             if(oldAddress == null){ //新增收货信息
+                tipsStr = "增加收货信息";
                 conn.setUrl(Constant.url+"pClientInfoAction!addDeliveryAddress.htm");
                 new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
-
             } else { //修改收货信息
+                tipsStr = "修改收货信息";
                 conn.setParam("addressId", Variable.currentDeliveryAddress.id);
                 conn.setUrl(Constant.url + "pClientInfoAction!updateDeliveryAddress.htm");
                 new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
             }
-
-            this.finish();
             break;
 
         case R.id.title_right:
-            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-            tips.setTitle("提示").setIcon( android.R.drawable.ic_dialog_info).setMessage("确定删除该收货地址？");
-            tips.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
+            Utility.alertDialog("确定删除该收货地址？", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) { //删除收货信息
+                public void onClick(DialogInterface dialog, int which) {
+                    tipsStr = "删除收货信息";
                     dialog.dismiss();
                     HttpClient conn = new HttpClient();
                     conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
                     conn.setParam("addressId", Variable.currentDeliveryAddress.id);
                     conn.setUrl(Constant.url + "pClientInfoAction!removeDeliveryAddress.htm");
                     new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
-
                 }
-            });
-            tips.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            tips.create().show();
+            }, null);
             break;
 
-        case R.id.name_clear: name.setText(""); break;
-        case R.id.address_clear: address.setText(""); break;
-        case R.id.mobile_clear: mobile.setText(""); break;
+        case R.id.name_clear:      name.setText("");      break;
+        case R.id.address_clear:   address.setText("");   break;
+        case R.id.mobile_clear:    mobile.setText("");    break;
         case R.id.telephone_clear: telephone.setText(""); break;
-        case R.id.zip_clear: zip.setText(""); break;
+        case R.id.zip_clear:       zip.setText("");       break;
         default: break;
 		};
 	}
@@ -212,19 +203,22 @@ public class DeliveryAddressEditActivity extends BaseActivity {
     class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
             switch(code){
                 case 0:
-                    finish();
+                    Utility.alertDialog(tipsStr+"成功", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    }, null);
                     break;
-                case -1:
-                    Utility.gotoLogin();
-                    break;
-                default:
-                    Utility.alertMessage("操作失败");
+                case 1:
+                    Utility.alertMessage(tipsStr+"失败");
                     break;
             }
         }
     }
-
 
 }

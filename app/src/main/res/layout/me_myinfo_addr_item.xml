@@ -5,14 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!-- 展示我的收货地址列表 -->
+    <!-- 展示我的收货地址信息 -->
     <LinearLayout style="@style/base_bar">
         <TextView android:id="@+id/info"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="【默认地址】黄浩, 吉林省, 吉林市 昌邑区, 阳关大街103号, 104249, 13812345678"/>
+            android:textColor="@color/dark_black"
+            android:textSize="15sp"/>
         <ImageView style="@style/myinfo_right_arrow"
             android:layout_gravity="center"/>
     </LinearLayout>
+    <View style="@style/longline" android:layout_marginBottom="1dp"/>
 </LinearLayout>

@@ -7,6 +7,6 @@ public class Constant {
     public static final String[] lot_status={"已上拍","未上拍","成交","流拍","撤拍"}; //拍品状态
     public static final String[] lot_deal_type={"","现场", "网络"};                //拍品成交方式
     public static final String[] session_status={"未开拍","已开拍","已结束"};    //拍卖会专场状态
-//    public static final String url = "http://199.34.60.49/phones/";            //服务器host
+ //   public static final String url = "http://115.231.94.51/phones/";            //服务器host
     public static final String url = "http://test.shbgz.com/phones/";            //服务器host
 }

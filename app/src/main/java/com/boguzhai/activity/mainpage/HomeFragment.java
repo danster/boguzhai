@@ -21,6 +21,7 @@ import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.MyInt;
+import com.boguzhai.logic.dao.Session;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.ShowLotListHandler;
@@ -47,6 +48,7 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
     private TextView viewInfo;
     private int currentIndex = 0;
     private ImageView[] mImageViews, tips;
+    private ArrayList<String> sessionNames = new ArrayList<String>();
 
     // 拍品展示
     private ArrayList<Lot> lotList;
@@ -56,7 +58,7 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
     private SwipeRefreshLayout swipe_layout;
     private MyInt order = new MyInt(1);
 
-    private int index_i;
+    private int index_i, index_j;
 
 
     @Override
@@ -76,7 +78,6 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
     private void pullDynamicInfo(){
         HttpClient conn = new HttpClient();
         conn.setParam("status", "");
-        conn.setParam("number", "1");
         conn.setUrl(Constant.url + "pMainAction!getAuctionMainList.htm");
         new Thread(new HttpPostRunnable(conn,new AuctionListHandler())).start();
 
@@ -118,7 +119,7 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
             //载入图片进去，用当前的position 除以 图片数组长度取余数是关键
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                container.removeView(mImageViews[position % mImageViews.length]);
+                //container.removeView(mImageViews[position % mImageViews.length]);
                 container.addView(mImageViews[position % mImageViews.length], 0);
                 return mImageViews[position % mImageViews.length];
             }
@@ -133,7 +134,7 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
             @Override
             public void onPageSelected(int position) {
                 currentIndex=position;
-                viewInfo.setText(auctionList.get(position % adsCount).name);
+                viewInfo.setText(sessionNames.get(position % adsCount));
                 for (int i = 0; i < adsCount; i++) {
                     if (i == position % adsCount) {
                         tips[i].setBackgroundResource(R.drawable.circle_selected_little);
@@ -210,41 +211,40 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
             switch (code){
                 case 0:
                     auctionList = JsonApi.getAuctionList(data);
+
                     // 查询含有专场的拍卖会数目（最大为4个）
                     adsCount = 0;
                     for (int i = 0; i < auctionList.size(); i++) {
-                        if(auctionList.get(i).sessionList.size() > 0){
-                            adsCount ++ ;
-                            if( adsCount == 4) {
-                                break;
-                            }
+                        adsCount += auctionList.get(i).sessionList.size() > 0 ? auctionList.get(i).sessionList.size() : 0;
+                        if( adsCount >= 4) {
+                            adsCount = 4;
+                            break;
                         }
                     }
 
-                    if(adsCount == 0){
+                    // 专场数最小为2
+                    if(adsCount < 2){
                         break;
                     }
+
+                    sessionNames.clear();
 
                     // 将静态图片ID装载到数组中
                     mImageViews = new ImageView[adsCount];
                     int count = 0;
-                    for (int i = 0; i < auctionList.size() && count < adsCount; i++) {
-                        if(auctionList.get(i).sessionList.size() > 0){
-                            index_i = i;
+                    for (index_i = 0; index_i < auctionList.size() && count < adsCount; index_i++) {
+                        for(index_j = 0; index_j < auctionList.get(index_i).sessionList.size() && count < adsCount; index_j++) {
                             mImageViews[count] = new ImageView(getActivity());
+                            mImageViews[count].setImageResource(R.drawable.default_image);
+
+                            // 加载拍卖会专场图片和显示名称
+                            Auction auction = auctionList.get(index_i);
+                            Session session = auction.sessionList.get(index_j);
 
                             // 设置广告图片的点击响应
-                            mImageViews[count].setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Variable.currentAuction = auctionList.get(index_i);
-                                    Variable.currentSession = auctionList.get(index_i).sessionList.get(0);
-                                    Utility.gotoAuction(context, Variable.currentSession.status);
-                                }
-                            });
-
-                            // 加载拍卖会专场图片
-                            Tasks.showImage(auctionList.get(count).sessionList.get(0).imageUrl, mImageViews[count], 4);
+                            mImageViews[count].setOnClickListener(new ImageListener(auction, session));
+                            Tasks.showImage(session.imageUrl, mImageViews[count], 4);
+                            sessionNames.add(auction.name + ": " +session.name);
                             count ++ ;
                         }
                     }
@@ -256,5 +256,20 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
         }
     }
 
+    class ImageListener implements View.OnClickListener{
+        private Auction auction;
+        private Session session;
+        public ImageListener(Auction auction, Session session){
+            this.auction = auction;
+            this.session = session;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Variable.currentAuction = this.auction;
+            Variable.currentSession = this.session;
+            Utility.gotoSession();
+        }
+    }
 
 }

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View style="@style/longline" android:layout_marginTop="10dp"/>
+        <LinearLayout style="@style/base_bar"
+            android:background="#fffee3dc">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="只有通过实名认证才能参加拍卖会！"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+
+        <LinearLayout style="@style/base_bar" >
+            <TextView style="@style/verify_left_text" android:text="认证状态  "/>
+            <TextView android:id="@+id/status" style="@style/myinfo_middle_text" android:textColor="@color/red"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar"
+            android:id="@+id/my_property">
+            <TextView style="@style/verify_left_text"   android:text="用户性质"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/property"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/base_bar" android:layout_marginTop="5dp">
+            <TextView style="@style/verify_left_text"  android:id="@+id/my_name"/>
+            <TextView android:id="@+id/name" style="@style/myinfo_middle_text"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/verify_left_text"  android:text="手机"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/mobile"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/layout_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+            <LinearLayout style="@style/base_bar" android:layout_marginTop="5dp">
+                <TextView style="@style/verify_left_text"   android:text="证件类型"/>
+                <TextView style="@style/myinfo_middle_text" android:id="@+id/credential_type"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"   android:text="证件号码"/>
+                <TextView style="@style/myinfo_middle_text" android:id="@+id/credential_number"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/layout_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="营业执照"/>
+                <TextView android:id="@+id/no_unit1" style="@style/myinfo_middle_text"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="税务登记证"/>
+                <TextView android:id="@+id/no_unit2" style="@style/myinfo_middle_text"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="组织机构代码"/>
+                <TextView android:id="@+id/no_unit3" style="@style/myinfo_middle_text"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/base_bar" android:layout_marginTop="5dp">
+                <TextView style="@style/verify_left_text"  android:text="法人代表姓名"/>
+                <TextView style="@style/myinfo_middle_text" android:id="@+id/legal_person_name" />
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"   android:text="法人代表证件类型"/>
+                <TextView style="@style/myinfo_middle_text" android:id="@+id/legal_person_type"/>
+            </LinearLayout>
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"   android:text="法人代表证件号码"/>
+                <TextView style="@style/myinfo_middle_text" android:id="@+id/legal_person_number"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/gold"
+    android:id="@+id/reVerify"
+    android:text="重新审核"/>
+</LinearLayout>

@@ -59,7 +59,7 @@
         android:layout_marginTop="10dp">
         <TextView style="@style/myinfo_left_star"  android:text="  "/>
         <TextView style="@style/myinfo_left_text"  android:text="设为默认地址"/>
-        <EditText style="@style/myinfo_middle_text" />
+        <TextView style="@style/myinfo_middle_text" />
         <CheckBox
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

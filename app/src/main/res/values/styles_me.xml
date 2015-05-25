@@ -57,15 +57,17 @@
         <item name="android:background">@color/transparent</item>
     </style>
 
-    <style name="verify_left_text" parent="@style/myinfo_left_text">
-    </style>
-
     <style name="myinfo_right_arrow" parent="@style/me_right_arrow"> </style>
     <style name="myinfo_right_clear" parent="@style/me_right_arrow">
         <item name="android:layout_height">15dp</item>
         <item name="android:layout_width">15dp</item>
         <item name="android:layout_marginLeft">7dp</item>
         <item name="android:background">@drawable/base_clear</item>
+    </style>
+
+    <style name="verify_left_text" parent="@style/myinfo_left_text">
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">1dp</item>
     </style>
 
 </resources>

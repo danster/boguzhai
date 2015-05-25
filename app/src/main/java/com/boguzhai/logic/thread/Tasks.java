@@ -45,7 +45,6 @@ public class Tasks {
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pClientInfoAction!getAccountInfo.htm");
         new Thread(new HttpPostRunnable(conn, new UpdateHandler())).start();
-
     }
 
     public static void getCheckCode(String mobile){
@@ -68,12 +67,12 @@ public class Tasks {
         imageUrl = url;
         imageView = img;
         imageRatio = ratio;
-        Log.i("AsyncTask", "image get: " + url);
         new AsyncTask<Void, Void, Void>() {
             Bitmap bmp=null;
             @Override
             protected Void doInBackground(Void... params) {
                 if(imageUrl.equals("")){
+                    Log.i("AsyncTask", "image get: null string");
                     return null;
                 }
                 try {
@@ -96,7 +95,6 @@ public class Tasks {
                     imageView.setImageBitmap(bmp);
                 } else {
                     Log.i("AsyncTask", "image get: failed !");
-                    imageView.setImageResource(R.color.transparent);
                 }
             }
         }.execute();

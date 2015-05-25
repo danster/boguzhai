@@ -57,7 +57,7 @@
 	    android:textSize="14sp"
 	    android:background="@color/transparent"
 	    android:textColor="@color/blue"
-	    android:text="忘记密码" />
+	    android:text="忘记/修改密码" />
 </LinearLayout>
 
 <LinearLayout style="@style/base_bar"

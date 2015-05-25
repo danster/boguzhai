@@ -2,7 +2,7 @@ package com.boguzhai.logic.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Pair;
 import android.view.View;
@@ -36,11 +36,22 @@ public class Utility {
     public static void toastMessage(String msg){
         Toast.makeText(Variable.app_context, msg, Toast.LENGTH_SHORT).show();
     }
+
     public static void alertMessage(String msg){
         if(!Variable.currentActivity.isFinishing()){
             AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
             tips.setIcon(android.R.drawable.ic_dialog_info);
-            tips.setTitle("提示").setMessage(msg).setPositiveButton("确定",null).show();
+            tips.setTitle("提示").setMessage(msg).setPositiveButton("确定", null).create().show();
+        }
+    }
+
+    // 添加确定信息 确定动作 取消动作
+    public static void alertDialog(String msg, DialogInterface.OnClickListener ok, DialogInterface.OnClickListener cancel){
+        if(!Variable.currentActivity.isFinishing()){
+            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+            tips.setIcon(android.R.drawable.ic_dialog_info);
+            tips.setTitle("提示").setMessage(msg);
+            tips.setPositiveButton("确定", ok).setNegativeButton("取消", cancel).create().show();
         }
     }
 
@@ -117,14 +128,16 @@ public class Utility {
     }
 
     // 进去专场的检查
-    public static void gotoAuction(Context context, String status){
+    public static void gotoSession(){
+        Activity activity = Variable.currentActivity;
+        String status = Variable.currentSession.status;
         if (status.equals("已开拍")){
-            context.startActivity(new Intent(context, AuctionActiveActivity.class));
-        }else if(status.equals("未开拍")){
-            context.startActivity(new Intent(context, AuctionPreviewActivity.class));
-        }else if(status.equals("已结束")){
-            context.startActivity(new Intent(context, AuctionOverActivity.class));
-        }else{
+            activity.startActivity(new Intent(activity, AuctionActiveActivity.class));
+        } else if(status.equals("未开拍")){
+            activity.startActivity(new Intent(activity, AuctionPreviewActivity.class));
+        } else if(status.equals("已结束")){
+            activity.startActivity(new Intent(activity, AuctionOverActivity.class));
+        } else{
         }
     }
 

@@ -1,6 +1,7 @@
 package com.boguzhai.activity.items;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,16 @@ public class SessionListAdapter extends BaseAdapter {
     private Context context;
     private Auction auction;
     private ArrayList<Session> list;
+    private boolean[] imageFlags;
 
 	public SessionListAdapter(Context context, ArrayList<Session> list, Auction auction) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.auction = auction;
         this.list = list;
+
+        // Use boolean[] instead so that all values defaults to false
+        this.imageFlags = new boolean[list.size()];
     }    
     
     @Override    
@@ -61,7 +66,12 @@ public class SessionListAdapter extends BaseAdapter {
         holder.auctionTime.setText("拍卖:" + session.auctionTime);
         holder.auctionLocation.setText("地点:" + session.auctionLocation);
 
-        Tasks.showImage(session.imageUrl, holder.image, 2);
+
+        Log.i("SessionList", "position = " + position + " ,image="+ (imageFlags[position] == false?"false":"true") );
+        if(imageFlags[position] == false){
+            Tasks.showImage(session.imageUrl, holder.image, 2);
+            imageFlags[position] = true;
+        }
 
         convertView.setOnClickListener(new MyOnClickListener(position));
         return convertView;    
@@ -81,7 +91,7 @@ public class SessionListAdapter extends BaseAdapter {
 		public void onClick(View v) {
             Variable.currentAuction = auction;
             Variable.currentSession = list.get(position);
-            Utility.gotoAuction(context, list.get(position).status);
+            Utility.gotoSession();
 		}
     }
 

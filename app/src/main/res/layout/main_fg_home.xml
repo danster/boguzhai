@@ -24,8 +24,7 @@
                 android:id="@+id/viewInfo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="2015博古斋新年大拍"/>
+                android:layout_weight="1"/>
             <LinearLayout
                 android:id="@+id/viewGroup"
                 android:layout_width="wrap_content"
@@ -47,22 +46,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/refresh"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<ScrollView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-            <!--<com.boguzhai.logic.view.XListViewForScrollView-->
-                <!--android:id="@+id/lotlist"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:footerDividersEnabled="false"-->
-                <!--android:dividerHeight="0dp" />-->
-        <!--</ScrollView>-->
-    <!--</LinearLayout>-->
 
 </LinearLayout>

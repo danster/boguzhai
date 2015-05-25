@@ -165,12 +165,12 @@ public class AccountInfoEditActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // requestCode: 1 相机取照片; 2 4.4以下版本相册取照片; 3 4.4及4.4以上版本相册取照片;
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK || data == null)
+        if (resultCode != RESULT_OK || data == null) {
             return;
+        }
 
         // 得到压缩过的照片,小于50KB
         Bitmap bitmap = ImageApi.getBitmap(requestCode, data);
-
         if(bitmap != null) {
             Tasks.uploadImage("当前图像", bitmap, new UploadImageHandler((ImageView)findViewById(R.id.image), bitmap));
         }

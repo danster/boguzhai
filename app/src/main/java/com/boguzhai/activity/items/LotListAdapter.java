@@ -2,6 +2,7 @@ package com.boguzhai.activity.items;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,26 +44,27 @@ public class LotListAdapter extends BaseAdapter {
     public long getItemId(int position) { return position; }
     
     @Override    
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
+        Log.i("Adapter", "position=" + position + ", view is " + (view == null ? "null" : "not null"));
         ViewHolder holder = null;    
-        if (convertView == null) { 
-            holder = new ViewHolder();    
-            convertView = inflater.inflate(R.layout.item_list_lot, null);
-            holder.leftLot = (LinearLayout) convertView.findViewById(R.id.leftLot);
-            holder.leftImage = (ImageView) convertView.findViewById(R.id.leftImage);
-            holder.leftLotName = (TextView) convertView.findViewById(R.id.leftLotName);
-            holder.leftLotID = (TextView) convertView.findViewById(R.id.leftLotID);
-            holder.leftLotApprisal = (TextView) convertView.findViewById(R.id.leftLotApprisal);
-            holder.leftLotStartPrice = (TextView) convertView.findViewById(R.id.leftLotStartPrice);
-            holder.rightLot = (LinearLayout) convertView.findViewById(R.id.rightLot);
-            holder.rightImage = (ImageView) convertView.findViewById(R.id.rightImage);
-            holder.rightLotName = (TextView) convertView.findViewById(R.id.rightLotName);
-            holder.rightLotID = (TextView) convertView.findViewById(R.id.rightLotID);
-            holder.rightLotApprisal = (TextView) convertView.findViewById(R.id.rightLotApprisal);
-            holder.rightLotStartPrice = (TextView)convertView.findViewById(R.id.rightLotStartPrice);
-            convertView.setTag(holder); 
+        if (view == null) {
+            holder = new ViewHolder();
+            view = inflater.inflate(R.layout.item_list_lot, null);
+            holder.leftLot = (LinearLayout) view.findViewById(R.id.leftLot);
+            holder.leftImage = (ImageView) view.findViewById(R.id.leftImage);
+            holder.leftLotName = (TextView) view.findViewById(R.id.leftLotName);
+            holder.leftLotID = (TextView) view.findViewById(R.id.leftLotID);
+            holder.leftLotApprisal = (TextView) view.findViewById(R.id.leftLotApprisal);
+            holder.leftLotStartPrice = (TextView) view.findViewById(R.id.leftLotStartPrice);
+            holder.rightLot = (LinearLayout) view.findViewById(R.id.rightLot);
+            holder.rightImage = (ImageView) view.findViewById(R.id.rightImage);
+            holder.rightLotName = (TextView) view.findViewById(R.id.rightLotName);
+            holder.rightLotID = (TextView) view.findViewById(R.id.rightLotID);
+            holder.rightLotApprisal = (TextView) view.findViewById(R.id.rightLotApprisal);
+            holder.rightLotStartPrice = (TextView)view.findViewById(R.id.rightLotStartPrice);
+            view.setTag(holder);
         } else {    
-            holder = (ViewHolder) convertView.getTag();    
+            holder = (ViewHolder) view.getTag();
         }
 
         // 下载并加载左侧拍品信息
@@ -102,7 +104,7 @@ public class LotListAdapter extends BaseAdapter {
             holder.rightLotStartPrice.setVisibility(View.GONE);
         }
 
-        return convertView;    
+        return view;
     }
 
 

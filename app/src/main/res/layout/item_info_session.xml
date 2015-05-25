@@ -27,37 +27,35 @@
                 android:layout_height="22dp"
                 android:gravity="center|left"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/dark_black"
-                android:text="金雕玉石专场"/>
+                android:textColor="@color/dark_black"/>
             <TextView
                 android:id="@+id/session_pretime"
                 android:layout_width="match_parent"
                 android:layout_height="17dp"
                 android:gravity="center|left"
                 android:textSize="14sp"
-                android:text="预展时间：2014.6.9 - 2014.7.1"/>
+                android:text="预展："/>
             <TextView
                 android:id="@+id/session_prelocation"
                 android:layout_width="match_parent"
                 android:layout_height="17dp"
                 android:gravity="center|left"
                 android:textSize="14sp"
-                android:text="预展地点：福州路821号5楼502室"/>
+                android:text="地点："/>
             <TextView
                 android:id="@+id/session_time"
                 android:layout_width="match_parent"
                 android:layout_height="17dp"
                 android:gravity="center|left"
                 android:textSize="14sp"
-                android:text="拍卖时间：2014.7.9 - 2014.7.10"/>
+                android:text="拍卖："/>
             <TextView
                 android:id="@+id/session_location"
                 android:layout_width="match_parent"
                 android:layout_height="17dp"
                 android:gravity="center|left"
                 android:textSize="14sp"
-                android:text="拍卖地点：福州路821号6楼602室"/>
+                android:text="地点："/>
 
         </LinearLayout>
     </LinearLayout>

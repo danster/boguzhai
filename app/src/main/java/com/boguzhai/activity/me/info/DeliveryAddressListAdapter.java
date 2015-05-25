@@ -2,6 +2,7 @@ package com.boguzhai.activity.me.info;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ public class DeliveryAddressListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<DeliveryAddress> list;
-
 	public DeliveryAddressListAdapter(Context context, ArrayList<DeliveryAddress> list) {
         inflater = LayoutInflater.from(context);
         this.context = context;
@@ -33,6 +33,8 @@ public class DeliveryAddressListAdapter extends BaseAdapter {
 
     @Override    
     public View getView(int position, View view, ViewGroup parent) {
+        Log.i("Adapter", "position="+position+", view is "+(view==null?"null":"not null"));
+
         ViewHolder holder = null;    
         if (view == null) {
             holder = new ViewHolder();

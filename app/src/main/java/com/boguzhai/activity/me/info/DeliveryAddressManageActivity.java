@@ -12,7 +12,7 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.widget.ListViewForScrollView;
+import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,58 +20,56 @@ import org.json.JSONObject;
 
 public class DeliveryAddressManageActivity extends BaseActivity{
 
-    private ListViewForScrollView listview;
+    private XListView listview;
     private DeliveryAddressListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_myinfo_addr_manage);
+        this.setLinearView(R.layout.me_myinfo_addr_manage);
         title.setText("收货地址管理");
         init();
 	}
 
 	protected void init(){
-        this.showListView();
+        listview = (XListView) findViewById(R.id.list);
+        listview.setPullLoadEnable(false);
+        listview.setPullRefreshEnable(false);
+        adapter = new DeliveryAddressListAdapter(this, Variable.account.deliveryAddressList);
+        listview.setAdapter(adapter);
         this.listen(R.id.add_address);
+	}
 
+    protected void getDeliveryAddress(){
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pClientInfoAction!getDeliveryAddress.htm");
         new Thread(new HttpPostRunnable(conn, new UpdateAddressHandler())).start();
-	}
+    }
 
-    public void showListView(){
-        listview = (ListViewForScrollView) findViewById(R.id.list);
-        adapter = new DeliveryAddressListAdapter(this, Variable.account.deliveryAddressList);
-        listview.setAdapter(adapter);
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        this.getDeliveryAddress();
     }
 
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
 		switch (view.getId()) {
-        case R.id.add_address:
-            Variable.currentDeliveryAddress = null;
-            startActivity(new Intent(this, DeliveryAddressEditActivity.class));
-            break;
-        default: break;
+            case R.id.add_address:
+                Variable.currentDeliveryAddress = null;
+                startActivity(new Intent(this, DeliveryAddressEditActivity.class));
+                break;
+            default: break;
 		};
 	}
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        
-        HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-        conn.setUrl(Constant.url + "pClientInfoAction!getDeliveryAddress.htm");
-        new Thread(new HttpPostRunnable(conn, new UpdateAddressHandler())).start();
-    }
 
     class UpdateAddressHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
             switch(code){
                 case 0:
                     // 解析收货地址信息（列表）
@@ -87,9 +85,6 @@ public class DeliveryAddressManageActivity extends BaseActivity{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    break;
-                case -1:
-                    Utility.gotoLogin();
                     break;
                 default:
                     Utility.alertMessage("网络数据错误");

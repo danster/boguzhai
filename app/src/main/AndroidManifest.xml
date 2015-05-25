@@ -35,84 +35,54 @@
         <activity android:name=".activity.base.ActivityEntry" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <!-- activities belong part of app start -->
-        <activity android:name=".activity.mainpage.MainActivity" >
-        </activity>
-        <activity android:name=".activity.mainpage.AppGuideActivity" >
-        </activity>
-        <activity android:name=".activity.mainpage.AppStartActivity" >
-        </activity>
-
+        <activity android:name=".activity.mainpage.MainActivity" />
+        <activity android:name=".activity.mainpage.AppGuideActivity" />
+        <activity android:name=".activity.mainpage.AppStartActivity" />
 
         <!-- activities belong part of base and item -->
-        <activity android:name=".activity.items.ShowImageActivity" >  </activity>
+        <activity android:name=".activity.items.ShowImageActivity" />
 
         <!-- activities belong part of search -->
-        <activity android:name=".activity.search.SearchResultActivity" >
-        </activity>
+        <activity android:name=".activity.search.SearchResultActivity" />
 
         <!-- activities belong part of auction -->
-        <activity android:name=".activity.auction.AuctionPreviewActivity" >
-        </activity>
-        <activity android:name=".activity.auction.LotInfoActivity" >
-        </activity>
-        <activity android:name=".activity.auction.LotFilterActivity" >
-        </activity>
-        <activity android:name=".activity.auction.AuctionActiveActivity" >
-        </activity>
-        <activity android:name=".activity.auction.AuctionOverActivity" >
-        </activity>
-        <activity android:name=".activity.auction.apply.ApplyForAuctionActivity" >
-        </activity>
-        <activity android:name=".activity.auction.apply.ShowSpecialLotsActivity" >
-        </activity>
-        <activity android:name=".activity.auction.apply.PayBailActivity" >
-        </activity>
-        <activity android:name=".activity.auction.apply.PayBailResultActivity" >
-        </activity>
+        <activity android:name=".activity.auction.AuctionPreviewActivity" />
+        <activity android:name=".activity.auction.LotInfoActivity" />
+        <activity android:name=".activity.auction.LotFilterActivity" />
+        <activity android:name=".activity.auction.AuctionActiveActivity" />
+        <activity android:name=".activity.auction.AuctionOverActivity" />
+        <activity android:name=".activity.auction.apply.ApplyForAuctionActivity" />
+        <activity android:name=".activity.auction.apply.ShowSpecialLotsActivity" />
+        <activity android:name=".activity.auction.apply.PayBailActivity" />
+        <activity android:name=".activity.auction.apply.PayBailResultActivity" />
 
         <!-- activities belong part of login -->
-        <activity android:name=".activity.login.LoginActivity" >
-        </activity>
-        <activity android:name=".activity.login.RegisterActivity" >
-        </activity>
-        <activity android:name=".activity.login.ForgetPwdActivity" >
-        </activity>
+        <activity android:name=".activity.login.LoginActivity" />
+        <activity android:name=".activity.login.RegisterActivity" />
+        <activity android:name=".activity.login.ForgetPwdActivity" />
 
         <!-- activities belong part of me info -->
-        <activity android:name=".activity.me.info.AccountInfoActivity" >
-        </activity>
-        <activity android:name=".activity.me.info.AccountInfoMoreActivity" >
-        </activity>
-        <activity android:name=".activity.me.info.AccountInfoEditActivity" >
-        </activity>
-        <activity android:name=".activity.me.info.AccountBindEmailActivity" >
-        </activity>
-        <activity android:name=".activity.me.info.AccountBindMobileActivity" >
-        </activity>
-        <activity android:name=".activity.me.info.IdentityVerifyActivity" >
-        </activity>
-        <activity android:name=".activity.me.info.DeliveryAddressManageActivity" >
-        </activity>
-        <activity android:name=".activity.me.info.DeliveryAddressEditActivity" >
-        </activity>
+        <activity android:name=".activity.me.info.AccountInfoActivity" />
+        <activity android:name=".activity.me.info.AccountInfoMoreActivity" />
+        <activity android:name=".activity.me.info.AccountInfoEditActivity" />
+        <activity android:name=".activity.me.info.AccountBindEmailActivity" />
+        <activity android:name=".activity.me.info.AccountBindMobileActivity" />
+        <activity android:name=".activity.me.info.IdentityVerifyActivity" />
+        <activity android:name=".activity.me.info.IdentityShowActivity" />
+        <activity android:name=".activity.me.info.DeliveryAddressManageActivity" />
+        <activity android:name=".activity.me.info.DeliveryAddressEditActivity" />
 
         <!-- activities belong part of me capital -->
-        <activity android:name=".activity.me.capital.CapitalShowActivity" >
-        </activity>
-        <activity android:name=".activity.me.capital.CapitalBindbankActivity" >
-        </activity>
-        <activity android:name=".activity.me.capital.CapitalDetailActivity" >
-        </activity>
-        <activity android:name=".activity.me.capital.CapitalChargeActivity" >
-        </activity>
-        <activity android:name=".activity.me.capital.CapitalWithdrawalActivity" >
-        </activity>
+        <activity android:name=".activity.me.capital.CapitalShowActivity" />
+        <activity android:name=".activity.me.capital.CapitalBindbankActivity" />
+        <activity android:name=".activity.me.capital.CapitalDetailActivity" />
+        <activity android:name=".activity.me.capital.CapitalChargeActivity" />
+        <activity android:name=".activity.me.capital.CapitalWithdrawalActivity" />
 
         <!-- activities belong part of me myauction -->
         <activity
@@ -121,12 +91,10 @@
         </activity>
 
         <!-- activities belong part of me bidding -->
-        <activity android:name=".activity.me.bidding.BiddingActivity" >
-        </activity>
+        <activity android:name=".activity.me.bidding.BiddingActivity" />
 
         <!-- activities belong part of me order -->
-        <activity android:name=".activity.me.order.PayOrderActivity" >
-        </activity>
+        <activity android:name=".activity.me.order.PayOrderActivity" />
 
         <!-- activities belong part of me proxy -->
         <activity

@@ -95,7 +95,7 @@ public class MyAuctionAdapter extends BaseAdapter {
         public void onClick(View v) {
             Variable.currentAuction = myAuctions.get(position);
 //            Variable.currentSession = list.get(position);
-            Utility.gotoAuction(mContext, myAuctions.get(position).status);
+            Utility.gotoSession();
         }
     }
 

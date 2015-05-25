@@ -8,16 +8,16 @@
     <LinearLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
-        <ScrollView
+        <com.boguzhai.logic.view.XListView
+            android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-            <com.boguzhai.logic.widget.ListViewForScrollView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
+            android:layout_height="fill_parent"
+            android:scrollbars="vertical"
+            android:divider="@color/transparent"
+            android:dividerHeight="0dp"/>
     </LinearLayout>
 
 

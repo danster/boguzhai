@@ -2,14 +2,22 @@ package com.boguzhai.activity.me.capital;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
+import com.boguzhai.logic.thread.HttpJsonHandler;
+import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.widget.ListViewForScrollView;
+
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,11 +47,7 @@ public class CapitalDetailActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
         setLinearView(R.layout.me_capital_detail);
         type = getIntent().getStringExtra("type");
-
-        if(type.equals("balance") || type.equals("bail")) {
-            Utility.toastMessage(type);
-            init();
-        }
+        init();
 
 	}
 
@@ -55,7 +59,7 @@ public class CapitalDetailActivity extends BaseActivity {
         Date r_date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(r_date);
-        cal.add(Calendar.DAY_OF_YEAR,-10);
+        cal.add(Calendar.DAY_OF_YEAR, -10);
         Date l_date= cal.getTime();
         left_date.setText(dateFormat.format(l_date));
         right_date.setText(dateFormat.format(r_date));
@@ -90,6 +94,13 @@ public class CapitalDetailActivity extends BaseActivity {
         listview.setAdapter(adapter);
 
         listen(R.id.search);
+
+
+        HttpClient conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setUrl(Constant.url + "pClientInfoAction!getBalanceDetail.htm?number=1");
+        new Thread(new HttpPostRunnable(conn, new GetBalanceHandler())).start();
+
 	}
 
 
@@ -155,6 +166,21 @@ public class CapitalDetailActivity extends BaseActivity {
                 break;
 		};
 	}
+
+    class GetBalanceHandler extends HttpJsonHandler {
+        @Override
+        public void handlerData(int code, JSONObject data){
+            super.handlerData(code, data);
+            switch(code){
+                case 0:
+                    Log.i(TAG, data.toString());
+                    break;
+                default:
+                    Utility.alertMessage("网络数据错误");
+                    break;
+            }
+        }
+    }
 
 }
 
