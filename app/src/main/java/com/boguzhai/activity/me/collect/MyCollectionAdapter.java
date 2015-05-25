@@ -106,13 +106,8 @@ public class MyCollectionAdapter extends BaseAdapter{
 //        Tasks.showBigImage(lots.get(position).imageUrl, holder.my_collection_lot_image, 4);
         holder.my_collection_lot_image.setImageBitmap(lots.get(position).image);
 
-        holder.my_collection_lot_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 点击缩略图时显示大图
-                Tasks.showBigImage(lots.get(position).imageUrl, holder.my_collection_lot_image, 1);
-            }
-        });
+        // 点击缩略图时显示大图
+        Tasks.showBigImage(lots.get(position).imageUrl, holder.my_collection_lot_image, 1);
 
 
         view.setOnClickListener(new View.OnClickListener() {
