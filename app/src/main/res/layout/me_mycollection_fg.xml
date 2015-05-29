@@ -48,6 +48,7 @@
         android:layout_height="match_parent">
 
         <com.boguzhai.logic.view.XListView
+            android:footerDividersEnabled="false"
             android:id="@+id/lv_my_collections"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

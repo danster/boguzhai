@@ -38,7 +38,7 @@
 
         <TextView
             style="@style/base_text"
-            android:text="请选择分类一" />
+            android:text="请选择分类" />
 
         <Spinner
             android:id="@+id/sp_advice_type"

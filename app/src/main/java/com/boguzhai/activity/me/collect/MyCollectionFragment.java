@@ -238,6 +238,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     @Override
     public void onRefresh() {
         Log.i(TAG, "下拉刷新");
+        isSearch = false;
         currentCount = 0;
         number = 1;
         myCollections.clear();

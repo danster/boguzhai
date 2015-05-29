@@ -40,6 +40,15 @@ public class Tasks {
         new Thread(new HttpPostRunnable(conn, handler)).start();
     }
 
+    public static void uploadAuctionImage(Bitmap bitmap, HttpJsonHandler handler){
+        HttpClient conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+
+        conn.setParamBitmap("fileStr", bitmap);
+        conn.setUrl(Constant.url.replace("/phones/","/") + "fileUploadAction!uploadAuctionImage.htm");
+        new Thread(new HttpPostRunnable(conn, handler)).start();
+    }
+
     public static void updateAccount(){
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
@@ -109,6 +118,13 @@ public class Tasks {
 
         new AsyncTask<Void, Void, Void>() {
             Bitmap bmp=null;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                Log.i("showBigImage", "showBigImage");
+            }
+
             @Override
             protected Void doInBackground(Void... params) {
                 if(imageUrl.equals("")){
@@ -150,7 +166,6 @@ public class Tasks {
                     });
                 } else {
                     Log.i("AsyncTask", "image get: failed !");
-
                 }
             }
         }.execute();
