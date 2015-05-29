@@ -60,7 +60,5 @@
             </LinearLayout>
             <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>
