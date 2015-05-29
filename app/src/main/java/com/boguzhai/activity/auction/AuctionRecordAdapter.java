@@ -40,7 +40,6 @@ public class AuctionRecordAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Log.i(TAG,"now position" + position);
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();

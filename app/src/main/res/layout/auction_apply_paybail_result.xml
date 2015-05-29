@@ -24,8 +24,7 @@
             android:layout_width="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/dark_black"
-            android:text="恭喜您，保证金支付成功！"/>
+            android:textColor="@color/dark_black"/>
     </LinearLayout>
 
     <LinearLayout android:id="@+id/result_info"
@@ -47,6 +46,17 @@
             android:text="N007"/>
     </LinearLayout>
 
+    </LinearLayout>
+
+
+    <LinearLayout style="@style/base_itembar" android:gravity="center" android:layout_marginTop="20dp">
+        <TextView style="@style/myinfo_left_text"
+            android:id="@+id/count"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:textSize="20sp"/>
+        <TextView style="@style/myinfo_left_text"
+            android:text="秒后跳转到拍卖会专场页面"/>
     </LinearLayout>
 
 

@@ -45,19 +45,15 @@
         <activity android:name=".activity.mainpage.AppStartActivity" />
 
         <!-- activities belong part of base and item -->
-        <activity android:name=".activity.items.ShowImageActivity" />
 
         <!-- activities belong part of search -->
         <activity android:name=".activity.search.SearchResultActivity" />
 
         <!-- activities belong part of auction -->
-        <activity android:name=".activity.auction.AuctionPreviewActivity" />
+        <activity android:name=".activity.auction.AuctionDisplayActivity" />
         <activity android:name=".activity.auction.LotInfoActivity" />
         <activity android:name=".activity.auction.LotFilterActivity" />
         <activity android:name=".activity.auction.AuctionActiveActivity" />
-        <activity android:name=".activity.auction.AuctionOverActivity" />
-        <activity android:name=".activity.auction.apply.ApplyForAuctionActivity" />
-        <activity android:name=".activity.auction.apply.ShowSpecialLotsActivity" />
         <activity android:name=".activity.auction.apply.PayBailActivity" />
         <activity android:name=".activity.auction.apply.PayBailResultActivity" />
 

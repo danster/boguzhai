@@ -1,6 +1,7 @@
 package com.boguzhai.activity.mainpage;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.AuctionDisplayActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
@@ -28,7 +30,6 @@ import com.boguzhai.logic.thread.ShowLotListHandler;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
-import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONObject;
@@ -171,7 +172,6 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
         adapter = new LotListAdapter(context, lotList, true);
         listview.setAdapter(adapter);
 
-
         // 支持下拉刷新的布局，设置下拉监听事件，重写onRefresh()方法
         swipe_layout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipe_layout.setColorSchemeResources(R.color.gold);
@@ -203,7 +203,6 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
         conn.setUrl(Constant.url + "pMainAction!getHomeAuctionMainList.htm");
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler(lotList, adapter, order))).start();
     }
-
 
     public class AuctionListHandler extends HttpJsonHandler {
         @Override
@@ -268,8 +267,7 @@ public class HomeFragment extends Fragment implements XListView.IXListViewListen
         public void onClick(View v) {
             Variable.currentAuction = this.auction;
             Variable.currentSession = this.session;
-            Utility.gotoSession();
+            startActivity(new Intent(context, AuctionDisplayActivity.class));
         }
     }
-
 }

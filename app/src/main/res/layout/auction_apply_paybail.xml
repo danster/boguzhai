@@ -28,30 +28,39 @@
     </LinearLayout>
 
     <LinearLayout style="@style/base_itembar" android:layout_height="60dp" android:id="@+id/capital">
-        <ImageView style="@style/pay_left_image" android:background="@drawable/image"/>
+        <ImageView style="@style/pay_left_image" android:background="@drawable/payment_balance"/>
         <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
-            <TextView style="@style/pay_right_top_text"  android:text="账户余额支付"/>
-            <TextView style="@style/pay_right_bottom_text" android:text="如果您的余额不足，请及时充值"/>
+            <TextView style="@style/pay_right_top_text" android:id="@+id/balance"  android:text="暂存款(还有: 30000.00元)支付"/>
+            <TextView style="@style/pay_right_bottom_text" android:text="如果您的暂存款不足，请及时充值"/>
         </LinearLayout>
         <ImageView style="@style/search_right_arrow" />
     </LinearLayout>
-    <View style="@style/longline"/>
-    <LinearLayout style="@style/base_itembar" android:layout_height="60dp" android:id="@+id/alipay">
-        <ImageView style="@style/pay_left_image" android:background="@drawable/payment_alipay"/>
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
-            <TextView style="@style/pay_right_top_text"  android:text="支付宝客户端"/>
-            <TextView style="@style/pay_right_bottom_text" android:text="推荐安装支付宝客户端的用户使用"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_itembar" android:layout_height="60dp" android:id="@+id/alipay">
+            <ImageView style="@style/pay_left_image" android:background="@drawable/payment_alipay"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
+                <TextView style="@style/pay_right_top_text"  android:text="支付宝客户端"/>
+                <TextView style="@style/pay_right_bottom_text" android:text="推荐安装支付宝客户端的用户使用"/>
+            </LinearLayout>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
-        <ImageView style="@style/search_right_arrow" />
-    </LinearLayout>
-    <View style="@style/longline"/>
-    <LinearLayout style="@style/base_itembar"  android:layout_height="60dp" android:id="@+id/bank_card">
-        <ImageView style="@style/pay_left_image" android:background="@drawable/payment_bank"/>
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
-            <TextView style="@style/pay_right_top_text"  android:text="银行卡支付"/>
-            <TextView style="@style/pay_right_bottom_text" android:text="支持储蓄卡信用卡，无需开通网银"/>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_itembar"  android:layout_height="60dp" android:id="@+id/bank_card">
+            <ImageView style="@style/pay_left_image" android:background="@drawable/payment_bank"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
+                <TextView style="@style/pay_right_top_text"  android:text="银行卡支付"/>
+                <TextView style="@style/pay_right_bottom_text" android:text="支持储蓄卡信用卡，无需开通网银"/>
+            </LinearLayout>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
-        <ImageView style="@style/search_right_arrow" />
+
     </LinearLayout>
 
 </LinearLayout>

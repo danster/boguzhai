@@ -70,7 +70,7 @@ public class LotListAdapter extends BaseAdapter {
         // 下载并加载左侧拍品信息
         holder.leftImage.setImageBitmap(list.get(2*position).image);
         holder.leftLotName.setText(list.get(2*position).name);
-        holder.leftLotID.setText("拍品号: "+list.get(2*position).id);
+        holder.leftLotID.setText("拍品号: "+list.get(2*position).no);
         holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).appraisal1+" - ￥"+list.get(2*position).appraisal2);
         holder.leftLotStartPrice.setText("起拍价: ￥" + list.get(2 * position).startPrice);
         holder.leftLot.setOnClickListener(new MyOnClickListener(2 * position));
@@ -83,7 +83,7 @@ public class LotListAdapter extends BaseAdapter {
             holder.rightImage.setImageBitmap(list.get(2*position+1).image);
             holder.rightLot.setOnClickListener(new MyOnClickListener(2*position + 1));
             holder.rightLotName.setText(list.get(2*position+1).name);
-            holder.rightLotID.setText("拍品号: "+list.get(2*position+1).id);
+            holder.rightLotID.setText("拍品号: "+list.get(2*position+1).no);
             holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).appraisal1+" - ￥"+list.get(2*position+1).appraisal2);
             holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
         }

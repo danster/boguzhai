@@ -13,9 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.AuctionActiveActivity;
-import com.boguzhai.activity.auction.AuctionOverActivity;
-import com.boguzhai.activity.auction.AuctionPreviewActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Account;
@@ -125,20 +122,6 @@ public class Utility {
         ((TextView)activity.findViewById(R.id.session_prelocation)).setText("地点:"+session.previewLocation);
         ((TextView)activity.findViewById(R.id.session_time)).setText("拍卖:"+session.auctionTime);
         ((TextView)activity.findViewById(R.id.session_location)).setText("地点:" + session.auctionLocation);
-    }
-
-    // 进去专场的检查
-    public static void gotoSession(){
-        Activity activity = Variable.currentActivity;
-        String status = Variable.currentSession.status;
-        if (status.equals("已开拍")){
-            activity.startActivity(new Intent(activity, AuctionActiveActivity.class));
-        } else if(status.equals("未开拍")){
-            activity.startActivity(new Intent(activity, AuctionPreviewActivity.class));
-        } else if(status.equals("已结束")){
-            activity.startActivity(new Intent(activity, AuctionOverActivity.class));
-        } else{
-        }
     }
 
     /********************************* 根据条件获取拍品类型(一、二、三)的名称 *************************/

@@ -9,6 +9,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.logic.widget.RangeSeekBar;
 
+// 该Activity已遗弃
 public class LotFilterActivity extends BaseActivity {
 
     private TextView low_price, high_price;

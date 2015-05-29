@@ -29,7 +29,6 @@ public abstract class HttpJsonHandler extends Handler {
                 Log.i("JSON",(String)msg.obj);
                 try {
                     JSONObject result = new JSONObject((String)msg.obj);
-                    Log.i("HttpJsonHandler", result.toString());
                     int code = -9;
                     JSONObject data = null;
                     code = result.getInt("code");
@@ -42,11 +41,15 @@ public abstract class HttpJsonHandler extends Handler {
                 }
                 break;
             default:
-                if(Variable.app_context == null)
+                if(Variable.app_context == null) {
                     Log.i("TAG", "Variable.app_context is null");
+                    break;
+                }
 
-                if(msg.obj == null)
+                if(msg.obj == null){
                     Log.i("TAG", "msg.obj is null");
+                    break;
+                }
 
                 Toast.makeText(Variable.app_context, (String)msg.obj, Toast.LENGTH_SHORT).show();
                 break;

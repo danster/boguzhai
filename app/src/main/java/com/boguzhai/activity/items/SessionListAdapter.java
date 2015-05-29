@@ -1,6 +1,7 @@
 package com.boguzhai.activity.items;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.AuctionDisplayActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Session;
 import com.boguzhai.logic.thread.Tasks;
-import com.boguzhai.logic.utils.Utility;
 
 import java.util.ArrayList;
 
@@ -91,7 +92,7 @@ public class SessionListAdapter extends BaseAdapter {
 		public void onClick(View v) {
             Variable.currentAuction = auction;
             Variable.currentSession = list.get(position);
-            Utility.gotoSession();
+            context.startActivity(new Intent(context, AuctionDisplayActivity.class));
 		}
     }
 

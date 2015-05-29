@@ -13,7 +13,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.proxy.ProxyPricingActivity;
 import com.boguzhai.logic.gaobo.MyAuction;
-import com.boguzhai.logic.utils.Utility;
 
 import java.util.List;
 
@@ -95,7 +94,7 @@ public class MyAuctionAdapter extends BaseAdapter {
         public void onClick(View v) {
             Variable.currentAuction = myAuctions.get(position);
 //            Variable.currentSession = list.get(position);
-            Utility.gotoSession();
+//            mContext.startActivity(new Intent(mContext, AuctionNoActiveActivity.class));
         }
     }
 

@@ -57,14 +57,14 @@
                     android:text="搜索"/>
             </LinearLayout>
             <TextView
-                android:id="@+id/filter"
+                android:id="@+id/sort"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
-                android:text="筛选"/>
+                android:text="排序"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -76,9 +76,7 @@
         <com.boguzhai.logic.view.XListView
             android:id="@+id/lotlist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:footerDividersEnabled="false"
-            android:dividerHeight="0dp" />
+            android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

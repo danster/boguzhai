@@ -54,9 +54,9 @@ public class Variable {
     public static SwipeRefreshLayout currentRefresh=null; // 下拉更新
     public static DeliveryAddress currentDeliveryAddress = null; //修改收货地址时初始化
 
+    public static String biddingNo="";  // 我的网络拍卖号,如N007,没有为空字符串
     public static Activity currentActivity = null; //当前的Activity
     public static Activity lastActivity = null;    //跳转进来之前的Activity
-    public static Class<?> nextClass = null;    //即将跳转去的Class
 
 
 }

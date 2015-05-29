@@ -16,6 +16,7 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
@@ -43,9 +44,18 @@ public class AccountInfoActivity extends BaseActivity {
     private void fillAccountInfo(){
         ((TextView)findViewById(R.id.name)).setText(Variable.account.name);
         ((TextView)findViewById(R.id.nickname)).setText(Variable.account.nickname);
-        ((TextView)findViewById(R.id.zone)).setText(Variable.account.address_1+" "+Variable.account.address_2+" "+Variable.account.address_3);
+        ((TextView)findViewById(R.id.zone)).setText(Variable.account.address_1 + " " + Variable.account.address_2 + " " + Variable.account.address_3);
         ((TextView)findViewById(R.id.email)).setText(Variable.account.email);
         ((TextView)findViewById(R.id.mobile)).setText(Variable.account.mobile);
+    }
+
+    @Override
+    public void onResume(){
+        // 更新账户基本信息
+        HttpClient conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setUrl(Constant.url + "pClientInfoAction!getAccountInfo.htm");
+        new Thread(new HttpPostRunnable(conn, new UpdateInfoHandler())).start();
     }
 
 	@Override
@@ -59,15 +69,9 @@ public class AccountInfoActivity extends BaseActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 break;
 
-            case R.id.my_more:     startActivity(new Intent(this, AccountInfoMoreActivity.class));  break;
-            case R.id.my_delivery: startActivity(new Intent(this, DeliveryAddressManageActivity.class));break;
-            case R.id.my_capital:
-                // 获取账户资产信息
-                HttpClient conn = new HttpClient();
-                conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-                conn.setUrl(Constant.url + "pClientInfoAction!getCapitalInfo.htm");
-                new Thread(new HttpPostRunnable(conn, new GetCaptialInfoHandler())).start();
-                break;
+            case R.id.my_more:startActivity(new Intent(this, AccountInfoMoreActivity.class)); break;
+            case R.id.my_delivery:startActivity(new Intent(this, DeliveryAddressManageActivity.class));break;
+            case R.id.my_capital:startActivity(new Intent(this, CapitalShowActivity.class)); break;
 
             case R.id.my_verify:
                 // 获取账户认证信息
@@ -122,32 +126,23 @@ public class AccountInfoActivity extends BaseActivity {
         }
     }
 
-    class GetCaptialInfoHandler extends HttpJsonHandler {
+    public class UpdateInfoHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            super.handlerData(code, data);
-            switch(code){
+            super.handlerData(code,data);
+            switch (code){
                 case 0:
-                    // 解析账户资产信息
-                    try {
-                        JSONObject capitalInfo = data.getJSONObject("capitalInfo");
-                        Variable.account.capitalInfo.status = capitalInfo.getString("status");
-                        Variable.account.capitalInfo.bankName = capitalInfo.getString("bankName");
-                        Variable.account.capitalInfo.bankNumber = capitalInfo.getString("bankNumber");
-                        Variable.account.capitalInfo.name = capitalInfo.getString("name");
-                        Variable.account.capitalInfo.balance = capitalInfo.getString("balance");
-                        Variable.account.capitalInfo.bail = capitalInfo.getString("bail");
-                        startActivity(new Intent(AccountInfoActivity.this, CapitalShowActivity.class));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    JsonApi.getAccountInfo(data);
+                    break;
+                case 1:
                     break;
                 default:
-                    Utility.alertMessage("无法获取账户资产信息");
                     break;
             }
         }
     }
+
+
 }
 
 

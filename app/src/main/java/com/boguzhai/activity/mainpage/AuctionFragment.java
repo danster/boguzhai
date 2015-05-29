@@ -63,10 +63,12 @@ public class AuctionFragment extends Fragment {
         updateDynamicAuctions(R.id.auction_status_all); //默认展示全部拍卖会
         RadioButton radio = (RadioButton)view.findViewById(R.id.auction_status_all);
         radio.setChecked(true);
-
     }
 
     public void updateDynamicAuctions(int checkedId){
+        list.clear();
+        adapter.notifyDataSetChanged();
+
         HttpClient conn = new HttpClient();
         switch (checkedId){
             case R.id.auction_status_all:     conn.setParam("status", "");      break;
@@ -83,7 +85,6 @@ public class AuctionFragment extends Fragment {
         @Override
         public void handlerData(int code, JSONObject data){
             super.handlerData(code, data);
-
             switch (code){
                 case 0:
                     list.clear();

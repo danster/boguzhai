@@ -47,7 +47,6 @@ public class DeliveryAddressManageActivity extends BaseActivity{
         new Thread(new HttpPostRunnable(conn, new UpdateAddressHandler())).start();
     }
 
-
     @Override
     public void onResume(){
         super.onResume();

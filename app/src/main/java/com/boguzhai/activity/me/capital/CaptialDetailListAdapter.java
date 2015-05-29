@@ -14,29 +14,40 @@ import java.util.ArrayList;
 public class CaptialDetailListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context context;
-    private ArrayList<String> list;
+    private ArrayList<BalanceDetail> balanceList;
+    private ArrayList<BailDetail> bailList;
     private String type="";
 
-    public CaptialDetailListAdapter(Context context, ArrayList<String> list, String type) {
+    public CaptialDetailListAdapter(Context context, ArrayList<BalanceDetail> list1, ArrayList<BailDetail> list2, String type) {
         inflater = LayoutInflater.from(context);
         this.context = context;
-        this.list = list;
+        this.balanceList = list1;
+        this.bailList = list2;
         this.type = type;
     }
 
     @Override
-    public int getCount() { return list.size(); }
+    public int getCount() {
+        if(type.equals("balance")){
+            return balanceList.size();
+        } else {
+            return bailList.size();
+        }
+    }
     @Override
-    public Object getItem(int position) { return list.get(position); }
+    public Object getItem(int position) {
+        if(type.equals("balance")){
+            return balanceList.get(position);
+        } else {
+            return bailList.get(position);
+        }
+    }
     @Override
     public long getItemId(int position) { return position; }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-
         ViewHolder holder = null;
-        String[] info = list.get(position).split(",");
-
         if(type.equals("balance")) {
             if (view == null) {
                 holder = new ViewHolder();
@@ -51,12 +62,14 @@ public class CaptialDetailListAdapter extends BaseAdapter {
             } else {
                 holder = (ViewHolder) view.getTag();
             }
-            holder.info_1.setText(info[0]);
-            holder.info_2.setText(info[1]);
-            holder.info_3.setText(info[2]);
-            holder.info_4.setText("收入:"+info[3]);
-            holder.info_5.setText("支出:"+info[4]);
-            holder.info_6.setText("余额:￥"+info[5]);
+
+            BalanceDetail detail = balanceList.get(position);
+            holder.info_1.setText(detail.id);
+            holder.info_2.setText(detail.type);
+            holder.info_3.setText(detail.time);
+            holder.info_4.setText("收入:"+detail.in);
+            holder.info_5.setText("支出:"+detail.out);
+            holder.info_6.setText("余额:￥"+detail.balance);
         }
         if(type.equals("bail")){
             if (view == null) {
@@ -70,10 +83,13 @@ public class CaptialDetailListAdapter extends BaseAdapter {
             } else {
                 holder = (ViewHolder) view.getTag();
             }
-            holder.info_1.setText(info[0]);
-            holder.info_2.setText(info[1]);
-            holder.info_3.setText("资金来源:"+info[2]);
-            holder.info_4.setText("金额:￥"+info[3]);
+
+
+            BailDetail detail = bailList.get(position);
+            holder.info_1.setText(detail.auctionMainName);
+            holder.info_2.setText(detail.time);
+            holder.info_3.setText("资金来源:"+detail.from);
+            holder.info_4.setText("金额:￥"+detail.money);
         }
         return view;
     }

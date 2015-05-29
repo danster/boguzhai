@@ -1,5 +1,6 @@
 package com.boguzhai.activity.auction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -77,7 +78,7 @@ public class LotInfoActivity extends BaseActivity {
                 }
                 break;
             case R.id.session_info:
-                Utility.gotoSession();
+                startActivity(new Intent(context, AuctionDisplayActivity.class));
                 break;
             default: break;
         }
@@ -177,9 +178,9 @@ public class LotInfoActivity extends BaseActivity {
                     try {
                         Variable.currentAuction = Auction.parseJson(data.getJSONObject("auctionMain"));
                         Variable.currentSession = null;
-                        for( Session s : Variable.currentAuction.sessionList){
-                            if(s.id.equals(Variable.currentLot.sessionId)){
-                                Variable.currentSession = s;
+                        for( Session session : Variable.currentAuction.sessionList){
+                            if(session.id.equals(Variable.currentLot.sessionId)){
+                                Variable.currentSession = session;
                                 break;
                             }
                         }

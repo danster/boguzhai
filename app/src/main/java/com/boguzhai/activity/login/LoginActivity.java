@@ -87,6 +87,7 @@ public class LoginActivity extends BaseActivity {
     public class LoginHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            super.handlerData(code,data);
             switch (code){
                 case 0:
                     Variable.isLogin = true;
@@ -95,9 +96,6 @@ public class LoginActivity extends BaseActivity {
                     Variable.mainTabIndex = R.id.rb_4;
                     context.startActivity(new Intent(context, MainActivity.class));
                 break;
-                case -1:
-                    Utility.gotoLogin();
-                    break;
                 case 1:
                     Utility.alertMessage("登录失败: 用户名或者密码错误！");
                     break;

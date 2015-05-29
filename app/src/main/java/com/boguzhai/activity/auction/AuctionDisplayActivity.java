@@ -1,15 +1,20 @@
-package com.boguzhai.activity.search;
+package com.boguzhai.activity.auction;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.MyInt;
@@ -32,14 +37,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
 
-public class SearchResultActivity extends BaseActivity implements XListView.IXListViewListener, SwipeRefreshLayout.OnRefreshListener{
-    private static final String TAG = "SearchResultActivity";
-    private ArrayList<Lot> list;
+public class AuctionDisplayActivity extends BaseActivity implements XListView.IXListViewListener,
+        SwipeRefreshLayout.OnRefreshListener{
+
+    private ArrayList<Lot> list, temp_list;
     private XListView listview;
     private LotListAdapter adapter;
-    private String searchUrl=null;
 
-    // 分页信息必备条件
     private SwipeRefreshLayout swipe_layout;
     private MyInt order = new MyInt(1);
 
@@ -52,49 +56,27 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLinearView(R.layout.search_result);
-        title.setText("搜索结果");
-        title_right.setText("排序");
-        title_right.setVisibility(View.VISIBLE);
-
+        setLinearView(R.layout.auction_preview);
+        title.setText("拍卖专场");
         init();
     }
 
     private void init(){
-        listview = (XListView) findViewById(R.id.lotlist);
-        listview.setPullLoadEnable(true);
-        listview.setPullRefreshEnable(false);
-        listview.setXListViewListener(this);
-
         list = new ArrayList<Lot>();
-        adapter = new LotListAdapter(this, list);
-        listview.setAdapter(adapter);
+        temp_list = new ArrayList<Lot>();
+        Utility.showAuctionInfo(baseActivity, Variable.currentAuction, Variable.currentSession);
 
-        swipe_layout = (SwipeRefreshLayout) findViewById(R.id.refresh);
-        swipe_layout.setColorSchemeResources(R.color.gold);
-        swipe_layout.setOnRefreshListener(this);
+        this.listen(R.id.sort);
+        this.listen(R.id.search);
 
-        searchUrl=getIntent().getStringExtra("url");
+        if(Variable.currentAuction.type.equals("同步")){
+            title_right.setText("进入专场");
+            title_right.setVisibility(View.VISIBLE);
+        } else {
+            title_right.setVisibility(View.INVISIBLE);
+        }
 
-        HttpClient conn = new HttpClient();
-        conn.setUrl(searchUrl + "&number=1");
-        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
-    }
-
-    @Override
-    public void onRefresh() {
-        order.value = 1;
-        swipe_layout.setRefreshing(true);
-        HttpClient conn = new HttpClient();
-        conn.setUrl(searchUrl + "&number=" + order.value);
-        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
-    }
-
-    @Override
-    public void onLoadMore() {
-        HttpClient conn = new HttpClient();
-        conn.setUrl(searchUrl + "&number=" + order.value);
-        new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
+        this.showListView();
     }
 
     @Override
@@ -102,19 +84,82 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
         super.onClick(v);
         switch (v.getId()) {
             case R.id.title_right:
+                startActivity(new Intent(context, AuctionActiveActivity.class));
+                break;
+            case R.id.sort:
                 new AlertDialog.Builder(this).setSingleChoiceItems(sortTypes, sortType,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int index) {
-                            sortType = index;
-                            Collections.sort(list, new LotComparator());
-                            adapter.notifyDataSetChanged();
-                            dialog.dismiss();
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int index) {
+                                sortType = index;
+                                Collections.sort(list, new LotComparator());
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton("取消", null).show();
+                break;
+            case R.id.search:
+                String key = ((EditText)findViewById(R.id.search_value)).getText().toString();
+                if (!TextUtils.isEmpty(key)) {
+                    temp_list.clear();
+                    temp_list.addAll(list);
+
+                    list.clear();
+                    for (Lot lot : temp_list) {
+                        if (lot.name.indexOf(key) >= 0) {
+                            list.add(lot);
                         }
-                    }).setNegativeButton("取消", null).show();
+                    }
+                    adapter.notifyDataSetChanged();;
+                }
+
                 break;
             default:
                 break;
         }
+    }
+
+    // 展示专场的拍品列表
+    public void showListView(){
+        listview = (XListView) findViewById(R.id.lotlist);
+        adapter = new LotListAdapter(this, list);
+        listview.setAdapter(adapter);
+
+        listview.setPullLoadEnable(true);
+        listview.setPullRefreshEnable(false);
+        listview.setXListViewListener(this);
+
+        // 支持下拉刷新的布局，设置下拉监听事件，重写onRefresh()方法
+        swipe_layout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        swipe_layout.setColorSchemeResources(R.color.gold);
+        swipe_layout.setOnRefreshListener(this);
+
+        this.order.value = 1;
+        this.httpConnect(1);
+    }
+
+    @Override
+    public void onRefresh() {
+        swipe_layout.setRefreshing(true);
+        this.order.value = 1;
+        this.httpConnect(1);
+    }
+
+    @Override
+    public void onLoadMore() {
+        this.httpConnect(this.order.value);
+    }
+
+    private void httpConnect(int number){
+        ((EditText)findViewById(R.id.search_value)).setText("");
+        if(temp_list.size() > 0){
+            list.clear();
+            list.addAll(temp_list);
+            temp_list.clear();
+        }
+        HttpClient conn = new HttpClient();
+        conn.setParam("number", number + "");
+        conn.setUrl(Constant.url + "pAuctionInfoAction!getAuctionInfoListBySessionId.htm?auctionSessionId=" + Variable.currentSession.id);
+        new Thread(new HttpPostRunnable(conn, new ShowLotListHandler())).start();
     }
 
     // 拍品排序器
@@ -247,5 +292,6 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
             }
         }
     }
+
 
 }
