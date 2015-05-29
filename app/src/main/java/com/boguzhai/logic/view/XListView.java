@@ -3,6 +3,7 @@ package com.boguzhai.logic.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -226,6 +227,10 @@ public class XListView extends ListView implements OnScrollListener {
 
 	private void updateFooterHeight(float delta) {
 		int height = mFooterView.getBottomMargin() + (int) delta;
+//        Log.i("XListView", "底部距离:" + mFooterView.getBottomMargin());
+//        Log.i("XListView", "height:" + height);
+//        Log.i("XListView", "mEnablePullLoad:" + mEnablePullLoad);
+//        Log.i("XListView", "mPullLoading:" + mPullLoading);
 		if (mEnablePullLoad && !mPullLoading) {
 			if (height > PULL_LOAD_MORE_DELTA) { // height enough to invoke load
 													// more.
@@ -266,36 +271,46 @@ public class XListView extends ListView implements OnScrollListener {
 		switch (ev.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			mLastY = ev.getRawY();
+//            Log.i("XListView", "mLastY:" + mLastY);
 			break;
 		case MotionEvent.ACTION_MOVE:
 			final float deltaY = ev.getRawY() - mLastY;
+
 			mLastY = ev.getRawY();
-			if (getFirstVisiblePosition() == 0
-					&& (mHeaderView.getVisiableHeight() > 0 || deltaY > 0)) {
-				// the first item is showing, header has shown or pull down.
-				updateHeaderHeight(deltaY / OFFSET_RADIO);
-				invokeOnScrolling();
-			} else if (getLastVisiblePosition() == mTotalItemCount - 1
+//			if (getFirstVisiblePosition() == 0
+//					&& (mHeaderView.getVisiableHeight() > 0 || deltaY > 0)) {
+//				// the first item is showing, header has shown or pull down.
+//				updateHeaderHeight(deltaY / OFFSET_RADIO);
+//				invokeOnScrolling();
+//			} else
+            if (getLastVisiblePosition() == mTotalItemCount - 1
 					&& (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
 				// last item, already pulled up or want to pull up.
-				updateFooterHeight(-deltaY / OFFSET_RADIO);
+//                Log.i("XListView", "deltaY:" + deltaY);
+                updateFooterHeight(-deltaY / OFFSET_RADIO);
 			}
 			break;
 		default:
 			mLastY = -1; // reset
-			if (getFirstVisiblePosition() == 0) {
-				// invoke refresh
-				if (mEnablePullRefresh
-						&& mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
-					mPullRefreshing = true;
-					mHeaderView.setState(XListViewHeader.STATE_REFRESHING);
-					if (mListViewListener != null) {
-						mListViewListener.onRefresh();
-					}
-				}
-				resetHeaderHeight();
-			} else if (getLastVisiblePosition() == mTotalItemCount - 1) {
+            Log.i("XListView", "getLastVisiblePosition():" + getLastVisiblePosition());
+            Log.i("XListView", "mTotalItemCount:" + mTotalItemCount);
+//			if (getFirstVisiblePosition() == 0) {
+//				// invoke refresh
+//				if (mEnablePullRefresh
+//						&& mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
+//					mPullRefreshing = true;
+//					mHeaderView.setState(XListViewHeader.STATE_REFRESHING);
+//					if (mListViewListener != null) {
+//						mListViewListener.onRefresh();
+//					}
+//				}
+//				resetHeaderHeight();
+//			} else
+            if (getLastVisiblePosition() == mTotalItemCount - 1) {
 				// invoke load more.
+//                Log.i("XListView", "mEnablePullLoad:" + mEnablePullLoad);
+//                Log.i("XListView", "mFooterView.getBottomMargin():" + mFooterView.getBottomMargin());
+
 				if (mEnablePullLoad
 						&& mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
 					startLoadMore();

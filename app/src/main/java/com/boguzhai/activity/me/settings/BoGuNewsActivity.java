@@ -28,7 +28,7 @@ public class BoGuNewsActivity extends BaseActivity {
         rb = (RadioButton) findViewById(R.id.rb_bo_gu_news_1);
         wv = (WebView) findViewById(R.id.wv_bo_gu_news);
         rb.setChecked(true);
-        wv.loadUrl("http://60.191.203.80/informationaction!initInformationList.htm");
+        wv.loadUrl("http://test.shbgz.com/informationaction!initInformationList.htm");
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

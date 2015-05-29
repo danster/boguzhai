@@ -5,47 +5,53 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/ll_aution_guide_1"
-        style="@style/base_bar"
-        android:layout_marginTop="10dp">
-        <TextView style="@style/me_middle_text" android:text="买家指南"/>
-        <ImageView style="@style/search_right_arrow" />
-    </LinearLayout>
 
-    <View style="@style/longline" />
 
-    <LinearLayout
-        android:id="@+id/ll_aution_guide_2"
-        style="@style/base_bar" >
-        <TextView style="@style/me_middle_text" android:text="卖家指南"/>
-        <ImageView style="@style/search_right_arrow" />
-    </LinearLayout>
+    <WebView
+        android:id="@+id/wv_auction_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_aution_guide_1"-->
+        <!--style="@style/base_bar"-->
+        <!--android:layout_marginTop="10dp">-->
+        <!--<TextView style="@style/me_middle_text" android:text="买家指南"/>-->
+        <!--<ImageView style="@style/search_right_arrow" />-->
+    <!--</LinearLayout>-->
 
-    <View style="@style/longline" />
+    <!--<View style="@style/longline" />-->
 
-    <LinearLayout
-        android:id="@+id/ll_aution_guide_3"
-        style="@style/base_bar" >
-        <TextView style="@style/me_middle_text" android:text="图书订购"/>
-        <ImageView style="@style/search_right_arrow" />
-    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_aution_guide_2"-->
+        <!--style="@style/base_bar" >-->
+        <!--<TextView style="@style/me_middle_text" android:text="卖家指南"/>-->
+        <!--<ImageView style="@style/search_right_arrow" />-->
+    <!--</LinearLayout>-->
 
-    <View style="@style/longline" />
+    <!--<View style="@style/longline" />-->
 
-    <LinearLayout
-        android:id="@+id/ll_aution_guide_4"
-        style="@style/base_bar" >
-        <TextView style="@style/me_middle_text" android:text="拍卖规则"/>
-        <ImageView style="@style/search_right_arrow" />
-    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_aution_guide_3"-->
+        <!--style="@style/base_bar" >-->
+        <!--<TextView style="@style/me_middle_text" android:text="图书订购"/>-->
+        <!--<ImageView style="@style/search_right_arrow" />-->
+    <!--</LinearLayout>-->
 
-    <View style="@style/longline" />
+    <!--<View style="@style/longline" />-->
 
-    <LinearLayout
-        android:id="@+id/ll_aution_guide_5"
-        style="@style/base_bar" >
-        <TextView style="@style/me_middle_text" android:text="法律法规"/>
-        <ImageView style="@style/search_right_arrow" />
-    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_aution_guide_4"-->
+        <!--style="@style/base_bar" >-->
+        <!--<TextView style="@style/me_middle_text" android:text="拍卖规则"/>-->
+        <!--<ImageView style="@style/search_right_arrow" />-->
+    <!--</LinearLayout>-->
+
+    <!--<View style="@style/longline" />-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/ll_aution_guide_5"-->
+        <!--style="@style/base_bar" >-->
+        <!--<TextView style="@style/me_middle_text" android:text="法律法规"/>-->
+        <!--<ImageView style="@style/search_right_arrow" />-->
+    <!--</LinearLayout>-->
 </LinearLayout>

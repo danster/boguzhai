@@ -92,9 +92,10 @@ public class MyAuctionAdapter extends BaseAdapter {
         }
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(mContext, MyAuctionSessionActivity.class);
+            intent.putExtra("auctionId", myAuctions.get(position).id);
             Variable.currentAuction = myAuctions.get(position);
-//            Variable.currentSession = list.get(position);
-//            mContext.startActivity(new Intent(mContext, AuctionNoActiveActivity.class));
+            mContext.startActivity(intent);
         }
     }
 

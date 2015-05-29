@@ -9,4 +9,5 @@ public class Constant {
     public static final String[] session_status={"未开拍","已开拍","已结束"};    //拍卖会专场状态
  //   public static final String url = "http://115.231.94.51/phones/";            //服务器host
     public static final String url = "http://test.shbgz.com/phones/";            //服务器host
+//    public static final String url = "http://www.shbgz.com/phones/";            //服务器host
 }

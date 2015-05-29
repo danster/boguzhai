@@ -51,6 +51,7 @@ public class AccountInfoActivity extends BaseActivity {
 
     @Override
     public void onResume(){
+        super.onResume();
         // 更新账户基本信息
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);

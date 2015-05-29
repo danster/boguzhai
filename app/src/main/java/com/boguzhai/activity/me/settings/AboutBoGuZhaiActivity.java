@@ -30,7 +30,10 @@ public class AboutBoGuZhaiActivity extends BaseActivity {
         wv = (WebView) findViewById(R.id.wv_about_bo_gu_zhai);
 //        tv = (TextView) findViewById(R.id.tv_about_bo_gu_zhai);
         rb.setChecked(true);
-        wv.loadUrl("http://60.191.203.80/otherAction!about.htm?target=2_0_8");
+
+        wv.getSettings().setUseWideViewPort(true);
+        wv.getSettings().setLoadWithOverviewMode(true);
+        wv.loadUrl("http://test.shbgz.com/otherAction!about.htm?target=2_0_8");
 //        tv.setText("公司简介");
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

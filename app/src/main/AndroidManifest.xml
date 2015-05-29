@@ -85,6 +85,7 @@
             android:name=".activity.me.myauction.MyAuctionActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
+        <activity android:name=".activity.me.myauction.MyAuctionSessionActivity"/>
 
         <!-- activities belong part of me bidding -->
         <activity android:name=".activity.me.bidding.BiddingActivity" />
