@@ -119,8 +119,9 @@
         <activity android:name=".activity.me.settings.AuctionGuide3" />
         <activity android:name=".activity.me.settings.AuctionGuide4" />
         <activity android:name=".activity.me.settings.AuctionGuide5" />
-        <activity android:name=".activity.me.settings.AddAdviceActivity"/>
-        <activity android:name=".activity.me.settings.AdviceActivity"/>
+        <activity android:name=".activity.me.settings.AddAdviceActivity" android:windowSoftInputMode="adjustPan|stateVisible|stateHidden"/>
+        <activity android:name=".activity.me.settings.GetAdviceActivity"/>
+        <activity android:name=".activity.me.settings.CheckAdivceActivity"/>
     </application>
 
 </manifest>

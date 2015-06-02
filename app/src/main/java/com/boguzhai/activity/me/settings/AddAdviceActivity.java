@@ -40,7 +40,8 @@ public class AddAdviceActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_add_advice);
+        setLinearView(R.layout.settings_add_advice);
+        title.setText("添加投诉建议");
         init();
     }
 
@@ -94,10 +95,10 @@ public class AddAdviceActivity extends BaseActivity {
                     //网络请求
                     conn = new HttpClient();
                     conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-                    conn.setUrl(Constant.url + "pClientInfoAction!uploadAdvice.htm");
+                    conn.setUrl(Constant.url + "pProposeAction!uploadAdvice.htm");
                     conn.setParam("title", et_advice_title.getText().toString().trim());
                     conn.setParam("type", type);
-                    conn.setParam("orderId", et_advice_title.getText().toString().trim());
+                    conn.setParam("orderId", et_advice_order_no.getText().toString().trim());
                     conn.setParam("info", et_advice.getText().toString().trim());
                     new Thread(new HttpPostRunnable(conn, new AddAdviceHandler())).start();
                 }

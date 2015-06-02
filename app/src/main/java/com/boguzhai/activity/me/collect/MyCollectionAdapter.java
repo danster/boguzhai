@@ -2,7 +2,6 @@ package com.boguzhai.activity.me.collect;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.CollectionLot;
 
@@ -181,15 +179,6 @@ public class MyCollectionAdapter extends BaseAdapter {
 //        Tasks.showBigImage(lots.get(position).imageUrl, holder.my_collection_lot_image, 1);
 
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转到该拍品信息界面
-//                Toast.makeText(mContext, "跳转到" + lots.get(position).name, Toast.LENGTH_SHORT).show();
-                Variable.currentLot = lots.get(position);
-                mContext.startActivity(new Intent(mContext, LotInfoActivity.class));
-            }
-        });
 
         return view;
     }

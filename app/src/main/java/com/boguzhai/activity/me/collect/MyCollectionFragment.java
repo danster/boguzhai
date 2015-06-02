@@ -16,12 +16,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.auction.LotInfoActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
@@ -29,6 +33,7 @@ import com.boguzhai.logic.dao.CollectionLot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONArray;
@@ -72,10 +77,10 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     private int currentCount;//当前数量
 
     private TextView title_right;
-    private String[] sortTypes = {"按拍品名称","按拍品号",
+    private String[] sortTypes = {"按拍品名称", "按拍品号",
             "按拍品起拍价升序", "按拍品起拍价降序",
             "按拍品估价最低值升序", "按拍品估价最低价降序",
-            "按拍品估价最高值升序", "按拍品估价最高值降序" };
+            "按拍品估价最高值升序", "按拍品估价最高值降序"};
     private int sortType = 0;
 
     public MyCollectionFragment(String mainState, String status) {
@@ -111,7 +116,18 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     }
 
 
+    private void deleteCollection(int position, View view) {
+        conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setUrl(Constant.url + "pClientStowAction!removeCollectedAuction.htm");
+        conn.setParam("auctionId", adapter.lots.get(position - 1).id);//收藏拍品id
+        new Thread(new HttpPostRunnable(conn, new DeleteCollectionHandler(position, view))).start();
+    }
+
+
     private void initView() {
+
+
         tempCollections = new ArrayList<>();
         myCollections = new ArrayList<>();
         /**
@@ -121,7 +137,35 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         lv_my_collection.setPullLoadEnable(true);
         lv_my_collection.setPullRefreshEnable(false);
         lv_my_collection.setXListViewListener(this);
+        lv_my_collection.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //跳转到该拍品信息界面
+                Variable.currentLot = adapter.lots.get(position - 1);
+                mContext.startActivity(new Intent(mContext, LotInfoActivity.class));
+            }
+        });
+        lv_my_collection.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                View dialog = View.inflate(mContext, R.layout.me_mycollection_delete_dialog, null);
+                TextView tv = (TextView) dialog.findViewById(R.id.delete_collection);
+                final AlertDialog alertDialog = builder.setView(dialog).show();
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //http请求
+                        Log.i(TAG, "删除收藏http请求");
+                        deleteCollection(position, view);
+                        //关闭对话框
+                        alertDialog.dismiss();
+                    }
+                });
 
+                return true;
+            }
+        });
 
         /**
          * 搜索关键字
@@ -157,19 +201,19 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         //排序
         title_right = (TextView) getActivity().findViewById(R.id.title_right);
         title_right.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new AlertDialog.Builder(mContext).setSingleChoiceItems(sortTypes, sortType,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int index) {
-                                        sortType = index;
-                                        Collections.sort(tempCollections, new LotComparator());
-                                        adapter.notifyDataSetChanged();
-                                        dialog.dismiss();
-                                    }
-                                }).setNegativeButton("取消", null).show();
-                    }
-                });
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(mContext).setSingleChoiceItems(sortTypes, sortType,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int index) {
+                                sortType = index;
+                                Collections.sort(tempCollections, new LotComparator());
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton("取消", null).show();
+            }
+        });
     }
 
 
@@ -250,7 +294,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     @Override
     public void onLoadMore() {
         Log.i(TAG, "加载更多");
-        if(currentCount >= totalCount) {
+        if (currentCount >= totalCount) {
             Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
         }
         number++;
@@ -287,7 +331,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                             lot.startPrice = Double.parseDouble(jArray.getJSONObject(i).getString("startPrice"));
                             lot.status = jArray.getJSONObject(i).getString("status");
                             lot.apprisal = jArray.getJSONObject(i).getString("appraisal");
-                            if(!"".equals(jArray.getJSONObject(i).getString("dealPrice"))){
+                            if (!"".equals(jArray.getJSONObject(i).getString("dealPrice"))) {
                                 lot.dealPrice = Double.parseDouble(jArray.getJSONObject(i).getString("dealPrice"));
                             }
                             lot.biddingTime = jArray.getJSONObject(i).getString("biddingTime");
@@ -301,13 +345,13 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                             @Override
                             protected Void doInBackground(Void... params) {
                                 try {
-                                    BitmapFactory.Options options=new BitmapFactory.Options();
+                                    BitmapFactory.Options options = new BitmapFactory.Options();
                                     options.inJustDecodeBounds = false;
                                     options.inSampleSize = 5; //width，hight设为原来的 .. 分之一
 
-                                    for(CollectionLot lot: myCollections){
+                                    for (CollectionLot lot : myCollections) {
                                         InputStream in = new URL(lot.imageUrl).openStream();
-                                        lot.image = BitmapFactory.decodeStream(in,null,options);
+                                        lot.image = BitmapFactory.decodeStream(in, null, options);
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -327,7 +371,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                             swipe_layout_my_collection.setRefreshing(false);
                             initData();
                         } else {//加载更多
-                            if(!isSearch) {
+                            if (!isSearch) {
                                 key = "";
                             }
                             lotFilter();
@@ -342,70 +386,113 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         }
     }
 
+    private class DeleteCollectionHandler extends HttpJsonHandler {
 
+        private View view;
+        private int position;
+
+        DeleteCollectionHandler(int position, View view) {
+            this.view = view;
+            this.position = position;
+        }
+
+        @Override
+        public void handlerData(int code, JSONObject data) {
+            super.handlerData(code, data);
+            switch (code) {
+                case 0:
+                    Utility.toastMessage("删除成功");
+                    //显示位移动画
+                    TranslateAnimation ta = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
+                            Animation.RELATIVE_TO_SELF, -1.0f,
+                            Animation.RELATIVE_TO_SELF, 0,
+                            Animation.RELATIVE_TO_SELF, 0);
+                    ta.setDuration(200);
+                    view.startAnimation(ta);
+                    //从原始数据中删除
+                    for (int i = 0; i < myCollections.size(); i++) {
+                        if (adapter.lots.get(position - 1).name.equals(myCollections.get(i).name)) {
+                            myCollections.remove(i);
+                            break;
+                        }
+                    }
+                    //从集合中删除该收藏
+                    adapter.lots.remove(position - 1);
+                    adapter.notifyDataSetChanged();
+                    break;
+                case 1:
+                    Utility.toastMessage("服务器出错，删除失败");
+                    break;
+                case 2:
+                    Utility.toastMessage("服务器出错，删除失败");
+                    break;
+            }
+
+        }
+    }
 
     class LotComparator implements Comparator<CollectionLot> {
         public int compare(CollectionLot l1, CollectionLot l2) {
-            switch (sortType){
+            switch (sortType) {
                 case 0:
-                    if(!l1.name.equals(l2.name)){
+                    if (!l1.name.equals(l2.name)) {
                         return l1.name.compareTo(l2.name);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 1:
-                    if(l1.no.equals(l2.no)){
+                    if (l1.no.equals(l2.no)) {
                         return l1.no.compareTo(l2.no);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 2:
-                    if(l1.startPrice != l2.startPrice){
+                    if (l1.startPrice != l2.startPrice) {
                         double gap = l1.startPrice - l2.startPrice;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 3:
-                    if(l1.startPrice != l2.startPrice){
+                    if (l1.startPrice != l2.startPrice) {
                         double gap = l2.startPrice - l1.startPrice;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 4:
-                    if(l1.appraisal1 != l2.appraisal1){
+                    if (l1.appraisal1 != l2.appraisal1) {
                         double gap = l1.appraisal1 - l2.appraisal1;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 5:
-                    if(l1.appraisal1 != l2.appraisal1){
+                    if (l1.appraisal1 != l2.appraisal1) {
                         double gap = l2.appraisal1 - l1.appraisal1;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 6:
-                    if(l1.appraisal2 != l2.appraisal2){
+                    if (l1.appraisal2 != l2.appraisal2) {
                         double gap = l1.appraisal2 - l2.appraisal2;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
                 case 7:
-                    if(l1.appraisal2 != l2.appraisal2){
+                    if (l1.appraisal2 != l2.appraisal2) {
                         double gap = l2.appraisal2 - l1.appraisal2;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if(!l1.id.equals(l2.id)){
+                    } else if (!l1.id.equals(l2.id)) {
                         return l1.id.compareTo(l2.id);
                     }
                     break;
@@ -413,4 +500,6 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
             return 0;
         }
     }
+
+
 }

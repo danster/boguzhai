@@ -19,7 +19,7 @@ public class AboutBoGuZhaiActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_about_bo_gu_zhai);
+        setLinearView(R.layout.settings_about_bo_gu_zhai);
         title.setText("关于博古斋");
         init();
     }
@@ -30,8 +30,12 @@ public class AboutBoGuZhaiActivity extends BaseActivity {
         wv = (WebView) findViewById(R.id.wv_about_bo_gu_zhai);
 //        tv = (TextView) findViewById(R.id.tv_about_bo_gu_zhai);
         rb.setChecked(true);
-
         wv.getSettings().setUseWideViewPort(true);
+        wv.getSettings().setLoadWithOverviewMode(true);
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.getSettings().setSupportZoom(true);
+        wv.getSettings().setBuiltInZoomControls(true);
+        wv.getSettings().setDisplayZoomControls(true);
         wv.getSettings().setLoadWithOverviewMode(true);
         wv.loadUrl("http://test.shbgz.com/otherAction!about.htm?target=2_0_8");
 //        tv.setText("公司简介");

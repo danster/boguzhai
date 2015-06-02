@@ -100,7 +100,7 @@ public class SystemSettingsActivity extends BaseActivity {
                 startActivity(new Intent(SystemSettingsActivity.this, AuctionGuideActivity.class));
                 break;
             case R.id.ll_advice:
-                startActivity(new Intent(SystemSettingsActivity.this, AdviceActivity.class));
+                startActivity(new Intent(SystemSettingsActivity.this, GetAdviceActivity.class));
                 break;
         }
     }

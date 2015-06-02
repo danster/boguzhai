@@ -17,7 +17,7 @@ public class AuctionGuideActivity extends BaseActivity {
     private LinearLayout ll_aution_guide_4;
     private LinearLayout ll_aution_guide_5;
 
-    private WebView wv_auction_guide;
+    private WebView wv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +40,15 @@ public class AuctionGuideActivity extends BaseActivity {
 //        listen(ll_aution_guide_5);
 
 
-        wv_auction_guide = (WebView) findViewById(R.id.wv_auction_guide);
-        wv_auction_guide.loadUrl("http://test.shbgz.com/otherAction!sellor.htm?target=3_0_8");
+        wv = (WebView) findViewById(R.id.wv_auction_guide);
+        wv.getSettings().setUseWideViewPort(true);
+        wv.getSettings().setLoadWithOverviewMode(true);
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.getSettings().setSupportZoom(true);
+        wv.getSettings().setBuiltInZoomControls(true);
+        wv.getSettings().setDisplayZoomControls(true);
+        wv.getSettings().setLoadWithOverviewMode(true);
+        wv.loadUrl("http://test.shbgz.com/otherAction!sellor.htm?target=3_0_8");
 
     }
 

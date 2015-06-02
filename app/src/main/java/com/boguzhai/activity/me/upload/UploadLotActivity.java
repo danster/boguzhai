@@ -84,7 +84,7 @@ public class UploadLotActivity extends BaseActivity {
     private Bitmap[] images = new Bitmap[3];
     private int image = 0;
 
-    private String[] image_urls = {"", "", ""};
+    private String[] image_urls = new String[3];
 
     private HttpClient conn;
 
@@ -300,6 +300,7 @@ public class UploadLotActivity extends BaseActivity {
             switch(code){
                 case 0:
                     Utility.toastMessage("上传图片成功");
+                    Log.i(TAG, data.toString());
                     iv.setImageBitmap(bitmap);
                     try {
                         image_urls[i] = data.getString("url");
@@ -399,9 +400,6 @@ public class UploadLotActivity extends BaseActivity {
     }
 
 
-//    private parseLotTypeId() {
-//
-//    }
 
 
 }
