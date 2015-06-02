@@ -9,7 +9,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.mainpage.MainActivity;
 import com.boguzhai.logic.dao.SharedKeys;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
@@ -56,7 +55,7 @@ public class LoginActivity extends BaseActivity {
         	startActivity(new Intent(this, RegisterActivity.class));
         break;
         case R.id.forget_pwd:
-        	startActivity(new Intent(this, ForgetPwdActivity.class));
+        	startActivity(new Intent(this, ResetPwdActivity.class));
         break;
         case R.id.login:
             username = username_tv.getText().toString();
@@ -93,8 +92,7 @@ public class LoginActivity extends BaseActivity {
                     Variable.isLogin = true;
                     Variable.account.password = password;
                     JsonApi.getAccountInfo(data);
-                    Variable.mainTabIndex = R.id.rb_4;
-                    context.startActivity(new Intent(context, MainActivity.class));
+                    Utility.gotoMainpage(4);
                 break;
                 case 1:
                     Utility.alertMessage("登录失败: 用户名或者密码错误！");

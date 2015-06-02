@@ -10,13 +10,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
@@ -44,7 +45,9 @@
         <activity android:name=".activity.mainpage.AppGuideActivity" />
         <activity android:name=".activity.mainpage.AppStartActivity" />
 
-        <!-- activities belong part of base and item -->
+        <!-- activities belong part of base, pay and item -->
+        <activity android:name=".activity.items.BaseHtmlActivity" />
+        <activity android:name=".activity.pay.AlipayActivity" />
 
         <!-- activities belong part of search -->
         <activity android:name=".activity.search.SearchResultActivity" />
@@ -60,7 +63,7 @@
         <!-- activities belong part of login -->
         <activity android:name=".activity.login.LoginActivity" />
         <activity android:name=".activity.login.RegisterActivity" />
-        <activity android:name=".activity.login.ForgetPwdActivity" />
+        <activity android:name=".activity.login.ResetPwdActivity" />
 
         <!-- activities belong part of me info -->
         <activity android:name=".activity.me.info.AccountInfoActivity" />
@@ -110,15 +113,8 @@
         <!-- activities belong part of me setting -->
         <activity android:name=".activity.me.settings.SystemSettingsActivity" >
         </activity>
-        <activity android:name=".activity.me.settings.BoGuNewsActivity" >
-        </activity>
         <activity android:name=".activity.me.settings.AboutBoGuZhaiActivity" />
         <activity android:name=".activity.me.settings.AuctionGuideActivity" />
-        <activity android:name=".activity.me.settings.AuctionGuide1" />
-        <activity android:name=".activity.me.settings.AuctionGuide2" />
-        <activity android:name=".activity.me.settings.AuctionGuide3" />
-        <activity android:name=".activity.me.settings.AuctionGuide4" />
-        <activity android:name=".activity.me.settings.AuctionGuide5" />
         <activity android:name=".activity.me.settings.AddAdviceActivity"/>
         <activity android:name=".activity.me.settings.AdviceActivity"/>
     </application>

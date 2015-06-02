@@ -1,7 +1,5 @@
 package com.boguzhai.activity.mainpage;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.login.LoginActivity;
+import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.logic.utils.Utility;
 
-public class AppGuideActivity extends Activity implements View.OnClickListener {
+public class AppGuideActivity extends BaseActivity {
 	ViewPager viewPager;
     ViewGroup viewGroup;
 	ImageView[] imageViews, tips;
@@ -23,7 +21,8 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_guide_page);
+		setLinearView(R.layout.app_guide_page);
+        title_bar.setVisibility(View.GONE);
 		setBaseEnv();
 	}
 	
@@ -110,20 +109,17 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
 
         startTips.setOnClickListener(this);
         signTips.setOnClickListener(this);
-		
 	}
 
     @Override
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.app_enter:
-                Variable.mainTabIndex = R.id.rb_1;
-                startActivity(new Intent(this, MainActivity.class));
+                Utility.gotoMainpage(1);
                 break;
 
             case R.id.app_sign:
-                Variable.mainTabIndex = R.id.rb_1;
-                startActivity(new Intent(this, LoginActivity.class));
+                Utility.gotoMainpage(4);
                 break;
         }
     };

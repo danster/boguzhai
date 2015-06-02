@@ -1,8 +1,6 @@
 package com.boguzhai.activity.login;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
-import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
@@ -25,7 +22,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class ForgetPwdActivity extends BaseActivity {
+public class ResetPwdActivity extends BaseActivity {
 	
 	private EditText mobile, check_code, pwd_input, pwd_confirm;
     private TextView get_check_code;
@@ -128,16 +125,15 @@ public class ForgetPwdActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
                 case 0:
-                    AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-                    tips.setTitle("提示").setIcon(android.R.drawable.ic_dialog_info).setMessage("修改密码成功，请重新登录")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                baseActivity.startActivity(new Intent(baseActivity, LoginActivity.class));
-                            }
-                        }).show();
+                    Utility.alertDialog("重置密码成功，请重新登录", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Utility.gotoMainpage(4);
+                        }
+                    },null);
+
                     break;
                 default:
-                    Utility.alertMessage("修改密码失败, 请检查您的密码修改信息");
+                    Utility.alertMessage("重置密码失败, 请检查您的密码修改信息");
                     break;
             }
         }

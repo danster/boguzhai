@@ -10,6 +10,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.pay.AlipayActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
@@ -27,7 +28,6 @@ public class PayBailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setLinearView(R.layout.auction_apply_paybail);
         title.setText("支付保证金");
-
         init();
     }
 
@@ -41,26 +41,31 @@ public class PayBailActivity extends BaseActivity {
         ((TextView)findViewById(R.id.balance)).setText("暂存款(还有: "+pay_balance+"元)支付");
 
         listen(R.id.capital);
+        listen(R.id.alipay_web);
+        listen(R.id.alipay);
+        listen(R.id.bank_card);
+    }
+
+    private HttpClient getPayConn(String type){
+        HttpClient conn = new HttpClient();
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setParam("auctionMainId", Variable.currentAuction.id);
+        conn.setParam("auctionId", "");
+        conn.setParam("type", type);
+        conn.setUrl(Constant.url + "pTraceAction!payDeposit.htm");
+        return conn;
     }
 
     @Override
     public void onClick(View v){
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.capital:
-                Utility.alertDialog("确认支付 ?", new DialogInterface.OnClickListener() {
+            case R.id.capital: // 用暂存款支付保证金
+                Utility.alertDialog("确认用暂存款支付 ?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-
-                        // 用暂存款支付保证金
-                        HttpClient conn = new HttpClient();
-                        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-                        conn.setParam("auctionMainId", Variable.currentAuction.id);
-                        conn.setParam("type", "1");
-                        conn.setUrl(Constant.url + "pTraceAction!payDeposit.htm");
-
-                        new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+                        new Thread(new HttpPostRunnable( getPayConn("1"), new HttpJsonHandler() {
                             @Override
                             public void handlerData(int code, JSONObject data) {
                                 super.handlerData(code, data);
@@ -99,6 +104,86 @@ public class PayBailActivity extends BaseActivity {
 
                     }
                 }, null);
+                break;
+            case R.id.alipay: // 用支付宝客户端支付保证金
+                new Thread(new HttpPostRunnable( getPayConn("4"), new HttpJsonHandler() {
+                    @Override
+                    public void handlerData(int code, JSONObject data) {
+                        super.handlerData(code, data);
+                        switch (code){
+                            // 获取支付宝支付信息
+                            case 0:
+                                try {
+                                    Intent intent = new Intent(Variable.currentActivity, AlipayActivity.class);
+                                    intent.putExtra("tradeNo", data.getString("tradeNo"));
+                                    intent.putExtra("notifyUrl", data.getString("notifyUrl"));
+                                    intent.putExtra("subject", pay_info);
+                                    intent.putExtra("body", pay_info);
+                                    intent.putExtra("price", pay_money);
+
+                                    startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+
+                            // 获取支付宝支付信息失败
+                            case 1:
+                                Utility.toastMessage("网络错误");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })).start();
+                break;
+            case R.id.alipay_web: // 用支付宝网页支付保证金
+                new Thread(new HttpPostRunnable( getPayConn("3"), new HttpJsonHandler() {
+                    @Override
+                    public void handlerData(int code, JSONObject data) {
+                        super.handlerData(code, data);
+                        switch (code){
+                            // 获取支付链接信息成功
+                            case 0:
+                                try {
+                                    Utility.openUrl(data.getString("payUrl"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            // 获取支付链接信息失败
+                            case 1:
+                                Utility.toastMessage("网络错误");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })).start();
+                break;
+            case R.id.bank_card: // 用银行卡网络支付保证金
+                new Thread(new HttpPostRunnable( getPayConn("2"), new HttpJsonHandler() {
+                    @Override
+                    public void handlerData(int code, JSONObject data) {
+                        super.handlerData(code, data);
+                        switch (code){
+                            // 获取支付链接信息成功
+                            case 0:
+                                try {
+                                    Utility.openUrl(data.getString("payUrl"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            // 获取支付链接信息失败
+                            case 1:
+                                Utility.toastMessage("网络错误");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })).start();
                 break;
             default:
                 break;

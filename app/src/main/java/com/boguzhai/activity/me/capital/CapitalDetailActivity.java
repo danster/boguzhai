@@ -34,16 +34,16 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
     //账户余额明细 "Zc15902130841,支出保证金,2014-08-20 16:24,0,200,3213.90"
     //保证金明细 "21号博古斋春季拍卖会,2014-08-20 16:24,线下,2000"
 
-    private static final String[] list_balance={"不限","支付保证金"};
-    private static final String[] list_bail={"不限","现场","网络","自动生成"};
+    private static final String[] list_balance={};
+    private static final String[] list_bail={};
     private ArrayList<String> type_list = new ArrayList<String>();
 
     private StringBuffer balance_type=new StringBuffer();
     private StringBuffer bail_from=new StringBuffer();
 
     private XListView listview;
-    private ArrayList<BalanceDetail> balanceList;
-    private ArrayList<BailDetail> bailList;
+    private ArrayList<BalanceDetail> balanceAllList, balanceList;
+    private ArrayList<BailDetail> bailAllList, bailList;
     private CaptialDetailListAdapter adapter;
 
     private TextView left_date, right_date;
@@ -100,7 +100,9 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
         listview.setPullLoadEnable(true);
         listview.setPullRefreshEnable(false);
         listview.setXListViewListener(this);
+        balanceAllList = new ArrayList<BalanceDetail>();
         balanceList = new ArrayList<BalanceDetail>();
+        bailAllList = new ArrayList<BailDetail>();
         bailList = new ArrayList<BailDetail>();
         adapter = new CaptialDetailListAdapter(this, balanceList,bailList, type);
         listview.setAdapter(adapter);
@@ -119,8 +121,25 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
         Utility.setSpinner(this, (Spinner) findViewById(R.id.type_list), type_list,
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        String t = type_list.get(arg2);
-                        Utility.toastMessage(t);
+                        String str = type_list.get(arg2);
+                        if(str.equals("全部")){
+                            return;
+                        }
+                        switch (type){
+                            case "balance":
+                                balanceList.clear();
+                                balanceList.addAll(BalanceDetail.filter(balanceAllList, str));
+                                adapter.notifyDataSetChanged();
+                                break;
+
+                            case  "bail":
+                                bailList.clear();
+                                bailList.addAll(BailDetail.filter(bailAllList, str));
+                                adapter.notifyDataSetChanged();
+                                break;
+                            default:
+                                break;
+                        }
                     }
                     public void onNothingSelected(AdapterView<?> arg0) {
                     }
@@ -162,21 +181,15 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                 }
                 switch (type){
                     case "balance":
-                        ArrayList<BalanceDetail> temp1 = new ArrayList<BalanceDetail>();
-                        temp1.addAll(balanceList);
-                        balanceList = BalanceDetail.filter(balanceList, lDate, rDate);
-                        adapter.notifyDataSetChanged();
                         balanceList.clear();
-                        balanceList = temp1;
+                        balanceList.addAll(BalanceDetail.filter(balanceAllList, lDate, rDate));
+                        adapter.notifyDataSetChanged();
                         break;
 
                     case  "bail":
-                        ArrayList<BailDetail> temp2 = new ArrayList<BailDetail>();
-                        temp2.addAll(bailList);
-                        bailList = BailDetail.filter(bailList, lDate, rDate);
-                        adapter.notifyDataSetChanged();
                         bailList.clear();
-                        bailList = temp2;
+                        bailList.addAll(BailDetail.filter(bailAllList, lDate, rDate));
+                        adapter.notifyDataSetChanged();
                         break;
 
                     default:
@@ -201,8 +214,8 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                         Utility.toastMessage("已无更多信息");
                         break;
                     } else if(order.value == 1)  {
-                        bailList.clear();
-                        balanceList.clear();
+                        bailAllList.clear();
+                        balanceAllList.clear();
                     }
 
                     try {
@@ -224,17 +237,19 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                         type_list.add("全部");
                         if(type.equals("balance")){
                             ArrayList<BalanceDetail> list1 = BalanceDetail.parseJson(data);
-                            balanceList.addAll(list1);
-                            type_list.addAll(BalanceDetail.uniqType(balanceList));
+                            balanceAllList.addAll(list1);
+                            type_list.addAll(BalanceDetail.uniqType(balanceAllList));
                         } else if (type.equals("bail")){
                             ArrayList<BailDetail> list2 = BailDetail.parseJson(data);
-                            bailList.addAll(list2);
-                            type_list.addAll(BailDetail.uniqFrom(bailList));
+                            bailAllList.addAll(list2);
+                            type_list.addAll(BailDetail.uniqFrom(bailAllList));
                         }
 
                         left_date.setText("请选择日期");
                         right_date.setText("请选择日期");
                         setSpinner();
+                        balanceList.addAll(balanceAllList);
+                        bailList.addAll(bailAllList);
                         adapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {

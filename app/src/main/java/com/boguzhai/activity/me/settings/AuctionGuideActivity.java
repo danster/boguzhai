@@ -2,70 +2,45 @@ package com.boguzhai.activity.me.settings;
 
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.logic.utils.Utility;
 
 public class AuctionGuideActivity extends BaseActivity {
-
-
-    private LinearLayout ll_aution_guide_1;
-    private LinearLayout ll_aution_guide_2;
-    private LinearLayout ll_aution_guide_3;
-    private LinearLayout ll_aution_guide_4;
-    private LinearLayout ll_aution_guide_5;
-
-    private WebView wv_auction_guide;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setLinearView(R.layout.settings_auction_guide);
+        setContentView(R.layout.settings_auction_guide);
         title.setText("拍卖指南");
         init();
     }
 
     private void init() {
-//        ll_aution_guide_1 = (LinearLayout) findViewById(R.id.ll_aution_guide_1);
-//        ll_aution_guide_2 = (LinearLayout) findViewById(R.id.ll_aution_guide_2);
-//        ll_aution_guide_3 = (LinearLayout) findViewById(R.id.ll_aution_guide_3);
-//        ll_aution_guide_4 = (LinearLayout) findViewById(R.id.ll_aution_guide_4);
-//        ll_aution_guide_5 = (LinearLayout) findViewById(R.id.ll_aution_guide_5);
-//
-//        listen(ll_aution_guide_1);
-//        listen(ll_aution_guide_2);
-//        listen(ll_aution_guide_3);
-//        listen(ll_aution_guide_4);
-//        listen(ll_aution_guide_5);
-
-
-        wv_auction_guide = (WebView) findViewById(R.id.wv_auction_guide);
-        wv_auction_guide.loadUrl("http://test.shbgz.com/otherAction!sellor.htm?target=3_0_8");
-
+        int ids[] = {R.id.about_1, R.id.about_2, R.id.about_3, R.id.about_4, R.id.about_5};
+        listen(ids);
     }
-
 
     @Override
-    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.ll_aution_guide_1:
-//                startActivity(new Intent(AuctionGuideActivity.this, AuctionGuide1.class));
-//                break;
-//            case R.id.ll_aution_guide_2:
-//                startActivity(new Intent(AuctionGuideActivity.this, AuctionGuide2.class));
-//                break;
-//            case R.id.ll_aution_guide_3:
-//                startActivity(new Intent(AuctionGuideActivity.this, AuctionGuide3.class));
-//                break;
-//            case R.id.ll_aution_guide_4:
-//                startActivity(new Intent(AuctionGuideActivity.this, AuctionGuide4.class));
-//                break;
-//            case R.id.ll_aution_guide_5:
-//                startActivity(new Intent(AuctionGuideActivity.this, AuctionGuide5.class));
-//                break;
-//        }
-
-        super.onClick(v);
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.about_1:
+                Utility.openUrl("http://www.shbgz.com/otherAction!sellor.htm?target=3_0_8");
+                break;
+            case R.id.about_2:
+                Utility.openUrl("http://www.shbgz.com/otherAction!buyer.htm?target=3_1_8");
+                break;
+            case R.id.about_3:
+                Utility.openUrl("http://www.shbgz.com/otherAction!orderbook.htm?target=3_2_8");
+                break;
+            case R.id.about_4:
+                Utility.openUrl("http://www.shbgz.com/otherAction!autionrule.htm?target=3_3_8");
+                break;
+            case R.id.about_5:
+                Utility.openUrl("http://www.shbgz.com/otherAction!layer.htm?target=3_4_8");
+                break;
+        }
     }
+
 }

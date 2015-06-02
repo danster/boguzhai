@@ -1,20 +1,13 @@
 package com.boguzhai.activity.me.settings;
 
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.view.View;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.logic.utils.Utility;
 
 public class AboutBoGuZhaiActivity extends BaseActivity {
-
-
-    private RadioGroup rg;
-    private RadioButton rb;
-    private WebView wv;
-//    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,40 +18,27 @@ public class AboutBoGuZhaiActivity extends BaseActivity {
     }
 
     private void init() {
-        rg = (RadioGroup) findViewById(R.id.rg_about_bo_gu_zhai);
-        rb = (RadioButton) findViewById(R.id.rb_about_bo_gu_1);
-        wv = (WebView) findViewById(R.id.wv_about_bo_gu_zhai);
-//        tv = (TextView) findViewById(R.id.tv_about_bo_gu_zhai);
-        rb.setChecked(true);
+        int ids[] = {R.id.about_1, R.id.about_2, R.id.about_3, R.id.about_4};
+        listen(ids);
+    }
 
-        wv.getSettings().setUseWideViewPort(true);
-        wv.getSettings().setLoadWithOverviewMode(true);
-        wv.loadUrl("http://test.shbgz.com/otherAction!about.htm?target=2_0_8");
-//        tv.setText("公司简介");
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_about_bo_gu_1:
-//                        tv.setText("公司简介");
-                        wv.loadUrl("http://60.191.203.80/otherAction!about.htm");
-                        break;
-                    case R.id.rb_about_bo_gu_2:
-//                        tv.setText("联系我们");
-                        wv.loadUrl("http://60.191.203.80/otherAction!about.htm");
-                        break;
-                    case R.id.rb_about_bo_gu_3:
-//                        tv.setText("业务范围");
-                        wv.loadUrl("http://60.191.203.80/otherAction!about.htm");
-                        break;
-                    case R.id.rb_about_bo_gu_4:
-//                        tv.setText("诚聘英才");
-                        wv.loadUrl("http://60.191.203.80/otherAction!about.htm");
-                        break;
-                }
-            }
-        });
-
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.about_1:
+                Utility.openUrl("http://www.shbgz.com/otherAction!about.htm?target=2_0_8");
+                break;
+            case R.id.about_2:
+                Utility.openUrl("http://www.shbgz.com/otherAction!contactus.htm?target=2_1_8");
+                break;
+            case R.id.about_3:
+                Utility.openUrl("http://www.shbgz.com/otherAction!business.htm?target=2_2_8");
+                break;
+            case R.id.about_4:
+                Utility.openUrl("http://www.shbgz.com/otherAction!recruitment.htm?target=2_3_8");
+                break;
+        }
     }
 
 }

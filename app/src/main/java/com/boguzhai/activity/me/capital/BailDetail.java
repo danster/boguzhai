@@ -71,4 +71,14 @@ public class BailDetail {
         return newList;
     }
 
+    public static ArrayList<BailDetail> filter(ArrayList<BailDetail> list, String from){
+        ArrayList<BailDetail> newList = new ArrayList<BailDetail>();
+        for(BailDetail detail: list){
+            if(detail.from.equals(from)){
+                newList.add(detail);
+            }
+        }
+        return newList;
+    }
+
 }

@@ -51,14 +51,25 @@
             </LinearLayout>
             <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
+
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_itembar" android:layout_height="60dp" android:id="@+id/alipay_web">
+            <ImageView style="@style/pay_left_image" android:background="@drawable/payment_alipay"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
+                <TextView style="@style/pay_right_top_text"  android:text="支付宝网页支付"/>
+                <TextView style="@style/pay_right_bottom_text" android:text="推荐没安装支付宝客户端的用户使用"/>
+            </LinearLayout>
+            <ImageView style="@style/search_right_arrow" />
+        </LinearLayout>
+    </LinearLayout>
+
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_itembar"  android:layout_height="60dp" android:id="@+id/bank_card">
             <ImageView style="@style/pay_left_image" android:background="@drawable/payment_bank"/>
             <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
                 <TextView style="@style/pay_right_top_text"  android:text="银行卡支付"/>
-                <TextView style="@style/pay_right_bottom_text" android:text="支持储蓄卡信用卡，无需开通网银"/>
+                <TextView style="@style/pay_right_bottom_text" android:text="应用建设银行第三方支付系统，无需开通网银"/>
             </LinearLayout>
             <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

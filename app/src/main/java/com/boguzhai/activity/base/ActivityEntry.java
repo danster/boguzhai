@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.mainpage.MainActivity;
+import com.boguzhai.activity.mainpage.AppStartActivity;
 import com.boguzhai.logic.service.NetworkStateService;
 import com.boguzhai.logic.thread.AddressHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
@@ -20,9 +20,8 @@ public class ActivityEntry extends Activity {
     	super.onCreate(savedInstanceState);
         init();
 
-        //进入正式程序
-        Variable.mainTabIndex=R.id.rb_4;
-        startActivity(new Intent(this, MainActivity.class));
+        Variable.mainTabIndex = R.id.rb_4;
+        startActivity(new Intent(this, AppStartActivity.class));
     }
 
     private void init(){

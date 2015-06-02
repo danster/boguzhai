@@ -1,46 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/ll_app_update"
-        style="@style/base_bar"
+    <LinearLayout android:id="@+id/ll_app_update" style="@style/base_bar"
         android:layout_marginTop="10dp">
         <TextView style="@style/me_middle_text" android:text="系统更新"/>
         <ImageView style="@style/search_right_arrow" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_news"
-        style="@style/base_bar"
-        android:layout_marginTop="10dp">
-        <TextView style="@style/me_middle_text" android:text="博古资讯"/>
+    <View style="@style/longline" />
+    <LinearLayout android:id="@+id/ll_pwd" style="@style/base_bar" >
+        <TextView style="@style/me_middle_text" android:text="修改密码"/>
         <ImageView style="@style/search_right_arrow" />
     </LinearLayout>
 
-    <View style="@style/longline" />
-
-    <LinearLayout
-        android:id="@+id/ll_about"
-        style="@style/base_bar" >
+    <LinearLayout android:id="@+id/ll_about" style="@style/base_bar"
+        android:layout_marginTop="10dp">
         <TextView style="@style/me_middle_text" android:text="关于博古斋"/>
         <ImageView style="@style/search_right_arrow" />
     </LinearLayout>
-
     <View style="@style/longline" />
-
-    <LinearLayout
-        android:id="@+id/ll_guide"
-        style="@style/base_bar" >
+    <LinearLayout android:id="@+id/ll_guide" style="@style/base_bar" >
         <TextView style="@style/me_middle_text" android:text="拍卖指南"/>
         <ImageView style="@style/search_right_arrow" />
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_advice"
-        style="@style/base_bar"
+
+    <LinearLayout android:id="@+id/ll_advice" style="@style/base_bar"
         android:layout_marginTop="10dp">
         <TextView style="@style/me_middle_text" android:text="投诉建议"/>
         <ImageView style="@style/search_right_arrow" />

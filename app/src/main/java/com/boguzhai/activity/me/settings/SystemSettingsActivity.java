@@ -10,16 +10,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.login.ResetPwdActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,12 +31,6 @@ public class SystemSettingsActivity extends BaseActivity {
 
     public static String TAG = "SystemSettingsActivity";
 
-    private LinearLayout ll_app_update;
-    private LinearLayout ll_news;
-    private LinearLayout ll_about;
-    private LinearLayout ll_guide;
-    private LinearLayout ll_advice;
-
     private PackageManager packageManager;
     private int currentVersionCode;//当前app版本
     private String downloadUrl;//新版本的下载地址
@@ -43,7 +38,6 @@ public class SystemSettingsActivity extends BaseActivity {
     private HttpClient conn;
 
     AlertDialog.Builder builder;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +48,8 @@ public class SystemSettingsActivity extends BaseActivity {
 	}
 
 	protected void init(){
-        ll_app_update = (LinearLayout) findViewById(R.id.ll_app_update);
-        ll_news = (LinearLayout) findViewById(R.id.ll_news);
-        ll_about = (LinearLayout) findViewById(R.id.ll_about);
-        ll_guide = (LinearLayout) findViewById(R.id.ll_guide);
-        ll_advice = (LinearLayout) findViewById(R.id.ll_advice);
-
-
-        ll_app_update.setOnClickListener(this);
-        ll_news.setOnClickListener(this);
-        ll_about.setOnClickListener(this);
-        ll_guide.setOnClickListener(this);
-        ll_advice.setOnClickListener(this);
+        int ids[]={R.id.ll_app_update, R.id.ll_pwd, R.id.ll_about, R.id.ll_guide, R.id.ll_advice};
+        listen(ids);
 
         /**
          * 获得当前app的版本号
@@ -78,7 +62,6 @@ public class SystemSettingsActivity extends BaseActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
         builder = new AlertDialog.Builder(this);
 	}
 
@@ -90,14 +73,14 @@ public class SystemSettingsActivity extends BaseActivity {
                 //检查更新
                 checkVersion();
                 break;
-            case R.id.ll_news:
-                startActivity(new Intent(SystemSettingsActivity.this, BoGuNewsActivity.class));
+            case R.id.ll_pwd:
+                Utility.gotoActivity(ResetPwdActivity.class);
                 break;
             case R.id.ll_about:
-                startActivity(new Intent(SystemSettingsActivity.this, AboutBoGuZhaiActivity.class));
+                Utility.gotoActivity(AboutBoGuZhaiActivity.class);
                 break;
             case R.id.ll_guide:
-                startActivity(new Intent(SystemSettingsActivity.this, AuctionGuideActivity.class));
+                Utility.gotoActivity(AuctionGuideActivity.class);
                 break;
             case R.id.ll_advice:
                 startActivity(new Intent(SystemSettingsActivity.this, AdviceActivity.class));
@@ -229,12 +212,5 @@ public class SystemSettingsActivity extends BaseActivity {
         });
         builder.show();
     }
-
-
-
-
-
-
-
 
 }

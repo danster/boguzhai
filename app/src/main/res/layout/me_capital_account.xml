@@ -12,15 +12,13 @@
             style="@style/myinfo_middle_text"
             android:gravity="center|left"
             android:textSize="17sp"
-            android:textStyle="bold"
-            android:text="银行"/>
+            android:textStyle="bold"/>
         <TextView android:id="@+id/bind_bank"
             style="@style/base_text"
             android:background="#ff8a292e"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            android:text="绑定"/>
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar">
@@ -28,8 +26,7 @@
             android:layout_margin="0dp" android:text="账号"/>
         <TextView android:id="@+id/bank_number" style="@style/myinfo_middle_text"
             android:gravity="center|left"
-            android:textSize="17sp"
-            android:text="622"/>
+            android:textSize="17sp"/>
     </LinearLayout>
 
     <LinearLayout style="@style/base_bar"
@@ -52,7 +49,7 @@
     </LinearLayout>
     <LinearLayout style="@style/base_bar">
         <TextView style="@style/myinfo_left_text" android:layout_margin="0dp" android:text="户名"/>
-        <TextView android:id="@+id/name" style="@style/myinfo_middle_text" android:text="张三"/>
+        <TextView android:id="@+id/name" style="@style/myinfo_middle_text"/>
     </LinearLayout>
 
     <LinearLayout style="@style/base_bar"
@@ -83,13 +80,13 @@
     </LinearLayout>
     <LinearLayout style="@style/base_bar" android:id="@+id/my_balance">
         <TextView style="@style/myinfo_left_text" android:layout_margin="0dp" android:text="资金可用余额"/>
-        <TextView android:id="@+id/balance" style="@style/myinfo_middle_text" android:text="￥23000"/>
+        <TextView android:id="@+id/balance" style="@style/myinfo_middle_text"/>
         <ImageView style="@style/myinfo_right_arrow"/>
     </LinearLayout>
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar" android:id="@+id/my_bail">
         <TextView style="@style/myinfo_left_text" android:layout_margin="0dp" android:text="已交保证金"/>
-        <TextView android:id="@+id/bail" style="@style/myinfo_middle_text" android:text="￥5000"/>
+        <TextView android:id="@+id/bail" style="@style/myinfo_middle_text"/>
         <ImageView style="@style/myinfo_right_arrow"/>
     </LinearLayout>
 

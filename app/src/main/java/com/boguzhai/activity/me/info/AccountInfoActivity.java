@@ -10,7 +10,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.mainpage.MainActivity;
 import com.boguzhai.activity.me.capital.CapitalShowActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
@@ -66,8 +65,7 @@ public class AccountInfoActivity extends BaseActivity {
             case R.id.logout:
                 Variable.isLogin = false;
                 Variable.account.sessionid = "";
-                Variable.mainTabIndex = R.id.rb_4;
-                startActivity(new Intent(this, MainActivity.class));
+                Utility.gotoMainpage(4);
                 break;
 
             case R.id.my_more:startActivity(new Intent(this, AccountInfoMoreActivity.class)); break;

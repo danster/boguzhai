@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.items.BaseHtmlActivity;
 import com.boguzhai.activity.login.LoginActivity;
+import com.boguzhai.activity.mainpage.MainActivity;
 import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.Address_1;
 import com.boguzhai.logic.dao.Address_2;
@@ -59,14 +61,43 @@ public class Utility {
         Variable.currentActivity.startActivity(new Intent(Variable.currentActivity, LoginActivity.class));
     }
 
+    // Activity 跳转
     public static void gotoActivity(Class<?> cls){
         Variable.lastActivity = Variable.currentActivity;
         Variable.currentActivity.startActivity(new Intent(Variable.currentActivity, cls));
     }
 
+    // 根据index跳转到主页面版块
+    public static void gotoMainpage(int index){
+        switch (index){
+            case 1:
+                Variable.mainTabIndex = R.id.rb_1;
+                break;
+            case 2:
+                Variable.mainTabIndex = R.id.rb_2;
+                break;
+            case 3:
+                Variable.mainTabIndex = R.id.rb_3;
+                break;
+            case 4:
+                Variable.mainTabIndex = R.id.rb_4;
+                break;
+            default:
+                Variable.mainTabIndex = R.id.rb_1;
+                break;
+        }
+        Utility.gotoActivity(MainActivity.class);
+    }
+
+    // 在新的Activity里用webview打开链接
+    public static void openUrl(String url){
+        Intent intent = new Intent(Variable.currentActivity, BaseHtmlActivity.class);
+        intent.putExtra("url", url);
+        Variable.currentActivity.startActivity(intent);
+    }
+
 
     /************************************* 设置Spinner的几种方法 **********************************/
-
     public static void setSpinner(Activity activity, Spinner spinner, String[] list,
                                   AdapterView.OnItemSelectedListener listener){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item,list);
@@ -270,8 +301,6 @@ public class Utility {
         }
         return index;
     }
-
-
 
 }
 

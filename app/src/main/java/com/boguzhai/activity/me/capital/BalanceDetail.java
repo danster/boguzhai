@@ -24,7 +24,7 @@ public class BalanceDetail {
     public static ArrayList<BalanceDetail> parseJson(JSONObject data) {
         ArrayList<BalanceDetail> list = new ArrayList<BalanceDetail>();
         try {
-            JSONArray details = data.getJSONArray("bailDetail");
+            JSONArray details = data.getJSONArray("balanceDetail");
             for (int i = 0; i < details.length(); ++i) {
                 JSONObject obj = details.getJSONObject(i);
                 BalanceDetail detail = new BalanceDetail();
@@ -71,6 +71,16 @@ public class BalanceDetail {
             e.printStackTrace();
         }
 
+        return newList;
+    }
+
+    public static ArrayList<BalanceDetail> filter(ArrayList<BalanceDetail> list, String type){
+        ArrayList<BalanceDetail> newList = new ArrayList<BalanceDetail>();
+        for(BalanceDetail detail: list){
+            if(detail.type.equals(type)){
+                newList.add(detail);
+            }
+        }
         return newList;
     }
 

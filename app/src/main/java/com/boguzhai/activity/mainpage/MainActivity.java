@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -44,6 +45,15 @@ public class MainActivity extends BaseActivity {
         RadioButton radio = (RadioButton)findViewById(Variable.mainTabIndex);
         radio.setChecked(true);
 
+    }
+
+    @Override
+    public boolean onKeyDown (int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                break;
+        }
+        return true;
     }
 
 }
