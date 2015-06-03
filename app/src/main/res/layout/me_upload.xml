@@ -170,78 +170,87 @@
 
         <View style="@style/longline" />
 
-        <LinearLayout style="@style/base_bar">
+        <LinearLayout
+            android:id="@+id/me_upload_extra_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                style="@style/base_text"
-                android:layout_width="100dp"
-                android:text="年代" />
 
-            <EditText
-                android:id="@+id/me_upload_time"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:gravity="center_vertical|left"
-                android:hint="选填"
-                android:maxLines="1"
-                android:textSize="15sp" />
-
-            <ImageView
-                android:id="@+id/me_upload_time_delete"
-                style="@style/base_right_clear" />
         </LinearLayout>
 
-        <View style="@style/longline" />
+        <!--<LinearLayout style="@style/base_bar">-->
 
-        <LinearLayout style="@style/base_bar">
+        <!--<TextView-->
+        <!--style="@style/base_text"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:text="年代" />-->
 
-            <TextView
-                style="@style/base_text"
-                android:layout_width="100dp"
-                android:text="形式" />
+        <!--<EditText-->
+        <!--android:id="@+id/me_upload_time"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:gravity="center_vertical|left"-->
+        <!--android:hint="选填"-->
+        <!--android:maxLines="1"-->
+        <!--android:textSize="15sp" />-->
 
-            <EditText
-                android:id="@+id/me_upload_style"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:gravity="center_vertical|left"
-                android:hint="选填"
-                android:maxLines="1"
-                android:textSize="15sp" />
+        <!--<ImageView-->
+        <!--android:id="@+id/me_upload_time_delete"-->
+        <!--style="@style/base_right_clear" />-->
+        <!--</LinearLayout>-->
 
-            <ImageView
-                android:id="@+id/me_upload_style_delete"
-                style="@style/base_right_clear" />
-        </LinearLayout>
+        <!--<View style="@style/longline" />-->
 
-        <View style="@style/longline" />
+        <!--<LinearLayout style="@style/base_bar">-->
 
-        <LinearLayout style="@style/base_bar">
+        <!--<TextView-->
+        <!--style="@style/base_text"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:text="形式" />-->
 
-            <TextView
-                style="@style/base_text"
-                android:layout_width="100dp"
-                android:text="尺寸" />
+        <!--<EditText-->
+        <!--android:id="@+id/me_upload_style"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:gravity="center_vertical|left"-->
+        <!--android:hint="选填"-->
+        <!--android:maxLines="1"-->
+        <!--android:textSize="15sp" />-->
 
-            <EditText
-                android:id="@+id/me_upload_size"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:gravity="center_vertical|left"
-                android:hint="选填"
-                android:maxLines="1"
-                android:textSize="15sp" />
+        <!--<ImageView-->
+        <!--android:id="@+id/me_upload_style_delete"-->
+        <!--style="@style/base_right_clear" />-->
+        <!--</LinearLayout>-->
 
-            <ImageView
-                android:id="@+id/me_upload_size_delete"
-                style="@style/base_right_clear" />
-        </LinearLayout>
+        <!--<View style="@style/longline" />-->
+
+        <!--<LinearLayout style="@style/base_bar">-->
+
+        <!--<TextView-->
+        <!--style="@style/base_text"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:text="尺寸" />-->
+
+        <!--<EditText-->
+        <!--android:id="@+id/me_upload_size"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:gravity="center_vertical|left"-->
+        <!--android:hint="选填"-->
+        <!--android:maxLines="1"-->
+        <!--android:textSize="15sp" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/me_upload_size_delete"-->
+        <!--style="@style/base_right_clear" />-->
+        <!--</LinearLayout>-->
 
         <LinearLayout
             style="@style/base_bar"
@@ -255,17 +264,15 @@
                 android:layout_height="match_parent"
                 android:background="@color/transparent"
                 android:gravity="left"
-                android:hint="请填写备注信息(必填)"
+                android:hint="请填写备注信息(选填)"
                 android:maxLines="5" />
         </LinearLayout>
 
 
-
-
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -351,7 +358,7 @@
                 android:textColor="@color/gold" />
 
             <TextView
-                android:id="@+id/protocol"
+                android:id="@+id/me_upload_protocol"
                 style="@style/register_ev"
                 android:autoLink="web"
                 android:text="在线拍品征集规则"

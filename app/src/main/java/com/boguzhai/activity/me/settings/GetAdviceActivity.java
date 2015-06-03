@@ -1,14 +1,11 @@
 package com.boguzhai.activity.me.settings;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -76,40 +73,40 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
                 startActivity(intent);
             }
         });
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                View dialog = View.inflate(context, R.layout.settings_advice_option_dialog, null);
-                TextView tv_delete = (TextView) dialog.findViewById(R.id.delete_advice);
-                final AlertDialog alertDialog = builder.setView(dialog).show();
-                tv_delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //http请求
-                        Log.i(TAG, "删除投诉/建议http请求");
-                        deleteAdvice(position - 1, view);
-                        //关闭对话框
-                        alertDialog.dismiss();
-                    }
-                });
-                return true;
-            }
-        });
+//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                View dialog = View.inflate(context, R.layout.settings_advice_option_dialog, null);
+//                TextView tv_delete = (TextView) dialog.findViewById(R.id.delete_advice);
+//                final AlertDialog alertDialog = builder.setView(dialog).show();
+//                tv_delete.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //http请求
+//                        Log.i(TAG, "删除投诉/建议http请求");
+//                        deleteAdvice(position - 1, view);
+//                        //关闭对话框
+//                        alertDialog.dismiss();
+//                    }
+//                });
+//                return true;
+//            }
+//        });
 
         advices = new ArrayList<>();
         requestData();
     }
 
 
-    private void deleteAdvice(int posistion, View view) {
-        conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-        conn.setUrl(Constant.url + "pProposeAction!removeAdviceById.htm");
-        conn.setParam("id", advices.get(posistion).id);
-        Log.i(TAG, "id:" + advices.get(posistion).id);
-        new Thread(new HttpPostRunnable(conn, new DeleteAdvicesHandler(posistion, view))).start();
-    }
+//    private void deleteAdvice(int posistion, View view) {
+//        conn = new HttpClient();
+//        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+//        conn.setUrl(Constant.url + "pProposeAction!removeAdviceById.htm");
+//        conn.setParam("id", advices.get(posistion).id);
+//        Log.i(TAG, "id:" + advices.get(posistion).id);
+//        new Thread(new HttpPostRunnable(conn, new DeleteAdvicesHandler(posistion, view))).start();
+//    }
 
 
     /**
@@ -276,53 +273,53 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
 
 
 
-    private class DeleteAdvicesHandler extends HttpJsonHandler {
-
-        private View view;
-        private int position;
-
-        DeleteAdvicesHandler(int position, View view) {
-            this.view = view;
-            this.position = position;
-        }
-
-        @Override
-        public void handlerData(int code, JSONObject data) {
-            super.handlerData(code, data);
-            switch (code) {
-                case 0:
-                    Utility.toastMessage("删除成功");
-                    //显示位移动画
-                    TranslateAnimation ta = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
-                            Animation.RELATIVE_TO_SELF, -1.0f,
-                            Animation.RELATIVE_TO_SELF, 0,
-                            Animation.RELATIVE_TO_SELF, 0);
-                    ta.setDuration(200);
-                    view.startAnimation(ta);
-                    ta.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            advices.remove(position);
-                            adapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-
-                    break;
-                case 1:
-                    Utility.toastMessage("服务器出错，删除失败");
-                    break;
-
-            }
-        }
-    }
+//    private class DeleteAdvicesHandler extends HttpJsonHandler {
+//
+//        private View view;
+//        private int position;
+//
+//        DeleteAdvicesHandler(int position, View view) {
+//            this.view = view;
+//            this.position = position;
+//        }
+//
+//        @Override
+//        public void handlerData(int code, JSONObject data) {
+//            super.handlerData(code, data);
+//            switch (code) {
+//                case 0:
+//                    Utility.toastMessage("删除成功");
+//                    //显示位移动画
+//                    TranslateAnimation ta = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
+//                            Animation.RELATIVE_TO_SELF, -1.0f,
+//                            Animation.RELATIVE_TO_SELF, 0,
+//                            Animation.RELATIVE_TO_SELF, 0);
+//                    ta.setDuration(200);
+//                    view.startAnimation(ta);
+//                    ta.setAnimationListener(new Animation.AnimationListener() {
+//                        @Override
+//                        public void onAnimationStart(Animation animation) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onAnimationEnd(Animation animation) {
+//                            advices.remove(position);
+//                            adapter.notifyDataSetChanged();
+//                        }
+//
+//                        @Override
+//                        public void onAnimationRepeat(Animation animation) {
+//
+//                        }
+//                    });
+//
+//                    break;
+//                case 1:
+//                    Utility.toastMessage("服务器出错，删除失败");
+//                    break;
+//
+//            }
+//        }
+//    }
 }

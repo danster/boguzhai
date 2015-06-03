@@ -7,72 +7,123 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="5dp"
+        style="@style/base_bar" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="标题:"
-            android:textSize="20sp" />
+            android:text="问题"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/check_advice_title"
-            android:paddingLeft="10dp"
+            android:gravity="right"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="---"
+            android:textColor="@color/black"
             android:textSize="18sp" />
     </LinearLayout>
 
+    <View style="@style/longline" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/base_bar" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="内容:"
-            android:textSize="20sp" />
-
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:text="问题类型"
+            android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/check_advice_content"
-            android:paddingLeft="10dp"
+            android:id="@+id/check_advice_type"
+            android:gravity="right"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="---"
+            android:textColor="@color/black"
             android:textSize="18sp" />
-    </ScrollView>
+    </LinearLayout>
+
+    <View style="@style/longline" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/base_bar" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="订单号"
+            android:textSize="22sp" />
 
-            android:text="处理结果:"
+        <TextView
+            android:id="@+id/check_advice_orderId"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <View style="@style/longline" />
+
+    <LinearLayout
+        style="@style/base_bar" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态"
+            android:textSize="22sp" />
+        <TextView
+            android:id="@+id/check_advice_status"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        style="@style/base_bar" >
+
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="问题\n描述"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/check_advice_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="---"
-            android:paddingLeft="10dp"
-            android:textSize="18sp" />
+            android:id="@+id/check_advice_info"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/check_advice_delete"
+        android:background="@color/gold"
+        android:text="删除"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
