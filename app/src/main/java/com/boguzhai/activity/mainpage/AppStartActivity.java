@@ -28,6 +28,6 @@ public class AppStartActivity extends BaseActivity {
                 } else {
                     Utility.gotoMainpage(1);
                 }
-            }}, 1500);
+            }}, 1500); // 显示页面1.5秒后跳转
 	}
 }

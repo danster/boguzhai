@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.graphics.Bitmap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Pair;
 
@@ -57,6 +58,8 @@ public class Variable {
     public static String biddingNo="";  // 我的网络拍卖号,如N007,没有为空字符串
     public static Activity currentActivity = null; //当前的Activity
     public static Activity lastActivity = null;    //跳转进来之前的Activity
+
+    public static Bitmap currentBitmap = null;    //即将进行缩放的图片
 
 
 }

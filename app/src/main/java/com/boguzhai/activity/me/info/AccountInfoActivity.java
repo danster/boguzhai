@@ -65,7 +65,7 @@ public class AccountInfoActivity extends BaseActivity {
             case R.id.logout:
                 Variable.isLogin = false;
                 Variable.account.sessionid = "";
-                Utility.gotoMainpage(4);
+                Utility.gotoMainpage(3);
                 break;
 
             case R.id.my_more:startActivity(new Intent(this, AccountInfoMoreActivity.class)); break;

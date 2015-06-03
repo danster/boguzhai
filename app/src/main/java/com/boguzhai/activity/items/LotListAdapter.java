@@ -3,7 +3,6 @@ package com.boguzhai.activity.items;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +28,6 @@ public class LotListAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.list = list;
-    }
-
-    public LotListAdapter(Context context, ArrayList<Lot> list, boolean isMain) {
-        this(context,list);
-        this.isMain = isMain;
     }
 
     @Override    
@@ -70,7 +64,7 @@ public class LotListAdapter extends BaseAdapter {
         // 下载并加载左侧拍品信息
         holder.leftImage.setImageBitmap(list.get(2*position).image);
         holder.leftLotName.setText(list.get(2*position).name);
-        holder.leftLotID.setText("拍品号: "+list.get(2*position).no);
+        holder.leftLotID.setText("图录号: "+list.get(2*position).no);
         holder.leftLotApprisal.setText("预估价: ￥"+list.get(2*position).appraisal1+" - ￥"+list.get(2*position).appraisal2);
         holder.leftLotStartPrice.setText("起拍价: ￥" + list.get(2 * position).startPrice);
         holder.leftLot.setOnClickListener(new MyOnClickListener(2 * position));
@@ -83,27 +77,10 @@ public class LotListAdapter extends BaseAdapter {
             holder.rightImage.setImageBitmap(list.get(2*position+1).image);
             holder.rightLot.setOnClickListener(new MyOnClickListener(2*position + 1));
             holder.rightLotName.setText(list.get(2*position+1).name);
-            holder.rightLotID.setText("拍品号: "+list.get(2*position+1).no);
+            holder.rightLotID.setText("图录号: "+list.get(2*position+1).no);
             holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).appraisal1+" - ￥"+list.get(2*position+1).appraisal2);
             holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
         }
-
-        if(isMain){
-            ViewGroup.LayoutParams params = holder.leftLotName.getLayoutParams();
-            params.height = 40;
-            holder.leftLotName.setLayoutParams(params);
-            holder.rightLotName.setLayoutParams(params);
-
-            holder.leftLotName.setGravity(Gravity.CENTER);
-            holder.rightLotName.setGravity(Gravity.CENTER);
-            holder.leftLotID.setVisibility(View.GONE);
-            holder.rightLotID.setVisibility(View.GONE);
-            holder.leftLotApprisal.setVisibility(View.GONE);
-            holder.rightLotApprisal.setVisibility(View.GONE);
-            holder.leftLotStartPrice.setVisibility(View.GONE);
-            holder.rightLotStartPrice.setVisibility(View.GONE);
-        }
-
         return view;
     }
 

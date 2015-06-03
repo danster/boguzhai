@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.login.RegisterActivity;
@@ -20,11 +19,7 @@ import com.boguzhai.activity.me.myauction.MyAuctionActivity;
 import com.boguzhai.activity.me.order.PayOrderActivity;
 import com.boguzhai.activity.me.settings.SystemSettingsActivity;
 import com.boguzhai.activity.me.upload.UploadLotActivity;
-import com.boguzhai.logic.thread.HttpJsonHandler;
-import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.utils.HttpClient;
-
-import org.json.JSONObject;
+import com.boguzhai.activity.photowallfalls.PhotowallActivity;
 
 public class MeFragment extends Fragment {
     private static String TAG = "MeFragment";
@@ -110,15 +105,7 @@ public class MeFragment extends Fragment {
                     startActivityByLogin(PayOrderActivity.class);
                     break;
                 case R.id.me_my_proxy:
-                    HttpClient conn_test = new HttpClient();
-                    conn_test.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-                    conn_test.setUrl(Constant.url+"pProposeAction!lookAdviceById.htm?id=1011");
-                    new Thread(new HttpPostRunnable( conn_test, new HttpJsonHandler() {
-                        @Override
-                        public void handlerData(int code, JSONObject data) {
-                            super.handlerData(code, data);
-                        }
-                    })).start();
+                    context.startActivity(new Intent(context, PhotowallActivity.class));
                     break;
                 case R.id.me_my_favorites:
                     startActivityByLogin(MyCollectionActivity.class);

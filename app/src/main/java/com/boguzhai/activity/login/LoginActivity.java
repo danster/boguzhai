@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity {
                     Variable.isLogin = true;
                     Variable.account.password = password;
                     JsonApi.getAccountInfo(data);
-                    Utility.gotoMainpage(4);
+                    Utility.gotoMainpage(3);
                 break;
                 case 1:
                     Utility.alertMessage("登录失败: 用户名或者密码错误！");

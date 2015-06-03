@@ -1,6 +1,5 @@
 package com.boguzhai.activity.login;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
-import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.me.info.IdentityVerifyActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
@@ -145,13 +144,14 @@ public class RegisterActivity extends BaseActivity {
         public void handlerData(int code, JSONObject data){
             switch(code){
                 case 0:
-                    AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-                    tips.setTitle("请输入").setIcon( android.R.drawable.ic_dialog_info).setMessage("恭喜您，注册成功，请重新登录")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                baseActivity.startActivity(new Intent(baseActivity, LoginActivity.class));
-                            }
-                        }).show();
+                    Utility.alertDialog("注册成功，请进行实名认证",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            Utility.gotoActivity(IdentityVerifyActivity.class);
+                        }
+                    });
+
                     break;
                 default:
                     Utility.alertMessage("注册失败, 请检查您的注册信息");

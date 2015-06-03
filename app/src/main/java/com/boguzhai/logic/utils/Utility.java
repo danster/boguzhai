@@ -44,6 +44,17 @@ public class Utility {
         }
     }
 
+    // 添加确定信息 确定动作
+    public static void alertDialog(String msg, DialogInterface.OnClickListener ok){
+        if(!Variable.currentActivity.isFinishing()){
+            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+            tips.setIcon(android.R.drawable.ic_dialog_info);
+            tips.setTitle("提示").setMessage(msg);
+            tips.setPositiveButton("确定", ok).create().show();
+        }
+    }
+
+
     // 添加确定信息 确定动作 取消动作
     public static void alertDialog(String msg, DialogInterface.OnClickListener ok, DialogInterface.OnClickListener cancel){
         if(!Variable.currentActivity.isFinishing()){
@@ -78,9 +89,6 @@ public class Utility {
                 break;
             case 3:
                 Variable.mainTabIndex = R.id.rb_3;
-                break;
-            case 4:
-                Variable.mainTabIndex = R.id.rb_4;
                 break;
             default:
                 Variable.mainTabIndex = R.id.rb_1;

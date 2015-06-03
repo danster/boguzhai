@@ -10,4 +10,8 @@
     <string name="title_activity_bo_gu_news">BoGuNewsActivity</string>
     <string name="title_activity_advice">AdviceActivity</string>
 
+    <string name="border_top">Border Top</string>
+    <string name="border_bottom">Border Bottom</string>
+    <string name="image_url">Image Url</string>
+
 </resources>

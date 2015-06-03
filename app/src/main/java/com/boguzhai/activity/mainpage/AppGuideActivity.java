@@ -119,7 +119,7 @@ public class AppGuideActivity extends BaseActivity {
                 break;
 
             case R.id.app_sign:
-                Utility.gotoMainpage(4);
+                Utility.gotoMainpage(3);
                 break;
         }
     };

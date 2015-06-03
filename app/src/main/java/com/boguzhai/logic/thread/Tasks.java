@@ -1,17 +1,14 @@
 package com.boguzhai.logic.thread;
 
-import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.boguzhai.R;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.photowallfalls.ZoomImageView;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
@@ -112,6 +109,7 @@ public class Tasks {
 
     // 点击缩略图时下载高清原图并用弹出框查看, ratio为下载原图时的缩放比
     public static void showBigImage(String url, ImageView img, int ratio){
+
         imageUrl = url;
         imageView = img;
         imageRatio = ratio;
@@ -147,23 +145,26 @@ public class Tasks {
             protected void onPostExecute(Void result) {
                 if (bmp != null) {
                     Log.i("AsyncTask", "image get: succeed !");
-                    imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
-                        public void onClick(View paramView) {
-                            LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
-                            View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
-                            ((ImageView)imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
-                            final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
-                            dialog.setView(imgEntryView); // 自定义dialog
-                            dialog.show();
+                    Variable.currentBitmap = bmp;
+                    Utility.gotoActivity(ZoomImageView.class);
 
-                            // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-                            imgEntryView.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View paramView) {
-                                    dialog.cancel();
-                                }
-                            });
-                        }
-                    });
+//                    imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
+//                        public void onClick(View paramView) {
+//                            LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
+//                            View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
+//                            ((ImageView)imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
+//                            final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
+//                            dialog.setView(imgEntryView); // 自定义dialog
+//                            dialog.show();
+//
+//                            // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
+//                            imgEntryView.setOnClickListener(new View.OnClickListener() {
+//                                public void onClick(View paramView) {
+//                                    dialog.cancel();
+//                                }
+//                            });
+//                        }
+//                    });
                 } else {
                     Log.i("AsyncTask", "image get: failed !");
                 }

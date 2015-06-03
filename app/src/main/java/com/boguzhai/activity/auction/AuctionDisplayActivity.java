@@ -47,7 +47,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
     private SwipeRefreshLayout swipe_layout;
     private MyInt order = new MyInt(1);
 
-    private String[] sortTypes = {"按拍品名称","按拍品号",
+    private String[] sortTypes = {"按拍品名称","按图录号",
                                   "按拍品起拍价升序", "按拍品起拍价降序",
                                   "按拍品估价最低值升序", "按拍品估价最低价降序",
                                   "按拍品估价最高值升序", "按拍品估价最高值降序" };
@@ -70,7 +70,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
         this.listen(R.id.search);
 
         if(Variable.currentAuction.type.equals("同步")){
-            title_right.setText("进入专场");
+            title_right.setText("进入拍卖");
             title_right.setVisibility(View.VISIBLE);
         } else {
             title_right.setVisibility(View.INVISIBLE);

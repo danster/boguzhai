@@ -127,7 +127,7 @@ public class ResetPwdActivity extends BaseActivity {
                 case 0:
                     Utility.alertDialog("重置密码成功，请重新登录", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Utility.gotoMainpage(4);
+                            Utility.gotoMainpage(3);
                         }
                     },null);
 

@@ -24,6 +24,7 @@ public class BaseHtmlActivity extends Activity implements View.OnClickListener {
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
+        webSettings.setDisplayZoomControls(true);
         webSettings.setBuiltInZoomControls(true);
 
         myWebView.loadUrl(getIntent().getStringExtra("url"));

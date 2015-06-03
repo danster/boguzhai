@@ -2,7 +2,6 @@ package com.boguzhai.activity.base;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.boguzhai.R;
@@ -20,14 +19,13 @@ public class ActivityEntry extends Activity {
     	super.onCreate(savedInstanceState);
         init();
 
-        Variable.mainTabIndex = R.id.rb_4;
+        Variable.mainTabIndex = R.id.rb_3;
         startActivity(new Intent(this, AppStartActivity.class));
     }
 
     private void init(){
         Variable.app = this.getApplication();
         Variable.app_context = this.getApplicationContext();
-        Variable.account.image = BitmapFactory.decodeResource(getResources(), R.drawable.image);
 
         //启动后端的所有服务
         startService(new Intent(this, NetworkStateService.class));
@@ -37,7 +35,6 @@ public class ActivityEntry extends Activity {
     }
 
     private void prepareNetworkData(){
-
         HttpClient conn_address = new HttpClient();
         conn_address.setUrl(Constant.url+"pCommonAction!getAddressZoneMap.htm");
         new Thread(new HttpPostRunnable(conn_address, new AddressHandler())).start();
