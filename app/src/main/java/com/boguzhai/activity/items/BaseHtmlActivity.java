@@ -25,6 +25,8 @@ public class BaseHtmlActivity extends Activity implements View.OnClickListener {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
 
         myWebView.loadUrl(getIntent().getStringExtra("url"));
         //myWebView.loadUrl("https://ibsbjstar.ccb.com.cn/app/ccbMain?MERCHANTID=105290073990660&POSID=998003916&BRANCHID=310000000&ORDERID=56193&PAYMENT=1999.74&CURCODE=01&TXCODE=520100&REMARK1=canpai&REMARK2=144_0_0.26_9877&TYPE=1&GATEWAY=&CLIENTIP=&REGINFO=&PROINFO=&REFERER=&MAC=b3b01523035f4d9f088f22a92ebc205f");
