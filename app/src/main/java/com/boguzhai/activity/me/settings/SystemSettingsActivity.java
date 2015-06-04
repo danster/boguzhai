@@ -21,6 +21,11 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.HttpHandler;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +41,9 @@ public class SystemSettingsActivity extends BaseActivity {
     private String downloadUrl;//新版本的下载地址
     private String updateDescription;//更新描述
     private HttpClient conn;
-
-    AlertDialog.Builder builder;
+    private HttpHandler downLoadHandler;
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,9 @@ public class SystemSettingsActivity extends BaseActivity {
 	}
 
 	protected void init(){
+
+
+
         int ids[]={R.id.ll_app_update, R.id.ll_pwd, R.id.ll_about, R.id.ll_guide, R.id.ll_advice};
         listen(ids);
 
@@ -63,7 +72,8 @@ public class SystemSettingsActivity extends BaseActivity {
             e.printStackTrace();
         }
         builder = new AlertDialog.Builder(this);
-	}
+        dialog = builder.create();
+    }
 
 	@Override
 	public void onClick(View view) {
@@ -88,28 +98,34 @@ public class SystemSettingsActivity extends BaseActivity {
         }
     }
 
-    private void downloadApp(String url) {
-//        HttpUtils http = new HttpUtils();
+    private void downloadApp() {
+        HttpUtils http = new HttpUtils();
         builder = new AlertDialog.Builder(this);
-//        http.download(downloadUrl, Environment.getExternalStorageDirectory() + "boguzhai.apk",
-//                new RequestCallBack<File>() {
-//
-//                    @Override
-//                    public void onSuccess(ResponseInfo<File> arg0) {
-//                        showAppDownLoadSucessDialog();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(HttpException arg0, String arg1) {
-//                        showAppDownLoadFailedDialog();
-//                    }
-//
-//                    @Override
-//                    public void onLoading(long total, long current,
-//                                          boolean isUploading) {
-//                        showAppDownLodingDialog(total, current);
-//                    }
-//                });
+        downLoadHandler = http.download(downloadUrl, Environment.getExternalStorageDirectory() + "boguzhai.apk",
+                new RequestCallBack<File>() {
+
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        showBeforeAppDownDialog();
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseInfo<File> arg0) {
+                        showAppDownLoadSucessDialog();
+                    }
+
+                    @Override
+                    public void onFailure(HttpException arg0, String arg1) {
+                        showAppDownLoadFailedDialog();
+                    }
+
+                    @Override
+                    public void onLoading(long total, long current,
+                                          boolean isUploading) {
+                        showAppDownLodingDialog(total, current);
+                    }
+                });
     }
 
 
@@ -119,7 +135,7 @@ public class SystemSettingsActivity extends BaseActivity {
     private void checkVersion() {
 
         conn = new HttpClient();
-        conn.setUrl(Constant.url);
+        conn.setUrl(Constant.url.replace("/phones/","/") + "uploadDownAction!checkVersion.htm");
         new Thread(new HttpPostRunnable(conn, new MyAppUpateHandler())).start();
     }
 
@@ -151,15 +167,20 @@ public class SystemSettingsActivity extends BaseActivity {
         }
     }
 
+
+
+
+
+
+
     private void showAppUpdateDialog() {
-
-
+        dialog.dismiss();
         builder.setTitle("检测到新版本");
         builder.setMessage(updateDescription);
         builder.setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                dialog.dismiss();
             }
         });
 
@@ -167,20 +188,42 @@ public class SystemSettingsActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "下载地址" + downloadUrl);
-                downloadApp(downloadUrl);
+                downloadApp();
             }
         });
-        builder.show();
+        dialog = builder.show();
     }
 
     private void showAppDownLodingDialog(long total, long current) {
-
+        dialog.dismiss();
         builder.setTitle("版本更新");
         builder.setMessage("正在下载:" + current / 1024+ "kb" + "/" + total / 1024 + "kb");
-        builder.show();
+        builder.setPositiveButton("取消下载", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                downLoadHandler.cancel();
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.show();
+    }
+
+    private void showBeforeAppDownDialog() {
+        dialog.dismiss();
+        builder.setTitle("版本更新");
+        builder.setMessage("正在连接服务器...");
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                downLoadHandler.cancel();
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.show();
     }
 
     private void showAppDownLoadSucessDialog() {
+        dialog.dismiss();
         builder = new AlertDialog.Builder(this);
         builder.setTitle("版本更新");
         builder.setMessage("下载完成");
@@ -201,16 +244,17 @@ public class SystemSettingsActivity extends BaseActivity {
     }
 
     private void showAppDownLoadFailedDialog() {
+        dialog.dismiss();
         builder = new AlertDialog.Builder(this);
         builder.setTitle("版本更新");
         builder.setMessage("网络异常，下载失败");
         builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                dialog.dismiss();
             }
         });
-        builder.show();
+        dialog = builder.show();
     }
 
 }

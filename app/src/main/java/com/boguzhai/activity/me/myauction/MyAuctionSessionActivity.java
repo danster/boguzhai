@@ -37,7 +37,7 @@ public class MyAuctionSessionActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
         Log.i(TAG, "MyAuctionSessionActivity onCreate()");
         this.setLinearView(R.layout.me_myauctionsession);
-        title.setText("我的拍卖会");
+        title.setText("拍卖会详情");
 
         //获取传来的拍卖会id
         auctionId = getIntent().getExtras().getString("auctionId");

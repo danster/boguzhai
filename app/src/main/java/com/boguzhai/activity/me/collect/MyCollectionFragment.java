@@ -143,6 +143,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                 //跳转到该拍品信息界面
                 Variable.currentLot = adapter.lots.get(position - 1);
                 mContext.startActivity(new Intent(mContext, LotInfoActivity.class));
+
             }
         });
         lv_my_collection.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

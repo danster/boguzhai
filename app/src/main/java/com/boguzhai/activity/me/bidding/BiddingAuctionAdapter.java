@@ -10,8 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.AuctionActiveActivity;
 import com.boguzhai.activity.auction.LotInfoActivity;
+import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.me.myauction.MyAuctionSessionActivity;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.List;
@@ -69,8 +70,9 @@ public class BiddingAuctionAdapter extends BaseAdapter {
         holder.auction_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AuctionActiveActivity.class);
+                Intent intent = new Intent(mContext, MyAuctionSessionActivity.class);
                 intent.putExtra("auctionId", biddingAuctionList.get(position).auction.id);
+                Variable.currentAuction = biddingAuctionList.get(position).auction;
                 mContext.startActivity(intent);
             }
         });
@@ -81,9 +83,8 @@ public class BiddingAuctionAdapter extends BaseAdapter {
         holder.lotList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position2, long id) {
-                Intent intent = new Intent(mContext, LotInfoActivity.class);
-                intent.putExtra("auctionId", biddingAuctionList.get(position).lotList.get(position2).name);
-                mContext.startActivity(intent);
+                Variable.currentLot =  biddingAuctionList.get(position).lotList.get(position2);
+                mContext.startActivity(new Intent(mContext, LotInfoActivity.class));
             }
         });
         return view;
