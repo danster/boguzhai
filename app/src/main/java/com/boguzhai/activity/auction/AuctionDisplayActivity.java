@@ -270,7 +270,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
                                 try {
                                     BitmapFactory.Options options=new BitmapFactory.Options();
                                     options.inJustDecodeBounds = false;
-                                    options.inSampleSize = 5; //width，hight设为原来的 .. 分之一
+                                    options.inSampleSize = 5; // width，hight设为原来的 .. 分之一
 
                                     for(Lot lot: lots){
                                         InputStream in = new URL(lot.imageUrl).openStream();

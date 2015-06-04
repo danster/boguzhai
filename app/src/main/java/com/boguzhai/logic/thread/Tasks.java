@@ -4,11 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.photowallfalls.ZoomImageView;
+import com.boguzhai.activity.photowallfalls.ImageDetailsActivity;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
@@ -145,11 +146,13 @@ public class Tasks {
             protected void onPostExecute(Void result) {
                 if (bmp != null) {
                     Log.i("AsyncTask", "image get: succeed !");
-                    Variable.currentBitmap = bmp;
-                    Utility.gotoActivity(ZoomImageView.class);
 
-//                    imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
-//                        public void onClick(View paramView) {
+                    imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
+                        public void onClick(View paramView) {
+
+                            Variable.currentBitmap = bmp;
+                            Utility.gotoActivity(ImageDetailsActivity.class);
+
 //                            LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
 //                            View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
 //                            ((ImageView)imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
@@ -163,8 +166,8 @@ public class Tasks {
 //                                    dialog.cancel();
 //                                }
 //                            });
-//                        }
-//                    });
+                        }
+                    });
                 } else {
                     Log.i("AsyncTask", "image get: failed !");
                 }

@@ -23,21 +23,20 @@ import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class AuctionActiveActivity extends BaseActivity {
 
     private ArrayList<Record> list;
-    private XListView listview;
+    private ListViewForScrollView listview;
     private AuctionRecordAdapter adapter;
 
     // 参拍信息: 姓名 身份证 保证金 手机 号牌 支付状态
@@ -48,24 +47,22 @@ public class AuctionActiveActivity extends BaseActivity {
     private String payInfo="", payMoney="", payBalance="";
 
     // 竞拍大厅信息，当前拍品，下一拍品，出价页面
-    LinearLayout ly_main, ly_lotinfo_1, ly_lotinfo_2, ly_price;
+    LinearLayout ly_lotinfo_1, ly_lotinfo_2, ly_price;
     ImageView lot_info_image_1, lot_info_image_2;
 
-    TextView lot_info_name_1, lot_info_name_2, lot_info_no_1, lot_info_no_2, lot_info_apprisal_1,
+    TextView lot_status, lot_info_name_1, lot_info_name_2, lot_info_no_1, lot_info_no_2, lot_info_apprisal_1,
             lot_info_apprisal_2, lot_info_start_price_1, lot_info_start_price_2;
 
     TextView tips;
-    TextView bid_info_seconds, bid_info_now_price, bid_info_add_money, bid_info_next_money,
-             bid_info_min_money;
+    TextView bid_info_seconds, bid_info_now_price, bid_info_next_money, bid_info_min_money, bid_info_number;
     EditText bid_info_input_money;
 
     private Lot currentLot=null, nextLot=null;
-    private String currentLotId="", nextLotId="";
+    private String currentLotId="", nextLotId="", nextPrice="";
 
-    // 获取同步拍卖实时信息
-    private Timer timer = null;
-    private TimerTask task = null ;
-
+    // 获取同步拍卖实时信息,倒计时
+    private TimerTask timerTask = null ;
+    private CountTask countTask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,16 +73,16 @@ public class AuctionActiveActivity extends BaseActivity {
     }
 
     public void init(){
-        ly_main = (LinearLayout)findViewById(R.id.main_layout);
+        ly_price = (LinearLayout)findViewById(R.id.price);
         tips = (TextView)findViewById(R.id.tips);
-
         ly_lotinfo_1 = (LinearLayout)findViewById(R.id.lot_info_layout_1);
         ly_lotinfo_2 = (LinearLayout)findViewById(R.id.lot_info_layout_2);
-        ly_price = (LinearLayout)findViewById(R.id.price);
-        ly_price.setVisibility(View.GONE);
+        findViewById(R.id.ly_main).setVisibility(View.GONE);
+        ly_lotinfo_2.setVisibility(View.GONE);
 
         lot_info_image_1 = (ImageView)findViewById(R.id.lot_info_image_1);
         lot_info_image_2 = (ImageView)findViewById(R.id.lot_info_image_2);
+        lot_status = (TextView)findViewById(R.id.lot_status);
         lot_info_no_1 = (TextView)findViewById(R.id.lot_info_no_1);
         lot_info_no_2 = (TextView)findViewById(R.id.lot_info_no_2);
         lot_info_name_1 = (TextView)findViewById(R.id.lot_info_name_1);
@@ -98,9 +95,9 @@ public class AuctionActiveActivity extends BaseActivity {
         bid_info_input_money = (EditText)findViewById(R.id.bid_info_input_money);
         bid_info_seconds = (TextView)findViewById(R.id.bid_info_seconds);
         bid_info_now_price = (TextView)findViewById(R.id.bid_info_now_price);
-        bid_info_add_money = (TextView)findViewById(R.id.bid_info_add_money);
         bid_info_next_money = (TextView)findViewById(R.id.bid_info_next_money);
         bid_info_min_money = (TextView)findViewById(R.id.bid_info_min_money);
+        bid_info_number = (TextView)findViewById(R.id.bid_info_number);
 
         int[] ids = {R.id.bid_info_next_money, R.id.bid_info_enter_money};
         listen(ids);
@@ -111,8 +108,7 @@ public class AuctionActiveActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
 
-        timer = new Timer();
-        task = new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() { // UI thread
@@ -121,13 +117,14 @@ public class AuctionActiveActivity extends BaseActivity {
                         HttpClient conn = new HttpClient();
                         conn.setParam("auctionMainId", Variable.currentAuction.id);
                         conn.setParam("auctionId", "");
-                        conn.setUrl(Constant.url + "pSynchronizationAction!getBothAuctionBiddingInfo.htm");
+                        conn.setUrl(Constant.url +
+                                "pSynchronizationAction!getBothAuctionBiddingInfo.htm");
                         new Thread(new HttpPostRunnable(conn, new DispalyHandler())).start();
                     }
                 });
             }
         };
-        timer.schedule(task, 0, 3000); // 立刻启动间隔N秒的task
+        new Timer().schedule(timerTask, 0, 3000); // 立刻启动间隔N秒的task
 
         checkApplyStatus(); // 判断 同步拍卖会 或 网络拍卖会拍品 参拍状态
     }
@@ -135,14 +132,8 @@ public class AuctionActiveActivity extends BaseActivity {
     @Override
     public void onPause() {
         super.onPause();
-        timer.cancel();
+        timerTask.cancel();
     }
-
-    @Override
-    public void onRestart() {
-        super.onRestart();
-    }
-
 
     // 判断 同步拍卖会 或 网络拍卖会拍品 参拍状态
     private void checkApplyStatus(){
@@ -171,6 +162,7 @@ public class AuctionActiveActivity extends BaseActivity {
                                 mobile = data.getString("mobile");
                                 biddingNo = data.getString("biddingNo");
                                 identityNumber = data.getString("identityNumber");
+                                bid_info_number.setText("我的号牌: " + biddingNo);
 
                                 // status: 0-申请已支付 1-申请未支付 2-未申请
                                 if( status.equals("0") ) {
@@ -198,9 +190,7 @@ public class AuctionActiveActivity extends BaseActivity {
 
     // 展示出价记录初始化
     public void showListView(){
-        listview = (XListView) findViewById(R.id.record_list);
-        listview.setPullLoadEnable(false);
-        listview.setPullRefreshEnable(false);
+        listview = (ListViewForScrollView) findViewById(R.id.record_list);
         list = new ArrayList<Record>();
         adapter = new AuctionRecordAdapter(this, list);
         listview.setAdapter(adapter);
@@ -211,232 +201,297 @@ public class AuctionActiveActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.title_right:
-                if(Variable.isLogin == false) {
-                    Utility.gotoLogin();
-                    break;
-                } else if(authStatus == false){
-                    Utility.alertDialog("请先进行账户认证", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            Utility.gotoActivity(IdentityVerifyActivity.class);
-                        }
-                    });
-                    break;
-                }
-
-                // 申请参拍
-                String[] applyInfo = new String[]{"参拍人姓名：" + name, "手机号码  ：" + mobile, "身份证号码：" + identityNumber};
-                new AlertDialog.Builder(this).setTitle("申请参拍").setItems(applyInfo, null)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-                                HttpClient conn = new HttpClient();
-                                conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-                                conn.setParam("auctionId", "");
-                                conn.setParam("auctionMainId", Variable.currentAuction.id);
-                                conn.setUrl(Constant.url + "pTraceAction!askPayDeposit.htm");
-
-                                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-                                    @Override
-                                    public void handlerData(int code, JSONObject data) {
-                                        super.handlerData(code, data);
-                                        switch (code) {
-                                            case 0:
-                                                try {
-                                                    payInfo = data.getString("info");
-                                                    payMoney = data.getString("money");
-                                                    payBalance = data.getString("balance");
-
-                                                    Intent intent = new Intent(context, PayBailActivity.class);
-                                                    intent.putExtra("info", payInfo);
-                                                    intent.putExtra("money", payMoney);
-                                                    intent.putExtra("balance", payBalance);
-                                                    startActivity(intent);
-
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
-                                })).start();
-                            }
-                        }).show();
+                applyForBidding();
                 break;
-            case R.id.bid_info_enter_money:
-                if(biddingStatus == false){
-                    Utility.alertMessage("请先申请参拍！");
-                    break;
-                }
-                // 自主出价
-                // .....
-                break;
-
             case R.id.bid_info_next_money:
-                if(biddingStatus == false){
-                    Utility.alertMessage("请先申请参拍！");
-                    break;
+                giveMyPrice(nextPrice);
+                break;
+
+            case R.id.bid_info_enter_money:
+                String price = bid_info_input_money.getText().toString();
+                if(price.equals("")){
+                    Utility.toastMessage("出价不能为空");
+                } else {
+                    giveMyPrice(price);
                 }
-                // 推荐出价
-                // .....
                 break;
             default:
             break;
         }
     }
 
+    // 申请参拍
+    private void applyForBidding(){
+        if(Variable.isLogin == false) {
+            Utility.gotoLogin();
+        } else if(authStatus == false){
+            Utility.alertDialog("请先进行账户认证", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Utility.gotoActivity(IdentityVerifyActivity.class);
+                }
+            });
+        } else if(biddingStatus == false){
+            String[] applyInfo = new String[]{"参拍人姓名:" + name, "手机号码  :" + mobile,
+                    "身份证号码:" + identityNumber};
+            new AlertDialog.Builder(this).setTitle("申请参拍").setItems(applyInfo, null)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            HttpClient conn = new HttpClient();
+                            conn.setHeader("cookie", "JSESSIONID="+Variable.account.sessionid);
+                            conn.setParam("auctionId", "");
+                            conn.setParam("auctionMainId", Variable.currentAuction.id);
+                            conn.setUrl(Constant.url + "pTraceAction!askPayDeposit.htm");
+
+                            new Thread(new HttpPostRunnable(conn, new HttpJsonHandler(){
+                                @Override
+                                public void handlerData(int code, JSONObject data) {
+                                    super.handlerData(code, data);
+                                    switch (code) {
+                                        case 0:
+                                            try {
+                                                payInfo = data.getString("info");
+                                                payMoney = data.getString("money");
+                                                payBalance = data.getString("balance");
+
+                                                Intent intent = new Intent(context, PayBailActivity.class);
+                                                intent.putExtra("info", payInfo);
+                                                intent.putExtra("money", payMoney);
+                                                intent.putExtra("balance", payBalance);
+                                                startActivity(intent);
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            })).start();
+                        }
+                    }).show();
+        }
+
+    }
+
+    // 出价
+    private void giveMyPrice(String price){
+        applyForBidding();
+        if(Variable.isLogin && authStatus && biddingStatus && !currentLotId.equals("")
+            && !price.equals("") && !biddingNo.equals("")
+            && !Variable.currentAuction.id.equals("") && !Variable.currentSession.id.equals("")){
+
+            HttpClient conn = new HttpClient();
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setParam("auctionMainId", Variable.currentAuction.id);
+            conn.setParam("auctionSessionId", Variable.currentSession.id);
+            conn.setParam("auctionId", currentLotId);
+            conn.setParam("price", price);
+            conn.setParam("biddingNo", biddingNo);
+            conn.setUrl(Constant.url + "pSynchronizationAction!biddingLot.htm");
+
+            new Thread(new HttpPostRunnable(conn, new HttpJsonHandler(){
+                @Override
+                public void handlerData(int code, JSONObject data) {
+                    super.handlerData(code, data);
+                    switch (code) {
+                        case 0:
+                            Utility.alertDialog("出价成功",null);
+                            break;
+                        case 1:
+                            Utility.alertDialog("您的出价有误,出价失败",null);
+                            break;
+                        default:
+                            Utility.alertDialog("出价失败",null);
+                            break;
+                    }
+                }
+            })).start();
+        }
+    }
+
+    // 实时更新页面动态数据
     class DispalyHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
             switch (code){
-                case 0:
-                    // 当前拍卖会状态: "拍卖会未开始" "未开始" "开始" "倒计时已结束"
-                    // 当前拍品状态: "暂停" "正常" "成交" "流拍"
-                    try {
-                        String status = data.getString("status"); // 拍卖会状态
-                        String lotStatus = data.getString("auctionStatus"); // 拍品状态
+            case 0:
+                try {
+                    String status = data.getString("status"); // 拍卖会状态
 
-                        // 倒计时信息与当前实时价格显示
-                        int count = 0;
-                        if(!data.getString("countdown").equals("") && !data.getString("nowTime").equals("")){
-                            count = Integer.parseInt(data.getString("countdown"));
-                            int nowTime = Integer.parseInt(data.getString("nowTime"));
-                            count -= ( (int)((new Date()).getTime()/1000 ) - nowTime);
-                        }
-                        new Timer().schedule(new CountTask(bid_info_seconds, count), 0, 1000); // 更新倒计时信息
-                        bid_info_now_price.setText(data.getString("currentPriceForRMB"));   // 当前价格
-
-                        // 出价页面信息展示
-                        bid_info_min_money.setText("最小加价幅度:￥"+data.getString("minIncrement"));  // 最小加价幅度
-                        bid_info_add_money.setText("+￥"+data.getString("nextIncrement")); // 下一推荐出价的加价幅度
-                        bid_info_next_money.setText("￥"+data.getString("nextPrice"));    // 下一推荐出价
-
-                        // 更新当前出价记录
-                        JSONArray records = data.getJSONArray("records");
-                        list.clear();
-                        for(int i=0; i<records.length(); ++i){
-                            JSONArray recObj = records.getJSONArray(i);
-
-                            Record record = new Record();
-                            record.time = recObj.getString(0);
-                            record.no = recObj.getString(1);
-                            record.type = recObj.getString(2);
-                            record.price = recObj.getString(3);
-                            list.add(record);
-                        }
-                        adapter.notifyDataSetChanged();
-
-                        // 展示当前拍品与下一拍品的信息
-                        String auctionId = data.getString("auctionId");
-                        String nextAuctionId = data.getString("nextAuctionId");
-
-                        if(auctionId.equals("")){
-                            currentLotId = "";
-                            ly_main.setVisibility(View.GONE);
-                        } else {
-                            ly_main.setVisibility(View.VISIBLE);
-                            if(!auctionId.equals(currentLotId)){
-                                currentLotId = auctionId;
-                                // 获取当前拍品的详细信息
-                                HttpClient con = new HttpClient();
-                                con.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoById.htm?auctionId="+auctionId);
-                                new Thread(new HttpPostRunnable(con, new HttpJsonHandler() {
-                                    @Override
-                                    public void handlerData(int code, JSONObject data) {
-                                        super.handlerData(code, data);
-                                        switch (code){
-                                            case 0:
-                                                Lot lot = null;
-                                                try {
-                                                    lot = Lot.parseJson(data.getJSONObject("auctionInfo"));
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                                currentLot = lot;
-                                                lot_info_name_1.setText(lot.name);
-                                                lot_info_no_1.setText("图录号:"+lot.no);
-                                                lot_info_apprisal_1.setText("预估价:￥"+lot.appraisal1+" - ￥"+lot.appraisal2);
-                                                lot_info_start_price_1.setText("起拍价:￥" + lot.startPrice);
-                                                Tasks.showImage(lot.imageUrl, lot_info_image_1, 5); // 显示图片
-
-                                                findViewById(R.id.lot_info_moreinfo_1).setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Variable.currentLot = currentLot;
-                                                        Utility.gotoActivity(LotInfoActivity.class);
-                                                    }
-                                                });
-
-                                                break;
-                                            default:
-                                                break;
-                                        }
-
-                                    }
-                                })).start();
-                            }
-                        }
-
-                        if(nextAuctionId.equals("")){
-                            nextLotId = "";
-                            ly_lotinfo_2.setVisibility(View.GONE);
-                        } else {
-                            ly_lotinfo_2.setVisibility(View.VISIBLE);
-                            if(!nextAuctionId.equals(nextLotId)){
-                                nextLotId = nextAuctionId;
-                                // 获取下一拍品的详细信息
-                                HttpClient conn = new HttpClient();
-                                conn.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoById.htm?auctionId="+auctionId);
-                                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-                                    @Override
-                                    public void handlerData(int code, JSONObject data) {
-                                        super.handlerData(code, data);
-                                        switch (code){
-                                            case 0:
-                                                Lot lot = null;
-                                                try {
-                                                    lot = Lot.parseJson(data.getJSONObject("auctionInfo"));
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                                nextLot = lot;
-                                                lot_info_name_2.setText(lot.name);
-                                                lot_info_no_2.setText("图录号:"+lot.no);
-                                                lot_info_apprisal_2.setText("预估价:￥"+lot.appraisal1+" - ￥"+lot.appraisal2);
-                                                lot_info_start_price_2.setText("起拍价:￥"+lot.startPrice);
-                                                Tasks.showImage(lot.imageUrl, lot_info_image_2, 5); // 显示图片
-
-                                                findViewById(R.id.lot_info_moreinfo_2).setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Variable.currentLot = nextLot;
-                                                        Utility.gotoActivity(LotInfoActivity.class);
-                                                    }
-                                                });
-
-                                                break;
-                                            default:
-                                                break;
-                                        }
-
-                                    }
-                                })).start();
-                            }
-                        }
-
-                        tips.setText("当前拍卖会:"+status+" 当前拍品:"+lotStatus);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    // 倒计时信息与当前实时价格显示
+                    int count = 0;
+                    if(!data.getString("countdown").equals("") && !data.getString("nowTime").equals("")){
+                        count = Integer.parseInt(data.getString("countdown"));
                     }
-                    break;
-                default:
-                    break;
+                    if(countTask!=null) {
+                        countTask.cancel();
+                    }
+                    countTask = new CountTask(bid_info_seconds, count);
+                    new Timer().schedule(countTask, 0, 1000); // 更新倒计时信息
+                    bid_info_now_price.setText(data.getString("currentPriceForRMB"));   // 显示当前价格
+
+                    // 出价页面信息展示
+                    bid_info_min_money.setText("最小加价幅度:￥"+data.getString("minIncrement")); // 显示最小加价幅度
+                    nextPrice = data.getString("nextPrice"); // 设置下一推荐出价
+                    bid_info_next_money.setText("￥"+data.getString("nextPrice"));    // 显示下一推荐出价
+
+                    // 更新当前出价记录
+                    JSONArray records = data.getJSONArray("records");
+                    list.clear();
+                    for(int i=0; i<records.length(); ++i){
+                        JSONArray recObj = records.getJSONArray(i);
+
+                        Record record = new Record();
+                        record.time = recObj.getString(0);
+                        record.no = recObj.getString(1);
+                        record.type = recObj.getString(2);
+                        record.price = recObj.getString(3);
+                        list.add(record);
+                    }
+                    adapter.notifyDataSetChanged();
+
+                    // 展示当前拍品与下一拍品的信息
+                    String auctionId = data.getString("auctionId");
+                    String nextAuctionId = data.getString("nextAuctionId");
+                    lot_status.setText("拍品状态: "+data.getString("auctionStatus"));
+
+                    if(auctionId.equals("")){
+                        currentLotId = "";
+                        findViewById(R.id.ly_main).setVisibility(View.GONE);
+                    } else {
+                        if(!auctionId.equals(currentLotId)){
+                            currentLotId = auctionId;
+                            // 获取当前拍品的详细信息
+                            HttpClient con = new HttpClient();
+                            con.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoById.htm?auctionId="+auctionId);
+                            new Thread(new HttpPostRunnable(con, new HttpJsonHandler() {
+                                @Override
+                                public void handlerData(int code, JSONObject data) {
+                                    super.handlerData(code, data);
+                                    switch (code){
+                                        case 0:
+                                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
+                                            Lot lot = null;
+                                            try {
+                                                lot = Lot.parseJson(data.getJSONObject("auctionInfo"));
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            currentLot = lot;
+                                            lot_info_name_1.setText(lot.name);
+                                            lot_info_no_1.setText("图录号:"+lot.no);
+                                            lot_info_apprisal_1.setText("预估价:"+lot.appraisal1+"-"+lot.appraisal2);
+                                            lot_info_start_price_1.setText("起拍价:" + lot.startPrice);
+                                            Tasks.showImage(lot.imageUrl, lot_info_image_1, 5); // 显示图片
+
+                                            findViewById(R.id.lot_info_moreinfo_1).
+                                                    setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            Variable.currentLot = currentLot;
+                                                            Utility.gotoActivity(LotInfoActivity.class);
+                                                        }
+                                                    });
+
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                }
+                            })).start();
+                        }
+                    }
+
+                    if(nextAuctionId.equals("")){
+                        nextLotId = "";
+                        ly_lotinfo_2.setVisibility(View.GONE);
+                    } else {
+                        if(!nextAuctionId.equals(nextLotId)){
+                            nextLotId = nextAuctionId;
+                            // 获取下一拍品的详细信息
+                            HttpClient conn = new HttpClient();
+                            conn.setUrl(Constant.url+"pAuctionInfoAction!getAuctionInfoById.htm?auctionId="+nextLotId);
+                            new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+                                @Override
+                                public void handlerData(int code, JSONObject data) {
+                                    super.handlerData(code, data);
+                                    switch (code){
+                                        case 0:
+                                            ly_lotinfo_2.setVisibility(View.VISIBLE);
+                                            Lot lot = null;
+                                            try {
+                                                lot = Lot.parseJson(data.getJSONObject("auctionInfo"));
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            nextLot = lot;
+                                            lot_info_name_2.setText(lot.name);
+                                            lot_info_no_2.setText("图录号:"+lot.no);
+                                            lot_info_apprisal_2.setText("预估价:"+lot.appraisal1+"-"+lot.appraisal2);
+                                            lot_info_start_price_2.setText("起拍价:"+lot.startPrice);
+                                            Tasks.showImage(lot.imageUrl, lot_info_image_2, 5); // 显示图片
+
+                                            findViewById(R.id.lot_info_moreinfo_2).
+                                                    setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            Variable.currentLot = nextLot;
+                                                            Utility.gotoActivity(LotInfoActivity.class);
+                                                        }
+                                                    });
+
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                }
+                            })).start();
+                        }
+                    }
+
+                    // 当前拍卖会状态: "拍卖会未开始" "倒计时未开始" "倒计时开始" "倒计时已结束"
+                    switch (status){
+                        case "拍卖会未开始":
+                            tips.setText("拍卖会未开始");
+                            findViewById(R.id.ly_main).setVisibility(View.GONE);
+                            break;
+
+                        case "倒计时未开始":
+                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
+                            findViewById(R.id.ly_seconds).setVisibility(View.GONE);
+                            break;
+
+                        case "倒计时开始":
+                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
+                            findViewById(R.id.ly_seconds).setVisibility(View.VISIBLE);
+                            break;
+
+                        case "倒计时已结束":
+                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
+                            findViewById(R.id.ly_seconds).setVisibility(View.GONE);
+                            break;
+                        default:
+                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+                            findViewById(R.id.ly_main).setVisibility(View.GONE);
+                            break;
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                break;
             }
         }
     }

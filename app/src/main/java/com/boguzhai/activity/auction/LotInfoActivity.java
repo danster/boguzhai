@@ -89,13 +89,13 @@ public class LotInfoActivity extends BaseActivity {
         ((TextView)findViewById(R.id.lot_name)).setText(lot.name);
         ((TextView)findViewById(R.id.description)).setText("  " + lot.description);
         String info = "";
-        info += "拍品分类: ";
-        info += lot.type1.equals("")?"":Utility.getLottype1(lot.type1);
-        info += lot.type2.equals("")?"":" > "+Utility.getLottype2(lot.type1,lot.type2);
-        info += lot.type3.equals("")?"":" > "+Utility.getLottype3(lot.type1,lot.type2,lot.type3);
-        info += "\n拍品名称: "+lot.name;
+        info += "拍品图录号: "+lot.no;
         info += "\n拍品编号: "+lot.id;
-        info += "\n拍品图录号: "+lot.no;
+        info += "\n拍品名称: "+lot.name;
+        info += "\n拍品分类: ";
+        info += lot.type1.equals("")?"":Utility.getLottype1(lot.type1);
+        info += lot.type2.equals("") ? "" : " > " + Utility.getLottype2(lot.type1,lot.type2);
+        info += lot.type3.equals("")?"":" > "+Utility.getLottype3(lot.type1,lot.type2,lot.type3);
 
         info += "\n预估价: "+lot.appraisal1+"元 ~ "+lot.appraisal2+"元";
         info += "\n起拍价: "+lot.startPrice+"元";

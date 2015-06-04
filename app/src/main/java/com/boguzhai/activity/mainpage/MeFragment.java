@@ -1,7 +1,6 @@
 package com.boguzhai.activity.mainpage;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,40 +18,26 @@ import com.boguzhai.activity.me.myauction.MyAuctionActivity;
 import com.boguzhai.activity.me.order.PayOrderActivity;
 import com.boguzhai.activity.me.settings.SystemSettingsActivity;
 import com.boguzhai.activity.me.upload.UploadLotActivity;
-import com.boguzhai.activity.photowallfalls.PhotowallActivity;
+import com.boguzhai.logic.utils.Utility;
 
 public class MeFragment extends Fragment {
     private static String TAG = "MeFragment";
     private View view;
-    private MainActivity context;
     private MyOnClickListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.main_fg_me, null);
-        context = (MainActivity)getActivity();
         listener = new MyOnClickListener();
 
         ((TextView)view.findViewById(R.id.title_center)).setText("我");
         view.findViewById(R.id.title_left).setVisibility(View.INVISIBLE);
 
-        this.showMyInfo();
-
-        this.listen(R.id.me_login);
-        this.listen(R.id.title_right);
-        this.listen(R.id.me_myinfo);
-        this.listen(R.id.me_my_auctions);
-        this.listen(R.id.me_biding);
-        this.listen(R.id.me_billing);
-        this.listen(R.id.me_my_proxy);
-        this.listen(R.id.me_my_favorites);
-        this.listen(R.id.me_upload);
-        this.listen(R.id.me_system);
-
+        init();
         return view;
     }
 
-    public void showMyInfo(){
+    public void init(){
         if( Variable.isLogin == false ){
             ((TextView)view.findViewById(R.id.title_right)).setText("注册");
             view.findViewById(R.id.title_right).setVisibility(View.VISIBLE);
@@ -73,48 +58,53 @@ public class MeFragment extends Fragment {
 
             ((TextView)view.findViewById(R.id.address)).setText(address);
             ((TextView)view.findViewById(R.id.mobile)).setText(Variable.account.mobile);
-
         }
+
+        this.listen(R.id.me_login);
+        this.listen(R.id.title_right);
+        this.listen(R.id.me_myinfo);
+        this.listen(R.id.me_my_auctions);
+        this.listen(R.id.me_biding);
+        this.listen(R.id.me_billing);
+        this.listen(R.id.me_my_favorites);
+        this.listen(R.id.me_upload);
+        this.listen(R.id.me_system);
     }
 
     /*************************** View Listener ****************************/
     public void listen( View v){ if(v!=null){ v.setOnClickListener(listener);}} // 监听一个 VieW
     public void listen( int id){ this.listen(view.findViewById(id));}           // 监听一个 View Id
-    public void listen( int[] ids){ for(int id: ids){ this.listen(id);}}        // 监听一组 View Ids
 
     class MyOnClickListener implements View.OnClickListener{
         @Override
         public void onClick(View v){
             switch (v.getId()) {
                 case R.id.title_right:
-                    startActivity(new Intent(context, RegisterActivity.class));
+                    Utility.gotoActivity(RegisterActivity.class);
                     break;
                 case R.id.me_login:
-                    startActivity(new Intent(context, LoginActivity.class));
+                    Utility.gotoActivity(LoginActivity.class);
                     break;
                 case R.id.me_myinfo:
-                    startActivity(new Intent(context, AccountInfoActivity.class));
+                    Utility.gotoActivity(AccountInfoActivity.class);
                     break;
                 case R.id.me_my_auctions:
-                    startActivityByLogin(MyAuctionActivity.class);
+                    Utility.gotoActivity(MyAuctionActivity.class);
                     break;
                 case R.id.me_biding:
-                    startActivityByLogin(BiddingActivity.class);
+                    Utility.gotoActivity(BiddingActivity.class);
                     break;
                 case R.id.me_billing:
-                    startActivityByLogin(PayOrderActivity.class);
-                    break;
-                case R.id.me_my_proxy:
-                    context.startActivity(new Intent(context, PhotowallActivity.class));
+                    Utility.gotoActivity(PayOrderActivity.class);
                     break;
                 case R.id.me_my_favorites:
-                    startActivityByLogin(MyCollectionActivity.class);
+                    Utility.gotoActivity(MyCollectionActivity.class);
                     break;
                 case R.id.me_upload:
-                    startActivityByLogin(UploadLotActivity.class);
+                    Utility.gotoActivity(UploadLotActivity.class);
                     break;
                 case R.id.me_system:
-                    startActivityByLogin(SystemSettingsActivity.class);
+                    Utility.gotoActivity(SystemSettingsActivity.class);
                     break;
                 default:
                     break;
@@ -122,14 +112,5 @@ public class MeFragment extends Fragment {
         }
     }
 
-    public void startActivityByLogin(Class<?> cls){
-        context.startActivity(new Intent(context, cls));
-//        if(Variable.isLogin == true)
-//            mContext.startActivity(new Intent(mContext, cls));
-//        else {
-//            Intent intent = new Intent(mContext, LoginActivity.class);
-//            mContext.startActivity(intent);
-//        }
-    }
 
 }

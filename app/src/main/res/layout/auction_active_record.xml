@@ -7,13 +7,13 @@
         android:layout_height="40dp" android:gravity="center"
         android:background="@color/white">
         <TextView style="@style/bidding_record_text" android:id="@+id/time" android:textSize="14sp"
-            android:layout_weight="3" android:text="2015.1.4 16:20:10"/>
+            android:layout_weight="5" />
         <TextView style="@style/bidding_record_text" android:id="@+id/number" android:textSize="14sp"
-            android:layout_weight="1" android:text="N003"/>
+            android:layout_weight="1" />
         <TextView style="@style/bidding_record_text" android:id="@+id/type" android:textSize="14sp"
-            android:layout_weight="1" android:text="网络"/>
+            android:layout_weight="1" />
         <TextView style="@style/bidding_record_text" android:id="@+id/price" android:textSize="14sp"
-            android:layout_weight="1" android:text="22000"/>
+            android:layout_weight="2" />
 
     </LinearLayout>
 </LinearLayout>
