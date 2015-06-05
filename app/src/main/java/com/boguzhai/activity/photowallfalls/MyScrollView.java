@@ -234,7 +234,7 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 					task.execute(imageUrl);
 				}
 			} else {
-				imageView.setImageResource(R.drawable.default_image_2);
+				imageView.setImageResource(R.drawable.image);
 			}
 		}
 	}

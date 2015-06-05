@@ -38,8 +38,7 @@ public class Lot {
     public String description = "";  //详细描述
 
     public String imageUrl = "";   //图片url
-    public Boolean isLoaded = false; //是否已经加载图片
-    public Bitmap image = null;    //图片
+    public Bitmap image = null;
 
     public ArrayList<Pair<String,String>> specials = new ArrayList<Pair<String,String>>();
     public ArrayList<String> records = new ArrayList<String>(); //["2015-02-12 09:38:30,N091,网络, 120000.00",...]

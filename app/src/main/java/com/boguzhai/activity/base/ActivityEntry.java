@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.boguzhai.R;
 import com.boguzhai.activity.mainpage.AppStartActivity;
-import com.boguzhai.logic.service.NetworkStateService;
 import com.boguzhai.logic.thread.AddressHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.LotTypeHandler;
@@ -17,18 +15,12 @@ public class ActivityEntry extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        init();
-
-        Variable.mainTabIndex = R.id.rb_3;
         startActivity(new Intent(this, AppStartActivity.class));
     }
 
     private void init(){
         Variable.app = this.getApplication();
         Variable.app_context = this.getApplicationContext();
-
-        //启动后端的所有服务
-        startService(new Intent(this, NetworkStateService.class));
 
         //预先获取一些网络数据备用
         prepareNetworkData();
@@ -42,12 +34,6 @@ public class ActivityEntry extends Activity {
         HttpClient conn_lotType = new HttpClient();
         conn_lotType.setUrl(Constant.url+"pCommonAction!getAuctionTypeMap.htm");
         new Thread(new HttpPostRunnable(conn_lotType, new LotTypeHandler())).start();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        stopService(new Intent(this, NetworkStateService.class));
     }
 
 }

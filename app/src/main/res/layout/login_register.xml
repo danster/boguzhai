@@ -51,7 +51,6 @@
             android:text="同意"/>
         <TextView style="@style/register_ev"
             android:id="@+id/protocol"
-            android:autoLink="web"
             android:textColor="@color/gold"
             android:text="博古斋拍卖网注册协议"/>
     </LinearLayout>

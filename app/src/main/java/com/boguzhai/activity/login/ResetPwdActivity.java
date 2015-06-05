@@ -130,7 +130,15 @@ public class ResetPwdActivity extends BaseActivity {
                             Utility.gotoMainpage(3);
                         }
                     },null);
-
+                    break;
+                case 1:
+                    Utility.alertMessage("手机号码填写错误");
+                    break;
+                case 2:
+                    Utility.alertMessage("验证码错误");
+                    break;
+                case 3:
+                    Utility.alertMessage("重置密码失败, 请检查您的密码修改信息");
                     break;
                 default:
                     Utility.alertMessage("重置密码失败, 请检查您的密码修改信息");

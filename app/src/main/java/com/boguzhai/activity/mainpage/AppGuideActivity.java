@@ -1,5 +1,7 @@
 package com.boguzhai.activity.mainpage;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -9,36 +11,35 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.base.BaseActivity;
-import com.boguzhai.logic.utils.Utility;
+import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.login.LoginActivity;
 
-public class AppGuideActivity extends BaseActivity {
-	ViewPager viewPager;
+public class AppGuideActivity extends Activity implements View.OnClickListener {
+    ViewPager viewPager;
     ViewGroup viewGroup;
-	ImageView[] imageViews, tips;
-	ImageView startTips, signTips;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setLinearView(R.layout.app_guide_page);
-        title_bar.setVisibility(View.GONE);
-		setBaseEnv();
-	}
-	
-	public void setBaseEnv(){
+    ImageView[] imageViews, tips;
+    ImageView startTips, signTips;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.app_guide_page);
+        setBaseEnv();
+    }
+
+    public void setBaseEnv(){
         viewGroup = (ViewGroup) findViewById(R.id.viewGroup);
-		viewPager = (ViewPager) findViewById(R.id.viewPager);
-		int[] imageIds = new int[] { R.drawable.app_guide1, R.drawable.app_guide2,
-				                     R.drawable.app_guide3, R.drawable.app_guide4 };
-		
-		// 将静态图片ID装载到数组中
-		imageViews = new ImageView[imageIds.length];
-		for (int i = 0; i < imageViews.length; i++) {
-			ImageView imageView = new ImageView(this);
-			imageViews[i] = imageView;
-			imageView.setBackgroundResource(imageIds[i]);
-		}
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        int[] imageIds = new int[] { R.drawable.app_guide1, R.drawable.app_guide2,
+                R.drawable.app_guide3, R.drawable.app_guide4 };
+
+        // 将静态图片ID装载到数组中
+        imageViews = new ImageView[imageIds.length];
+        for (int i = 0; i < imageViews.length; i++) {
+            ImageView imageView = new ImageView(this);
+            imageViews[i] = imageView;
+            imageView.setBackgroundResource(imageIds[i]);
+        }
 
         // 将导航小图标加入到ViewGroup中
         tips = new ImageView[imageIds.length];
@@ -57,8 +58,8 @@ public class AppGuideActivity extends BaseActivity {
             }
             viewGroup.addView(imageView, layoutParams);
         }
-		
-		viewPager.setAdapter(new PagerAdapter() {
+
+        viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount(){ return 4;} // 只能来回滑动，不能循环
 
@@ -76,7 +77,7 @@ public class AppGuideActivity extends BaseActivity {
                 return imageViews[position % imageViews.length];
             }
         });
-		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()  {
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener()  {
             public void onPageScrollStateChanged(int arg0) {}
             public void onPageScrolled(int arg0, float arg1, int arg2) {} //当当前页面被滑动时调用
 
@@ -100,26 +101,29 @@ public class AppGuideActivity extends BaseActivity {
             }
 
         });
-		viewPager.setCurrentItem(0);
-		
-		startTips = (ImageView)findViewById(R.id.app_enter);
+        viewPager.setCurrentItem(0);
+
+        startTips = (ImageView)findViewById(R.id.app_enter);
         signTips = (ImageView)findViewById(R.id.app_sign);
-		startTips.setVisibility(View.INVISIBLE);
+        startTips.setVisibility(View.INVISIBLE);
         signTips.setVisibility(View.INVISIBLE);
 
         startTips.setOnClickListener(this);
         signTips.setOnClickListener(this);
-	}
+
+    }
 
     @Override
     public void onClick(View v){
         switch (v.getId()) {
             case R.id.app_enter:
-                Utility.gotoMainpage(1);
+                Variable.mainTabIndex = R.id.rb_1;
+                startActivity(new Intent(this, MainActivity.class));
                 break;
 
             case R.id.app_sign:
-                Utility.gotoMainpage(3);
+                Variable.mainTabIndex = R.id.rb_1;
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
         }
     };

@@ -2,7 +2,6 @@ package com.boguzhai.activity.login;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -132,8 +131,7 @@ public class RegisterActivity extends BaseActivity {
             startActivity(new Intent(this, LoginActivity.class));
             break;
         case R.id.protocol:
-            Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.shbgz.com"));
-            startActivity(link);
+            Utility.openUrl("http://www.shbgz.com/otherAction!autionrule.htm?target=3_3_8");
             break;
         default:  break;
 		};
@@ -152,6 +150,15 @@ public class RegisterActivity extends BaseActivity {
                         }
                     });
 
+                    break;
+                case 1:
+                    Utility.alertMessage("该账户已经被注册");
+                    break;
+                case 2:
+                    Utility.alertMessage("验证码错误");
+                    break;
+                case 3:
+                    Utility.alertMessage("账户号码填写错误");
                     break;
                 default:
                     Utility.alertMessage("注册失败, 请检查您的注册信息");

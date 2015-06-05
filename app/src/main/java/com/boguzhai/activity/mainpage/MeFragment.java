@@ -12,12 +12,12 @@ import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.login.RegisterActivity;
 import com.boguzhai.activity.me.bidding.BiddingActivity;
+import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
 import com.boguzhai.activity.me.myauction.MyAuctionActivity;
 import com.boguzhai.activity.me.order.PayOrderActivity;
 import com.boguzhai.activity.me.settings.SystemSettingsActivity;
 import com.boguzhai.activity.me.upload.UploadLotActivity;
-import com.boguzhai.activity.photowallfalls.PhotowallActivity;
 import com.boguzhai.logic.utils.Utility;
 
 public class MeFragment extends Fragment {
@@ -98,7 +98,7 @@ public class MeFragment extends Fragment {
                     Utility.gotoActivity(PayOrderActivity.class);
                     break;
                 case R.id.me_my_favorites:
-                    Utility.gotoActivity(PhotowallActivity.class);
+                    Utility.gotoActivity(MyCollectionActivity.class);
                     break;
                 case R.id.me_upload:
                     Utility.gotoActivity(UploadLotActivity.class);

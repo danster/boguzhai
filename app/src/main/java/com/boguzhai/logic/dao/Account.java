@@ -1,7 +1,5 @@
 package com.boguzhai.logic.dao;
 
-import android.graphics.Bitmap;
-
 import com.boguzhai.activity.me.info.DeliveryAddress;
 
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ public class Account{
     public String qq="";        //QQ
 
     public String imageUrl="";  //图片地址
-    public Bitmap image=null;   //图片
 
     public CapitalInfo capitalInfo=new CapitalInfo();  //资金账户信息
     public AuthInfo authInfo=new AuthInfo();           //账户认证信息
