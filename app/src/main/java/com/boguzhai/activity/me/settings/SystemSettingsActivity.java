@@ -134,6 +134,25 @@ public class SystemSettingsActivity extends BaseActivity {
      */
     private void checkVersion() {
 
+        //显示正在检查更新对话框
+//        builder.setTitle("正在检查更新...");
+//        builder.setMessage(updateDescription);
+//        builder.setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                Log.i(TAG, "下载地址" + downloadUrl);
+//                downloadApp();
+//            }
+//        });
+//        dialog = builder.show();
+
         conn = new HttpClient();
         conn.setUrl(Constant.url.replace("/phones/","/") + "uploadDownAction!checkVersion.htm");
         new Thread(new HttpPostRunnable(conn, new MyAppUpateHandler())).start();
@@ -195,7 +214,6 @@ public class SystemSettingsActivity extends BaseActivity {
     }
 
     private void showAppDownLodingDialog(long total, long current) {
-        dialog.dismiss();
         builder.setTitle("版本更新");
         builder.setMessage("正在下载:" + current / 1024+ "kb" + "/" + total / 1024 + "kb");
         builder.setPositiveButton("取消下载", new DialogInterface.OnClickListener() {

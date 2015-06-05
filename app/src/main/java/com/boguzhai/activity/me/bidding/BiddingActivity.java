@@ -3,6 +3,7 @@ package com.boguzhai.activity.me.bidding;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
@@ -54,7 +55,7 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
 
         lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
 
-        requestData();
+        onRefresh();
 	}
 
     public void initData() {
@@ -88,6 +89,19 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
      */
     private class BiddingHandler extends HttpJsonHandler {
 
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                case 9:
+                    swipe_layout.setRefreshing(false);
+                    break;
+            }
+        }
+
         @Override
         public void handlerData(int code, JSONObject data) {
             super.handlerData(code, data);
@@ -105,6 +119,9 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
 
                         BiddingAuction biddingAuction;
 
+                        if(jArray.length() == 0) {
+                            Utility.toastMessage("暂无数据");
+                        }
                         for(int j = 0; j < jArray.length(); j++) {
                             biddingAuction = new BiddingAuction();
                             biddingAuction.auction = new Auction();

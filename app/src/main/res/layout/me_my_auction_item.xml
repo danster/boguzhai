@@ -15,14 +15,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="---"
+            android:background="@color/gold"
+            android:textColor="@color/white"
             android:textSize="18sp"/>
-        <TextView
-            android:layout_toRightOf="@id/tv_my_auction_status"
-            android:id="@+id/tv_my_auction_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="---"
-            android:textSize="18sp"/>
+
         <TextView
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
@@ -31,11 +27,27 @@
             android:layout_height="wrap_content"
             android:text="---"
             android:textSize="16sp"
-            android:background="@color/yellow"/>
+            android:textColor="@color/white"
+            android:background="@color/gold"/>
         </RelativeLayout>
+
 
     <LinearLayout
         android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_my_auction_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -53,6 +65,8 @@
 
     <LinearLayout
         android:paddingBottom="5dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
