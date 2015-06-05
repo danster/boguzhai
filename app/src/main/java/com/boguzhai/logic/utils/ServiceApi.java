@@ -4,10 +4,11 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 
 import java.util.List;
 
-public class NetworkApi {
+public class ServiceApi {
 
     /**
      * 检测网络是否连接
@@ -96,6 +97,15 @@ public class NetworkApi {
             }
         }
         return false;
+    }
+
+    /**
+     * 判断手机是否有SD卡。
+     *
+     * @return 有SD卡返回true，没有返回false。
+     */
+    public static boolean hasSDCard() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
 }
