@@ -265,8 +265,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         Log.i(TAG, "加载更多");
         Log.i(TAG, "当前个数:" + currentCount + "总个数:" + totalCount);
         if (totalCount == currentCount) {
-            Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
             lv_my_auction.stopLoadMore();
+            Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
         } else {
             number++;//页数加1
             requestData();
@@ -301,7 +301,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                 case -1:
                     number--;
                     Toast.makeText(mContext, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    startActivityForResult(new Intent(mContext, LoginActivity.class), 0);
                     break;
                 case 0:
                     Log.i(TAG, data.toString());
@@ -350,6 +350,14 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     }
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(!Variable.isLogin){
+            mContext.finish();
         }
     }
 }

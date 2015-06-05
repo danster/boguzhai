@@ -5,9 +5,9 @@ package com.boguzhai.logic.dao;
  */
 public class BiddingLot extends Lot{
     public int biddingCount = 0;//出价次数
-    public int isLeader = -1;//1.领先 0.出局
+    public String isLeader;
     public double currentPrice = 0.0;
-    public double topPrice = 0.0;
+    public String topPrice ;
 }
 //public class Lot {
 //    public int id = 0;   //拍品编号 primary key
