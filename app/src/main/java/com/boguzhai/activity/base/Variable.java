@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Pair;
@@ -31,7 +30,6 @@ public class Variable {
     // 启动程序(Application)时初始化或重新赋值
     public static SharedPreferences settings = null ;
     public static SharedPreferences.Editor settings_editor = null ;
-    public static PackageInfo pInfo = null;     // APP包的相关信息
 
     // 第一次进入Activity(ActivityEntry)时初始化
     public static Context app_context = null;

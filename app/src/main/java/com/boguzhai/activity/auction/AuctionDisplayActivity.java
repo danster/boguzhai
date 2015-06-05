@@ -3,8 +3,6 @@ package com.boguzhai.activity.auction;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -28,8 +26,6 @@ import com.boguzhai.logic.view.XListView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.text.Collator;
 import java.text.RuleBasedCollator;
 import java.util.ArrayList;
@@ -263,26 +259,6 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
                         Collections.sort(list, new LotComparator());
                         adapter.notifyDataSetChanged();
 
-                        // 网络批量下载拍品图片
-                        new AsyncTask<Void, Void, Void>() {
-                            @Override
-                            protected Void doInBackground(Void... params) {
-                                try {
-                                    BitmapFactory.Options options=new BitmapFactory.Options();
-                                    options.inJustDecodeBounds = false;
-                                    options.inSampleSize = 5; // width，hight设为原来的 .. 分之一
-
-                                    for(Lot lot: lots){
-                                        InputStream in = new URL(lot.imageUrl).openStream();
-                                        lot.image = BitmapFactory.decodeStream(in,null,options);
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                return null;
-                            }
-                        }.execute();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

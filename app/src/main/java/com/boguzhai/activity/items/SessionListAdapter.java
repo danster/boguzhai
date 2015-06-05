@@ -2,7 +2,6 @@ package com.boguzhai.activity.items;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.boguzhai.activity.auction.AuctionDisplayActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Session;
-import com.boguzhai.logic.thread.Tasks;
+import com.boguzhai.logic.thread.LoadImageTask;
 
 import java.util.ArrayList;
 
@@ -24,16 +23,12 @@ public class SessionListAdapter extends BaseAdapter {
     private Context context;
     private Auction auction;
     private ArrayList<Session> list;
-    private boolean[] imageFlags;
 
 	public SessionListAdapter(Context context, ArrayList<Session> list, Auction auction) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.auction = auction;
         this.list = list;
-
-        // Use boolean[] instead so that all values defaults to false
-        this.imageFlags = new boolean[list.size()];
     }    
     
     @Override    
@@ -60,19 +55,12 @@ public class SessionListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();    
         }
         Session session = list.get(position);
-        holder.image.setBackgroundResource(R.drawable.default_image);
         holder.name.setText(session.name);
         holder.previewTime.setText("预展:" + session.previewTime);
         holder.previewLocation.setText("地点:" + session.previewLocation);
         holder.auctionTime.setText("拍卖:" + session.auctionTime);
         holder.auctionLocation.setText("地点:" + session.auctionLocation);
-
-
-        Log.i("SessionList", "position = " + position + " ,image="+ (imageFlags[position] == false?"false":"true") );
-        if(imageFlags[position] == false){
-            Tasks.showImage(session.imageUrl, holder.image, 2);
-            imageFlags[position] = true;
-        }
+        new LoadImageTask(holder.image, 2).execute(session.imageUrl); // 显示缩略图
 
         convertView.setOnClickListener(new MyOnClickListener(position));
         return convertView;    

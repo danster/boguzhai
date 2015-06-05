@@ -10,13 +10,9 @@ import android.widget.ImageView;
 import com.boguzhai.activity.photowallfalls.ImageLoader;
 import com.boguzhai.logic.utils.ServiceApi;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
@@ -73,6 +69,7 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         Bitmap imageBitmap = imageLoader.getBitmapFromMemoryCache(mImageUrl);
         if (imageBitmap == null) {
+            Log.i("TAG", "there is not memory cache about this url, go to load image");
             imageBitmap = loadImage(mImageUrl);
         }
         return imageBitmap;
@@ -96,10 +93,11 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
     private Bitmap loadImage(String imageUrl) {
         File imageFile = new File(getImagePath(imageUrl));
         if (!imageFile.exists()) {
+            Log.i("TAG", "file not exist: "+imageFile.getPath());
             downloadImage(imageUrl);
         }
         if (imageUrl != null) {
-            Bitmap bitmap = decodeBitmapFromResource(imageFile.getPath(), ratio);
+            Bitmap bitmap = decodeBitmapFromResource(imageFile.getPath(), 1);
             if (bitmap != null) {
                 imageLoader.addBitmapToMemoryCache(imageUrl, bitmap);
                 return bitmap;
@@ -119,54 +117,31 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
         } else {
             Log.d("TAG", "has no sdcard");
         }
-        HttpURLConnection con = null;
-        FileOutputStream fos = null;
-        BufferedOutputStream bos = null;
-        BufferedInputStream bis = null;
-        File imageFile = null;
+
         try {
-            URL url = new URL(imageUrl);
-            con = (HttpURLConnection) url.openConnection();
-            con.setConnectTimeout(5 * 1000);
-            con.setReadTimeout(15 * 1000);
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            bis = new BufferedInputStream(con.getInputStream());
-            imageFile = new File(getImagePath(imageUrl));
-            fos = new FileOutputStream(imageFile);
-            bos = new BufferedOutputStream(fos);
-            byte[] b = new byte[1024];
-            int length;
-            while ((length = bis.read(b)) != -1) {
-                bos.write(b, 0, length);
-                bos.flush();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bis != null) {
-                    bis.close();
-                }
-                if (bos != null) {
-                    bos.close();
-                }
-                if (con != null) {
-                    con.disconnect();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if (imageFile != null) {
-            Bitmap bitmap = decodeBitmapFromResource(imageFile.getPath(), ratio);
+            BitmapFactory.Options options=new BitmapFactory.Options();
+            options.inJustDecodeBounds = false;
+            options.inSampleSize = ratio;
+            InputStream in = new URL(mImageUrl).openStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(in, null, options);
             if (bitmap != null) {
+                // 将一张图片存储到LruCache中
                 imageLoader.addBitmapToMemoryCache(imageUrl, bitmap);
             }
+
+            // 将图片放到SD卡缓存起来
+            File imageFile = new File(getImagePath(imageUrl));
+            FileOutputStream fOut = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private Bitmap decodeBitmapFromResource(String pathName, int mRatio){
+    public static Bitmap decodeBitmapFromResource(String pathName, int mRatio){
         // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -183,10 +158,10 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
      * @param imageUrl 图片的URL地址。
      * @return 图片的本地存储路径。
      */
-    private String getImagePath(String imageUrl) {
+    public static String getImagePath(String imageUrl) {
         int lastSlashIndex = imageUrl.lastIndexOf("/");
         String imageName = imageUrl.substring(lastSlashIndex + 1);
-        String imageDir = Environment.getExternalStorageDirectory().getPath() + "/ShbgzImage/";
+        String imageDir = Environment.getExternalStorageDirectory().getPath() + "/Shbgz/Images/";
         File file = new File(imageDir);
         if (!file.exists()) {
             file.mkdirs();

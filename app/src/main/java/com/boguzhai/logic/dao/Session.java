@@ -1,6 +1,5 @@
 package com.boguzhai.logic.dao;
 
-import android.graphics.Bitmap;
 import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
@@ -19,7 +18,6 @@ public class Session {
     public String name = "";
     public String status = "";     //"" "未开拍" "已开拍" "已结束"
     public String imageUrl = "";
-    public Bitmap image = null;
 
     public String auctionLocation = "";
     public String previewLocation = "";

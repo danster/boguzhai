@@ -1,11 +1,17 @@
 package com.boguzhai.logic.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.widget.ImageView;
 
+import com.boguzhai.activity.photowallfalls.ImageLoader;
+import com.boguzhai.logic.thread.LoadImageTask;
+
+import java.io.File;
 import java.util.List;
 
 public class ServiceApi {
@@ -106,6 +112,25 @@ public class ServiceApi {
      */
     public static boolean hasSDCard() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+    // 判断该URL图片是否缓存在内存中或者保存在SD卡中，若是直接取出填充，否则返回false
+    public static boolean setImageFromMemOrSd(String imageUrl, ImageView imageView){
+        Bitmap bitmap = null;
+        bitmap =  ImageLoader.getInstance().getBitmapFromMemoryCache(imageUrl);
+        if(bitmap == null){
+            File imageFile = new File(LoadImageTask.getImagePath(imageUrl));
+            if (imageFile.exists()) {
+                bitmap = LoadImageTask.decodeBitmapFromResource(imageFile.getPath(), 1);
+            }
+        }
+
+        if(bitmap == null){
+            return false;
+        }else {
+            imageView.setImageBitmap(bitmap);
+            return true;
+        }
     }
 
 }

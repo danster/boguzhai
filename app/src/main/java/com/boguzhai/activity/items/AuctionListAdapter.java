@@ -2,7 +2,6 @@ package com.boguzhai.activity.items;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,6 @@ public class AuctionListAdapter extends BaseAdapter {
     
     @Override    
     public View getView(int position, View convertView, ViewGroup parent) {
-        //Log.i(TAG,"now position" + position);
         ViewHolder holder = null;    
         if (convertView == null) { 
             holder = new ViewHolder();    
@@ -51,9 +49,8 @@ public class AuctionListAdapter extends BaseAdapter {
         holder.auctionType.setText(list.get(position).type);
         holder.auctionName.setText(list.get(position).name);
 
-        Log.i("AuctionList", "position = "+position);
-        ArrayList<Session> session_list = list.get(position).sessionList;
-        SessionListAdapter adapter = new SessionListAdapter(context, session_list, list.get(position));
+        ArrayList<Session> sessionList = list.get(position).sessionList;
+        SessionListAdapter adapter = new SessionListAdapter(context,sessionList,list.get(position));
         holder.sessionList.setAdapter(adapter);
 
         return convertView;    

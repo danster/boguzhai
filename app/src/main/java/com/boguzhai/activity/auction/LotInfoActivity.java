@@ -16,6 +16,7 @@ import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Session;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.LoadImageTask;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
@@ -44,7 +45,7 @@ public class LotInfoActivity extends BaseActivity {
         checkCollectInfo();
 
         ImageView image = (ImageView)findViewById(R.id.lot_image);
-        Tasks.showImage(Variable.currentLot.imageUrl, image, 4);    // 显示缩略图
+        new LoadImageTask(image, 4).execute(Variable.currentLot.imageUrl); // 显示缩略图
         Tasks.showBigImage(Variable.currentLot.imageUrl, image, 1); // 添加listener: 点击缩略图时显示大图
 
         // 获取当前拍品的详细信息
