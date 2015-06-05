@@ -66,7 +66,7 @@ public class MyAuctionAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_my_auction_status.setText("[" + myAuctions.get(position).status + "] ");
+        holder.tv_my_auction_status.setText(myAuctions.get(position).status);
         holder.tv_my_auction_name.setText(myAuctions.get(position).name);
         holder.tv_my_auction_type.setText(myAuctions.get(position).type);
         holder.tv_my_auction_date.setText(myAuctions.get(position).auctionTime);

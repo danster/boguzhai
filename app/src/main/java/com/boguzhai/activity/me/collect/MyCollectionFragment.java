@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -100,8 +101,8 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = (MyCollectionActivity) getActivity();
-        initView();
-        requestData();
+
+        onRefresh();
     }
 
 
@@ -303,6 +304,20 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     }
 
     private class MyCollectionHandler extends HttpJsonHandler {
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                case 9:
+                    swipe_layout_my_collection.setRefreshing(false);
+                    break;
+            }
+        }
+
+
         @Override
         public void handlerData(int code, JSONObject data) {
             switch (code) {
@@ -321,6 +336,9 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                     try {
                         size = Integer.parseInt(data.getString("size"));//每页的数目
                         totalCount = Integer.parseInt(data.getString("count"));//总的数目
+                        if(number == 1 && totalCount == 0) {
+                            Utility.toastMessage("暂无数据");
+                        }
                         currentCount += size;
                         JSONArray jArray = data.getJSONArray("auctionList");
                         CollectionLot lot;
