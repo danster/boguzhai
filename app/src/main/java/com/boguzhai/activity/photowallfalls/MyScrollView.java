@@ -298,28 +298,6 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 		}
 
 		/**
-		 * 根据传入的URL，对图片进行加载。如果这张图片已经存在于SD卡中，则直接从SD卡里读取，否则就从网络上下载。
-		 * 
-		 * @param imageUrl 图片的URL地址
-		 * @return 加载到内存的图片。
-		 */
-		private Bitmap loadImage(String imageUrl) {
-			File imageFile = new File(getImagePath(imageUrl));
-			if (!imageFile.exists()) {
-				downloadImage(imageUrl);
-			}
-			if (imageUrl != null) {
-				Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(imageFile.getPath(),
-						columnWidth);
-				if (bitmap != null) {
-					imageLoader.addBitmapToMemoryCache(imageUrl, bitmap);
-					return bitmap;
-				}
-			}
-			return null;
-		}
-
-		/**
 		 * 向ImageView中添加一张图片
 		 * 
 		 * @param bitmap 待添加的图片
@@ -382,6 +360,28 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 				imageView.setTag(R.string.border_bottom, thirdColumnHeight);
 				return thirdColumn;
 			}
+		}
+
+		/**
+		 * 根据传入的URL，对图片进行加载。如果这张图片已经存在于SD卡中，则直接从SD卡里读取，否则就从网络上下载。
+		 *
+		 * @param imageUrl 图片的URL地址
+		 * @return 加载到内存的图片。
+		 */
+		private Bitmap loadImage(String imageUrl) {
+			File imageFile = new File(getImagePath(imageUrl));
+			if (!imageFile.exists()) {
+				downloadImage(imageUrl);
+			}
+			if (imageUrl != null) {
+				Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(imageFile.getPath(),
+						columnWidth);
+				if (bitmap != null) {
+					imageLoader.addBitmapToMemoryCache(imageUrl, bitmap);
+					return bitmap;
+				}
+			}
+			return null;
 		}
 
 		/**

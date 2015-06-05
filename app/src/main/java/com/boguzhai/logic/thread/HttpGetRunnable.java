@@ -5,7 +5,7 @@ import android.os.Looper;
 
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.utils.HttpClient;
-import com.boguzhai.logic.utils.NetworkApi;
+import com.boguzhai.logic.utils.ServiceApi;
 
 public class HttpGetRunnable implements Runnable{
     private HttpClient conn;
@@ -27,7 +27,7 @@ public class HttpGetRunnable implements Runnable{
          * And 先handler.sendMessage 再conn.get or conn.post， 操作之间是异步操作
          */
 
-        if(!NetworkApi.isNetConnected(Variable.app_context)){
+        if(!ServiceApi.isNetConnected(Variable.app_context)){
             handler.obtainMessage(1,"没有检测到网络, 请检查您的网络").sendToTarget();
             return;
         }

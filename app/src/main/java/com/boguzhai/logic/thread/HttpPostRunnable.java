@@ -2,11 +2,10 @@ package com.boguzhai.logic.thread;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.utils.HttpClient;
-import com.boguzhai.logic.utils.NetworkApi;
+import com.boguzhai.logic.utils.ServiceApi;
 
 public class HttpPostRunnable implements Runnable{
     private HttpClient conn;
@@ -20,7 +19,7 @@ public class HttpPostRunnable implements Runnable{
     @Override
     public void run() {
         Looper.prepare();
-        if(!NetworkApi.isNetConnected(Variable.app_context)){
+        if(!ServiceApi.isNetConnected(Variable.app_context)){
             handler.obtainMessage(1,"没有检测到网络, 请检查您的网络").sendToTarget();
             return;
         }
