@@ -1,5 +1,6 @@
 package com.boguzhai.activity.me.bidding;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.BiddingLot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
@@ -104,14 +106,16 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
 
         @Override
         public void handlerData(int code, JSONObject data) {
-            super.handlerData(code, data);
             switch (code) {
+                case -1:
+                    startActivityForResult(new Intent(context, LoginActivity.class), 0);
+                    break;
                 case 1:
                     Utility.toastMessage("网络异常，获取信息失败");
                     break;
                 case 0:
                     Log.i(TAG, "获取信息成功");
-                    Utility.toastMessage("刷新成功");
+
                     swipe_layout.setRefreshing(false);
                     JSONArray jArray;
                     try {
@@ -121,6 +125,8 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
 
                         if(jArray.length() == 0) {
                             Utility.toastMessage("暂无数据");
+                        }else {
+                            Utility.toastMessage("刷新成功");
                         }
                         for(int j = 0; j < jArray.length(); j++) {
                             biddingAuction = new BiddingAuction();
@@ -137,7 +143,7 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
                             for (int i = 0; i < array.length(); i++) {
                                 BiddingLot lot = new BiddingLot();
                                 lot.id = array.getJSONObject(j).getString("id");
-                                lot.isLeader = array.getJSONObject(j).getInt("isLeader");
+                                lot.isLeader = array.getJSONObject(j).getString("isLeader");
                                 lot.no = array.getJSONObject(j).getString("no");
                                 lot.name = array.getJSONObject(j).getString("name");
                                 lot.biddingCount = array.getJSONObject(j).getInt("biddingCount");
@@ -145,41 +151,41 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
                                 lot.appraisal2 = Double.parseDouble(array.getJSONObject(j).getString("appraisal2"));
                                 lot.startPrice = Double.parseDouble(array.getJSONObject(j).getString("startPrice"));
                                 lot.currentPrice = Double.parseDouble(array.getJSONObject(j).getString("currentPrice"));
-                                lot.topPrice = Double.parseDouble(array.getJSONObject(j).getString("myTopPrice"));
+                                lot.topPrice = array.getJSONObject(j).getString("myTopPrice");
                                 lot.imageUrl = array.getJSONObject(j).getString("image");
                                 biddingAuction.lotList.add(lot);
                             }
                             biddingAuctionList.add(biddingAuction);
-                            // 网络批量下载拍品图片
-                            final BiddingAuction finalBiddingAuction = biddingAuction;
-                            new AsyncTask<Void, Void, Void>() {
-                                @Override
-                                protected Void doInBackground(Void... params) {
-                                    try {
-                                        BitmapFactory.Options options = new BitmapFactory.Options();
-                                        options.inJustDecodeBounds = false;
-                                        options.inSampleSize = 5; //width，hight设为原来的 .. 分之一
+                        }
+                        initData();
+                        // 网络批量下载拍品图片
+                        new AsyncTask<Void, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Void... params) {
+                                try {
+                                    BitmapFactory.Options options = new BitmapFactory.Options();
+                                    options.inJustDecodeBounds = false;
+                                    options.inSampleSize = 5; //width，hight设为原来的 .. 分之一
 
-                                        Log.i(TAG, "开始下载图片");
-                                        for (BiddingLot lot : finalBiddingAuction.lotList) {
+                                    Log.i(TAG, "开始下载图片");
+                                    for(BiddingAuction auction : biddingAuctionList) {
+                                        for (BiddingLot lot : auction.lotList) {
                                             InputStream in = new URL(lot.imageUrl).openStream();
                                             lot.image = BitmapFactory.decodeStream(in, null, options);
                                         }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
                                     }
-                                    return null;
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
+                                return null;
+                            }
 
-                                @Override
-                                protected void onPostExecute(Void result) {
-                                    adapter.notifyDataSetChanged();
-                                    Log.i(TAG, "图片下载完成");
-                                }
-                            }.execute();
-
-                        }
-                        initData();
+                            @Override
+                            protected void onPostExecute(Void result) {
+                                adapter.notifyDataSetChanged();
+                                Log.i(TAG, "图片下载完成");
+                            }
+                        }.execute();
                         Log.i(TAG, "我的竞价数据解析完毕");
                     } catch (JSONException e) {
                         Log.i(TAG, "json解析异常");
@@ -187,6 +193,14 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
                     }
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(!Variable.isLogin){
+            finish();
         }
     }
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
@@ -44,7 +45,10 @@ public class SystemSettingsActivity extends BaseActivity {
     private HttpHandler downLoadHandler;
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
+    private AlertDialog downLoadDialog;
+    private TextView tv_download;
 
+    private AlertDialog.Builder downLoadBuilder;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,7 +59,7 @@ public class SystemSettingsActivity extends BaseActivity {
 
 	protected void init(){
 
-
+        downLoadDialog = new AlertDialog.Builder(this).create();
 
         int ids[]={R.id.ll_app_update, R.id.ll_pwd, R.id.ll_about, R.id.ll_guide, R.id.ll_advice};
         listen(ids);
@@ -98,10 +102,23 @@ public class SystemSettingsActivity extends BaseActivity {
         }
     }
 
+
+
+    private void installApp() {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setDataAndType(Uri.fromFile(new File(Environment
+                        .getExternalStorageDirectory(),
+                        "boguzhai.apk")),
+                "application/vnd.android.package-archive");
+        startActivityForResult(intent, 0);
+    }
+
     private void downloadApp() {
         HttpUtils http = new HttpUtils();
         builder = new AlertDialog.Builder(this);
-        downLoadHandler = http.download(downloadUrl, Environment.getExternalStorageDirectory() + "boguzhai.apk",
+        downLoadHandler = http.download(downloadUrl, Environment.getExternalStorageDirectory() + "/boguzhai.apk",
                 new RequestCallBack<File>() {
 
                     @Override
@@ -113,6 +130,7 @@ public class SystemSettingsActivity extends BaseActivity {
                     @Override
                     public void onSuccess(ResponseInfo<File> arg0) {
                         showAppDownLoadSucessDialog();
+
                     }
 
                     @Override
@@ -123,7 +141,11 @@ public class SystemSettingsActivity extends BaseActivity {
                     @Override
                     public void onLoading(long total, long current,
                                           boolean isUploading) {
-                        showAppDownLodingDialog(total, current);
+                        if(!downLoadDialog.isShowing()) {
+                            showAppDownLodingDialog(total, current);
+                        }else {
+                            tv_download.setText(total + "kb" + "/" + current + "kb");
+                        }
                     }
                 });
     }
@@ -133,26 +155,6 @@ public class SystemSettingsActivity extends BaseActivity {
      * 连接服务器，检查更新
      */
     private void checkVersion() {
-
-        //显示正在检查更新对话框
-//        builder.setTitle("正在检查更新...");
-//        builder.setMessage(updateDescription);
-//        builder.setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                Log.i(TAG, "下载地址" + downloadUrl);
-//                downloadApp();
-//            }
-//        });
-//        dialog = builder.show();
-
         conn = new HttpClient();
         conn.setUrl(Constant.url.replace("/phones/","/") + "uploadDownAction!checkVersion.htm");
         new Thread(new HttpPostRunnable(conn, new MyAppUpateHandler())).start();
@@ -214,8 +216,8 @@ public class SystemSettingsActivity extends BaseActivity {
     }
 
     private void showAppDownLodingDialog(long total, long current) {
+        builder = new AlertDialog.Builder(this);
         builder.setTitle("版本更新");
-        builder.setMessage("正在下载:" + current / 1024+ "kb" + "/" + total / 1024 + "kb");
         builder.setPositiveButton("取消下载", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -223,7 +225,11 @@ public class SystemSettingsActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
-        dialog = builder.show();
+        View view = View.inflate(this, R.layout.settings_app_download_dialog, null);
+        tv_download = (TextView) view.findViewById(R.id.me_system_settings_download_dialog);
+        builder.setView(view);
+        downLoadDialog = builder.create();
+        downLoadDialog.show();
     }
 
     private void showBeforeAppDownDialog() {
@@ -241,6 +247,7 @@ public class SystemSettingsActivity extends BaseActivity {
     }
 
     private void showAppDownLoadSucessDialog() {
+        downLoadDialog.dismiss();
         dialog.dismiss();
         builder = new AlertDialog.Builder(this);
         builder.setTitle("版本更新");
@@ -248,14 +255,7 @@ public class SystemSettingsActivity extends BaseActivity {
         builder.setPositiveButton("安装", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent();
-                intent.setAction("android.intent.action.VIEW");
-                intent.addCategory("android.intent.category.DEFAULT");
-                intent.setDataAndType(Uri.fromFile(new File(Environment
-                                .getExternalStorageDirectory(),
-                                "boguzhai.apk")),
-                        "application/vnd.android.package-archive");
-                startActivityForResult(intent, 0);
+                installApp();
             }
         });
         builder.show();

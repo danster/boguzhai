@@ -1,6 +1,5 @@
 package com.boguzhai.activity.me.collect;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +14,9 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.photowallfalls.ImageDetailsActivity;
 import com.boguzhai.logic.dao.CollectionLot;
+import com.boguzhai.logic.utils.Utility;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -45,6 +46,7 @@ public class MyCollectionAdapter extends BaseAdapter {
     public List<CollectionLot> lots;
     private Context mContext;
     private LayoutInflater inflater;
+    private boolean isShowing = false;
 
     MyCollectionAdapter(Context context, List<CollectionLot> lots) {
         this.mContext = context;
@@ -112,65 +114,74 @@ public class MyCollectionAdapter extends BaseAdapter {
 //        Tasks.showBigImage(lots.get(position).imageUrl, holder.my_collection_lot_image, 4);
         holder.my_collection_lot_image.setImageBitmap(lots.get(position).image);
 
-
         holder.my_collection_lot_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                new AsyncTask<Void, Void, Void>() {
-                    Bitmap bmp = null;
-                    int imageRatio = 1;
-                    String imageUrl = lots.get(position).imageUrl;
+                if(!isShowing) {
+                    isShowing = true;
+                    new AsyncTask<Void, Void, Void>() {
+                        Bitmap bmp = null;
+                        int imageRatio = 1;
+                        String imageUrl = lots.get(position).imageUrl;
 
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                        }
 
+                        @Override
+                        protected void onCancelled() {
+                            super.onCancelled();
+                            isShowing = false;
+                        }
 
-
-
-                    }
-
-                    @Override
-                    protected Void doInBackground(Void... params) {
-                        if (imageUrl.equals("")) {
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            if (imageUrl.equals("")) {
+                                return null;
+                            }
+                            try {
+                                Log.i("AsyncTask", "image get: " + imageUrl);
+                                BitmapFactory.Options options = new BitmapFactory.Options();
+                                options.inJustDecodeBounds = false;
+                                options.inSampleSize = imageRatio; // height, width 变为原来的ratio分之一
+                                InputStream inputStream = new URL(imageUrl).openStream();
+                                bmp = BitmapFactory.decodeStream(inputStream, null, options);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             return null;
                         }
-                        try {
-                            Log.i("AsyncTask", "image get: " + imageUrl);
-                            BitmapFactory.Options options = new BitmapFactory.Options();
-                            options.inJustDecodeBounds = false;
-                            options.inSampleSize = imageRatio; // height, width 变为原来的ratio分之一
-                            InputStream inputStream = new URL(imageUrl).openStream();
-                            bmp = BitmapFactory.decodeStream(inputStream, null, options);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return null;
-                    }
 
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        if (bmp != null) {
-                            Log.i("AsyncTask", "image get: succeed !");
-                            LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
-                            View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
-                            ((ImageView) imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
-                            final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
-                            dialog.setView(imgEntryView); // 自定义dialog
-                            dialog.show();
-
-                            // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-                            imgEntryView.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View paramView) {
-                                    dialog.cancel();
-                                }
-                            });
-                        } else {
-                            Log.i("AsyncTask", "image get: failed !");
+                        @Override
+                        protected void onPostExecute(Void result) {
+                            if (bmp != null) {
+                                Variable.currentBitmap = bmp;
+                                Utility.gotoActivity(ImageDetailsActivity.class);
+                                isShowing = false;
+//                                Log.i("AsyncTask", "image get: succeed !");
+//                                LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
+//                                View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
+//                                ((ImageView) imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
+//                                final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
+//                                dialog.setView(imgEntryView); // 自定义dialog
+//                                dialog.show();
+//
+//                                // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
+//                                imgEntryView.setOnClickListener(new View.OnClickListener() {
+//                                    public void onClick(View paramView) {
+//                                        dialog.cancel();
+//                                        isShowing = false;
+//                                    }
+//                                });
+                            } else {
+                                Log.i("AsyncTask", "image get: failed !");
+                            }
                         }
-                    }
-                }.execute();
+                    }.execute();
+                }
+
 
 
             }

@@ -101,7 +101,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = (MyCollectionActivity) getActivity();
-
+        initView();
         onRefresh();
     }
 
@@ -297,6 +297,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     public void onLoadMore() {
         Log.i(TAG, "加载更多");
         if (currentCount >= totalCount) {
+            lv_my_collection.stopLoadMore();
             Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
         }
         number++;
@@ -328,7 +329,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                 case -1:
                     number--;
                     Toast.makeText(mContext, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    startActivityForResult(new Intent(mContext, LoginActivity.class), 0);
                     break;
                 case 0:
                     Log.i(TAG, "获取我的收藏信息成功");
@@ -520,5 +521,11 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         }
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(!Variable.isLogin) {
+            mContext.finish();
+        }
+    }
 }
