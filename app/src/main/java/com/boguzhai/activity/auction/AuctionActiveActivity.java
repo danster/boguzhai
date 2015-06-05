@@ -20,6 +20,7 @@ import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Record;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.LoadImageTask;
 import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
@@ -47,15 +48,15 @@ public class AuctionActiveActivity extends BaseActivity {
     private String payInfo="", payMoney="", payBalance="";
 
     // 竞拍大厅信息，当前拍品，下一拍品，出价页面
-    LinearLayout ly_lotinfo_1, ly_lotinfo_2, ly_price;
-    ImageView lot_info_image_1, lot_info_image_2;
+    LinearLayout ly_lot1, ly_lot2, ly_price;
+    ImageView lot_image1, lot_image2;
 
-    TextView lot_status, lot_info_name_1, lot_info_name_2, lot_info_no_1, lot_info_no_2, lot_info_apprisal_1,
-            lot_info_apprisal_2, lot_info_start_price_1, lot_info_start_price_2;
+    TextView lot_status, lot_name1, lot_name2, lot_no1, lot_no2, lot_apprisal1, lot_apprisal2,
+             lot_startprice1, lot_startprice2;
 
     TextView tips;
-    TextView bid_info_seconds, bid_info_now_price, bid_info_next_money, bid_info_min_money, bid_info_number;
-    EditText bid_info_input_money;
+    TextView bid_seconds, bid_now_price, bid_next_price, bid_min_inc, bid_biddingNo;
+    EditText bid_input_money;
 
     private Lot currentLot=null, nextLot=null;
     private String currentLotId="", nextLotId="", nextPrice="";
@@ -75,29 +76,29 @@ public class AuctionActiveActivity extends BaseActivity {
     public void init(){
         ly_price = (LinearLayout)findViewById(R.id.price);
         tips = (TextView)findViewById(R.id.tips);
-        ly_lotinfo_1 = (LinearLayout)findViewById(R.id.lot_info_layout_1);
-        ly_lotinfo_2 = (LinearLayout)findViewById(R.id.lot_info_layout_2);
+        ly_lot1 = (LinearLayout)findViewById(R.id.lot_info_layout_1);
+        ly_lot2 = (LinearLayout)findViewById(R.id.lot_info_layout_2);
         findViewById(R.id.ly_main).setVisibility(View.GONE);
-        ly_lotinfo_2.setVisibility(View.GONE);
+        ly_lot2.setVisibility(View.GONE);
 
-        lot_info_image_1 = (ImageView)findViewById(R.id.lot_info_image_1);
-        lot_info_image_2 = (ImageView)findViewById(R.id.lot_info_image_2);
+        lot_image1 = (ImageView)findViewById(R.id.lot_info_image_1);
+        lot_image2 = (ImageView)findViewById(R.id.lot_info_image_2);
         lot_status = (TextView)findViewById(R.id.lot_status);
-        lot_info_no_1 = (TextView)findViewById(R.id.lot_info_no_1);
-        lot_info_no_2 = (TextView)findViewById(R.id.lot_info_no_2);
-        lot_info_name_1 = (TextView)findViewById(R.id.lot_info_name_1);
-        lot_info_name_2 = (TextView)findViewById(R.id.lot_info_name_2);
-        lot_info_apprisal_1 = (TextView)findViewById(R.id.lot_info_apprisal_1);
-        lot_info_apprisal_2 = (TextView)findViewById(R.id.lot_info_apprisal_2);
-        lot_info_start_price_1 = (TextView)findViewById(R.id.lot_info_start_price_1);
-        lot_info_start_price_2 = (TextView)findViewById(R.id.lot_info_start_price_2);
+        lot_no1 = (TextView)findViewById(R.id.lot_info_no_1);
+        lot_no2 = (TextView)findViewById(R.id.lot_info_no_2);
+        lot_name1 = (TextView)findViewById(R.id.lot_info_name_1);
+        lot_name2 = (TextView)findViewById(R.id.lot_info_name_2);
+        lot_apprisal1 = (TextView)findViewById(R.id.lot_info_apprisal_1);
+        lot_apprisal2 = (TextView)findViewById(R.id.lot_info_apprisal_2);
+        lot_startprice1 = (TextView)findViewById(R.id.lot_info_start_price_1);
+        lot_startprice2 = (TextView)findViewById(R.id.lot_info_start_price_2);
 
-        bid_info_input_money = (EditText)findViewById(R.id.bid_info_input_money);
-        bid_info_seconds = (TextView)findViewById(R.id.bid_info_seconds);
-        bid_info_now_price = (TextView)findViewById(R.id.bid_info_now_price);
-        bid_info_next_money = (TextView)findViewById(R.id.bid_info_next_money);
-        bid_info_min_money = (TextView)findViewById(R.id.bid_info_min_money);
-        bid_info_number = (TextView)findViewById(R.id.bid_info_number);
+        bid_input_money = (EditText)findViewById(R.id.bid_info_input_money);
+        bid_seconds = (TextView)findViewById(R.id.bid_info_seconds);
+        bid_now_price = (TextView)findViewById(R.id.bid_info_now_price);
+        bid_next_price = (TextView)findViewById(R.id.bid_info_next_money);
+        bid_min_inc = (TextView)findViewById(R.id.bid_info_min_money);
+        bid_biddingNo = (TextView)findViewById(R.id.bid_info_number);
 
         int[] ids = {R.id.bid_info_next_money, R.id.bid_info_enter_money};
         listen(ids);
@@ -162,7 +163,7 @@ public class AuctionActiveActivity extends BaseActivity {
                                 mobile = data.getString("mobile");
                                 biddingNo = data.getString("biddingNo");
                                 identityNumber = data.getString("identityNumber");
-                                bid_info_number.setText("我的号牌: " + biddingNo);
+                                bid_biddingNo.setText("我的号牌: " + biddingNo);
 
                                 // status: 0-申请已支付 1-申请未支付 2-未申请
                                 if( status.equals("0") ) {
@@ -208,7 +209,7 @@ public class AuctionActiveActivity extends BaseActivity {
                 break;
 
             case R.id.bid_info_enter_money:
-                String price = bid_info_input_money.getText().toString();
+                String price = bid_input_money.getText().toString();
                 if(price.equals("")){
                     Utility.toastMessage("出价不能为空");
                 } else {
@@ -331,14 +332,14 @@ public class AuctionActiveActivity extends BaseActivity {
                     if(countTask!=null) {
                         countTask.cancel();
                     }
-                    countTask = new CountTask(bid_info_seconds, count);
+                    countTask = new CountTask(bid_seconds, count);
                     new Timer().schedule(countTask, 0, 1000); // 更新倒计时信息
-                    bid_info_now_price.setText(data.getString("currentPriceForRMB"));   // 显示当前价格
+                    bid_now_price.setText(data.getString("currentPriceForRMB")); // 显示当前价格
 
                     // 出价页面信息展示
-                    bid_info_min_money.setText("最小加价幅度:￥"+data.getString("minIncrement")); // 显示最小加价幅度
+                    bid_min_inc.setText("最小加价幅度:￥" + data.getString("minIncrement")); // 显示最小加价幅度
                     nextPrice = data.getString("nextPrice"); // 设置下一推荐出价
-                    bid_info_next_money.setText("￥"+data.getString("nextPrice"));    // 显示下一推荐出价
+                    bid_next_price.setText("￥" + data.getString("nextPrice")); // 显示下一推荐出价
 
                     // 更新当前出价记录
                     JSONArray records = data.getJSONArray("records");
@@ -383,20 +384,19 @@ public class AuctionActiveActivity extends BaseActivity {
                                                 e.printStackTrace();
                                             }
                                             currentLot = lot;
-                                            lot_info_name_1.setText(lot.name);
-                                            lot_info_no_1.setText("图录号:"+lot.no);
-                                            lot_info_apprisal_1.setText("预估价:"+lot.appraisal1+"-"+lot.appraisal2);
-                                            lot_info_start_price_1.setText("起拍价:" + lot.startPrice);
-                                            Tasks.showImage(lot.imageUrl, lot_info_image_1, 5); // 显示图片
-
-                                            findViewById(R.id.lot_info_moreinfo_1).
-                                                    setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View v) {
-                                                            Variable.currentLot = currentLot;
-                                                            Utility.gotoActivity(LotInfoActivity.class);
-                                                        }
-                                                    });
+                                            lot_name1.setText(lot.name);
+                                            lot_no1.setText("图录号:" + lot.no);
+                                            lot_apprisal1.setText("预估价:" + lot.appraisal1 + "-" + lot.appraisal2);
+                                            lot_startprice1.setText("起拍价:" + lot.startPrice);
+                                            new LoadImageTask(lot_image1,4).execute(lot.imageUrl); // 显示缩略图
+                                            Tasks.showBigImage(lot.imageUrl, lot_image1, 1); // 点击缩略图时显示大图
+                                            findViewById(R.id.lot_info_moreinfo_1).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Variable.currentLot = currentLot;
+                                                    Utility.gotoActivity(LotInfoActivity.class);
+                                                }
+                                            });
 
                                             break;
                                         default:
@@ -410,7 +410,7 @@ public class AuctionActiveActivity extends BaseActivity {
 
                     if(nextAuctionId.equals("")){
                         nextLotId = "";
-                        ly_lotinfo_2.setVisibility(View.GONE);
+                        ly_lot2.setVisibility(View.GONE);
                     } else {
                         if(!nextAuctionId.equals(nextLotId)){
                             nextLotId = nextAuctionId;
@@ -423,7 +423,7 @@ public class AuctionActiveActivity extends BaseActivity {
                                     super.handlerData(code, data);
                                     switch (code){
                                         case 0:
-                                            ly_lotinfo_2.setVisibility(View.VISIBLE);
+                                            ly_lot2.setVisibility(View.VISIBLE);
                                             Lot lot = null;
                                             try {
                                                 lot = Lot.parseJson(data.getJSONObject("auctionInfo"));
@@ -431,20 +431,19 @@ public class AuctionActiveActivity extends BaseActivity {
                                                 e.printStackTrace();
                                             }
                                             nextLot = lot;
-                                            lot_info_name_2.setText(lot.name);
-                                            lot_info_no_2.setText("图录号:"+lot.no);
-                                            lot_info_apprisal_2.setText("预估价:"+lot.appraisal1+"-"+lot.appraisal2);
-                                            lot_info_start_price_2.setText("起拍价:"+lot.startPrice);
-                                            Tasks.showImage(lot.imageUrl, lot_info_image_2, 5); // 显示图片
-
-                                            findViewById(R.id.lot_info_moreinfo_2).
-                                                    setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View v) {
-                                                            Variable.currentLot = nextLot;
-                                                            Utility.gotoActivity(LotInfoActivity.class);
-                                                        }
-                                                    });
+                                            lot_name2.setText(lot.name);
+                                            lot_no2.setText("图录号:" + lot.no);
+                                            lot_apprisal2.setText("预估价:" + lot.appraisal1 + "-" + lot.appraisal2);
+                                            lot_startprice2.setText("起拍价:" + lot.startPrice);
+                                            new LoadImageTask(lot_image2,4).execute(lot.imageUrl); // 显示缩略图
+                                            Tasks.showBigImage(lot.imageUrl, lot_image2, 1); // 点击缩略图时显示大图
+                                            findViewById(R.id.lot_info_moreinfo_2).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Variable.currentLot = nextLot;
+                                                    Utility.gotoActivity(LotInfoActivity.class);
+                                                }
+                                            });
 
                                             break;
                                         default:
