@@ -15,7 +15,7 @@ import com.boguzhai.activity.me.bidding.BiddingActivity;
 import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
 import com.boguzhai.activity.me.myauction.MyAuctionActivity;
-import com.boguzhai.activity.me.mylot.MylotActivity;
+import com.boguzhai.activity.me.mylot.MyLotActivity;
 import com.boguzhai.activity.me.order.PayOrderActivity;
 import com.boguzhai.activity.me.settings.SystemSettingsActivity;
 import com.boguzhai.activity.me.upload.UploadLotActivity;
@@ -98,7 +98,7 @@ public class MeFragment extends Fragment {
                     break;
                 case R.id.me_mylot:
                     if(Variable.isLogin==true) {
-                        Utility.gotoActivity(MylotActivity.class);
+                        Utility.gotoActivity(MyLotActivity.class);
                     } else {
                         Utility.gotoLogin();
                     }

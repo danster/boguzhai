@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MylotActivity extends BaseActivity {
+public class MyLotActivity extends BaseActivity {
 	private XListView listview;
 	private MylotAuctionListAdapter adapter;
 	private ArrayList<MylotAuction> list;
@@ -77,16 +77,16 @@ public class MylotActivity extends BaseActivity {
 //		})).start();
 
 		// 提交订单信息
-		HttpClient conn = new HttpClient();
-		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-		conn.setParam("price","2300.5");
-		conn.setUrl(Constant.url + "pTraceAction!getSupportPrice.htm");
-		new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-			@Override
-			public void handlerData(int code, JSONObject data) {
-				super.handlerData(code, data);
-			}
-		})).start();
+//		HttpClient conn = new HttpClient();
+//		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+//		conn.setParam("price","2300.5");
+//		conn.setUrl(Constant.url + "pTraceAction!getSupportPrice.htm");
+//		new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+//			@Override
+//			public void handlerData(int code, JSONObject data) {
+//				super.handlerData(code, data);
+//			}
+//		})).start();
 
 	}
 

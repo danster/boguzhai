@@ -1,103 +1,202 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-<include
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    layout="@layout/item_titlebar" />
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
-    <LinearLayout
+    <include
+        layout="@layout/item_titlebar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout style="@style/base_bar"
-            android:layout_marginTop="5dp">
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:src="@drawable/base_search"/>
-            <EditText android:id="@+id/keyword"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:gravity="center|left"
-                android:lines="1"
-                android:background="@color/transparent"
-                android:hint="输入拍品关键字"/>
-        </LinearLayout>
+        android:layout_height="60dp" />
 
-        <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
-            <TextView style="@style/search_left_text" android:text="请选择分类一 "/>
-            <Spinner android:id="@+id/type1" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
-        <View style="@style/longline" />
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/search_left_text" android:text="请选择分类二 "/>
-            <Spinner android:id="@+id/type2" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
-        <View style="@style/longline" />
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/search_left_text" android:text="请选择分类三 "/>
-            <Spinner android:id="@+id/type3" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/base_bar"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_circle_rectangle">
+
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/base_search" />
+
+                    <EditText
+                        android:id="@+id/keyword"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:gravity="center|left"
+                        android:hint="输入拍品关键字"
+                        android:lines="1" />
 
 
-        <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
-            <TextView style="@style/search_left_text" android:text="请选择拍卖会状态 "/>
-            <Spinner android:id="@+id/auction_status" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
-        <View style="@style/longline" />
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/search_left_text" android:text="请选择拍卖会方式 "/>
-            <Spinner android:id="@+id/auction_type" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
-        <View style="@style/longline" />
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/search_left_text" android:text="请选择拍卖会 "/>
-            <Spinner android:id="@+id/auction" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
-        <View style="@style/longline" />
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/search_left_text" android:text="请选择专场 "/>
-            <Spinner android:id="@+id/session" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
+                </LinearLayout>
 
-        <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
-            <TextView style="@style/search_left_text" android:text="请选择拍品状态 "/>
-            <Spinner android:id="@+id/lot_status" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
-        <View style="@style/longline" />
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/search_left_text" android:text="请选择成交方式 "/>
-            <Spinner android:id="@+id/lot_deal_type" style="@style/lot_filter_spinner"></Spinner>
-            <ImageView style="@style/search_right_arrow" />
-        </LinearLayout>
+            </LinearLayout>
 
-    </LinearLayout>
-</ScrollView>
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="55dp"
-    android:layout_marginTop="12dp"
-    android:background="@color/gold"
-    android:textColor="@color/white"
-    android:textSize="18sp"
-    android:id="@+id/search"
-    android:text="搜索"/>
+            <LinearLayout
+                style="@style/base_bar"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择分类一 " />
+
+                <Spinner
+                    android:id="@+id/type1"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+            <View style="@style/longline" />
+
+            <LinearLayout style="@style/base_bar">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择分类二 " />
+
+                <Spinner
+                    android:id="@+id/type2"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+            <View style="@style/longline" />
+
+            <LinearLayout style="@style/base_bar">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择分类三 " />
+
+                <Spinner
+                    android:id="@+id/type3"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/base_bar"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择拍卖会状态 " />
+
+                <Spinner
+                    android:id="@+id/auction_status"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+            <View style="@style/longline" />
+
+            <LinearLayout style="@style/base_bar">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择拍卖会方式 " />
+
+                <Spinner
+                    android:id="@+id/auction_type"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+            <View style="@style/longline" />
+
+            <LinearLayout style="@style/base_bar">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择拍卖会 " />
+
+                <Spinner
+                    android:id="@+id/auction"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+            <View style="@style/longline" />
+
+            <LinearLayout style="@style/base_bar">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择专场 " />
+
+                <Spinner
+                    android:id="@+id/session"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/base_bar"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择拍品状态 " />
+
+                <Spinner
+                    android:id="@+id/lot_status"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+            <View style="@style/longline" />
+
+            <LinearLayout style="@style/base_bar">
+
+                <TextView
+                    style="@style/search_left_text"
+                    android:text="请选择成交方式 " />
+
+                <Spinner
+                    android:id="@+id/lot_deal_type"
+                    style="@style/lot_filter_spinner"></Spinner>
+
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/gold"
+        android:text="搜索"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </LinearLayout>

@@ -8,31 +8,38 @@
         android:layout_height="60dp"
         layout="@layout/item_titlebar" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="@color/white"
-        android:orientation="horizontal">
         <RadioGroup
             android:id="@+id/auction_status_tab"
             android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="45dp" >
             <RadioButton android:id="@+id/auction_status_all"
-                style="@style/auction_status_tab"
+                android:textColor="@color/black"
+                android:background="@color/white"
+                android:drawableBottom="@drawable/top_tab_selector"
+                style="@style/my_auction_tab"
                 android:text="全部"/>
             <RadioButton android:id="@+id/auction_status_preview"
-                style="@style/auction_status_tab"
+                android:textColor="@color/black"
+                android:background="@color/white"
+                android:drawableBottom="@drawable/top_tab_selector"
+                style="@style/my_auction_tab"
                 android:text="预展中"/>
             <RadioButton android:id="@+id/auction_status_bid"
-                style="@style/auction_status_tab"
+                android:textColor="@color/black"
+                android:background="@color/white"
+                android:drawableBottom="@drawable/top_tab_selector"
+                style="@style/my_auction_tab"
                 android:text="拍卖中"/>
             <RadioButton android:id="@+id/auction_status_over"
-                style="@style/auction_status_tab"
+                android:textColor="@color/black"
+                android:background="@color/white"
+                android:drawableBottom="@drawable/top_tab_selector"
+                style="@style/my_auction_tab"
                 android:text="已结束"/>
         </RadioGroup>
-    </LinearLayout>
 
     <!-- 展示各种拍卖会 -->
     <ScrollView
@@ -40,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.boguzhai.logic.widget.ListViewForScrollView
+            android:divider="@drawable/shape_listview_divider"
             android:id="@+id/auction_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
