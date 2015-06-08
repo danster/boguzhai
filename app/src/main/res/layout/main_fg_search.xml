@@ -17,7 +17,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout style="@style/base_bar"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_circle_rectangle">
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -37,47 +38,56 @@
         <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
             <TextView style="@style/search_left_text" android:text="请选择分类一 "/>
             <Spinner android:id="@+id/type1" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
         <View style="@style/longline" />
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/search_left_text" android:text="请选择分类二 "/>
             <Spinner android:id="@+id/type2" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
         <View style="@style/longline" />
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/search_left_text" android:text="请选择分类三 "/>
             <Spinner android:id="@+id/type3" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
 
 
         <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
             <TextView style="@style/search_left_text" android:text="请选择拍卖会状态 "/>
             <Spinner android:id="@+id/auction_status" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
         <View style="@style/longline" />
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/search_left_text" android:text="请选择拍卖会方式 "/>
             <Spinner android:id="@+id/auction_type" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
         <View style="@style/longline" />
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/search_left_text" android:text="请选择拍卖会 "/>
             <Spinner android:id="@+id/auction" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
         <View style="@style/longline" />
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/search_left_text" android:text="请选择专场 "/>
             <Spinner android:id="@+id/session" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
 
         <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
             <TextView style="@style/search_left_text" android:text="请选择拍品状态 "/>
             <Spinner android:id="@+id/lot_status" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
         <View style="@style/longline" />
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/search_left_text" android:text="请选择成交方式 "/>
             <Spinner android:id="@+id/lot_deal_type" style="@style/lot_filter_spinner"></Spinner>
+            <ImageView style="@style/search_right_arrow" />
         </LinearLayout>
 
     </LinearLayout>
