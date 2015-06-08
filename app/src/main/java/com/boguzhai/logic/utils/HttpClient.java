@@ -23,7 +23,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.ConnectionPoolTimeoutException;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -37,7 +36,6 @@ import org.apache.http.entity.mime.MIME;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -68,13 +66,12 @@ public class HttpClient {
     private static String regex = "^(http://|https://)?((?:[A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\\.)+([A-Za-z]+)[/\\?\\:]?.*$" ;
     private static Pattern pattern = Pattern.compile(regex);
 
-
     public org.apache.http.client.HttpClient httpClient = null;  //HTTP 客户端连接管理器
     public String url = "";
     public String requestType = "GET";
-    public int connectionPoolTimeout = 5000; //从ConnectionManager管理的连接池中取出连接的超时时间，毫秒
-    public int connectionTimeout = 7500; //通过网络与服务器建立连接的超时时间(请求超时)，毫秒
-    public int socketTimeout = 20000; //Socket读数据的超时时间，即从服务器获取响应数据需要等待的时间，毫秒
+    public int connectionPoolTimeout = 4000; //从ConnectionManager管理的连接池中取出连接的超时时间，毫秒
+    public int connectionTimeout = 5000; //通过网络与服务器建立连接的超时时间(请求超时)，毫秒
+    public int socketTimeout = 10000; //Socket读数据的超时时间，即从服务器获取响应数据需要等待的时间，毫秒
 
     public HttpRequestBase httpRequest = null; //HTTP 请求管理器
     public HttpParams httpParameters = null;   //HTTP 请求的配置参数
@@ -226,32 +223,27 @@ public class HttpClient {
         schReg.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
 
         // 使用线程安全的连接管理来创建HttpClient
-        ClientConnectionManager cm =new ThreadSafeClientConnManager(httpParameters, schReg);
-
+        // ClientConnectionManager cm =new ThreadSafeClientConnManager(httpParameters, schReg);
         // 创建一个客户端HTTP请求
-        // 如果不使用连接管理器：this.httpClient =new DefaultHttpClient(httpParameters);
-        this.httpClient =new DefaultHttpClient(cm, httpParameters);
+        // 如果使用连接管理器：this.httpClient =new DefaultHttpClient(cm, httpParameters);
+        this.httpClient =new DefaultHttpClient(httpParameters);
         // ((AbstractHttpClient)this.httpClient ).setHttpRequestRetryHandler(requestRetryHandler);
 
         try {
-        	Log.i(TAG,"http connect: start ... ");
 			this.httpResponse = this.httpClient.execute(this.httpRequest); // 发送HTTP请求并获取服务端响应
         } catch (IOException e) {
-            Log.i(TAG,"http connect: IO Exception when executing request !");
+            Log.i(TAG,"http request: IO Exception when executing request !");
             e.printStackTrace();
             this.responseEntity = null;
             return;
 		}
 
-        Log.i(TAG,"http connect: end.");
-        //this.httpResponse.getFirstHeader("sessionid");
         this.statusCode = this.httpResponse.getStatusLine().getStatusCode(); // 获取 HTTP 响应的状态码
+        Log.i(TAG,"http response status: "+this.statusCode );
         
         if (this.statusCode == HttpStatus.SC_OK) {
-        	Log.i(TAG,"http result: succeed !");
         	this.responseEntity = httpResponse.getEntity();
         } else {
-        	Log.i(TAG,"http result: error, status code is :"+this.statusCode);
         	this.responseEntity = null;
         }
     }

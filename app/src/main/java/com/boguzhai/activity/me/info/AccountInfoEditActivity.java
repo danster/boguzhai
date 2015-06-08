@@ -87,21 +87,21 @@ public class AccountInfoEditActivity extends BaseActivity {
                                         public void onNothingSelected(AdapterView<?> arg0) {}
                                     });
 
-                                if (index2boost && arg2 == Variable.account.addressIndex2) {
-                                    ((Spinner) findViewById(R.id.address_3)).setSelection(Variable.account.addressIndex3);
+                                if (index2boost && arg2 == Variable.account.addressIndex2()) {
+                                    ((Spinner) findViewById(R.id.address_3)).setSelection(Variable.account.addressIndex3());
                                 }
                                 index2boost = false;
                             }
                             public void onNothingSelected(AdapterView<?> arg0) {}
                         });
-                    if (index1boost && arg2 == Variable.account.addressIndex1) {
-                        ((Spinner) findViewById(R.id.address_2)).setSelection(Variable.account.addressIndex2);
+                    if (index1boost && arg2 == Variable.account.addressIndex1()) {
+                        ((Spinner) findViewById(R.id.address_2)).setSelection(Variable.account.addressIndex2());
                     }
                     index1boost = false;
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {}
             });
-        ((Spinner) findViewById(R.id.address_1)).setSelection(Variable.account.addressIndex1);
+        ((Spinner) findViewById(R.id.address_1)).setSelection(Variable.account.addressIndex1());
 
 		int[] ids = { R.id.my_email, R.id.my_mobile, R.id.ok, R.id.name_clear,
                       R.id.nickname_clear, R.id.my_photo, R.id.telephone_clear,

@@ -42,14 +42,9 @@ public class JsonApi {
             JSONObject account = data.getJSONObject("account");
             Variable.account.name = account.has("name") ? account.getString("name") : "";
             Variable.account.nickname = account.has("nickname") ? account.getString("nickname"): "";
-
             Variable.account.address_1 = account.has("address_1") ? account.getString("address_1"): "";
-            Variable.account.addressIndex1 = Utility.getAddressIndex(Variable.account.address_1);
             Variable.account.address_2 = account.has("address_2") ? account.getString("address_2"): "";
-            Variable.account.addressIndex2 = Utility.getAddressIndex(Variable.account.address_1, Variable.account.address_2);
             Variable.account.address_3 = account.has("address_3") ? account.getString("address_3"): "";
-            Variable.account.addressIndex3 = Utility.getAddressIndex(Variable.account.address_1, Variable.account.address_2, Variable.account.address_3);
-
             Variable.account.address = account.has("address") ? account.getString("address"): "";
             Variable.account.email = account.has("email") ? account.getString("email"): "";
             Variable.account.mobile = account.has("mobile") ? account.getString("mobile"): "";

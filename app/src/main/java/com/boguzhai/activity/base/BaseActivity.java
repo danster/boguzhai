@@ -56,9 +56,13 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
             Variable.app_context = this.getApplicationContext();
         }
 
-        Tasks.getMapZone();
-        Tasks.getMapLottype();
+        if(Variable.mapZone==null || Variable.mapProvince==null){
+            Tasks.getMapZone();
+        }
 
+        if(Variable.mapLottype==null || Variable.mapLottype1==null){
+            Tasks.getMapLottype();
+        }
 
     }
 

@@ -1,6 +1,8 @@
 package com.boguzhai.logic.dao;
 
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.info.DeliveryAddress;
+import com.boguzhai.logic.utils.Utility;
 
 import java.util.ArrayList;
 
@@ -13,11 +15,8 @@ public class Account{
     public String name="";      //姓名
     public String nickname="";  //昵称
     public String address_1=""; //省
-    public int addressIndex1=-1;
     public String address_2=""; //市
-    public int addressIndex2=-1;
     public String address_3=""; //区
-    public int addressIndex3=-1;
     public String address="";   //具体地址
 
     public String email="";     //邮箱
@@ -31,7 +30,12 @@ public class Account{
     public AuthInfo authInfo=new AuthInfo();           //账户认证信息
     public ArrayList<DeliveryAddress> deliveryAddressList=new ArrayList<DeliveryAddress>();  //收货地址信息（列表）
 
-	public Account(){
-    }
+	public Account(){}
+
+    public int addressIndex1(){ return Utility.getAddressIndex(Variable.account.address_1);};
+    public int addressIndex2(){ return Utility.getAddressIndex(Variable.account.address_1,
+            Variable.account.address_2);};
+    public int addressIndex3(){ return Utility.getAddressIndex(Variable.account.address_1,
+            Variable.account.address_2, Variable.account.address_3);};
 }
 

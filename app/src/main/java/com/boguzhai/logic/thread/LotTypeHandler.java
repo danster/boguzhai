@@ -25,8 +25,16 @@ public class LotTypeHandler  extends HttpJsonHandler{
                 case 0:
                     if(data==null) break;
                     JSONObject zoneMap = data.getJSONObject("auctionTypeMap");
-                    Variable.mapLottype = new ArrayList<Lottype_1>();
-                    Variable.mapLottype1 = new ArrayList<Pair<String,String>>();
+
+                    if(Variable.mapLottype == null)
+                        Variable.mapLottype = new ArrayList<Lottype_1>();
+                    else
+                        Variable.mapLottype.clear();
+
+                    if(Variable.mapLottype1 == null)
+                        Variable.mapLottype1 = new ArrayList<Pair<String,String>>();
+                    else
+                        Variable.mapLottype1.clear();
 
                     Lottype_1 lottype_1 = new Lottype_1(); lottype_1.id=""; lottype_1.name="不限";
                     Lottype_2 lottype_2 = new Lottype_2(); lottype_2.id=""; lottype_2.name="不限";

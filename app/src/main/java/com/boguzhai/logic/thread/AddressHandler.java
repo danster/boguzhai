@@ -24,9 +24,18 @@ public class AddressHandler extends HttpJsonHandler{
             switch (code){
                 case 0:
                     if(data==null) break;
+
                     JSONObject zoneMap = data.getJSONObject("addressZoneMap");
-                    Variable.mapZone = new ArrayList<Address_1>();
-                    Variable.mapProvince = new ArrayList<Pair<String,String>>();
+
+                    if(Variable.mapZone == null)
+                        Variable.mapZone = new ArrayList<Address_1>();
+                    else
+                        Variable.mapZone.clear();
+
+                    if(Variable.mapProvince == null)
+                        Variable.mapProvince = new ArrayList<Pair<String,String>>();
+                    else
+                        Variable.mapProvince.clear();
 
                     Address_1 address_1 = new Address_1(); address_1.id=""; address_1.name="不限";
                     Address_2 address_2 = new Address_2(); address_2.id=""; address_2.name="不限";

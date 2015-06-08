@@ -161,19 +161,15 @@ public class Tasks {
     }
 
     public static void getMapZone(){
-        if(Variable.mapZone == null || Variable.mapProvince == null){
-            HttpClient conn_address = new HttpClient();
-            conn_address.setUrl(Constant.url + "pCommonAction!getAddressZoneMap.htm");
-            new Thread(new HttpPostRunnable(conn_address, new AddressHandler())).start();
-        }
+        HttpClient conn_address = new HttpClient();
+        conn_address.setUrl(Constant.url + "pCommonAction!getAddressZoneMap.htm");
+        new Thread(new HttpPostRunnable(conn_address, new AddressHandler())).start();
     }
 
     public static void getMapLottype(){
-        if(Variable.mapLottype == null || Variable.mapLottype1 == null){
-            HttpClient conn_lotType = new HttpClient();
-            conn_lotType.setUrl(Constant.url+"pCommonAction!getAuctionTypeMap.htm");
-            new Thread(new HttpPostRunnable(conn_lotType, new LotTypeHandler())).start();
-        }
+        HttpClient conn_lotType = new HttpClient();
+        conn_lotType.setUrl(Constant.url+"pCommonAction!getAuctionTypeMap.htm");
+        new Thread(new HttpPostRunnable(conn_lotType, new LotTypeHandler())).start();
     }
 
 }

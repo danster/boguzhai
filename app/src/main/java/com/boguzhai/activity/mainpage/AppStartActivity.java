@@ -14,6 +14,7 @@ public class AppStartActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.app_start_page);
+
 		new Handler().postDelayed(new Runnable() {
             public void run() {
                 if( Variable.settings.getBoolean(SharedKeys.firstlogin, true)){

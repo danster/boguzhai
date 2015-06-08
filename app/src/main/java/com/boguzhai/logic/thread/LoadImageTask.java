@@ -53,6 +53,10 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
     protected Bitmap doInBackground(String... params) {
         mImageUrl = params[0];
 
+        if(mImageUrl.equals("")){
+            return null;
+        }
+
         // 如果手机没有安装SD卡，只下载图片不缓存进SD卡
         if(!ServiceApi.hasSDCard()){
             try {

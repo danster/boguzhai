@@ -1,1 +1,1 @@
-博古斋是一个AndroidAP
+博古斋是一个Android APP
