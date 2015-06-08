@@ -12,6 +12,7 @@
         android:layout_marginRight="5dp">
         <com.boguzhai.logic.view.XListView
             android:id="@+id/lotlist"
+            android:divider="@drawable/shape_listview_divider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:footerDividersEnabled="false"/>

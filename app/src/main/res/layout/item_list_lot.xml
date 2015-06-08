@@ -12,6 +12,8 @@
         android:paddingBottom="2dp"
         android:orientation="horizontal" >
         <LinearLayout
+            android:layout_marginRight="10dp"
+            android:paddingBottom="10dp"
             android:id="@+id/leftLot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -23,6 +25,7 @@
                 android:layout_height="90dp"
                 android:gravity="center">
                 <ImageView
+                    android:layout_marginTop="3dp"
                     android:id="@+id/leftImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -30,22 +33,28 @@
                     android:scaleType="fitCenter"/>
             </LinearLayout>
             <TextView
+                android:padding="5dp"
                 android:id="@+id/leftLotName"
                 style="@style/lot_info_text"
-                android:layout_height="18dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/dark_black"
                 android:textSize="15sp"
                 android:text=""/>
             <TextView
                 android:id="@+id/leftLotID"
+                android:paddingLeft="8dp"
                 style="@style/lot_info_text"
                 android:text="拍品号: "/>
             <TextView
                 android:id="@+id/leftLotApprisal"
+                android:paddingLeft="8dp"
                 style="@style/lot_info_text"
                 android:text="预估价: "/>
             <TextView
                 android:id="@+id/leftLotStartPrice"
+                android:paddingLeft="8dp"
                 style="@style/lot_info_text"
                 android:text="起拍价: "/>
         </LinearLayout>
@@ -54,6 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:paddingBottom="10dp"
             android:layout_marginLeft="3dp"
             android:background="@color/white"
             android:orientation="vertical" >
@@ -62,6 +72,7 @@
                 android:layout_height="90dp"
                 android:gravity="center">
                 <ImageView
+                    android:layout_marginTop="3dp"
                     android:id="@+id/rightImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -69,21 +80,27 @@
                     android:scaleType="fitCenter"/>
             </LinearLayout>
             <TextView
+                android:padding="5dp"
                 android:id="@+id/rightLotName"
                 style="@style/lot_info_text"
-                android:layout_height="18dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/dark_black"
                 android:textSize="15sp"
                 android:text=""/>
             <TextView
+                android:paddingLeft="8dp"
                 android:id="@+id/rightLotID"
                 style="@style/lot_info_text"
                 android:text="拍品号: "/>
             <TextView
+                android:paddingLeft="8dp"
                 android:id="@+id/rightLotApprisal"
                 style="@style/lot_info_text"
                 android:text="预估价: "/>
             <TextView
+                android:paddingLeft="8dp"
                 android:id="@+id/rightLotStartPrice"
                 style="@style/lot_info_text"
                 android:text="起拍价: "/>
