@@ -17,8 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout style="@style/base_bar"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/shape_circle_rectangle">
+            android:layout_marginTop="5dp">
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"

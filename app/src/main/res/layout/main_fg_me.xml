@@ -120,9 +120,16 @@
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
-                android:id="@+id/me_billing">
+                android:id="@+id/me_mylot">
+                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_proxy"/>
+                <TextView style="@style/me_middle_text" android:text="我的拍品"/>
+                <ImageView style="@style/search_right_arrow" />
+            </LinearLayout>
+            <View style="@style/longline" />
+            <LinearLayout style="@style/base_bar"
+                android:id="@+id/me_myorder">
                 <TextView style="@style/me_left_image" android:background="@drawable/me_tab_payment"/>
-                <TextView style="@style/me_middle_text" android:text="结算交割"/>
+                <TextView style="@style/me_middle_text" android:text="我的订单"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <!--<View style="@style/longline" />-->

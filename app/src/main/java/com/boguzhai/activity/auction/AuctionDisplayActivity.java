@@ -124,6 +124,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
         listview.setPullRefreshEnable(false);
         listview.setXListViewListener(this);
 
+
         // 支持下拉刷新的布局，设置下拉监听事件，重写onRefresh()方法
         swipe_layout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         swipe_layout.setColorSchemeResources(R.color.gold);

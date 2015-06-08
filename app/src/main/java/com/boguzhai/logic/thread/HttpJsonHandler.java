@@ -37,7 +37,7 @@ public abstract class HttpJsonHandler extends Handler {
                     }
                     handlerData(code, data);
                 } catch (JSONException ex) {
-                    Toast.makeText(Variable.app_context, "网络数据错误", Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
                 }
                 break;
             default:

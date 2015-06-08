@@ -10,8 +10,8 @@ public class PayOrderActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setLinearView(R.layout.me_payorder);
-        title.setText("结算交割");
+        this.setLinearView(R.layout.me_pay_order);
+        title.setText("我的订单");
         init();
 	}
 

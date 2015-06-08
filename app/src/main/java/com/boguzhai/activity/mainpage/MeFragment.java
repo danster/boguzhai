@@ -15,6 +15,7 @@ import com.boguzhai.activity.me.bidding.BiddingActivity;
 import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
 import com.boguzhai.activity.me.myauction.MyAuctionActivity;
+import com.boguzhai.activity.me.mylot.MylotActivity;
 import com.boguzhai.activity.me.order.PayOrderActivity;
 import com.boguzhai.activity.me.settings.SystemSettingsActivity;
 import com.boguzhai.activity.me.upload.UploadLotActivity;
@@ -65,7 +66,8 @@ public class MeFragment extends Fragment {
         this.listen(R.id.me_myinfo);
         this.listen(R.id.me_my_auctions);
         this.listen(R.id.me_biding);
-        this.listen(R.id.me_billing);
+        this.listen(R.id.me_mylot);
+        this.listen(R.id.me_myorder);
         this.listen(R.id.me_my_favorites);
         this.listen(R.id.me_upload);
         this.listen(R.id.me_system);
@@ -94,7 +96,10 @@ public class MeFragment extends Fragment {
                 case R.id.me_biding:
                     Utility.gotoActivity(BiddingActivity.class);
                     break;
-                case R.id.me_billing:
+                case R.id.me_mylot:
+                    Utility.gotoActivity(MylotActivity.class);
+                    break;
+                case R.id.me_myorder:
                     Utility.gotoActivity(PayOrderActivity.class);
                     break;
                 case R.id.me_my_favorites:
