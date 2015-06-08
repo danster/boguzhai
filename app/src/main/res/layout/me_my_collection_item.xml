@@ -7,7 +7,11 @@
     <!-- 展示拍卖会专场信息 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingTop="10dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -25,15 +29,18 @@
             android:gravity="center"
             android:orientation="vertical">
             <!--1-->
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/my_collection_lot_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="30dp"
+                    android:maxLines="1"
                     android:gravity="center|left"
+                    android:ellipsize="end"
                     android:text="-------"
                     android:textColor="@color/dark_black"
                     android:textSize="18sp"
@@ -41,18 +48,21 @@
 
                 <TextView
                     android:id="@+id/my_collection_lot_status"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:background="@color/yellow"
+                    android:background="@color/gold"
                     android:gravity="center|left"
                     android:text="-------"
-                    android:textColor="@color/red"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-            </RelativeLayout>
+            </LinearLayout>
             <!--2-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,15 +72,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
-                    android:text="拍品号："
-                    android:textSize="15sp" />
+                    android:text="拍  品  号:"
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/my_collection_lot_no"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:paddingLeft="15dp"
                     android:gravity="center|left"
                     android:text="---"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
             <!--3-->
@@ -82,15 +93,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
-                    android:text="预估价："
-                    android:textSize="15sp" />
+                    android:text="预  估  价:"
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/my_collection_lot_appraisal"
                     android:layout_width="wrap_content"
+                    android:paddingLeft="15dp"
                     android:layout_height="20dp"
                     android:gravity="center|left"
                     android:text="---"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
@@ -103,30 +115,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
-                    android:text="起拍价："
-                    android:textSize="15sp" />
+                    android:text="起  拍  价:"
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/my_collection_lot_startprice"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="15dp"
                     android:layout_height="20dp"
                     android:gravity="center|left"
                     android:text="---"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/tv_my_collection_lot_dealprice"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
-                    android:text="成交价："
-                    android:textSize="15sp" />
+                    android:text="成  交  价:"
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/my_collection_lot_dealprice"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:paddingLeft="15dp"
                     android:gravity="center|left"
                     android:text="---"
                     android:textColor="@color/red"
-                    android:textSize="15sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -136,11 +150,14 @@
 
                 <TextView
                     android:text="开拍时间:"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/my_collection_biddingTime"
+                    android:paddingLeft="16dp"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -152,11 +169,14 @@
 
                 <TextView
                     android:text="是否参拍:"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/my_collection_forBidding"
+                    android:paddingLeft="15dp"
+                    android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

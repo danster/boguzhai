@@ -5,18 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/base_bar"
+        android:layout_marginBottom="0.5dp"
+        android:layout_marginTop="5dp">
 
         <LinearLayout
-            style="@style/base_bar"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1">
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/shape_circle_rectangle"
+            android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center"
                 android:src="@drawable/base_search" />
 
@@ -32,15 +37,18 @@
                 android:lines="1" />
         </LinearLayout>
 
+
         <Button
             android:id="@+id/btn_my_collection_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="确定" />
+            android:background="@drawable/shape_circle_rectangle_button"
+            android:text="确定"
+            android:textColor="@color/white" />
+
 
     </LinearLayout>
 
-    <View style="@style/longline" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_layout_my_collection"
@@ -48,10 +56,12 @@
         android:layout_height="match_parent">
 
         <com.boguzhai.logic.view.XListView
-            android:footerDividersEnabled="false"
             android:id="@+id/lv_my_collections"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:divider="@drawable/shape_listview_divider"
+            android:footerDividersEnabled="false" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

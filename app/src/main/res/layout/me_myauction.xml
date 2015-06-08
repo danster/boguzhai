@@ -8,31 +8,70 @@
     <RadioGroup
         android:id="@+id/rg_my_auction_tab"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="45dp"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rb_my_auction_all"
             style="@style/my_auction_tab"
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             android:text="全部"/>
 
         <RadioButton
             android:id="@+id/rb_my_auction_display"
             style="@style/my_auction_tab"
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             android:text="预展中"/>
 
         <RadioButton
             android:id="@+id/rb_my_auction_onauction"
             style="@style/my_auction_tab"
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             android:text="拍卖中"/>
 
         <RadioButton
             android:id="@+id/rb_my_auction_histroy"
             style="@style/my_auction_tab"
+            android:textSize="18sp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             android:text="往期拍卖"/>
 
     </RadioGroup>
-
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:layout_height="3dp">-->
+        <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/gold"-->
+            <!--android:layout_height="match_parent"/>-->
+        <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"/>-->
+        <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"/>-->
+        <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="match_parent"/>-->
+        <!--</LinearLayout>-->
 
     <FrameLayout
         android:id="@+id/my_auction_content"

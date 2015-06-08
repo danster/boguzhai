@@ -133,6 +133,7 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
+        lv.setPullLoadEnable(true);
         Log.i(TAG, "刷新");
         number = 1;
         advices.clear();
@@ -146,6 +147,7 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
         if(currentCount >= totalCount) {
             lv.stopLoadMore();
             Utility.toastMessage("没有更多数据了");
+            lv.setPullLoadEnable(false);
             return;
         }
         number++;

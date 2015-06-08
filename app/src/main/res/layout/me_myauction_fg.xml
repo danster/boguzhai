@@ -5,16 +5,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/base_bar"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp">
 
         <LinearLayout
-            style="@style/base_bar"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_circle_rectangle">
 
             <ImageView
+                android:layout_marginLeft="10dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
@@ -36,13 +41,15 @@
             android:id="@+id/btn_my_auction_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="确定" />
-
+            android:background="@drawable/shape_circle_rectangle_button"
+            android:text="确定"
+            android:textColor="@color/white" />
     </LinearLayout>
 
-    <View style="@style/longline" />
 
-    <LinearLayout style="@style/base_bar">
+    <LinearLayout
+        style="@style/base_bar"
+        android:layout_marginBottom="0.5dp">
 
         <TextView
             style="@style/search_left_text"
@@ -59,33 +66,20 @@
     </LinearLayout>
 
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout_my_auction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_layout_my_auction"
+        <com.boguzhai.logic.view.XListView
+            android:id="@+id/lv_myauctions"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:divider="@drawable/shape_listview_divider"
+            android:footerDividersEnabled="false" />
 
-            <com.boguzhai.logic.view.XListView
-                android:id="@+id/lv_myauctions"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:footerDividersEnabled="false" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:text="暂无数据"-->
-                <!--android:textSize="22sp"-->
-                <!--android:layout_height="wrap_content" />-->
-            <!--</RelativeLayout>-->
-    <!--</FrameLayout>-->
 
 </LinearLayout>

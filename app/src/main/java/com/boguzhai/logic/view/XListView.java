@@ -58,6 +58,9 @@ public class XListView extends ListView implements OnScrollListener {
 	private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
 													// feature.
 
+
+
+
 	/**
 	 * @param context
 	 */
@@ -75,6 +78,8 @@ public class XListView extends ListView implements OnScrollListener {
 		super(context, attrs, defStyle);
 		initWithContext(context);
 	}
+
+
 
 	private void initWithContext(Context context) {
 		mScroller = new Scroller(context, new DecelerateInterpolator());
@@ -359,7 +364,8 @@ public class XListView extends ListView implements OnScrollListener {
 		}
 	}
 
-	public void setXListViewListener(IXListViewListener l) {
+
+    public void setXListViewListener(IXListViewListener l) {
 		mListViewListener = l;
 	}
 
@@ -379,4 +385,6 @@ public class XListView extends ListView implements OnScrollListener {
 
 		public void onLoadMore();
 	}
+
+
 }

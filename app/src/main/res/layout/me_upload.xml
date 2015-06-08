@@ -370,7 +370,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal"
+            android:background="@color/dark_red"
             android:text="提交"
             android:textColor="@color/white"
             android:textSize="20sp" />

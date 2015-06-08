@@ -247,6 +247,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
      */
     @Override
     public void onRefresh() {
+        lv_my_auction.setPullLoadEnable(true);
         Log.i(TAG, "下拉刷新");
         myAuctions.clear();//清空之前所有数据
         currentCount = 0;
@@ -267,6 +268,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         if (totalCount == currentCount) {
             lv_my_auction.stopLoadMore();
             Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            lv_my_auction.setPullLoadEnable(false);
         } else {
             number++;//页数加1
             requestData();

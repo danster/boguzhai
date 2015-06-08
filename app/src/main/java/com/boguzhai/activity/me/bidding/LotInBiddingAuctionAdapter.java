@@ -16,6 +16,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.photowallfalls.ImageDetailsActivity;
 import com.boguzhai.logic.dao.BiddingLot;
+import com.boguzhai.logic.thread.LoadImageTask;
 import com.boguzhai.logic.utils.Utility;
 
 import java.io.InputStream;
@@ -80,7 +81,8 @@ public class LotInBiddingAuctionAdapter extends BaseAdapter {
         holder.my_bidding_lot_nowprice.setText("￥" + String.valueOf(mLotList.get(position).currentPrice));
         holder.my_bidding_lot_topprice.setText("￥" + mLotList.get(position).topPrice);
 
-        holder.my_bidding_lot_image.setImageBitmap(mLotList.get(position).image);
+        new LoadImageTask(holder.my_bidding_lot_image, 4).execute(mLotList.get(position).imageUrl);
+//        holder.my_bidding_lot_image.setImageBitmap(mLotList.get(position).image);
 
 
         holder.my_bidding_lot_image.setOnClickListener(new View.OnClickListener() {
