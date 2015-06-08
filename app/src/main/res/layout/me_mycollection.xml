@@ -8,32 +8,49 @@
     <RadioGroup
         android:id="@+id/rg_my_auction_tab"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rb_my_collection_all"
             style="@style/my_auction_tab"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             android:text="全部"/>
 
         <RadioButton
             android:id="@+id/rb_my_collection_display"
             style="@style/my_auction_tab"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             android:text="预展中"/>
 
         <RadioButton
             android:id="@+id/rb_my_collection_onauction"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             style="@style/my_auction_tab"
             android:text="拍卖中"/>
 
         <RadioButton
             android:id="@+id/rb_my_collection_history"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             style="@style/my_auction_tab"
             android:text="已成交"/>
 
         <RadioButton
             android:id="@+id/rb_my_collection_abort"
             style="@style/my_auction_tab"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:drawableBottom="@drawable/top_tab_selector"
             android:text="已流拍"/>
 
     </RadioGroup>

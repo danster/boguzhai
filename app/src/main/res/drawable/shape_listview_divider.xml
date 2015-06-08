@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 参考 Android中shape的使用：http://blog.csdn.net/ekeuy/article/details/12349853 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 填充的颜色 -->
+    <solid android:color="#f4f4f4" />
+
+    <size android:height="10dp"/>
+</shape>

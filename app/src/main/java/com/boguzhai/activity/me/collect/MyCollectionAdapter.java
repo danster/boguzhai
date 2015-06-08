@@ -16,6 +16,7 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.photowallfalls.ImageDetailsActivity;
 import com.boguzhai.logic.dao.CollectionLot;
+import com.boguzhai.logic.thread.LoadImageTask;
 import com.boguzhai.logic.utils.Utility;
 
 import java.io.InputStream;
@@ -111,14 +112,12 @@ public class MyCollectionAdapter extends BaseAdapter {
         }
 
 
-//        Tasks.showBigImage(lots.get(position).imageUrl, holder.my_collection_lot_image, 4);
-        holder.my_collection_lot_image.setImageBitmap(lots.get(position).image);
+        new LoadImageTask(holder.my_collection_lot_image, 4).execute(lots.get(position).imageUrl);
 
         holder.my_collection_lot_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(!isShowing) {
+                if (!isShowing) {
                     isShowing = true;
                     new AsyncTask<Void, Void, Void>() {
                         Bitmap bmp = null;
@@ -181,13 +180,9 @@ public class MyCollectionAdapter extends BaseAdapter {
                         }
                     }.execute();
                 }
-
-
-
             }
         });
 
-//        Tasks.showBigImage(lots.get(position).imageUrl, holder.my_collection_lot_image, 1);
 
 
 

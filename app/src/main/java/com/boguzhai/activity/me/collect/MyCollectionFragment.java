@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -41,8 +39,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -220,6 +216,9 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
 
     public void lotFilter() {
+        if(adapter == null) {
+            return;
+        }
         tempCollections.clear();
         if (!TextUtils.isEmpty(key)) {
             for (CollectionLot lot : myCollections) {
@@ -283,6 +282,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
     @Override
     public void onRefresh() {
+        lv_my_collection.setPullLoadEnable(true);
         Log.i(TAG, "下拉刷新");
         isSearch = false;
         currentCount = 0;
@@ -299,6 +299,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         if (currentCount >= totalCount) {
             lv_my_collection.stopLoadMore();
             Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            lv_my_collection.setPullLoadEnable(false);
         }
         number++;
         requestData();
@@ -360,30 +361,30 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                             myCollections.add(lot);
                         }
 
-                        // 网络批量下载拍品图片
-                        new AsyncTask<Void, Void, Void>() {
-                            @Override
-                            protected Void doInBackground(Void... params) {
-                                try {
-                                    BitmapFactory.Options options = new BitmapFactory.Options();
-                                    options.inJustDecodeBounds = false;
-                                    options.inSampleSize = 5; //width，hight设为原来的 .. 分之一
-
-                                    for (CollectionLot lot : myCollections) {
-                                        InputStream in = new URL(lot.imageUrl).openStream();
-                                        lot.image = BitmapFactory.decodeStream(in, null, options);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            protected void onPostExecute(Void result) {
-                                adapter.notifyDataSetChanged();
-                            }
-                        }.execute();
+//                        // 网络批量下载拍品图片
+//                        new AsyncTask<Void, Void, Void>() {
+//                            @Override
+//                            protected Void doInBackground(Void... params) {
+//                                try {
+//                                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                                    options.inJustDecodeBounds = false;
+//                                    options.inSampleSize = 5; //width，hight设为原来的 .. 分之一
+//
+//                                    for (CollectionLot lot : myCollections) {
+//                                        InputStream in = new URL(lot.imageUrl).openStream();
+//                                        lot.image = BitmapFactory.decodeStream(in, null, options);
+//                                    }
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
+//                                return null;
+//                            }
+//
+//                            @Override
+//                            protected void onPostExecute(Void result) {
+//                                adapter.notifyDataSetChanged();
+//                            }
+//                        }.execute();
 
                         Log.i(TAG, "我的收藏数据获取完成！");
                         if (number == 1) {//刷新
