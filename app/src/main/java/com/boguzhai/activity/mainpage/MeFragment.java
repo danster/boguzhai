@@ -97,10 +97,18 @@ public class MeFragment extends Fragment {
                     Utility.gotoActivity(BiddingActivity.class);
                     break;
                 case R.id.me_mylot:
-                    Utility.gotoActivity(MylotActivity.class);
+                    if(Variable.isLogin==true) {
+                        Utility.gotoActivity(MylotActivity.class);
+                    } else {
+                        Utility.gotoLogin();
+                    }
                     break;
                 case R.id.me_myorder:
-                    Utility.gotoActivity(PayOrderActivity.class);
+                    if(Variable.isLogin==true) {
+                        Utility.gotoActivity(PayOrderActivity.class);
+                    } else {
+                        Utility.gotoLogin();
+                    }
                     break;
                 case R.id.me_my_favorites:
                     Utility.gotoActivity(MyCollectionActivity.class);
