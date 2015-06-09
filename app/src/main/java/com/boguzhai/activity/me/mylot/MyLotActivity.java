@@ -65,6 +65,7 @@ public class MyLotActivity extends BaseActivity {
 					Utility.alertDialog("请选择需要结算的拍品",null);
 					break;
 				}
+				Utility.toastMessage("mylot length :"+mylots.size());
 				Intent intent = new Intent(this, EditOrderActivity.class);
 				intent.putExtra("mylots", mylots);
 				startActivity(intent);

@@ -71,7 +71,17 @@ public class MylotListAdapter extends BaseAdapter {
         new LoadImageTask(holder.lot_image, 5).execute(list.get(position).image); // 显示缩略图
 
         if(!isOrder){
-            if(MyLotActivity.mylots.contains( list.get(position))){
+            MylotItem lot = list.get(position);
+            boolean isContains = false;
+
+            for(MylotItem mylot: MyLotActivity.mylots){
+                if(lot.id.equals(mylot.id)){
+                    isContains = true;
+                    break;
+                }
+            }
+
+            if(isContains){
                 holder.choose.setImageResource(R.drawable.choose_yes);
             }else{
                 holder.choose.setImageResource(R.drawable.choose_no);
@@ -97,9 +107,17 @@ public class MylotListAdapter extends BaseAdapter {
         public void onClick(View v) {
             ImageView choose= (ImageView)v.findViewById(R.id.choose);
             MylotItem lot = list.get(position);
+            boolean isContains = false;
 
-            if(MyLotActivity.mylots.contains(lot)){
-                MyLotActivity.mylots.remove(lot);
+            for(MylotItem mylot: MyLotActivity.mylots){
+                if(lot.id.equals(mylot.id)){
+                    isContains = true;
+                    MyLotActivity.mylots.remove(mylot);
+                    break;
+                }
+            }
+
+            if(isContains){
                 choose.setImageResource(R.drawable.choose_no);
             }else{
                 String auctionId = lot.auctionId;
