@@ -385,7 +385,7 @@ public class EditOrderActivity extends BaseActivity {
         conn.setParam("invoiceHeader", invoiceText.getText().toString());
         conn.setParam("invoiceContent", invoiceContent.getText().toString());
         conn.setParam("remark", remarkText.getText().toString());
-        conn.setUrl(Constant.url + "XXXXX_pTraceAction!submitOrderInfo.htm");
+        conn.setUrl(Constant.url + "pTraceAction!submitOrderInfo.htm");
         new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
             @Override
             public void handlerData(int code, JSONObject data) {
@@ -417,32 +417,26 @@ public class EditOrderActivity extends BaseActivity {
 
         if(deliveryType.equals("1")){
             if( dp_name.getText().toString().equals("")){
-                Utility.alertDialog("请填写提货人地址",null);  return;
+                Utility.alertDialog("请填写提货人地址",null);
+            } else if( dp_mobile.getText().toString().equals("")){
+                Utility.alertDialog("请填写提货人手机号码",null);
+            } else if( credentialType.getText().toString().equals("")){
+                Utility.alertDialog("请选择提货人有效证件类型",null);
+            } else if( credentialNumber.getText().toString().equals("")){
+                Utility.alertDialog("请填写提货人有效证件号码",null);
+            } else if( check_code.getText().toString().equals("")){
+                Utility.alertDialog("请填写提货码",null);
+            } else {
+                getOrderId();
             }
-            if( dp_mobile.getText().toString().equals("")){
-                Utility.alertDialog("请填写提货人手机号码",null);  return;
-            }
-            if( credentialType.getText().toString().equals("")){
-                Utility.alertDialog("请选择提货人有效证件类型",null);  return;
-            }
-            if( credentialNumber.getText().toString().equals("")){
-                Utility.alertDialog("请填写提货人有效证件号码",null);  return;
-            }
-            if( check_code.getText().toString().equals("")){
-                Utility.alertDialog("请填写提货码",null);  return;
-            }
-
-            getOrderId();
 
         }else if(deliveryType.equals("2")){
             if( isSupport.getText().toString().equals("")){
-                Utility.alertDialog("请选择是否保价",null);  return;
-            }
-            if( isSupport.getText().toString().equals("是")){
+                Utility.alertDialog("请选择是否保价",null);
+            } else if( isSupport.getText().toString().equals("是")){
                 if( support_price.getText().toString().equals("")){
-                    Utility.alertDialog("请填写声明价值",null);  return;
-                }else {
-
+                    Utility.alertDialog("请填写声明价值",null);
+                } else {
                     HttpClient conn = new HttpClient();
                     conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
                     conn.setParam("price", support_price.getText().toString());
@@ -467,7 +461,7 @@ public class EditOrderActivity extends BaseActivity {
             }
 
         } else {
-            Utility.alertDialog("请选择配送方式",null);  return;
+            Utility.alertDialog("请选择配送方式",null);
         }
     }
 }
