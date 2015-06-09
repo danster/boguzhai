@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- 展示拍卖会专场信息 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/me_pay_order_lot_image"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/image" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/me_pay_order_lot_name"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:ellipsize="end"
+                android:gravity="center|left"
+                android:maxLines="1"
+                android:paddingBottom="3dp"
+                android:text="-------"
+                android:textColor="@color/dark_black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!--2-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="拍品号:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/me_pay_order_lot_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:text="---"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+            <!--3-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="预估价:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/me_pay_order_lot_appraisal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:text="---"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="成交价:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/me_pay_order_lot_deal_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:text="---"
+                    android:textSize="16sp" />
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="小    计:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/me_pay_order_lot_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:text="---"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:text="佣    金:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/me_pay_order_lot_commission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:text="---"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
