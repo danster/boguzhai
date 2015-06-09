@@ -97,6 +97,8 @@
 
         <!-- activities belong part of me order -->
         <activity android:name=".activity.me.mylot.MyLotActivity" />
+        <activity android:name=".activity.me.mylot.EditOrderActivity" />
+        <activity android:name=".activity.me.mylot.ChooseAddressActivity" />
         <activity android:name=".activity.me.order.PayOrderActivity" />
 
         <!-- activities belong part of me proxy -->

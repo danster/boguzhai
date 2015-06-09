@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class MylotItem implements Serializable {
     private static final long serialVersionUID = -2813634580481038361L;
     public String id = "";
+    public String auctionId = "";
     public String name = "";
     public String number = "";
     public String no = "";

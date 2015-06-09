@@ -49,7 +49,7 @@ public class MylotAuctionListAdapter extends BaseAdapter {
         holder.name.setText(list.get(position).name);
         holder.bail.setText("已交保证金:" + list.get(position).bail);
         holder.endtime.setText("付款截止日:"+list.get(position).endtime);
-        holder.info.setText("优 惠 说 明:"+list.get(position).info);
+        holder.info.setText("优惠说明:"+list.get(position).info);
 
         MylotListAdapter adapter = new MylotListAdapter(context,list.get(position).lotlist);
         holder.lotlist.setAdapter(adapter);

@@ -89,7 +89,7 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:background="@drawable/me_banner_red"
+                android:background="@drawable/shape_circle_rectangle_button"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:text="登录"/>

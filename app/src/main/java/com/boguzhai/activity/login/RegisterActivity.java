@@ -31,8 +31,6 @@ public class RegisterActivity extends BaseActivity {
     private CheckBox isAgreedView;
     boolean isAgreed = false;
 
-    private StringApi stringApi = new StringApi();
-
     private int time = 30;
     private TimerTask task;
 
@@ -72,8 +70,8 @@ public class RegisterActivity extends BaseActivity {
 		super.onClick(v);
 		switch (v.getId()) {  
 		case R.id.get_check_code:
-            if(! stringApi.checkPhoneNumber(username.getText().toString())){
-                Utility.alertMessage(stringApi.tips);
+            if(! StringApi.checkPhoneNumber(username.getText().toString())){
+                Utility.alertMessage(StringApi.tips);
                 break;
             }
             get_check_code.setEnabled(false);
@@ -98,12 +96,12 @@ public class RegisterActivity extends BaseActivity {
             };
 
             Tasks.getCheckCodeNoLogin(username.getText().toString());
-            new Timer().schedule(task, 0, 1000); // 一秒后启动task
+            new Timer().schedule(task, 0, 1000);
             break;
 
         case R.id.register:
-            if(!stringApi.checkPhoneNumber(username.getText().toString())){
-                Utility.alertMessage(stringApi.tips);
+            if(!StringApi.checkPhoneNumber(username.getText().toString())){
+                Utility.alertMessage(StringApi.tips);
                 break;
             }
             if(check_code.getText().toString().equals("")){

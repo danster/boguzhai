@@ -53,15 +53,8 @@ public class DeliveryAddress implements Serializable {
     public DeliveryAddress() {}
 
     public String toString(){
-        String str = isDefault?"【默认地址】":"";
-        str += receiver + ", " + mobile + ", ";
-        str += address_1 + " " + address_2 + " "+ address_3 + ", " + address;
-
-        // 非必填信息
-        str += telephone.equals("")?"":", "+telephone;
-        str += zip.equals("")?"":", "+zip;
-        str += ".";
-
+        String str = receiver+"                "+mobile+"\n";
+        str += (isDefault?"[默认]":"")+address_1+""+address_2+""+address_3+" "+address;
         return str;
     }
 

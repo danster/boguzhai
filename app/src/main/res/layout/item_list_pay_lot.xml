@@ -2,18 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
-        android:paddingTop="10dp"
-        android:paddingRight="15dp"
-        android:paddingLeft="15dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/lot_image"
             android:layout_gravity="center_vertical"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/image" />
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -28,7 +27,7 @@
                     android:id="@+id/lot_name"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:maxLines="1"
                     android:gravity="center|left"
                     android:ellipsize="end"
@@ -40,14 +39,14 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="start"
                     android:text="拍品号:"
                     android:textSize="16sp" />
                 <TextView
                     android:id="@+id/lot_number"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:paddingLeft="15dp"
                     android:gravity="start"
                     android:text="---"
@@ -57,7 +56,7 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="start"
                     android:text="成交价:"
                     android:textSize="16sp" />
@@ -65,7 +64,7 @@
                     android:id="@+id/dealprice"
                     android:layout_width="wrap_content"
                     android:paddingLeft="15dp"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="start"
                     android:text="---"
                     android:textSize="16sp" />
@@ -74,7 +73,7 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="center|left"
                     android:text="佣   金:"
                     android:textSize="16sp" />
@@ -82,7 +81,7 @@
                     android:id="@+id/commission"
                     android:layout_width="wrap_content"
                     android:paddingLeft="15dp"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="start"
                     android:text="---"
                     android:textSize="16sp" />
@@ -90,7 +89,7 @@
                     android:id="@+id/currCommission"
                     android:layout_width="wrap_content"
                     android:paddingLeft="15dp"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="start"
                     android:text="---"
                     android:textSize="16sp" />
@@ -99,7 +98,7 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="start"
                     android:text="小   计:"
                     android:textSize="16sp" />
@@ -107,7 +106,7 @@
                     android:id="@+id/sum"
                     android:layout_width="wrap_content"
                     android:paddingLeft="15dp"
-                    android:layout_height="20dp"
+                    android:layout_height="18dp"
                     android:gravity="start"
                     android:text="---"
                     android:textSize="16sp" />
@@ -117,8 +116,7 @@
         <ImageView
             android:id="@+id/choose"
             android:layout_gravity="center_vertical"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/choose_no" />
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
 
 </LinearLayout>

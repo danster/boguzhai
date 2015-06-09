@@ -6,15 +6,16 @@
     android:orientation="vertical" >
 
     <!-- 展示我的收货地址信息 -->
-    <LinearLayout style="@style/base_bar">
+    <LinearLayout style="@style/base_bar" android:layout_height="wrap_content">
         <TextView android:id="@+id/info"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:textColor="@color/dark_black"
-            android:textSize="15sp"/>
-        <ImageView style="@style/myinfo_right_arrow"
-            android:layout_gravity="center"/>
+            android:textSize="16sp"/>
+        <ImageView style="@style/myinfo_right_arrow" android:id="@id/image"
+            android:layout_gravity="center"
+            android:src="@null"/>
     </LinearLayout>
     <View style="@style/longline" android:layout_marginBottom="1dp"/>
 </LinearLayout>

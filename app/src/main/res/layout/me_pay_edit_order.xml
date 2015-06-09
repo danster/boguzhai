@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 展示我的收货地址信息 -->
+    <LinearLayout style="@style/base_bar" android:layout_height="wrap_content"
+        android:id="@+id/ly_delivery_address"  android:layout_marginTop="5dp"
+        android:paddingTop="10dp" android:paddingBottom="10dp">
+        <ImageView android:layout_width="12dp" android:layout_height="20dp"
+            android:layout_gravity="center"    android:src="@drawable/icon_position"/>
+        <TextView android:id="@+id/delivery_address"
+            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/dark_black"
+            android:textSize="16sp"/>
+        <ImageView android:layout_width="12dp" android:layout_height="20dp"
+            android:layout_gravity="center"    android:src="@drawable/base_arrow_right_small"/>
+    </LinearLayout>
+
+    <!-- 展示订单中的拍品 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <com.boguzhai.logic.widget.ListViewForScrollView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"/>
+    </LinearLayout>
+
+    <!-- 选择配送方式 -->
+    <LinearLayout style="@style/base_bar" android:layout_marginTop="5dp" android:id="@+id/ly_delivery_type">
+        <TextView style="@style/myinfo_left_text"  android:text="配 送  方 式:"/>
+        <TextView android:id="@+id/delivery_type" style="@style/myinfo_middle_text" android:text="自提"/>
+        <ImageView style="@style/myinfo_right_arrow"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <!-- 选择自提方式 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ly_myself">
+
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="提货人姓名:"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/dp_name" android:hint="必填"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="提货人手机:"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/dp_mobile" android:inputType="numberDecimal"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:text=" 获取提货码 "
+                android:background="@drawable/shape_circle_rectangle_button"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:id="@+id/get_check_code" />
+
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/myinfo_left_text"  android:text="提    货    码:"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/check_code"
+                android:inputType="numberDecimal"
+                android:hint="必填"/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout android:id="@+id/ly_credential_type" style="@style/base_bar">
+            <TextView style="@style/verify_left_text"  android:text="有 效  证 件:"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/credential_type"  android:text="二代身份证"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/verify_left_text"  android:text="证 件  号 码:"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/number" android:inputType="numberDecimal"
+                android:hint="必填" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 选择快递方式 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ly_express"
+        android:visibility="gone">
+        <LinearLayout style="@style/base_bar">
+            <TextView style="@style/verify_left_text"  android:text="运            费:"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/delivery_price"
+                android:textColor="@color/red" android:textSize="17sp"
+                android:text=""/>
+        </LinearLayout>
+        <View style="@style/longline"/>
+        <LinearLayout android:id="@+id/ly_is_support"   style="@style/base_bar">
+            <TextView style="@style/verify_left_text"  android:text="是 否  保 价:"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/is_support"  android:text="是"/>
+            <ImageView style="@style/myinfo_right_arrow" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/ly_support_price"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_bar">
+                <TextView style="@style/verify_left_text"  android:text="声 明  价 值:"/>
+                <EditText style="@style/myinfo_middle_text" android:id="@+id/support_price"
+                    android:inputType="numberDecimal" android:hint="必填（单位元）"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 填写发票信息 -->
+    <LinearLayout android:id="@+id/ly_invoice_type"  android:layout_marginTop="5dp" style="@style/base_bar">
+        <TextView style="@style/verify_left_text"  android:text="发票抬头类:"/>
+        <TextView style="@style/myinfo_middle_text"  android:id="@+id/invoice_type" android:text="个人"/>
+        <ImageView style="@style/myinfo_right_arrow" />
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar">
+        <TextView style="@style/verify_left_text"  android:text="发 票  抬 头:"/>
+        <EditText style="@style/myinfo_middle_text" android:id="@+id/invoice" android:hint="填写发票抬头"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_bar" android:id="@+id/ly_invoice_content">
+        <TextView style="@style/verify_left_text"  android:text="发 票  内 容:"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/invoice_content" />
+        <ImageView style="@style/myinfo_right_arrow" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_marginTop="5dp" style="@style/base_bar"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp" android:paddingBottom="15dp">
+        <EditText style="@style/myinfo_middle_text"
+            android:singleLine="false"
+            android:gravity="center|left"
+            android:id="@+id/remark" android:hint="给卖家留言:"/>
+    </LinearLayout>
+
+    <View android:layout_width="wrap_content" android:layout_height="40dp" />
+
+</LinearLayout>
+</ScrollView>
+
+<View style="@style/longline"/>
+<LinearLayout style="@style/base_bar">
+    <TextView style="@style/verify_left_text"  android:text="结    算    价:"/>
+    <TextView style="@style/myinfo_middle_text" android:id="@+id/sum1" android:textColor="@color/red" android:text="￥0.0"/>
+    <TextView style="@style/base_text" android:id="@+id/sum2"
+        android:textColor="@color/half_black" android:textSize="14sp"
+        android:text="(含运费:0.0 保费:0.0)"/>
+</LinearLayout>
+<Button style="@style/base_bar"  android:id="@+id/submit"
+    android:gravity="center"
+    android:background="@color/gold"
+    android:textColor="@color/white"
+    android:textSize="17sp"
+    android:text="提交订单"/>
+
+</LinearLayout>

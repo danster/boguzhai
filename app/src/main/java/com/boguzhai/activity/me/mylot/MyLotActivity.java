@@ -1,5 +1,6 @@
 package com.boguzhai.activity.me.mylot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONArray;
@@ -22,6 +24,7 @@ public class MyLotActivity extends BaseActivity {
 	private XListView listview;
 	private MylotAuctionListAdapter adapter;
 	private ArrayList<MylotAuction> list;
+	public static ArrayList<MylotItem> mylots; // 将购买的拍品ID
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class MyLotActivity extends BaseActivity {
 	}
 
 	protected void init(){
+		mylots = new ArrayList<MylotItem>();
 		listview = (XListView) findViewById(R.id.list);
 		listview.setPullLoadEnable(false);
 		listview.setPullRefreshEnable(false);
@@ -39,54 +43,6 @@ public class MyLotActivity extends BaseActivity {
 		adapter = new MylotAuctionListAdapter(this, list);
 		listview.setAdapter(adapter);
 		this.listen(R.id.submit);
-
-		// 获取发票内容
-//		HttpClient conn = new HttpClient();
-//		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-//		conn.setUrl(Constant.url + "pTraceAction!getInvoiceContent.htm");
-//		new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-//			@Override
-//			public void handlerData(int code, JSONObject data) {
-//				super.handlerData(code, data);
-//			}
-//		})).start();
-
-		// 获取运费
-//		HttpClient conn = new HttpClient();
-//		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-//		conn.setParam("addressId", "2040");
-//		conn.setParam("auctionId", "418609");
-//		conn.setUrl(Constant.url + "pTraceAction!getFreight.htm");
-//		new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-//			@Override
-//			public void handlerData(int code, JSONObject data) {
-//				super.handlerData(code, data);
-//			}
-//		})).start();
-
-		// 计算保费
-//		HttpClient conn = new HttpClient();
-//		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-//		conn.setParam("price","2300.5");
-//		conn.setUrl(Constant.url + "pTraceAction!getSupportPrice.htm");
-//		new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-//			@Override
-//			public void handlerData(int code, JSONObject data) {
-//				super.handlerData(code, data);
-//			}
-//		})).start();
-
-		// 提交订单信息
-//		HttpClient conn = new HttpClient();
-//		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-//		conn.setParam("price","2300.5");
-//		conn.setUrl(Constant.url + "pTraceAction!getSupportPrice.htm");
-//		new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-//			@Override
-//			public void handlerData(int code, JSONObject data) {
-//				super.handlerData(code, data);
-//			}
-//		})).start();
 
 	}
 
@@ -103,6 +59,19 @@ public class MyLotActivity extends BaseActivity {
 	@Override
 	public void onClick(View view) {
         super.onClick(view);
+		switch (view.getId()){
+			case R.id.submit:
+				if(mylots.size()<=0){
+					Utility.alertDialog("请选择需要结算的拍品",null);
+					break;
+				}
+				Intent intent = new Intent(this, EditOrderActivity.class);
+				intent.putExtra("mylots", mylots);
+				startActivity(intent);
+				break;
+			default:
+				break;
+		}
     }
 
 	class MylotHandler extends HttpJsonHandler {

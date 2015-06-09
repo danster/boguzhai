@@ -37,6 +37,7 @@ public class MylotAuction implements Serializable {
             for(int i=0; i<list.length(); ++i){
                 JSONObject lotobj = list.getJSONObject(i);
                 MylotItem mylot = MylotItem.parseJson(lotobj);
+                mylot.auctionId = auction.id;
                 auction.lotlist.add(mylot);
             }
         }catch(JSONException ex) {

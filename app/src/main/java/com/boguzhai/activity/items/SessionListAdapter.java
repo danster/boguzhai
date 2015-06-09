@@ -66,12 +66,12 @@ public class SessionListAdapter extends BaseAdapter {
         return convertView;    
     }  
 
-    public final class ViewHolder {  
+    final class ViewHolder {
         public TextView name, previewTime, previewLocation, auctionTime, auctionLocation;
         public ImageView image;
     }
     
-    protected class MyOnClickListener implements View.OnClickListener{
+    private class MyOnClickListener implements View.OnClickListener{
 		private int position;
 		public MyOnClickListener(int position){
 			this.position = position;
