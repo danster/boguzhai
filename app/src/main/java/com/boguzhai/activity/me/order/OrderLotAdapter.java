@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.photowallfalls.ImageDetailsActivity;
+import com.boguzhai.activity.items.ImageDetailsActivity;
 import com.boguzhai.logic.gaobo.OrderLot;
 import com.boguzhai.logic.thread.LoadImageTask;
 import com.boguzhai.logic.utils.Utility;

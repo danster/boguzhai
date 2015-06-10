@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.photowallfalls.ImageDetailsActivity;
+import com.boguzhai.activity.items.ImageDetailsActivity;
 import com.boguzhai.logic.dao.Address_1;
 import com.boguzhai.logic.dao.Address_2;
 import com.boguzhai.logic.dao.Address_3;

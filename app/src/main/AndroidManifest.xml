@@ -49,7 +49,7 @@
         <activity android:name=".activity.items.BaseHtmlActivity" />
         <activity android:name=".activity.pay.AlipayActivity" />
         <activity android:name=".activity.photowallfalls.PhotowallActivity" />
-        <activity android:name=".activity.photowallfalls.ImageDetailsActivity" />
+        <activity android:name=".activity.items.ImageDetailsActivity" />
 
         <!-- activities belong part of search -->
         <activity android:name=".activity.search.SearchResultActivity" />

@@ -19,6 +19,8 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.boguzhai.R;
+import com.boguzhai.activity.items.ImageDetailsActivity;
+import com.boguzhai.activity.items.ImageLoader;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

@@ -1,4 +1,4 @@
-package com.boguzhai.activity.photowallfalls;
+package com.boguzhai.activity.items;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -19,7 +19,7 @@ public class ImageDetailsActivity extends Activity {
 	/**
 	 * 自定义的ImageView控制，可对图片进行多点触控缩放和拖动
 	 */
-	private ZoomImageView zoomImageView;
+	private ImageZoomView imageZoomView;
 
 	/**
 	 * 待展示的图片
@@ -31,7 +31,7 @@ public class ImageDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.item_image_details);
-		zoomImageView = (ZoomImageView) findViewById(R.id.zoom_image_view);
+		imageZoomView = (ImageZoomView) findViewById(R.id.zoom_image_view);
 		// 取出图片路径，并解析成Bitmap对象，然后在ZoomImageView中显示
 		if(getIntent().hasExtra("image_path")) {
 			String imagePath = getIntent().getStringExtra("image_path");
@@ -39,7 +39,7 @@ public class ImageDetailsActivity extends Activity {
 		}else {
 			bitmap = Variable.currentBitmap;
 		}
-		zoomImageView.setImageBitmap(bitmap);
+		imageZoomView.setImageBitmap(bitmap);
 	}
 
 	@Override

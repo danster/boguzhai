@@ -8,7 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.widget.ImageView;
 
-import com.boguzhai.activity.photowallfalls.ImageLoader;
+import com.boguzhai.activity.items.ImageLoader;
 import com.boguzhai.logic.thread.LoadImageTask;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.boguzhai.activity.photowallfalls;
+package com.boguzhai.activity.items;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -7,7 +7,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.boguzhai.activity.photowallfalls.ImageLoader;
+import com.boguzhai.activity.items.ImageLoader;
 import com.boguzhai.logic.utils.ServiceApi;
 
 import java.io.File;

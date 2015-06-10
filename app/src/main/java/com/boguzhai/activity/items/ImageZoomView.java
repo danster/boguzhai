@@ -1,4 +1,4 @@
-package com.boguzhai.activity.photowallfalls;
+package com.boguzhai.activity.items;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,7 +13,7 @@ import android.view.View;
  * 
  * @author guolin
  */
-public class ZoomImageView extends View {
+public class ImageZoomView extends View {
 
 	/**
 	 * 初始化状态常量
@@ -136,7 +136,7 @@ public class ZoomImageView extends View {
 	 * @param context
 	 * @param attrs
 	 */
-	public ZoomImageView(Context context, AttributeSet attrs) {
+	public ImageZoomView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		currentStatus = STATUS_INIT;
 	}
