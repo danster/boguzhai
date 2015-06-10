@@ -1,4 +1,4 @@
-package com.boguzhai.activity.search;
+package com.boguzhai.activity.mainpage;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

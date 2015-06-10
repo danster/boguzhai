@@ -1,4 +1,4 @@
-package com.boguzhai.activity.auction.apply;
+package com.boguzhai.activity.pay;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import com.boguzhai.activity.base.BaseActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class PayBailResultActivity extends BaseActivity {
+public class PayDepositResultActivity extends BaseActivity {
 
     private TextView result_tips;
     private ImageView result_icon;

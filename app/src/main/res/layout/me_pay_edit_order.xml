@@ -75,13 +75,6 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:id="@+id/get_check_code" />
-
-        </LinearLayout>
-        <View style="@style/longline"/>
-        <LinearLayout style="@style/base_bar">
-            <TextView style="@style/myinfo_left_text"  android:text="提    货    码:"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/check_code"
-                android:hint="必填"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout android:id="@+id/ly_credential_type" style="@style/base_bar">

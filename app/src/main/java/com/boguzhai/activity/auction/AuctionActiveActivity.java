@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.apply.PayBailActivity;
+import com.boguzhai.activity.pay.PayDepositActivity;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
@@ -258,7 +258,7 @@ public class AuctionActiveActivity extends BaseActivity {
                                                 payMoney = data.getString("money");
                                                 payBalance = data.getString("balance");
 
-                                                Intent intent = new Intent(context, PayBailActivity.class);
+                                                Intent intent = new Intent(context, PayDepositActivity.class);
                                                 intent.putExtra("info", payInfo);
                                                 intent.putExtra("money", payMoney);
                                                 intent.putExtra("balance", payBalance);

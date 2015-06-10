@@ -1,4 +1,4 @@
-package com.boguzhai.activity.auction.apply;
+package com.boguzhai.activity.pay;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import com.boguzhai.logic.utils.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PayBailActivity extends BaseActivity {
+public class PayDepositActivity extends BaseActivity {
 
     private String pay_info, pay_money, pay_balance;
     private boolean useBalance=false, useUnionpay=false;
@@ -134,7 +134,7 @@ public class PayBailActivity extends BaseActivity {
     }
 
     private void gotoPayResult(boolean success, String tips){
-        Intent intent = new Intent(Variable.currentActivity, PayBailResultActivity.class);
+        Intent intent = new Intent(Variable.currentActivity, PayDepositResultActivity.class);
         intent.putExtra("result", success?"1":"0");
         intent.putExtra("tips", tips);
         intent.putExtra("info", pay_info);

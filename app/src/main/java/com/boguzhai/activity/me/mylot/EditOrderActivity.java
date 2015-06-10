@@ -13,9 +13,9 @@ import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.info.DeliveryAddress;
+import com.boguzhai.activity.me.order.PayOrderActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.StringApi;
 import com.boguzhai.logic.utils.Utility;
@@ -33,12 +33,12 @@ public class EditOrderActivity extends BaseActivity {
 
     private double lotPrice=0.0, freight=0.0, supportPrice =0.0; // 拍品总价， 运费，保费
     public  ArrayList<MylotItem> mylots; // 需要提交结算的拍品
-    public static String addressInfo="", addressId="";
+    public static String addressInfo="", addressId="", pickCode="";
 
     private int time = 30;
     private TimerTask task;
     private TextView get_check_code, delivery_address;
-    private EditText dp_name, dp_mobile,check_code, credentialNumber,support_price,invoiceText,remarkText ;
+    private EditText dp_name, dp_mobile, credentialNumber,support_price,invoiceText,remarkText ;
 
     // 供用户选择的项目
     private String[] invoiceTypeList = {"个人","单位"}; // 发票抬头类型
@@ -104,7 +104,6 @@ public class EditOrderActivity extends BaseActivity {
 
         dp_name = (EditText)findViewById(R.id.dp_name);
         dp_mobile = (EditText)findViewById(R.id.dp_mobile);
-        check_code = (EditText)findViewById(R.id.check_code);
         credentialNumber = (EditText)findViewById(R.id.number); // 有效证件号码
         support_price = (EditText)findViewById(R.id.support_price);
         invoiceText = (EditText)findViewById(R.id.invoice);
@@ -358,7 +357,33 @@ public class EditOrderActivity extends BaseActivity {
                         });
                     }
                 };
-                Tasks.getCheckCode(dp_mobile.getText().toString());
+
+                HttpClient conn = new HttpClient();
+                conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                conn.setParam("mobile", dp_mobile.getText().toString());
+                conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
+                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+                    @Override
+                    public void handlerData(int code, JSONObject data) {
+                        super.handlerData(code, data);
+                        switch (code){
+                            case 0:
+                                try {
+                                    pickCode = data.getString("pickCode");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Utility.toastMessage("发送提货码成功，请注意查收");
+                                break;
+                            case 1:
+                                Utility.toastMessage("发送提货码失败，请重新获取提货码");
+                            default:
+                                break;
+
+                        }
+                    }
+                })).start();
+
                 new Timer().schedule(task, 0, 1000);
                 break;
 
@@ -378,7 +403,7 @@ public class EditOrderActivity extends BaseActivity {
         conn.setParam("deliveryPersonMobile", dp_mobile.getText().toString());
         conn.setParam("deliveryPersonType", credentialType.getText().toString());
         conn.setParam("deliveryPersonNumber", credentialNumber.getText().toString());
-        conn.setParam("checkCode", check_code.getText().toString());
+        conn.setParam("checkCode", pickCode);
         conn.setParam("expressSupport", isSupport.getText().toString().equals("是")?"1":"0");
         conn.setParam("supportPrice", supportPrice+"");
         conn.setParam("invoiceHeaderType", invoiceType.getText().toString());
@@ -393,7 +418,10 @@ public class EditOrderActivity extends BaseActivity {
                 switch (code){
                     case 0:
                         try {
-                            String orderId = data.getString("orderId");
+                            Intent intent = new Intent(Variable.currentActivity, PayOrderActivity.class);
+                            intent.putExtra("orderId",data.getString("orderId"));
+                            startActivity(intent);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -424,8 +452,8 @@ public class EditOrderActivity extends BaseActivity {
                 Utility.alertDialog("请选择提货人有效证件类型",null);
             } else if( credentialNumber.getText().toString().equals("")){
                 Utility.alertDialog("请填写提货人有效证件号码",null);
-            } else if( check_code.getText().toString().equals("")){
-                Utility.alertDialog("请填写提货码",null);
+            } else if( pickCode.equals("")){
+                Utility.alertDialog("请获取提货码",null);
             } else {
                 getOrderId();
             }

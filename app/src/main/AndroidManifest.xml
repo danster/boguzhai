@@ -52,15 +52,19 @@
         <activity android:name=".activity.items.ImageDetailsActivity" />
 
         <!-- activities belong part of search -->
-        <activity android:name=".activity.search.SearchResultActivity" />
+        <activity android:name=".activity.mainpage.SearchResultActivity" />
 
         <!-- activities belong part of auction -->
         <activity android:name=".activity.auction.AuctionDisplayActivity" />
         <activity android:name=".activity.auction.LotInfoActivity" />
         <activity android:name=".activity.auction.LotFilterActivity" />
         <activity android:name=".activity.auction.AuctionActiveActivity" />
-        <activity android:name=".activity.auction.apply.PayBailActivity" />
-        <activity android:name=".activity.auction.apply.PayBailResultActivity" />
+
+
+        <!-- activities belong part of pay -->
+        <activity android:name=".activity.pay.PayDepositActivity" />
+        <activity android:name=".activity.pay.PayDepositResultActivity" />
+        <activity android:name=".activity.pay.PayOrderActivity" />
 
         <!-- activities belong part of login -->
         <activity android:name=".activity.login.LoginActivity" />
@@ -95,7 +99,7 @@
         <!-- activities belong part of me bidding -->
         <activity android:name=".activity.me.bidding.BiddingActivity" />
 
-        <!-- activities belong part of me order -->
+        <!-- activities belong part of me mylot and order -->
         <activity android:name=".activity.me.mylot.MyLotActivity" />
         <activity android:name=".activity.me.mylot.EditOrderActivity" />
         <activity android:name=".activity.me.mylot.ChooseAddressActivity" />

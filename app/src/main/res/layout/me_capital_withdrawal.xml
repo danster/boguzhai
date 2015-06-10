@@ -1,8 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout style="@style/base_itembar" android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_text"  android:text="目标银行名称:"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/bank_name"/>
+    </LinearLayout>
+    <View style="@style/longline"/>
+    <LinearLayout style="@style/base_itembar">
+        <TextView style="@style/myinfo_left_text"  android:text="目标银行账号:"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/bank_number"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_itembar" android:layout_marginTop="10dp">
+        <TextView style="@style/myinfo_left_text"  android:text="提现金额:"/>
+        <EditText style="@style/myinfo_middle_text" android:id="@+id/money"
+            android:inputType="numberDecimal" android:hint="单位(元)"/>
+        <ImageView style="@style/base_right_clear" android:layout_marginLeft="10dp"
+            android:id="@+id/money_clear"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button style="@style/base_bar"  android:id="@+id/submit"
+        android:gravity="center"
+        android:background="@color/gold"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:text="确认提现"/>
 </LinearLayout>

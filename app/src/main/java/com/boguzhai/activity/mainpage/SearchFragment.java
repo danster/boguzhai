@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.search.SearchResultActivity;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lottype_1;
 import com.boguzhai.logic.dao.Lottype_2;
