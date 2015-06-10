@@ -26,7 +26,9 @@
         android:orientation="vertical">
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:background="@color/white" android:id="@+id/lot_info_layout_1">
+            android:orientation="horizontal" android:background="@color/white"
+            android:id="@+id/lot_info_layout_1"
+            android:paddingBottom="10dp" >
             <!-- 展示 拍品图片 -->
             <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8"
                 android:gravity="center">

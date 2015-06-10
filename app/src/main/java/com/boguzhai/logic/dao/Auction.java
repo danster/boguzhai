@@ -1,9 +1,5 @@
 package com.boguzhai.logic.dao;
 
-import android.util.Log;
-
-import com.boguzhai.logic.utils.Utility;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +32,6 @@ public class Auction {
         Auction auction = null;
         try {
             auction = new Auction();
-            Log.i("JSON","parse auction "+auctionObj.getString("id")+" starting ...");
-
             auction.id = auctionObj.getString("id");
             auction.name = auctionObj.getString("name");
             auction.location = auctionObj.getString("auctionLocation");
@@ -58,11 +52,9 @@ public class Auction {
                     auction.sessionList.add(session);
                 }
             }
-            Log.i("JSON","parse auction end .");
 
         }catch(JSONException ex) {
             ex.printStackTrace();
-            Utility.toastMessage("数据解析报错");
         }
 
         return auction;

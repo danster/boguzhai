@@ -1,11 +1,7 @@
 package com.boguzhai.logic.dao;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
-
-import com.boguzhai.activity.base.Variable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,12 +46,10 @@ public class Lot {
         Lot lot = null;
         try {
             lot = new Lot();
-            Log.i("JSON", "parse lot starting ...");
             JSONObject base = lotObj.getJSONObject("base");
             JSONArray special = lotObj.getJSONArray("special");
             JSONArray records = lotObj.getJSONArray("records");
 
-            Log.i("JSON", "parse lot base starting ...");
             lot.id = base.getString("id");
             lot.no = base.getString("no");
             lot.name = base.getString("name");
@@ -75,26 +69,19 @@ public class Lot {
             lot.startPrice = base.getString("startPrice").equals("")?0.0:Double.parseDouble(base.getString("startPrice"));
             lot.dealPrice = base.getString("dealPrice").equals("")?0.0:Double.parseDouble(base.getString("dealPrice"));
 
-            Log.i("JSON", "parse lot special starting ...");
             for(int i=0; i< special.length(); ++i){
                 JSONArray k_v = special.getJSONArray(i);
                 lot.specials.add(new Pair<String, String>(k_v.getString(0), k_v.getString(1)));
             }
 
-            Log.i("JSON", "parse lot records starting ...");
             for(int i=0; i< records.length(); ++i){
                 JSONArray a_record = records.getJSONArray(i);
                 lot.records.add(a_record.getString(0)+","+a_record.getString(1)+","
                         + a_record.getString(2)+","+a_record.getString(3));
             }
 
-            Log.i("JSON", "parse lot records starting ...");
-
-            Log.i("JSON","parse lot end .");
-
         }catch(JSONException ex) {
             ex.printStackTrace();
-            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
         }
 
         return lot;
@@ -121,7 +108,6 @@ public class Lot {
 
         }catch(JSONException ex) {
             ex.printStackTrace();
-            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
         }
 
         return lot;

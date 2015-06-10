@@ -36,27 +36,25 @@ public class PayBailResultActivity extends BaseActivity {
         result_tips = (TextView)findViewById(R.id.result_tips);
         result_icon = (ImageView)findViewById(R.id.result_icon);
 
-        switch ( getIntent().getStringExtra("result") ){
-            case "0" :
+        String result = getIntent().getStringExtra("result");
+        String tips = getIntent().getStringExtra("tips");
+
+        switch ( result ){
+            case "1" :
                 result_info.setVisibility(View.VISIBLE);
-                result_tips.setText("恭喜您，支付成功！");
+                result_tips.setText(tips);
                 ((TextView)findViewById(R.id.info)).setText(getIntent().getStringExtra("info"));
-                ((TextView)findViewById(R.id.number)).setText(getIntent().getStringExtra("number"));
+                ((TextView)findViewById(R.id.number)).setText(getIntent().getStringExtra("biddingNO"));
                 result_icon.setBackgroundResource(R.drawable.pay_succeed);
                 break;
-            case "1" :
+            case "0" :
                 result_info.setVisibility(View.GONE);
-                result_tips.setText("暂存款不足，支付失败！");
-                result_icon.setBackgroundResource(R.drawable.pay_failed);
-                break;
-            case "2" :
-                result_info.setVisibility(View.GONE);
-                result_tips.setText("抱歉，支付失败！");
+                result_tips.setText(tips);
                 result_icon.setBackgroundResource(R.drawable.pay_failed);
                 break;
             default:
                 result_info.setVisibility(View.GONE);
-                result_tips.setText("抱歉，支付失败！");
+                result_tips.setText(tips);
                 result_icon.setBackgroundResource(R.drawable.pay_failed);
                 break;
         }

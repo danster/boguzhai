@@ -6,7 +6,7 @@
     <LinearLayout style="@style/base_itembar" android:layout_marginTop="10dp">
         <TextView style="@style/myinfo_left_text"  android:text="支付信息"/>
         <TextView style="@style/myinfo_middle_text" android:id="@+id/info"
-            android:text="2015上海博古斋拍卖会-古籍专场"/>
+            android:text=""/>
     </LinearLayout>
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_itembar">
@@ -14,7 +14,7 @@
         <TextView style="@style/myinfo_middle_text" android:id="@+id/money"
             android:textColor="@color/red"
             android:textSize="15sp"
-            android:text="1000元"/>
+            android:text=""/>
     </LinearLayout>
 
     <LinearLayout style="@style/base_itembar"
@@ -27,21 +27,33 @@
             android:text="请选择支付方式"/>
     </LinearLayout>
 
-    <LinearLayout style="@style/base_itembar" android:layout_height="60dp" android:id="@+id/capital">
+    <LinearLayout style="@style/base_itembar" android:layout_height="60dp" android:id="@+id/ly_balance">
         <ImageView style="@style/pay_left_image" android:background="@drawable/payment_balance"/>
         <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
             <TextView style="@style/pay_right_top_text" android:id="@+id/balance"  android:text="暂存款(还有: 元)支付"/>
             <TextView style="@style/pay_right_bottom_text" android:text="如果您的暂存款不足，请及时充值"/>
         </LinearLayout>
-        <ImageView style="@style/search_right_arrow" />
+        <ImageView style="@style/base_right_clear" android:id="@+id/choose_balance" android:src="@drawable/choose_no"/>
     </LinearLayout>
     <View style="@style/longline"/>
-    <LinearLayout style="@style/base_itembar"  android:layout_height="60dp" android:id="@+id/bank_card">
+    <LinearLayout style="@style/base_itembar"  android:layout_height="60dp" android:id="@+id/ly_unionpay">
         <ImageView style="@style/pay_left_image" android:background="@drawable/payment_bank"/>
         <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"  android:orientation="vertical">
             <TextView style="@style/pay_right_top_text"  android:text="银联支付"/>
             <TextView style="@style/pay_right_bottom_text" android:text="应用第三方支付系统，无需开通网银"/>
         </LinearLayout>
-        <ImageView style="@style/search_right_arrow" />
+        <ImageView style="@style/base_right_clear" android:id="@+id/choose_unionpay" android:src="@drawable/choose_no"/>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button style="@style/base_bar"  android:id="@+id/submit"
+        android:gravity="center"
+        android:background="@color/gold"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:text="确认支付"/>
 </LinearLayout>
