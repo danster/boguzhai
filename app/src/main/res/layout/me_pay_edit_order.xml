@@ -81,7 +81,6 @@
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="提    货    码:"/>
             <EditText style="@style/myinfo_middle_text" android:id="@+id/check_code"
-                android:inputType="numberDecimal"
                 android:hint="必填"/>
         </LinearLayout>
         <View style="@style/longline"/>
@@ -93,7 +92,7 @@
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/verify_left_text"  android:text="证 件  号 码:"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/number" android:inputType="numberDecimal"
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/number"
                 android:hint="必填" />
         </LinearLayout>
     </LinearLayout>
@@ -123,7 +122,7 @@
             <LinearLayout style="@style/base_bar">
                 <TextView style="@style/verify_left_text"  android:text="声 明  价 值:"/>
                 <EditText style="@style/myinfo_middle_text" android:id="@+id/support_price"
-                    android:inputType="numberDecimal" android:hint="必填（单位元）"/>
+                     android:hint="必填（单位元）"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

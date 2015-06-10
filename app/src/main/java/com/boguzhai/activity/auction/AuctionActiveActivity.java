@@ -326,7 +326,7 @@ public class AuctionActiveActivity extends BaseActivity {
 
                     // 倒计时信息与当前实时价格显示
                     int count = 0;
-                    if(!data.getString("countdown").equals("") && !data.getString("nowTime").equals("")){
+                    if(!data.getString("countdown").equals("")){
                         count = Integer.parseInt(data.getString("countdown"));
                     }
                     if(countTask!=null) {

@@ -30,23 +30,29 @@
         <TextView android:id="@+id/bail"
             android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="已交保证金:"/>
+            android:text="已交保证金: "/>
         <TextView
             android:id="@+id/endtime"
             android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="付款截止日:"/>
+            android:text="付款截止日: "/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/info"
+    <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="#fff9d6d7"
         android:paddingLeft="7dp"  android:paddingRight="7dp"
         android:paddingTop="3dp"   android:paddingBottom="3dp"
-        android:background="#fff9d6d7"
-        android:textColor="#ffa4453d"
-        android:textSize="15sp"
-        android:text="优惠说明:"/>
+        android:orientation="horizontal" >
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textSize="15sp"  android:textColor="#ffa4453d"
+            android:text="优 惠  说 明: "/>
+        <TextView android:id="@+id/info"
+            android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:textSize="15sp"  android:textColor="#ffa4453d"/>
+    </LinearLayout>
 
 
     <!-- 展示我的拍品信息 -->

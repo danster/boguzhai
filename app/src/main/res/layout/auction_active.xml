@@ -18,13 +18,15 @@
     <LinearLayout
         android:id="@+id/ly_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
+        android:background="@color/transparent"
         android:orientation="vertical">
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
-            android:id="@+id/lot_info_layout_1" android:background="@color/transparent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:background="@color/white" android:id="@+id/lot_info_layout_1">
             <!-- 展示 拍品图片 -->
             <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8"
                 android:gravity="center">
@@ -37,7 +39,6 @@
             <!-- 展示拍品参拍信息 -->
             <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="@color/white"
                 android:paddingLeft="5dp"
                 android:gravity="top|left" >
 
@@ -114,7 +115,7 @@
                         android:layout_height="30dp"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        android:background="@color/red"
+                        android:background="@drawable/shape_circle_rectangle_button"
                         android:textSize="18sp"/>
                 </LinearLayout>
 
@@ -148,7 +149,7 @@
                                 android:gravity="center"
                                 android:textColor="@color/white"
                                 android:textSize="18sp"
-                                android:background="@color/red"
+                                android:background="@drawable/shape_circle_rectangle_button"
                                 android:text="出价"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -218,8 +219,8 @@
                     android:text="下一件拍品"/>
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
-                 android:background="@color/transparent">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:background="@color/white" android:paddingBottom="10dp">
                 <!-- 展示 拍品图片 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8"
                     android:gravity="center">
@@ -232,7 +233,6 @@
                 <!-- 展示拍品参拍信息 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
                     android:orientation="vertical"
-                    android:background="@color/white"
                     android:paddingLeft="5dp"
                     android:gravity="top|left" >
 
@@ -253,10 +253,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white" />
 
     </LinearLayout>
 </LinearLayout>
