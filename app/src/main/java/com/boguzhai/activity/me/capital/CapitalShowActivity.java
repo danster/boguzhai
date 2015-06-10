@@ -64,7 +64,11 @@ public class CapitalShowActivity extends BaseActivity {
                 startActivity(new Intent(this, CapitalChargeActivity.class));
                 break;
             case R.id.withdrawal:
-                startActivity(new Intent(this, CapitalWithdrawalActivity.class));
+                if(Variable.account.capitalInfo.status.equals("0")){
+                    Utility.alertDialog("未绑定银行卡不能提现",null);
+                }else{
+                    startActivity(new Intent(this, CapitalWithdrawalActivity.class));
+                }
                 break;
             default: break;
 		};

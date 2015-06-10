@@ -15,7 +15,7 @@
             android:textStyle="bold"/>
         <TextView android:id="@+id/bind_bank"
             style="@style/base_text"
-            android:background="#ff8a292e"
+            android:background="@drawable/shape_circle_rectangle_button"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:layout_marginLeft="10dp"/>
