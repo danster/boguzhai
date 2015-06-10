@@ -23,9 +23,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by bobo on 15/4/8.
- */
+
 public class OrderLotAdapter extends BaseAdapter {
 
 
@@ -34,13 +32,22 @@ public class OrderLotAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private boolean isShowing = false;
 
-    public OrderLotAdapter(Context context, ArrayList<OrderLot> lots){
+//    private XListViewForScrollView listView;
+//
+//    public OrderLotAdapter(Context context, ArrayList<OrderLot> lots, XListViewForScrollView listView) {
+//        this.listView = listView;
+//        inflater = LayoutInflater.from(context);
+//        mContext = context;
+//        this.lots = lots;
+//    }
+
+    public OrderLotAdapter(Context context, ArrayList<OrderLot> lots) {
         inflater = LayoutInflater.from(context);
         mContext = context;
         this.lots = lots;
     }
 
-    private final class ViewHolder{
+    private final class ViewHolder {
         TextView me_pay_order_lot_name,
                 me_pay_order_lot_no,
                 me_pay_order_lot_appraisal,
@@ -54,9 +61,9 @@ public class OrderLotAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         View view;
-        ViewHolder holder;
+        final ViewHolder holder;
 
-        if(convertView == null) {
+        if (convertView == null) {
             view = inflater.inflate(R.layout.item_list_pay_order_lot, null);
             holder = new ViewHolder();
             holder.me_pay_order_lot_name = (TextView) view.findViewById(R.id.me_pay_order_lot_name);
@@ -65,9 +72,9 @@ public class OrderLotAdapter extends BaseAdapter {
             holder.me_pay_order_lot_deal_price = (TextView) view.findViewById(R.id.me_pay_order_lot_deal_price);
             holder.me_pay_order_lot_sum = (TextView) view.findViewById(R.id.me_pay_order_lot_sum);
             holder.me_pay_order_lot_commission = (TextView) view.findViewById(R.id.me_pay_order_lot_commission);
-            holder.me_pay_order_lot_image = (ImageView) view.findViewById(R.id.my_bidding_lot_image);
+            holder.me_pay_order_lot_image = (ImageView) view.findViewById(R.id.me_pay_order_lot_image);
             view.setTag(holder);
-        }else {
+        } else {
             view = convertView;
             holder = (ViewHolder) view.getTag();
         }
@@ -78,6 +85,32 @@ public class OrderLotAdapter extends BaseAdapter {
         holder.me_pay_order_lot_sum.setText(lots.get(position).sum);
         holder.me_pay_order_lot_commission.setText(lots.get(position).commission);
 
+
+
+//        if (listView != null) {
+//            listView.setOnScrollListener(new XListViewForScrollView.OnScrollListener() {
+//                @Override
+//                public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                    Log.i("scroll", "state:" + scrollState);
+//
+//                    if(scrollState != XListViewForScrollView.SCROLL_STATE_FLING) {
+//                        new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
+//                    }
+////                    switch (scrollState) {
+////                        case XListViewForScrollView.SCROLL_STATE_IDLE:
+////                            new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
+////                            break;
+////                    }
+//                }
+//
+//                @Override
+//                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//                }
+//            });
+//
+//        } else {
+//            new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
+//        }
         new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
 
 
@@ -85,7 +118,7 @@ public class OrderLotAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                if(!isShowing) {
+                if (!isShowing) {
                     isShowing = true;
                     new AsyncTask<Void, Void, Void>() {
                         Bitmap bmp = null;
@@ -137,6 +170,7 @@ public class OrderLotAdapter extends BaseAdapter {
                 }
             }
         });
+
 
         return view;
     }

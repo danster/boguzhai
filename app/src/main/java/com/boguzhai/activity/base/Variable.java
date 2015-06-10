@@ -16,6 +16,7 @@ import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Lottype_1;
 import com.boguzhai.logic.dao.Session;
+import com.boguzhai.logic.gaobo.PayOrder;
 import com.boguzhai.logic.view.XListView;
 
 import java.util.ArrayList;
@@ -59,5 +60,6 @@ public class Variable {
 
     public static Bitmap currentBitmap = null;    //即将进行缩放的图片
 
+    public static PayOrder payOrder = null;//跳转到订单详情时，使用的订单对象
 
 }
