@@ -23,7 +23,6 @@ public abstract class HttpJsonHandler extends Handler {
 
     @Override
     public void handleMessage(Message msg) {
-        if(msg == null) return;
         switch (msg.what){
             case 0:
                 Log.i("JSON",(String)msg.obj);

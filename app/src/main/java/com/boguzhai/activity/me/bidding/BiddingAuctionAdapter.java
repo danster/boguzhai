@@ -76,7 +76,7 @@ public class BiddingAuctionAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
-        holder.bidding_count.setText(String.valueOf(biddingAuctionList.get(position).auction.dealNum));
+        holder.bidding_count.setText(String.valueOf(biddingAuctionList.get(position).auction.showNum));
 
         LotInBiddingAuctionAdapter adapter = new LotInBiddingAuctionAdapter(mContext, biddingAuctionList.get(position).lotList);
         holder.lotList.setAdapter(adapter);

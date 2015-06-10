@@ -123,11 +123,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
-                    android:text="小    计:"
+                    android:text="佣    金:"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/me_pay_order_lot_sum"
+                    android:id="@+id/me_pay_order_lot_commission"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
@@ -146,17 +146,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
-                    android:text="佣    金:"
+                    android:text="小    计:"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/me_pay_order_lot_commission"
+                    android:id="@+id/me_pay_order_lot_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:gravity="center|left"
                     android:paddingLeft="15dp"
                     android:text="---"
                     android:textSize="16sp" />
+
 
             </LinearLayout>
 

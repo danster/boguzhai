@@ -6,95 +6,120 @@
 
 
     <LinearLayout
-        android:paddingLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:paddingRight="10dp"
-        android:paddingTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="订单编号:"/>
-        <TextView
-            android:id="@+id/tv_me_pay_order_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginLeft="5dp"
-            android:text="---"/>
-        <TextView
-            android:id="@+id/tv_me_pay_order_time"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:gravity="right"
-            android:text="----"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_me_pay_order_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="---"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
         android:paddingLeft="15dp"
-        android:paddingBottom="10dp"
         android:paddingRight="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:paddingTop="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="运费:"/>
-        <TextView
-            android:id="@+id/tv_me_pay_order_expressPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginLeft="5dp"
-            android:text="---"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:paddingLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="优惠:"/>
-        <TextView
-            android:id="@+id/tv_me_pay_order_preferential"
-            android:layout_width="wrap_content"
-            android:textSize="16sp"
-            android:text="----"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="订单编号:" />
 
-        <TextView
-            android:paddingLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="实付款:"/>
-        <TextView
-            android:id="@+id/tv_me_pay_order_realPayPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="---"/>
+            <TextView
+                android:id="@+id/tv_me_pay_order_no"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="---"
+                android:textColor="@color/blue"
+                android:textSize="18sp" />
 
+
+
+            <TextView
+                android:id="@+id/tv_me_pay_order_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="3dp"
+                android:background="@color/gold"
+                android:textColor="@color/white"
+                android:text="---"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_me_pay_order_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="----"
+                android:textSize="18sp" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="运费:" />
+
+            <TextView
+                android:id="@+id/tv_me_pay_order_expressPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="---"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="优惠:" />
+
+            <TextView
+                android:id="@+id/tv_me_pay_order_preferential"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="----"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="实付款:" />
+
+            <TextView
+                android:id="@+id/tv_me_pay_order_realPayPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="---"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
+    <View style="@style/longline"/>
 
     <com.boguzhai.logic.widget.ListViewForScrollView
         android:id="@+id/lv_pay_order_lot_list"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/white" />
 
 </LinearLayout>

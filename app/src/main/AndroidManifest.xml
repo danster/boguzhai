@@ -104,6 +104,7 @@
         <activity android:name=".activity.me.mylot.EditOrderActivity" />
         <activity android:name=".activity.me.mylot.ChooseAddressActivity" />
         <activity android:name=".activity.me.order.PayOrderActivity" />
+        <activity android:name=".activity.me.order.PayOrderDetailsActivity" />
 
         <!-- activities belong part of me proxy -->
         <activity
