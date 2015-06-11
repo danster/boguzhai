@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.gaobo.PayOrder;
-import com.boguzhai.logic.view.XListViewForScrollView;
+import com.boguzhai.logic.view.XListView;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
@@ -23,7 +24,8 @@ public class PayOrderAdapter extends BaseAdapter {
     private ArrayList<PayOrder> payOrders;
     private LayoutInflater inflater;
 
-    private XListViewForScrollView listView;
+//    private XListViewForScrollView listView;
+    private XListView listView;
 
     private final class ViewHolder {
         TextView tv_me_pay_order_no,
@@ -37,7 +39,7 @@ public class PayOrderAdapter extends BaseAdapter {
 
     }
 
-    public PayOrderAdapter(Context context, ArrayList<PayOrder> payOrders, XListViewForScrollView listView) {
+    public PayOrderAdapter(Context context, ArrayList<PayOrder> payOrders, XListView listView) {
         this.listView = listView;
         inflater = LayoutInflater.from(context);
         mContext = context;
@@ -65,21 +67,32 @@ public class PayOrderAdapter extends BaseAdapter {
             holder.tv_me_pay_order_preferential = (TextView) view.findViewById(R.id.tv_me_pay_order_preferential);
             holder.tv_me_pay_order_expressPrice = (TextView) view.findViewById(R.id.tv_me_pay_order_expressPrice);
             holder.listView = (ListViewForScrollView) view.findViewById(R.id.lv_pay_order_lot_list);
-            holder.orderLotAdapter = new OrderLotAdapter(mContext, payOrders.get(position).orderLots);
             view.setTag(holder);
         } else {
             view = convertView;
             holder = (ViewHolder) view.getTag();
         }
 
-        holder.tv_me_pay_order_no.setText(payOrders.get(position).orderId);
+        holder.tv_me_pay_order_no.setText(payOrders.get(position).orderNo);
         holder.tv_me_pay_order_time.setText(payOrders.get(position).orderTime);
         holder.tv_me_pay_order_status.setText(payOrders.get(position).orderStatus);
         holder.tv_me_pay_order_realPayPrice.setText("¥ " + payOrders.get(position).realPayPrice);
         holder.tv_me_pay_order_preferential.setText("¥ " + payOrders.get(position).preferential);
         holder.tv_me_pay_order_expressPrice.setText("¥ " + payOrders.get(position).expressPrice);
 
-        holder.tv_me_pay_order_no.setOnClickListener(new View.OnClickListener() {
+
+        OrderLotAdapter orderLotAdapter = new OrderLotAdapter(mContext, payOrders.get(position).orderLots);
+        holder.listView.setAdapter(orderLotAdapter);
+        holder.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                //跳转订单详情
+                Variable.payOrder = payOrders.get(position);
+                Intent intent = new Intent(mContext, PayOrderDetailsActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //跳转订单详情
@@ -88,11 +101,6 @@ public class PayOrderAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
-
-
-
-        holder.listView.setAdapter(holder.orderLotAdapter);
-
         return view;
     }
 

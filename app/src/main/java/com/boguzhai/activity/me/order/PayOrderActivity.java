@@ -18,7 +18,7 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListViewForScrollView;
+import com.boguzhai.logic.view.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,11 +26,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class PayOrderActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, XListViewForScrollView.IXListViewListener {
+public class PayOrderActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, XListView.IXListViewListener {
 
 
     private SwipeRefreshLayout swipe_layout;
-    private XListViewForScrollView listview;
+    private XListView listview;
     private int totalCount;
     private int currentCount;
     private int size;
@@ -41,11 +41,16 @@ public class PayOrderActivity extends BaseActivity implements SwipeRefreshLayout
 
     private HttpClient conn;
 
+
+//    private
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setLinearView(R.layout.me_pay_order);
         title.setText("我的订单");
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("正在加载数据...").show();
+
         init();
     }
 
@@ -54,7 +59,7 @@ public class PayOrderActivity extends BaseActivity implements SwipeRefreshLayout
         swipe_layout.setOnRefreshListener(this);
         swipe_layout.setColorSchemeResources(R.color.gold);
 
-        listview = (XListViewForScrollView) findViewById(R.id.me_pay_order_lv);
+        listview = (XListView) findViewById(R.id.me_pay_order_lv);
         listview.setPullLoadEnable(true);
         listview.setXListViewListener(this);
 
@@ -103,9 +108,10 @@ public class PayOrderActivity extends BaseActivity implements SwipeRefreshLayout
             listview.stopLoadMore();
             Utility.toastMessage("没有更多数据了");
             listview.setPullLoadEnable(false);
+        }else {
+            number++;
+            requestData();
         }
-        number++;
-        requestData();
     }
 
 private class MyPayOrderHandler extends HttpJsonHandler {

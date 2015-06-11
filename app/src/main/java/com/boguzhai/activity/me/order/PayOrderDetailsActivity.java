@@ -1,5 +1,6 @@
 package com.boguzhai.activity.me.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,14 @@ public class PayOrderDetailsActivity extends BaseActivity {
         listView.setFocusable(false);
 
         button = (Button) findViewById(R.id.btn_order_details);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Variable.currentActivity, PayOrderActivity.class);
+                intent.putExtra("orderId",payOrder.orderId);
+                startActivity(intent);
+            }
+        });
         payOrder = Variable.payOrder;
 
         initOrderBasicInfo();
@@ -60,7 +69,7 @@ public class PayOrderDetailsActivity extends BaseActivity {
         }else {
             button.setVisibility(View.GONE);
         }
-        setText(R.id.tv_order_details_id, payOrder.orderId);
+        setText(R.id.tv_order_details_no, payOrder.orderNo);
         setText(R.id.tv_order_details_addressInfo, payOrder.addressInfo);
         setText(R.id.tv_order_details_deliveryInfo, payOrder.deliveryInfo);
         setText(R.id.tv_order_details_payType, payOrder.payType);
@@ -112,4 +121,5 @@ public class PayOrderDetailsActivity extends BaseActivity {
         super.onDestroy();
         Variable.payOrder = null;
     }
+
 }
