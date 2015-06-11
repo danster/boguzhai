@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
 
         <LinearLayout
@@ -83,8 +84,7 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="5dp"
-                android:paddingTop="10dp">
-            </LinearLayout>
+                android:paddingTop="10dp"></LinearLayout>
 
 
             <LinearLayout
@@ -103,7 +103,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_order_details_id"
+                    android:id="@+id/tv_order_details_no"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -116,11 +116,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:layout_width="100dp"
@@ -143,11 +143,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:layout_width="100dp"
@@ -170,11 +170,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:layout_width="100dp"
@@ -196,11 +196,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:layout_width="100dp"
@@ -222,11 +222,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="100dp"
@@ -248,11 +248,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:layout_width="100dp"
@@ -274,11 +274,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:paddingBottom="8dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:layout_width="100dp"
@@ -379,6 +379,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
                     android:text="---" />
             </LinearLayout>
 
@@ -387,17 +388,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:background="@color/white" />
-
-
-            <Button
-                android:id="@+id/btn_order_details"
-                android:textColor="@color/white"
-                android:background="@color/dark_red"
-                android:textSize="18sp"
-                android:text="付款"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
-
     </ScrollView>
+
+    <Button
+        android:id="@+id/btn_order_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_red"
+        android:text="付款"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </LinearLayout>
