@@ -16,7 +16,7 @@ import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
 import com.boguzhai.activity.me.myauction.MyAuctionActivity;
 import com.boguzhai.activity.me.mylot.MyLotActivity;
-import com.boguzhai.activity.me.order.PayOrderActivity;
+import com.boguzhai.activity.me.order.MyPayOrderActivity;
 import com.boguzhai.activity.me.settings.SystemSettingsActivity;
 import com.boguzhai.activity.me.upload.UploadLotActivity;
 import com.boguzhai.logic.utils.Utility;
@@ -105,7 +105,7 @@ public class MeFragment extends Fragment {
                     break;
                 case R.id.me_myorder:
                     if(Variable.isLogin==true) {
-                        Utility.gotoActivity(PayOrderActivity.class);
+                        Utility.gotoActivity(MyPayOrderActivity.class);
                     } else {
                         Utility.gotoLogin();
                     }

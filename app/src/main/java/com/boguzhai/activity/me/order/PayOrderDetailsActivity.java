@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Variable;
+import com.boguzhai.activity.pay.PayOrderActivity;
 import com.boguzhai.logic.gaobo.PayOrder;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 

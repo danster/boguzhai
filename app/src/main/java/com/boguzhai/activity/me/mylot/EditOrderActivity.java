@@ -13,7 +13,7 @@ import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.info.DeliveryAddress;
-import com.boguzhai.activity.me.order.PayOrderActivity;
+import com.boguzhai.activity.pay.PayOrderActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
