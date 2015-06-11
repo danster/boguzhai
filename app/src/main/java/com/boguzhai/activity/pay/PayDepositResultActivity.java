@@ -1,15 +1,15 @@
 package com.boguzhai.activity.pay;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.auction.AuctionDisplayActivity;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.logic.utils.Utility;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,12 +22,14 @@ public class PayDepositResultActivity extends BaseActivity {
 
     private int time;
     private TextView count;
+    private TimerTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLinearView(R.layout.pay_deposit_result);
         title.setText("支付结果");
+        title_left.setVisibility(View.INVISIBLE);
         init();
     }
 
@@ -59,10 +61,10 @@ public class PayDepositResultActivity extends BaseActivity {
                 break;
         }
 
-        // time 秒后跳转到拍卖会专场页面
+        // time 秒后跳转
         time = 10;
         count = (TextView)findViewById(R.id.count);
-        TimerTask task = new TimerTask() {
+        task = new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() { // UI thread
@@ -71,7 +73,7 @@ public class PayDepositResultActivity extends BaseActivity {
                         if (time <= 0) {
                             count.setText("0");
                             cancel();
-                            startActivity(new Intent(context, AuctionDisplayActivity.class));
+                            Utility.gotoMainpage(1);
                         } else {
                             count.setText(""+time);
                         }
@@ -81,6 +83,17 @@ public class PayDepositResultActivity extends BaseActivity {
             }
         };
         new Timer().schedule(task, 0, 1000); // 一秒后启动task
+    }
+
+    @Override
+    public boolean onKeyDown (int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                task.cancel();
+                finish();
+                break;
+        }
+        return true;
     }
 
 }

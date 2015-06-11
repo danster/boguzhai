@@ -29,7 +29,6 @@ public class CapitalWithdrawalActivity extends BaseActivity {
 	protected void init(){
 		((TextView)findViewById(R.id.bank_name)).setText(Variable.account.capitalInfo.bankName);
 		((TextView)findViewById(R.id.bank_number)).setText(Variable.account.capitalInfo.bankNumber);
-
 		listen(R.id.money_clear);
 		listen(R.id.submit);
 	}

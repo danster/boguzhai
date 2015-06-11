@@ -24,13 +24,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class AuctionFragment extends Fragment {
-    private static String TAG = "AuctionFragment";
     private View view;
     private MainActivity context;
     private int myCheckedId;
 
     private ArrayList<Auction> list = new ArrayList<Auction>();
-    private ListViewForScrollView listview;
     private AuctionListAdapter adapter;
 
     @Override
@@ -56,19 +54,17 @@ public class AuctionFragment extends Fragment {
             }
         });
 
-        listview = (ListViewForScrollView) view.findViewById(R.id.auction_list);
+        ListViewForScrollView listview = (ListViewForScrollView)view.findViewById(R.id.auction_list);
         adapter = new AuctionListAdapter(context, list);
         listview.setAdapter(adapter);
 
-        updateDynamicAuctions(R.id.auction_status_all); //默认展示全部拍卖会
-        RadioButton radio = (RadioButton)view.findViewById(R.id.auction_status_all);
-        radio.setChecked(true);
+        //默认展示全部拍卖会
+        ((RadioButton)view.findViewById(R.id.auction_status_all)).setChecked(true);
     }
 
     public void updateDynamicAuctions(int checkedId){
         list.clear();
         adapter.notifyDataSetChanged();
-
         HttpClient conn = new HttpClient();
         switch (checkedId){
             case R.id.auction_status_all:     conn.setParam("status", "");      break;

@@ -14,11 +14,11 @@ import com.boguzhai.logic.utils.Utility;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class PayOrderResultActivity extends BaseActivity {
+public class PayResultActivity extends BaseActivity {
 
-    private TextView result_tips;
+    private TextView result_tips, count_info;
     private ImageView result_icon;
-    private LinearLayout result_info;
+    private LinearLayout result_info, info_1, info_2, info_3, ly_count;
 
     private int time;
     private TextView count;
@@ -36,28 +36,32 @@ public class PayOrderResultActivity extends BaseActivity {
     public void init(){
         result_info = (LinearLayout)findViewById(R.id.result_info);
         result_tips = (TextView)findViewById(R.id.result_tips);
+        count_info = (TextView)findViewById(R.id.count_info);
         result_icon = (ImageView)findViewById(R.id.result_icon);
+        info_1 = (LinearLayout)findViewById(R.id.info_1);
+        info_2 = (LinearLayout)findViewById(R.id.info_2);
+        info_3 = (LinearLayout)findViewById(R.id.info_3);
+        ly_count = (LinearLayout)findViewById(R.id.ly_count);
+
+        info_1.setVisibility(View.GONE);
+        info_2.setVisibility(View.GONE);
+        info_3.setVisibility(View.GONE);
+        ly_count.setVisibility(View.GONE);
+
 
         String result = getIntent().getStringExtra("result");
         String tips = getIntent().getStringExtra("tips");
 
         switch ( result ){
-            case "1" :
+            case "1" : // 成功
                 result_info.setVisibility(View.VISIBLE);
-                result_tips.setText(tips);
-                ((TextView)findViewById(R.id.order_no)).setText(getIntent().getStringExtra("order_no"));
-                ((TextView)findViewById(R.id.order_money)).setText(getIntent().getStringExtra("order_money"));
                 result_icon.setBackgroundResource(R.drawable.pay_succeed);
-                break;
-            case "0" :
-                result_info.setVisibility(View.GONE);
                 result_tips.setText(tips);
-                result_icon.setBackgroundResource(R.drawable.pay_failed);
                 break;
-            default:
+            case "0" : // 失败
                 result_info.setVisibility(View.GONE);
-                result_tips.setText(tips);
                 result_icon.setBackgroundResource(R.drawable.pay_failed);
+                result_tips.setText(tips);
                 break;
         }
 

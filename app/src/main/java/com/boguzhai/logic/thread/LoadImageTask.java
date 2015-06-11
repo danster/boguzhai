@@ -73,7 +73,7 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         Bitmap imageBitmap = imageLoader.getBitmapFromMemoryCache(mImageUrl);
         if (imageBitmap == null) {
-            Log.i("TAG", "there is not memory cache about this url, go to load image");
+            Log.i("TAG", "Load image: "+mImageUrl);
             imageBitmap = loadImage(mImageUrl);
         }
         return imageBitmap;

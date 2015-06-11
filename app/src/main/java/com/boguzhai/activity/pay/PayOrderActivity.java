@@ -1,5 +1,6 @@
 package com.boguzhai.activity.pay;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 public class PayOrderActivity extends BaseActivity {
 
     private boolean useBalance=false, useDeposit=false, useUnionpay=false;
-    private String orderId="", orderNo="", orderMoney="", balance="", deposit="";
+    private String orderNo="", orderMoney="", balance="", deposit="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,10 @@ public class PayOrderActivity extends BaseActivity {
 
     public void init(){
 
-        orderId = getIntent().getStringExtra("orderId");
-
+        // 获取订单支付信息
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-        conn.setParam("orderId", orderId);
+        conn.setParam("orderId", getIntent().getStringExtra("orderId") );
         conn.setUrl(Constant.url + "pTraceAction!getOrderPayInfoById.htm");
         new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
             @Override
@@ -59,7 +59,14 @@ public class PayOrderActivity extends BaseActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                        break;
+                    case 1:
+                        Utility.alertDialog("无法获取订单支付信息", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
                         break;
                     default:
                         break;
@@ -73,24 +80,15 @@ public class PayOrderActivity extends BaseActivity {
         listen(R.id.submit);
     }
 
-    private void gotoPayResult(boolean success, String tips){
-        Intent intent = new Intent(Variable.currentActivity, PayOrderResultActivity.class);
-        intent.putExtra("result", success?"1":"0");
-        intent.putExtra("tips", tips);
-        intent.putExtra("order_no", orderNo);
-        intent.putExtra("order_money", orderMoney);
-        startActivity(intent);
-    }
-
-    // 支付订单
+    // 上传支付信息，获取支付结果，跳转结果显示页或者网银支付页面
     private void payHttpConnect(){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-        conn.setParam("orderId", orderId);
-        conn.setParam("useBalance", useDeposit?"1":"0");
-        conn.setParam("useDeposit", useDeposit?"1":"0");
-        conn.setParam("type", useUnionpay?"1":"0");
-        conn.setUrl(Constant.url + "pTraceAction!payOrderById.htm");
+        conn.setHeader("cookie",    "JSESSIONID=" + Variable.account.sessionid);
+        conn.setParam("orderId",    orderNo);
+        conn.setParam("useBalance", useDeposit ? "1" : "0");
+        conn.setParam("useDeposit", useDeposit ? "1" : "0");
+        conn.setParam("type",       useUnionpay ? "1" : "0");
+        conn.setUrl(Constant.url +  "pTraceAction!payOrderById.htm");
 
         if (useUnionpay) { //使用银联支付方式支付
             new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
@@ -98,8 +96,7 @@ public class PayOrderActivity extends BaseActivity {
                 public void handlerData(int code, JSONObject data) {
                     super.handlerData(code, data);
                     switch (code) {
-                        // 获取支付链接信息成功
-                        case 0:
+                        case 0: // 获取支付链接信息成功
                             try {
                                 Utility.openUrl(data.getString("payUrl"));
                             } catch (JSONException e) {
@@ -125,10 +122,18 @@ public class PayOrderActivity extends BaseActivity {
                     }
                 }
             })).start();
-
         }
     }
 
+    // 根据条件跳转到支付结果显示页面
+    private void gotoPayResult(boolean success, String tips){
+        Intent intent = new Intent(Variable.currentActivity, PayOrderResultActivity.class);
+        intent.putExtra("result", success ? "1" : "0");
+        intent.putExtra("tips", tips);
+        intent.putExtra("order_no", orderNo);
+        intent.putExtra("order_money", orderMoney);
+        startActivity(intent);
+    }
 
     @Override
     public void onClick(View v){

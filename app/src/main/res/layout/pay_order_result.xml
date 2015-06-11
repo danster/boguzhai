@@ -51,7 +51,7 @@
             android:textColor="@color/red"
             android:textSize="20sp"/>
         <TextView style="@style/myinfo_left_text"
-            android:text="秒后跳转到拍卖会专场页面"/>
+            android:text="秒后跳转到我的订单页面"/>
     </LinearLayout>
 
 

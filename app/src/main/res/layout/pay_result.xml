@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content"
+        android:layout_marginTop="10dp" android:layout_gravity="center">
+        <ImageView android:id="@+id/result_icon"
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:background="@drawable/pay_succeed"/>
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_itembar" android:background="@color/transparent" android:gravity="center">
+        <TextView android:id="@+id/result_tips"
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:textSize="18sp" android:textStyle="bold"
+            android:textColor="@color/dark_black"/>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/result_info"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout  style="@style/base_itembar" android:id="@+id/info_1">
+            <TextView style="@style/myinfo_left_text"  android:id="@+id/info_1_head" />
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/info_1_tail"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:background="@color/white" android:id="@+id/info_2">
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_itembar">
+                <TextView style="@style/myinfo_left_text"  android:id="@+id/info_2_head" />
+                <TextView style="@style/myinfo_middle_text" android:id="@+id/info_2_tail" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:background="@color/white" android:id="@+id/info_3">
+            <View style="@style/longline"/>
+            <LinearLayout style="@style/base_itembar">
+                <TextView style="@style/myinfo_left_text"  android:id="@+id/info_3_head" />
+                <TextView style="@style/myinfo_middle_text" android:id="@+id/info_3_tail" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/base_itembar" android:gravity="center" android:id="@+id/ly_count"
+        android:layout_marginTop="20dp">
+        <TextView style="@style/myinfo_left_text"
+            android:id="@+id/count"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:textSize="20sp"/>
+        <TextView style="@style/myinfo_left_text"
+            android:id="@+id/count_info"
+            android:text="秒后跳转到"/>
+    </LinearLayout>
+
+
+</LinearLayout>

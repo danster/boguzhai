@@ -22,7 +22,6 @@ public class PayDepositActivity extends BaseActivity {
 
     private String pay_info, pay_money, pay_balance, biddingNo="";
     private boolean useBalance=false, useUnionpay=false;
-    private String payType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class PayDepositActivity extends BaseActivity {
         listen(R.id.submit);
     }
 
-    // 支付保证金
+    // 上传支付信息，获取支付结果，跳转结果显示页或者网银支付页面
     private void payHttpConnect(){
 
         HttpClient conn = new HttpClient();
@@ -109,6 +108,7 @@ public class PayDepositActivity extends BaseActivity {
         }
     }
 
+    // 根据条件跳转到支付结果显示页面
     private void gotoPayResult(boolean success, String tips){
         Intent intent = new Intent(Variable.currentActivity, PayDepositResultActivity.class);
         intent.putExtra("result", success?"1":"0");

@@ -26,7 +26,6 @@ public class PayOrderDetailsActivity extends BaseActivity {
     private ListViewForScrollView listView;
 
     private PayOrder payOrder;
-
     private Button button;
 
     @Override
@@ -48,7 +47,7 @@ public class PayOrderDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Variable.currentActivity, PayOrderActivity.class);
-                intent.putExtra("orderId",payOrder.orderId);
+                intent.putExtra("orderId",payOrder.orderNo);
                 startActivity(intent);
             }
         });
