@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class PayDepositActivity extends BaseActivity {
 
-    private String pay_info, pay_money, pay_balance;
+    private String pay_info, pay_money, pay_balance, biddingNo="";
     private boolean useBalance=false, useUnionpay=false;
     private String payType = "";
 
@@ -47,89 +47,65 @@ public class PayDepositActivity extends BaseActivity {
     }
 
     // 支付保证金
-    private void payDepositConn(String type){
+    private void payHttpConnect(){
 
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("auctionMainId", Variable.currentAuction.id);
         conn.setParam("auctionId", "");
-        conn.setParam("type", type);
+        conn.setParam("useBalance", useBalance?"1":"0");
+        conn.setParam("type", useUnionpay?"1":"0");
         conn.setUrl(Constant.url + "pTraceAction!payDeposit.htm");
 
-        switch (type){
-            case "1":
-                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-                    @Override
-                    public void handlerData(int code, JSONObject data) {
-                        super.handlerData(code, data);
-                        switch (code) {
-                            case 0:
-                                try {
-                                    Variable.biddingNo = data.getString("biddingNo");
-                                    gotoPayResult(true, "恭喜您，支付成功！");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case 1:  gotoPayResult(false, "暂存款余额不足，支付失败！"); break;
-                            case 2:  gotoPayResult(false, "抱歉，支付失败！");          break;
-                            default: gotoPayResult(false, "抱歉，支付失败！");          break;
-                        }
+        if (useUnionpay) { //使用银联支付方式支付
+            new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+                @Override
+                public void handlerData(int code, JSONObject data) {
+                    super.handlerData(code, data);
+                    switch (code){
+                        // 获取支付链接信息成功
+                        case 0:
+                            try {
+                                Utility.openUrl(data.getString("payUrl"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 1:
+                            try {
+                                biddingNo = data.getString("biddingNo");
+                                gotoPayResult(true, "恭喜您，支付成功！");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 2:  gotoPayResult(false, "抱歉，支付失败！");    break;
+                        default: gotoPayResult(false, "抱歉，支付失败！");    break;
                     }
-                })).start();
-                break;
+                }
+            })).start();
 
-            case "2":
-                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-                    @Override
-                    public void handlerData(int code, JSONObject data) {
-                        super.handlerData(code, data);
-                        switch (code){
-                            // 获取支付链接信息成功
-                            case 0:
-                                try {
-                                    Utility.openUrl(data.getString("payUrl"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case 1:  gotoPayResult(false, "抱歉，支付失败！");    break;
-                            default: gotoPayResult(false, "抱歉，支付失败！");    break;
-                        }
+        } else{ // 不使用任何网银支付,使用暂存款
+            new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+                @Override
+                public void handlerData(int code, JSONObject data) {
+                    super.handlerData(code, data);
+                    switch (code) {
+                        case 0:
+                            try {
+                                biddingNo = data.getString("biddingNo");
+                                gotoPayResult(true, "恭喜您，支付成功！");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 1:  gotoPayResult(false, "暂存款余额不足，支付失败！"); break;
+                        case 2:  gotoPayResult(false, "抱歉，支付失败！");          break;
+                        default: gotoPayResult(false, "抱歉，支付失败！");          break;
                     }
-                })).start();
-                break;
-            case "3":
-                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-                    @Override
-                    public void handlerData(int code, JSONObject data) {
-                        super.handlerData(code, data);
-                        switch (code){
-                            // 暂存款已足够，支付成功
-                            case 0:
-                                try {
-                                    Variable.biddingNo = data.getString("biddingNo");
-                                    gotoPayResult(true, "恭喜您，支付成功！");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            // 暂存款不足够，余下使用银联支付，返回支付链接
-                            case 1:
-                                try {
-                                    Utility.openUrl(data.getString("payUrl"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case 2:  gotoPayResult(false, "抱歉，支付失败！");    break;
-                            default: gotoPayResult(false, "抱歉，支付失败！");    break;
-                        }
-                    }
-                })).start();
-                break;
-            default:
-                break;
+                }
+            })).start();
+
         }
     }
 
@@ -138,7 +114,7 @@ public class PayDepositActivity extends BaseActivity {
         intent.putExtra("result", success?"1":"0");
         intent.putExtra("tips", tips);
         intent.putExtra("info", pay_info);
-        intent.putExtra("biddingNO", Variable.biddingNo);
+        intent.putExtra("biddingNO", biddingNo);
         startActivity(intent);
     }
 
@@ -149,13 +125,8 @@ public class PayDepositActivity extends BaseActivity {
             case R.id.submit:
                 if(!useBalance && !useUnionpay){
                     Utility.alertDialog("请选择支付方式", null);
-                    break;
-                } else if (useBalance && !useUnionpay) {
-                    payType = "1";
-                } else if (!useBalance && useUnionpay) {
-                    payType = "2";
-                } else if (useBalance && useUnionpay) {
-                    payType = "3";
+                } else {
+                    payHttpConnect();
                 }
 
                 break;

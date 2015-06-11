@@ -10,7 +10,7 @@
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_itembar">
         <TextView style="@style/myinfo_left_text"  android:text="实付金额:"/>
-        <TextView style="@style/myinfo_middle_text" android:id="@+id/order_money"/>
+        <TextView style="@style/myinfo_middle_text" android:id="@+id/order_money" android:textColor="@color/red"/>
     </LinearLayout>
 
     <LinearLayout style="@style/base_itembar"

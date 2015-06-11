@@ -48,7 +48,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLinearView(R.layout.search_result);
+        setLinearView(R.layout.main_fg_search_result);
         title.setText("搜索结果");
         title_right.setText("排序");
         title_right.setVisibility(View.VISIBLE);

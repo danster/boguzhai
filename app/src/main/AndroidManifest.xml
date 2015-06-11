@@ -28,9 +28,7 @@
         android:theme="@style/AppTheme" >
 
         <!-- Service在AndroidManifest中的声明语法参考 http://developer.android.com/guide/topics/manifest/service-element.html -->
-        <service
-            android:name=".logic.service.NetworkStateService"
-            android:enabled="true" />
+        <service android:name=".logic.service.NetworkStateService" android:enabled="true" />
 
         <!-- activity entry of app -->
         <activity android:name=".activity.base.ActivityEntry" >
@@ -40,19 +38,15 @@
             </intent-filter>
         </activity>
 
-        <!-- activities belong part of app start -->
+        <!-- activities belong part of app start and mainpage -->
         <activity android:name=".activity.mainpage.MainActivity" />
         <activity android:name=".activity.mainpage.AppGuideActivity" />
         <activity android:name=".activity.mainpage.AppStartActivity" />
-
-        <!-- activities belong part of base, pay and item -->
-        <activity android:name=".activity.items.BaseHtmlActivity" />
-        <activity android:name=".activity.pay.AlipayActivity" />
-        <activity android:name=".activity.photowallfalls.PhotowallActivity" />
-        <activity android:name=".activity.items.ImageDetailsActivity" />
-
-        <!-- activities belong part of search -->
         <activity android:name=".activity.mainpage.SearchResultActivity" />
+
+        <!-- activities belong part of item -->
+        <activity android:name=".activity.items.BaseHtmlActivity" />
+        <activity android:name=".activity.items.ImageDetailsActivity" />
 
         <!-- activities belong part of auction -->
         <activity android:name=".activity.auction.AuctionDisplayActivity" />
@@ -60,11 +54,11 @@
         <activity android:name=".activity.auction.LotFilterActivity" />
         <activity android:name=".activity.auction.AuctionActiveActivity" />
 
-
         <!-- activities belong part of pay -->
         <activity android:name=".activity.pay.PayDepositActivity" />
         <activity android:name=".activity.pay.PayDepositResultActivity" />
         <activity android:name=".activity.pay.PayOrderActivity" />
+        <activity android:name=".activity.pay.PayOrderResultActivity" />
 
         <!-- activities belong part of login -->
         <activity android:name=".activity.login.LoginActivity" />
@@ -90,10 +84,8 @@
         <activity android:name=".activity.me.capital.CapitalWithdrawalActivity" />
 
         <!-- activities belong part of me myauction -->
-        <activity
-            android:name=".activity.me.myauction.MyAuctionActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
+        <activity android:name=".activity.me.myauction.MyAuctionActivity"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".activity.me.myauction.MyAuctionSessionActivity"/>
 
         <!-- activities belong part of me bidding -->
@@ -107,25 +99,22 @@
         <activity android:name=".activity.me.order.PayOrderDetailsActivity" />
 
         <!-- activities belong part of me proxy -->
-        <activity
-            android:name=".activity.me.proxy.ProxyPricingActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".activity.me.proxy.ProxyPricingActivity"
+                  android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".activity.me.proxy.SetProxyPricingActivity" />
 
         <!-- activities belong part of me collect -->
-        <activity android:name=".activity.me.collect.MyCollectionActivity" >
-        </activity>
+        <activity android:name=".activity.me.collect.MyCollectionActivity" />
 
         <!-- activities belong part of me upload -->
-        <activity android:name=".activity.me.upload.UploadLotActivity" >
-        </activity>
+        <activity android:name=".activity.me.upload.UploadLotActivity" />
 
         <!-- activities belong part of me setting -->
-        <activity android:name=".activity.me.settings.SystemSettingsActivity" >
-        </activity>
+        <activity android:name=".activity.me.settings.SystemSettingsActivity" />
         <activity android:name=".activity.me.settings.AboutBoGuZhaiActivity" />
         <activity android:name=".activity.me.settings.AuctionGuideActivity" />
-        <activity android:name=".activity.me.settings.AddAdviceActivity" android:windowSoftInputMode="adjustPan|stateVisible|stateHidden"/>
+        <activity android:name=".activity.me.settings.AddAdviceActivity"
+                  android:windowSoftInputMode="adjustPan|stateVisible|stateHidden"/>
         <activity android:name=".activity.me.settings.GetAdviceActivity"/>
         <activity android:name=".activity.me.settings.CheckAdivceActivity"/>
     </application>

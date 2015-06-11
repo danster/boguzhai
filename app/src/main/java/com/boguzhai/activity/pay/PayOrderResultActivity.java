@@ -26,7 +26,7 @@ public class PayOrderResultActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLinearView(R.layout.pay_deposit_result);
+        setLinearView(R.layout.pay_order_result);
         title.setText("支付结果");
         init();
     }
@@ -43,8 +43,8 @@ public class PayOrderResultActivity extends BaseActivity {
             case "1" :
                 result_info.setVisibility(View.VISIBLE);
                 result_tips.setText(tips);
-                ((TextView)findViewById(R.id.info)).setText(getIntent().getStringExtra("info"));
-                ((TextView)findViewById(R.id.number)).setText(getIntent().getStringExtra("biddingNO"));
+                ((TextView)findViewById(R.id.order_no)).setText(getIntent().getStringExtra("order_no"));
+                ((TextView)findViewById(R.id.order_money)).setText(getIntent().getStringExtra("order_money"));
                 result_icon.setBackgroundResource(R.drawable.pay_succeed);
                 break;
             case "0" :

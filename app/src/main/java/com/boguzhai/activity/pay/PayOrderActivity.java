@@ -1,5 +1,6 @@
 package com.boguzhai.activity.pay;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,9 +20,8 @@ import org.json.JSONObject;
 
 public class PayOrderActivity extends BaseActivity {
 
-    private String balance, deposit, sum;
     private boolean useBalance=false, useDeposit=false, useUnionpay=false;
-    private String payType = "", orderId="";
+    private String orderId="", orderNo="", orderMoney="", balance="", deposit="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +46,13 @@ public class PayOrderActivity extends BaseActivity {
                 switch (code) {
                     case 0:
                         try {
-                            String orderNo = data.getString("orderNo");
-                            String payMoney = data.getString("payMoney");
-                            String balance = data.getString("payStatus");
-                            String deposit = data.getString("deposit");
+                            orderNo = data.getString("orderNo");
+                            orderMoney = data.getString("payMoney");
+                            balance = data.getString("balance");
+                            deposit = data.getString("deposit");
 
                             ((TextView)findViewById(R.id.order_no)).setText(orderNo);
-                            ((TextView)findViewById(R.id.order_money)).setText("￥"+payMoney);
+                            ((TextView)findViewById(R.id.order_money)).setText("￥"+orderMoney);
                             ((TextView)findViewById(R.id.balance)).setText("暂存款余额为:￥"+balance);
                             ((TextView)findViewById(R.id.deposit)).setText("保证金金额为:￥"+deposit);
 
@@ -67,7 +67,6 @@ public class PayOrderActivity extends BaseActivity {
             }
         })).start();
 
-
         listen(R.id.ly_balance);
         listen(R.id.ly_deposit);
         listen(R.id.ly_unionpay);
@@ -75,62 +74,58 @@ public class PayOrderActivity extends BaseActivity {
     }
 
     private void gotoPayResult(boolean success, String tips){
-//        Intent intent = new Intent(Variable.currentActivity, PayDepositResultActivity.class);
-//        intent.putExtra("result", success?"1":"0");
-//        intent.putExtra("tips", tips);
-//        intent.putExtra("biddingNO", Variable.biddingNo);
-//        startActivity(intent);
-        Utility.alertDialog(tips,null);
+        Intent intent = new Intent(Variable.currentActivity, PayOrderResultActivity.class);
+        intent.putExtra("result", success?"1":"0");
+        intent.putExtra("tips", tips);
+        intent.putExtra("order_no", orderNo);
+        intent.putExtra("order_money", orderMoney);
+        startActivity(intent);
     }
 
-    // 支付保证金
-    private void payDepositConn(String type){
+    // 支付订单
+    private void payHttpConnect(){
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("orderId", orderId);
         conn.setParam("useBalance", useDeposit?"1":"0");
         conn.setParam("useDeposit", useDeposit?"1":"0");
-        conn.setParam("type", type);
+        conn.setParam("type", useUnionpay?"1":"0");
         conn.setUrl(Constant.url + "pTraceAction!payOrderById.htm");
 
-        switch (type){
-            case "0": // 不使用任何网银支付,使用暂存款或保证金或两者都用
-                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-                    @Override
-                    public void handlerData(int code, JSONObject data) {
-                        super.handlerData(code, data);
-                        switch (code) {
-                            case 0:  gotoPayResult(true, "恭喜您，支付成功！");         break;
-                            case 1:  gotoPayResult(false, "金额不足,支付失败！"); break;
-                            case 2:  gotoPayResult(false, "抱歉，支付失败！");          break;
-                            default: gotoPayResult(false, "抱歉，支付失败！");          break;
-                        }
+        if (useUnionpay) { //使用银联支付方式支付
+            new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+                @Override
+                public void handlerData(int code, JSONObject data) {
+                    super.handlerData(code, data);
+                    switch (code) {
+                        // 获取支付链接信息成功
+                        case 0:
+                            try {
+                                Utility.openUrl(data.getString("payUrl"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 1: gotoPayResult(true, "恭喜您，支付成功！");   break;
+                        case 2: gotoPayResult(false, "抱歉，支付失败！");    break;
+                        default: gotoPayResult(false, "抱歉，支付失败！");   break;
                     }
-                })).start();
-                break;
+                }
+            })).start();
+        } else{ // 不使用任何网银支付,使用暂存款或保证金或两者都用
+            new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
+                @Override
+                public void handlerData(int code, JSONObject data) {
+                    super.handlerData(code, data);
+                    switch (code) {
+                        case 0:  gotoPayResult(true, "恭喜您，支付成功！");         break;
+                        case 1:  gotoPayResult(false, "金额不足,支付失败！");        break;
+                        case 2:  gotoPayResult(false, "抱歉，支付失败！");          break;
+                        default: gotoPayResult(false, "抱歉，支付失败！");          break;
+                    }
+                }
+            })).start();
 
-            case "1": //使用银联支付方式支付
-                new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
-                    @Override
-                    public void handlerData(int code, JSONObject data) {
-                        super.handlerData(code, data);
-                        switch (code){
-                            // 获取支付链接信息成功
-                            case 0:
-                                try {
-                                    Utility.openUrl(data.getString("payUrl"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            case 1:  gotoPayResult(false, "抱歉，支付失败！");    break;
-                            default: gotoPayResult(false, "抱歉，支付失败！");    break;
-                        }
-                    }
-                })).start();
-                break;
-            default:
-                break;
         }
     }
 
@@ -142,15 +137,9 @@ public class PayOrderActivity extends BaseActivity {
             case R.id.submit:
                 if(!useBalance && !useUnionpay && !useDeposit){
                     Utility.alertDialog("请选择支付方式", null);
-                    break;
+                } else {
+                    payHttpConnect();
                 }
-
-                if(useUnionpay){
-                    payDepositConn("1");
-                }else {
-                    payDepositConn("0");
-                }
-
                 break;
             case R.id.ly_balance: // 用暂存款支付
                 if(useBalance) {

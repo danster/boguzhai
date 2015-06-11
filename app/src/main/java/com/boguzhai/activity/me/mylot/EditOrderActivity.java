@@ -421,7 +421,6 @@ public class EditOrderActivity extends BaseActivity {
                             Intent intent = new Intent(Variable.currentActivity, PayOrderActivity.class);
                             intent.putExtra("orderId",data.getString("orderId"));
                             startActivity(intent);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
