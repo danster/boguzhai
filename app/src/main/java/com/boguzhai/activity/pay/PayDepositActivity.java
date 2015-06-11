@@ -27,7 +27,7 @@ public class PayDepositActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setLinearView(R.layout.auction_apply_paybail);
+        setLinearView(R.layout.pay_deposit);
         title.setText("支付保证金");
         init();
     }

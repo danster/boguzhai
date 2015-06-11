@@ -14,7 +14,7 @@ import com.boguzhai.activity.base.BaseActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class PayDepositResultActivity extends BaseActivity {
+public class PayOrderResultActivity extends BaseActivity {
 
     private TextView result_tips;
     private ImageView result_icon;
