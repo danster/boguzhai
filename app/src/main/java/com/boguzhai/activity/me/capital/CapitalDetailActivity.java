@@ -176,7 +176,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                 }
 
                 if(lDate.compareTo(rDate)>=0){
-                    Utility.alertMessage("请正确选择日期范围！");
+                    Utility.alertDialog("请正确选择日期范围！");
                     break;
                 }
                 switch (type){
@@ -257,7 +257,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                     }
                     break;
                 default:
-                    Utility.alertMessage("网络数据错误");
+                    Utility.alertDialog("网络数据错误");
                     break;
             }
         }

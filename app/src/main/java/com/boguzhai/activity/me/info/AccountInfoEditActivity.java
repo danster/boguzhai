@@ -1,6 +1,7 @@
 package com.boguzhai.activity.me.info;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -54,56 +55,64 @@ public class AccountInfoEditActivity extends BaseActivity {
 	}
 
 	private void init(){
-        dialog = Utility.getProgressDialog("正在提交个人信息，请等待...");
-        fillAccountInfo();
+        dialog = Utility.getProgressDialog("正在提交个人信息，请稍后...");
+
+        // 显示头像
+        Tasks.showImage(Variable.account.imageUrl, (ImageView)findViewById(R.id.image), 2);
 
         // 省市区选择器之间的联动
         Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_1), Utility.getValueList(mapAddress1),
-            new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    currentAddress1 = Variable.mapZone.get(arg2);
-                    address_1.replace(0, address_1.length(), mapAddress1.get(arg2).second);
-                    address_2.replace(0, address_2.length(), "");
-                    address_3.replace(0, address_3.length(), "");
-                    mapAddress2.clear();
-                    for (Address_2 address_2 : currentAddress1.child) {
-                        mapAddress2.add(new Pair<String, String>(address_2.id, address_2.name));
-                    }
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                        currentAddress1 = Variable.mapZone.get(arg2);
+                        address_1.replace(0, address_1.length(), mapAddress1.get(arg2).second);
+                        address_2.replace(0, address_2.length(), "");
+                        address_3.replace(0, address_3.length(), "");
+                        mapAddress2.clear();
+                        for (Address_2 address_2 : currentAddress1.child) {
+                            mapAddress2.add(new Pair<String, String>(address_2.id, address_2.name));
+                        }
 
-                    Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_2), Utility.getValueList(mapAddress2),
-                        new AdapterView.OnItemSelectedListener() {
-                            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                                currentAddress2 = currentAddress1.child.get(arg2);
-                                address_2.replace(0, address_2.length(), mapAddress2.get(arg2).second);
-                                address_3.replace(0, address_3.length(), "");
+                        Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_2), Utility.getValueList(mapAddress2),
+                                new AdapterView.OnItemSelectedListener() {
+                                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                                        currentAddress2 = currentAddress1.child.get(arg2);
+                                        address_2.replace(0, address_2.length(), mapAddress2.get(arg2).second);
+                                        address_3.replace(0, address_3.length(), "");
 
-                                mapAddress3.clear();
-                                for (Address_3 address_3 : currentAddress2.child) {
-                                    mapAddress3.add(new Pair<String, String>(address_3.id, address_3.name));
-                                }
-
-                                Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_3), Utility.getValueList(mapAddress3),
-                                    new AdapterView.OnItemSelectedListener() {
-                                        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                                            address_3.replace(0, address_3.length(), mapAddress3.get(arg2).second);
+                                        mapAddress3.clear();
+                                        for (Address_3 address_3 : currentAddress2.child) {
+                                            mapAddress3.add(new Pair<String, String>(address_3.id, address_3.name));
                                         }
-                                        public void onNothingSelected(AdapterView<?> arg0) {}
-                                    });
 
-                                if (index2boost && arg2 == Variable.account.addressIndex2()) {
-                                    ((Spinner) findViewById(R.id.address_3)).setSelection(Variable.account.addressIndex3());
-                                }
-                                index2boost = false;
-                            }
-                            public void onNothingSelected(AdapterView<?> arg0) {}
-                        });
-                    if (index1boost && arg2 == Variable.account.addressIndex1()) {
-                        ((Spinner) findViewById(R.id.address_2)).setSelection(Variable.account.addressIndex2());
+                                        Utility.setSpinner(baseActivity, (Spinner) findViewById(R.id.address_3), Utility.getValueList(mapAddress3),
+                                                new AdapterView.OnItemSelectedListener() {
+                                                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                                                        address_3.replace(0, address_3.length(), mapAddress3.get(arg2).second);
+                                                    }
+
+                                                    public void onNothingSelected(AdapterView<?> arg0) {
+                                                    }
+                                                });
+
+                                        if (index2boost && arg2 == Variable.account.addressIndex2()) {
+                                            ((Spinner) findViewById(R.id.address_3)).setSelection(Variable.account.addressIndex3());
+                                        }
+                                        index2boost = false;
+                                    }
+
+                                    public void onNothingSelected(AdapterView<?> arg0) {
+                                    }
+                                });
+                        if (index1boost && arg2 == Variable.account.addressIndex1()) {
+                            ((Spinner) findViewById(R.id.address_2)).setSelection(Variable.account.addressIndex2());
+                        }
+                        index1boost = false;
                     }
-                    index1boost = false;
-                }
-                public void onNothingSelected(AdapterView<?> arg0) {}
-            });
+
+                    public void onNothingSelected(AdapterView<?> arg0) {
+                    }
+                });
         ((Spinner) findViewById(R.id.address_1)).setSelection(Variable.account.addressIndex1());
 
 		int[] ids = { R.id.my_email, R.id.my_mobile, R.id.ok, R.id.name_clear,
@@ -112,10 +121,15 @@ public class AccountInfoEditActivity extends BaseActivity {
 		this.listen(ids);
 	}
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        fillAccountInfo();
+
+    }
+
     // 修改之前先填充账户信息
     private void fillAccountInfo(){
-        Tasks.showImage(Variable.account.imageUrl, (ImageView) findViewById(R.id.image), 2);
-
         ((TextView)findViewById(R.id.name)).setText(Variable.account.name);
         ((EditText)findViewById(R.id.nickname)).setText(Variable.account.nickname);
         ((EditText)findViewById(R.id.address)).setText(Variable.account.address);
@@ -129,12 +143,13 @@ public class AccountInfoEditActivity extends BaseActivity {
 	@Override
 	public void onClick(View view) {
 		super.onClick(view);
+        Intent intent = new Intent(this, AccountBindActivity.class);
 		switch (view.getId()) {
 		case R.id.ok:
             if(address_1.toString().equals("") || address_1.toString().equals("不限") ||
                     address_2.toString().equals("") || address_2.toString().equals("不限") ||
                     address_3.toString().equals("") || address_3.toString().equals("不限") ){
-                Utility.alertMessage("请完整填写地区信息");
+                Utility.alertDialog("请完整填写地区信息");
                 break;
             }
 
@@ -148,13 +163,13 @@ public class AccountInfoEditActivity extends BaseActivity {
             conn.setParam("telephone", ((EditText)findViewById(R.id.telephone)).getText().toString());
             conn.setParam("fax",       ((EditText)findViewById(R.id.fax)).getText().toString());
             conn.setParam("qq",        ((EditText)findViewById(R.id.qq)).getText().toString());
-            conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
+            conn.setUrl(Constant.url + "pClientInfoAction!setAccountInfo.htm");
             new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
             dialog.show();
             break;
 
-        case R.id.my_email:  Utility.gotoActivity(AccountBindEmailActivity.class);     break;
-        case R.id.my_mobile: Utility.gotoActivity(AccountBindMobileActivity.class);    break;
+        case R.id.my_email: intent.putExtra("bind_info","邮箱");startActivity(intent);  break;
+        case R.id.my_mobile:intent.putExtra("bind_info","手机");startActivity(intent);  break;
         case R.id.my_photo:       ImageApi.showUpdateImageDialog();                    break;
         case R.id.nickname_clear: ((EditText)findViewById(R.id.nickname)).setText(""); break;
         case R.id.telephone_clear:((EditText)findViewById(R.id.telephone)).setText("");break;
@@ -174,7 +189,7 @@ public class AccountInfoEditActivity extends BaseActivity {
         // 得到压缩过的照片,小于50KB
         Bitmap bitmap = ImageApi.getBitmap(requestCode, data);
         if(bitmap != null) {
-            Tasks.uploadImage("当前图像", bitmap, new UploadImageHandler((ImageView)findViewById(R.id.image), bitmap));
+            Tasks.uploadImage("当前头像", bitmap, new UploadImageHandler((ImageView)findViewById(R.id.image), bitmap));
         }
     }
 
@@ -184,8 +199,15 @@ public class AccountInfoEditActivity extends BaseActivity {
             dialog.dismiss();
             super.handlerData(code,data);
             switch(code){
-                case 0: Utility.alertMessage("修改个人信息成功!");break;
-                case 1: Utility.alertMessage("修改个人信息失败!");break;
+                case 0:
+                    Utility.alertDialog("修改个人信息成功",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+                    break;
+                case 1: Utility.alertDialog("修改个人信息失败!");break;
             }
         }
     }

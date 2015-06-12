@@ -37,7 +37,6 @@ public class AccountInfoActivity extends BaseActivity {
         this.fillAccountInfo();
         int[] ids = { R.id.logout, R.id.my_more, R.id.my_delivery, R.id.my_capital, R.id.my_verify};
         this.listen(ids);
-        Tasks.showImage(Variable.account.imageUrl, (ImageView) findViewById(R.id.image), 4);
 	}
 
     private void fillAccountInfo(){
@@ -116,10 +115,9 @@ public class AccountInfoActivity extends BaseActivity {
                     }else if(status.equals("0") || status.equals("1") || status.equals("2")){
                         startActivity(new Intent(AccountInfoActivity.this, IdentityShowActivity.class));
                     }
-
                     break;
                 default:
-                    Utility.alertMessage("无法获取账户认证信息");
+                    Utility.alertDialog("无法获取账户认证信息");
                     break;
             }
         }
@@ -132,6 +130,7 @@ public class AccountInfoActivity extends BaseActivity {
             switch (code){
                 case 0:
                     JsonApi.getAccountInfo(data);
+                    Tasks.showImage(Variable.account.imageUrl,(ImageView)findViewById(R.id.image),4);
                     break;
                 case 1:
                     break;

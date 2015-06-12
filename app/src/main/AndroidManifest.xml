@@ -69,7 +69,7 @@
         <activity android:name=".activity.me.info.AccountInfoActivity" />
         <activity android:name=".activity.me.info.AccountInfoMoreActivity" />
         <activity android:name=".activity.me.info.AccountInfoEditActivity" />
-        <activity android:name=".activity.me.info.AccountBindEmailActivity" />
+        <activity android:name=".activity.me.info.AccountBindActivity" />
         <activity android:name=".activity.me.info.AccountBindMobileActivity" />
         <activity android:name=".activity.me.info.IdentityVerifyActivity" />
         <activity android:name=".activity.me.info.IdentityShowActivity" />

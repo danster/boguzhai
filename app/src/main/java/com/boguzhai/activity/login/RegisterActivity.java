@@ -16,11 +16,11 @@ import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.me.info.IdentityVerifyActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
-import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.StringApi;
 import com.boguzhai.logic.utils.Utility;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Timer;
@@ -31,6 +31,7 @@ public class RegisterActivity extends BaseActivity {
     private TextView get_check_code;
     private CheckBox isAgreedView;
     boolean isAgreed = false;
+    private String realCheckcode = "";
 
     private int time = 30;
     private TimerTask task;
@@ -74,7 +75,7 @@ public class RegisterActivity extends BaseActivity {
 		switch (v.getId()) {  
 		case R.id.get_check_code:
             if(! StringApi.checkPhoneNumber(username.getText().toString())){
-                Utility.alertMessage(StringApi.tips);
+                Utility.alertDialog(StringApi.tips);
                 break;
             }
             get_check_code.setEnabled(false);
@@ -98,33 +99,60 @@ public class RegisterActivity extends BaseActivity {
                 }
             };
 
-            Tasks.getCheckCodeNoLogin(username.getText().toString());
+            HttpClient conn_checkcode = new HttpClient();
+            conn_checkcode.setParam("mobile", username.getText().toString());
+            conn_checkcode.setUrl(Constant.url + "pLoginAction!getMobileCheckCodeNoLogin.htm");
+            new Thread(new HttpPostRunnable(conn_checkcode, new HttpJsonHandler() {
+                @Override
+                public void handlerData(int code, JSONObject data) {
+                    super.handlerData(code, data);
+                    switch(code){
+                        case 0:
+                            Utility.toastMessage("发送验证码成功，请注意查收");
+                            try {
+                                realCheckcode = data.getString("check_code");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 1:
+                            Utility.toastMessage("发送验证码失败，请重新获取验证码");
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+            })).start();
+
             new Timer().schedule(task, 0, 1000);
             break;
 
         case R.id.register:
             if(!StringApi.checkPhoneNumber(username.getText().toString())){
-                Utility.alertMessage(StringApi.tips);
+                Utility.alertDialog(StringApi.tips);
                 break;
             }
             if(check_code.getText().toString().equals("")){
-                Utility.alertMessage("请输入手机验证码");
+                Utility.alertDialog("请输入手机验证码");
                 break;
             }
             if(password.getText().toString().length() < 6){
-                Utility.alertMessage("请输入6位有效密码");
+                Utility.alertDialog("请输入6位有效密码");
                 break;
             }
             if(!isAgreed){
-                Utility.alertMessage("同意博古斋拍卖网注册协议后，才能注册");
+                Utility.alertDialog("同意博古斋拍卖网注册协议后，才能注册");
                 break;
             }
 
             dialog.show();
+
             HttpClient conn = new HttpClient();
             conn.setParam("mobile", username.getText().toString());
             conn.setParam("password", password.getText().toString());
             conn.setParam("checkcode", check_code.getText().toString());
+            conn.setParam("realCheckcode", check_code.getText().toString());
             conn.setUrl(Constant.url + "pLoginAction!register.htm");
             new Thread(new HttpPostRunnable(conn, new RegisterHandler())).start();
 
@@ -152,10 +180,10 @@ public class RegisterActivity extends BaseActivity {
                         }
                     });
                     break;
-                case 1:  Utility.alertMessage("该账户已经被注册");   break;
-                case 2:  Utility.alertMessage("验证码错误");        break;
-                case 3:  Utility.alertMessage("账户号码错误");   break;
-                default: Utility.alertMessage("注册失败, 请检查您的注册信息");   break;
+                case 1:  Utility.alertDialog("该账户已经被注册");   break;
+                case 2:  Utility.alertDialog("验证码错误");        break;
+                case 3:  Utility.alertDialog("账户号码错误");   break;
+                default: Utility.alertDialog("注册失败, 请检查您的注册信息");   break;
             }
         }
     }

@@ -40,14 +40,6 @@ public class Utility {
         Toast.makeText(Variable.app_context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public static void alertMessage(String msg){
-        if(!Variable.currentActivity.isFinishing()){
-            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-            tips.setIcon(android.R.drawable.ic_dialog_info);
-            tips.setTitle("提示").setMessage(msg).setPositiveButton("确定", null).create().show();
-        }
-    }
-
     public static ProgressDialog getProgressDialog(String msg){
         ProgressDialog dialog = new ProgressDialog(Variable.currentActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -62,24 +54,36 @@ public class Utility {
         return dialog;
     }
 
-    // 添加确定信息 确定动作
-    public static void alertDialog(String msg, DialogInterface.OnClickListener ok){
-        if(!Variable.currentActivity.isFinishing()){
-            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-            tips.setIcon(android.R.drawable.ic_dialog_info);
-            tips.setTitle("提示").setMessage(msg);
-            tips.setPositiveButton("确定", ok).create().show();
+    // 添加确定信息
+    public static void alertDialog(String msg){
+        if (!Variable.currentActivity.isFinishing()){
+            AlertDialog dialog = (new AlertDialog.Builder(Variable.currentActivity)).setMessage(msg).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.show();
         }
     }
 
+    // 添加确定信息 确定动作
+    public static void alertDialog(String msg, DialogInterface.OnClickListener ok){
+        if (!Variable.currentActivity.isFinishing()){
+            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+//            tips.setIcon(android.R.drawable.ic_dialog_info);
+//            tips.setTitle("提示");
+            AlertDialog dialog = tips.setMessage(msg).setPositiveButton("确定", ok).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.show();
+        }
+    }
 
     // 添加确定信息 确定动作 取消动作
-    public static void alertDialog(String msg, DialogInterface.OnClickListener ok, DialogInterface.OnClickListener cancel){
-        if(!Variable.currentActivity.isFinishing()){
+    public static void alertDialog(String msg, DialogInterface.OnClickListener ok,
+                                   DialogInterface.OnClickListener cancel){
+        if (!Variable.currentActivity.isFinishing()){
             AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-            tips.setIcon(android.R.drawable.ic_dialog_info);
-            tips.setTitle("提示").setMessage(msg);
-            tips.setPositiveButton("确定", ok).setNegativeButton("取消", cancel).create().show();
+            AlertDialog dialog = tips.setMessage(msg).setPositiveButton("确定", ok)
+                                     .setNegativeButton("取消", cancel).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.show();
         }
     }
 

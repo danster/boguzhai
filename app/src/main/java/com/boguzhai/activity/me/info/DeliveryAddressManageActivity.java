@@ -86,7 +86,7 @@ public class DeliveryAddressManageActivity extends BaseActivity{
                     }
                     break;
                 default:
-                    Utility.alertMessage("网络数据错误");
+                    Utility.alertDialog("网络数据错误");
                     break;
             }
         }

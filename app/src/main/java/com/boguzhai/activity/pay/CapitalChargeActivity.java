@@ -55,7 +55,7 @@ public class CapitalChargeActivity  extends BaseActivity {
                 try { Double.parseDouble(pay_money);
                 } catch (Exception ex){ ex.printStackTrace(); Utility.alertDialog("请输入正确的充值金额",null); break;}
                 if(Double.parseDouble(pay_money)<0){ Utility.alertDialog("请输入正确的充值金额",null); break;}
-                if(!useUnionpay){ Utility.alertDialog("请输入充值方式",null); break;}
+                if(!useUnionpay){ Utility.alertDialog("请选择充值方式",null); break;}
 
                 HttpClient conn = new HttpClient();
                 conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);

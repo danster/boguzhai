@@ -147,7 +147,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             if(name.getText().toString().equals("")   || address.getText().toString().equals("") ||
                mobile.getText().toString().equals("") || address_1.toString().equals("") ||
                address_2.toString().equals("")        || address_3.toString().equals("") ){
-                Utility.alertMessage("必填项不能为空！");
+                Utility.alertDialog("必填项不能为空！");
                 break;
             }
 
@@ -215,7 +215,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
                     }, null);
                     break;
                 case 1:
-                    Utility.alertMessage(tipsStr+"失败");
+                    Utility.alertDialog(tipsStr + "失败");
                     break;
             }
         }

@@ -150,7 +150,7 @@ public class EditOrderActivity extends BaseActivity {
                         }
                         break;
                     default:
-                        Utility.alertMessage("网络数据错误");
+                        Utility.alertDialog("网络数据错误");
                         break;
                 }
             }
@@ -334,7 +334,7 @@ public class EditOrderActivity extends BaseActivity {
 
             case R.id.get_check_code:
                 if(! StringApi.checkPhoneNumber(dp_mobile.getText().toString())){
-                    Utility.alertMessage(StringApi.tips);
+                    Utility.alertDialog(StringApi.tips);
                     break;
                 }
                 get_check_code.setEnabled(false);

@@ -46,7 +46,7 @@ public class CheckAdivceActivity extends BaseActivity {
         if (!TextUtils.isEmpty(adviceId)) {
             checkAdvice();
         } else {
-            Utility.alertMessage("获取数据失败");
+            Utility.alertDialog("获取数据失败");
         }
     }
 

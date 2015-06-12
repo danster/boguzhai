@@ -107,7 +107,7 @@ public class CapitalShowActivity extends BaseActivity {
                     }
                     break;
                 default:
-                    Utility.alertMessage("无法获取账户资产信息");
+                    Utility.alertDialog("无法获取账户资产信息");
                     break;
             }
         }

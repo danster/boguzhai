@@ -89,7 +89,7 @@ public class ChooseAddressActivity extends BaseActivity{
                     }
                     break;
                 default:
-                    Utility.alertMessage("网络错误");
+                    Utility.alertDialog("网络错误");
                     break;
             }
         }

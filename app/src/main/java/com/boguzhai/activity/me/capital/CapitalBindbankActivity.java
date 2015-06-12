@@ -1,5 +1,6 @@
 package com.boguzhai.activity.me.capital;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -85,11 +86,11 @@ public class CapitalBindbankActivity extends BaseActivity {
                 String check_code = ((EditText)findViewById(R.id.check_code)).getText().toString();
 
                 if(bank.equals("")){
-                    Utility.alertMessage("银行名为空");
+                    Utility.alertDialog("银行名为空");
                 } else if(bank_number.equals("")){
-                    Utility.alertMessage("银行账号不能为空");
+                    Utility.alertDialog("银行账号不能为空");
                 } else if(check_code.equals("")){
-                    Utility.alertMessage("验证码不能为空");
+                    Utility.alertDialog("验证码不能为空");
                 } else {
 
                     HttpClient conn_bind = new HttpClient();
@@ -112,13 +113,18 @@ public class CapitalBindbankActivity extends BaseActivity {
             super.handlerData(code,data);
             switch(code){
                 case 0:
-                    Utility.alertMessage("绑定成功");
+                    Utility.alertDialog("绑定成功",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
                     break;
                 case 2:
-                    Utility.alertMessage("验证码错误");
+                    Utility.alertDialog("验证码错误");
                     break;
                 default:
-                    Utility.alertMessage("绑定失败");
+                    Utility.alertDialog("绑定失败");
                     break;
             }
         }

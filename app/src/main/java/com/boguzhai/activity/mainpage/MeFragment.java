@@ -12,7 +12,6 @@ import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.login.RegisterActivity;
 import com.boguzhai.activity.me.bidding.BiddingActivity;
-import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
 import com.boguzhai.activity.me.myauction.MyAuctionActivity;
 import com.boguzhai.activity.me.mylot.MyLotActivity;
@@ -63,6 +62,7 @@ public class MeFragment extends Fragment {
         this.listen(R.id.me_login);
         this.listen(R.id.title_right);
         this.listen(R.id.me_myinfo);
+
         this.listen(R.id.me_my_auctions);
         this.listen(R.id.me_biding);
         this.listen(R.id.me_mylot);
@@ -80,47 +80,26 @@ public class MeFragment extends Fragment {
         @Override
         public void onClick(View v){
             switch (v.getId()) {
-                case R.id.title_right:
-                    Utility.gotoActivity(RegisterActivity.class);
-                    break;
-                case R.id.me_login:
-                    Utility.gotoActivity(LoginActivity.class);
-                    break;
-                case R.id.me_myinfo:
-                    Utility.gotoActivity(AccountInfoActivity.class);
-                    break;
-                case R.id.me_my_auctions:
-                    Utility.gotoActivity(MyAuctionActivity.class);
-                    break;
-                case R.id.me_biding:
-                    Utility.gotoActivity(BiddingActivity.class);
-                    break;
-                case R.id.me_mylot:
-                    if(Variable.isLogin==true) {
-                        Utility.gotoActivity(MyLotActivity.class);
-                    } else {
-                        Utility.gotoLogin();
-                    }
-                    break;
-                case R.id.me_myorder:
-                    if(Variable.isLogin==true) {
-                        Utility.gotoActivity(MyPayOrderActivity.class);
-                    } else {
-                        Utility.gotoLogin();
-                    }
-                    break;
-                case R.id.me_my_favorites:
-                    Utility.gotoActivity(MyCollectionActivity.class);
-                    break;
-                case R.id.me_upload:
-                    Utility.gotoActivity(UploadLotActivity.class);
-                    break;
-                case R.id.me_system:
-                    Utility.gotoActivity(SystemSettingsActivity.class);
-                    break;
-                default:
-                    break;
+                case R.id.title_right: Utility.gotoActivity(RegisterActivity.class);  break;
+                case R.id.me_login: Utility.gotoActivity(LoginActivity.class);        break;
+                case R.id.me_myinfo: gotoActivityByLogin(AccountInfoActivity.class);  break;
+                case R.id.me_my_auctions: gotoActivityByLogin(MyAuctionActivity.class);  break;
+                case R.id.me_biding: gotoActivityByLogin(BiddingActivity.class);  break;
+                case R.id.me_mylot:  gotoActivityByLogin(MyLotActivity.class);    break;
+                case R.id.me_myorder: gotoActivityByLogin(MyPayOrderActivity.class);   break;
+                case R.id.me_my_favorites: gotoActivityByLogin(BiddingActivity.class); break;
+                case R.id.me_upload: gotoActivityByLogin(UploadLotActivity.class);       break;
+                case R.id.me_system: Utility.gotoActivity(SystemSettingsActivity.class); break;
+                default: break;
             }
+        }
+    }
+
+    private void gotoActivityByLogin(Class<?> cls){
+        if(Variable.isLogin==true) {
+            Utility.gotoActivity(cls);
+        } else {
+            Utility.gotoLogin();
         }
     }
 

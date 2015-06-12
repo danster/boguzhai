@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
@@ -86,7 +87,7 @@ public class SetProxyPricingActivity extends BaseActivity {
      */
     private void setProxy(String useProxy, String proxyPrice) {
         HttpClient conn = new HttpClient();
-        conn.setParam("sessionid", "");
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setParam("auctionId", auctionId);
         conn.setParam("useProxy", useProxy);
         conn.setParam("proxyPrice", proxyPrice);

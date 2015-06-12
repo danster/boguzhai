@@ -61,10 +61,10 @@ public class LoginActivity extends BaseActivity {
             Variable.settings_editor.commit();
 
             if(!StringApi.checkPhoneNumber(username)){
-                Utility.alertMessage(StringApi.tips);
+                Utility.alertDialog(StringApi.tips);
                 break;
             }else if(password.length() <= 0){
-                Utility.alertMessage("密码不能为空");
+                Utility.alertDialog("密码不能为空");
                 break;
             }else {
                 dialog.show();
@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity {
                     Utility.gotoMainpage(3);
                 break;
                 case 1:
-                    Utility.alertMessage("登录失败: 用户名或者密码错误！");
+                    Utility.alertDialog("登录失败: 用户名或者密码错误！");
                     break;
                 default:
                     break;
