@@ -62,7 +62,7 @@
         <item name="android:layout_height">15dp</item>
         <item name="android:layout_width">15dp</item>
         <item name="android:layout_marginLeft">7dp</item>
-        <item name="android:background">@drawable/base_clear</item>
+        <item name="android:src">@drawable/base_clear</item>
     </style>
 
     <style name="verify_left_text" parent="@style/myinfo_left_text">

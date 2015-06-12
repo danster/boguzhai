@@ -85,7 +85,7 @@
 
         <!-- activities belong part of me myauction -->
         <activity android:name=".activity.me.myauction.MyAuctionActivity"
-                  android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+                  android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.me.myauction.MyAuctionSessionActivity"/>
 
         <!-- activities belong part of me bidding -->
@@ -100,11 +100,12 @@
 
         <!-- activities belong part of me proxy -->
         <activity android:name=".activity.me.proxy.ProxyPricingActivity"
-                  android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+                  android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.me.proxy.SetProxyPricingActivity" />
 
         <!-- activities belong part of me collect -->
-        <activity android:name=".activity.me.collect.MyCollectionActivity" />
+        <activity android:name=".activity.me.collect.MyCollectionActivity"
+            android:windowSoftInputMode="stateHidden"/>
 
         <!-- activities belong part of me upload -->
         <activity android:name=".activity.me.upload.UploadLotActivity" />
@@ -114,7 +115,7 @@
         <activity android:name=".activity.me.settings.AboutBoGuZhaiActivity" />
         <activity android:name=".activity.me.settings.AuctionGuideActivity" />
         <activity android:name=".activity.me.settings.AddAdviceActivity"
-                  android:windowSoftInputMode="adjustPan|stateVisible|stateHidden"/>
+                  android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activity.me.settings.GetAdviceActivity"/>
         <activity android:name=".activity.me.settings.CheckAdivceActivity"/>
     </application>

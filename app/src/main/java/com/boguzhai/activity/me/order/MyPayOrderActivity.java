@@ -48,8 +48,6 @@ public class MyPayOrderActivity extends BaseActivity implements SwipeRefreshLayo
         super.onCreate(savedInstanceState);
         this.setLinearView(R.layout.me_pay_order);
         title.setText("我的订单");
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setMessage("正在加载数据...").show();
 
         init();
     }
@@ -64,6 +62,7 @@ public class MyPayOrderActivity extends BaseActivity implements SwipeRefreshLayo
         listview.setXListViewListener(this);
 
         payOrders = new ArrayList<>();
+        Utility.showLoadingDialog(this);
         onRefresh();
     }
 
@@ -119,6 +118,7 @@ private class MyPayOrderHandler extends HttpJsonHandler {
 
     @Override
     public void handleMessage(Message msg) {
+        Utility.dismissLoadingDialog();
         super.handleMessage(msg);
         switch (msg.what) {
             case 1:
@@ -134,6 +134,7 @@ private class MyPayOrderHandler extends HttpJsonHandler {
 
     @Override
     public void handlerData(int code, JSONObject data) {
+        Utility.dismissLoadingDialog();
         switch (code) {
             case 1:
                 number--;
@@ -200,7 +201,6 @@ private class MyPayOrderHandler extends HttpJsonHandler {
                             payOrders.add(order);
                         }
                         if (number == 1) {//刷新
-                            Utility.toastMessage("刷新成功");
                             swipe_layout.setRefreshing(false);
                             initData();
                         } else {//加载更多

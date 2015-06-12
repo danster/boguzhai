@@ -100,7 +100,7 @@
                 android:id="@+id/btn_advice_commit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gold"
+                android:background="@color/dark_red"
                 android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

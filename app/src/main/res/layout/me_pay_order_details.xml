@@ -62,7 +62,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/drak_white" />
+                    android:background="@color/dark_white" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -137,7 +137,8 @@
                     android:text="---------" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline"
+                android:background="@color/dark_white"/>
 
 
             <LinearLayout
@@ -164,7 +165,8 @@
                     android:text="---------" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline"
+                android:background="@color/dark_white"/>
 
 
             <LinearLayout
@@ -191,7 +193,8 @@
                     android:text="---------" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline"
+                android:background="@color/dark_white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +220,8 @@
                     android:text="---------" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline"
+                android:background="@color/dark_white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -243,7 +247,8 @@
                     android:text="---------" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline"
+                android:background="@color/dark_white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -269,7 +274,8 @@
                     android:text="---------" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline"
+                android:background="@color/dark_white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

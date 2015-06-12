@@ -111,21 +111,21 @@
                 <TextView style="@style/me_middle_text" android:text="我的拍卖会"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
-            <View style="@style/longline" />
+            <View style="@style/longline"/>
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_biding">
                 <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_bidding"/>
                 <TextView style="@style/me_middle_text" android:text="正在竞价"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
-            <View style="@style/longline" />
+            <View style="@style/longline"/>
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_mylot">
                 <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_proxy"/>
                 <TextView style="@style/me_middle_text" android:text="我的拍品"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
-            <View style="@style/longline" />
+            <View style="@style/longline"/>
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_myorder">
                 <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_payment"/>
@@ -140,7 +140,7 @@
                 <TextView style="@style/me_middle_text" android:text="我的收藏"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
-            <View style="@style/longline" />
+            <View style="@style/longline"/>
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_upload">
                 <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_upload"/>

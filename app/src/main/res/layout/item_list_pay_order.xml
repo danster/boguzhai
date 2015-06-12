@@ -111,7 +111,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="---"
-                android:textSize="18sp" />
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
 
         </LinearLayout>

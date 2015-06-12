@@ -56,7 +56,7 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
         biddingAuctionList = new ArrayList<>();
 
         lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
-
+        Utility.showLoadingDialog(this);
         onRefresh();
 	}
 
@@ -96,6 +96,7 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            Utility.dismissLoadingDialog();
             switch (msg.what) {
                 case 1:
                 case 9:
@@ -126,7 +127,6 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
                         if(jArray.length() == 0) {
                             Utility.toastMessage("暂无数据");
                         }else {
-                            Utility.toastMessage("刷新成功");
                         }
                         for(int j = 0; j < jArray.length(); j++) {
                             biddingAuction = new BiddingAuction();
@@ -158,6 +158,7 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
                             biddingAuctionList.add(biddingAuction);
                         }
                         initData();
+                        Utility.dismissLoadingDialog();
                         // 网络批量下载拍品图片
                         new AsyncTask<Void, Void, Void>() {
                             @Override
