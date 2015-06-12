@@ -2,10 +2,12 @@ package com.boguzhai.logic.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Pair;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -42,6 +44,20 @@ public class Utility {
             tips.setIcon(android.R.drawable.ic_dialog_info);
             tips.setTitle("提示").setMessage(msg).setPositiveButton("确定", null).create().show();
         }
+    }
+
+    public static ProgressDialog getProgressDialog(String msg){
+        ProgressDialog dialog = new ProgressDialog(Variable.currentActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setMessage(msg);
+        dialog.setCancelable(true); // could be killed by backward
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        return dialog;
     }
 
     // 添加确定信息 确定动作

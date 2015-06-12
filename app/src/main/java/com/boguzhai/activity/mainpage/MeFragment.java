@@ -22,7 +22,6 @@ import com.boguzhai.activity.me.upload.UploadLotActivity;
 import com.boguzhai.logic.utils.Utility;
 
 public class MeFragment extends Fragment {
-    private static String TAG = "MeFragment";
     private View view;
     private MyOnClickListener listener;
 

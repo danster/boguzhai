@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 参考 Android中shape的使用：http://blog.csdn.net/ekeuy/article/details/12349853 -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"  android:shape="rectangle">
 
     <!-- 填充颜色 -->
-    <solid android:color="@color/dark_red"></solid>
-
+    <solid android:color="#A32C1B"></solid>
 
     <!-- 矩形的圆角半径 -->
     <corners android:radius="5dp" />

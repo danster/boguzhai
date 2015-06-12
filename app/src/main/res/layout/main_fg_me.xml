@@ -21,7 +21,7 @@
                 android:layout_height="80dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/main_tab_me_on"
+                android:src="@drawable/base_person"
                 android:layout_gravity="center|left"/>
             <LinearLayout
                 android:layout_width="0dp"
@@ -107,51 +107,43 @@
 
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_my_auctions">
-                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_myauction"/>
+                <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_myauction"/>
                 <TextView style="@style/me_middle_text" android:text="我的拍卖会"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_biding">
-                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_bidding"/>
+                <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_bidding"/>
                 <TextView style="@style/me_middle_text" android:text="正在竞价"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_mylot">
-                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_proxy"/>
+                <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_proxy"/>
                 <TextView style="@style/me_middle_text" android:text="我的拍品"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_myorder">
-                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_payment"/>
+                <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_payment"/>
                 <TextView style="@style/me_middle_text" android:text="我的订单"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
-            <!--<View style="@style/longline" />-->
-            <!--<LinearLayout-->
-                <!--style="@style/base_bar"-->
-                <!--android:id="@+id/me_my_proxy">-->
-                <!--<TextView style="@style/me_left_image" android:background="@drawable/me_tab_proxy"/>-->
-                <!--<TextView style="@style/me_middle_text" android:text="JSON接口测试"/>-->
-                <!--<ImageView style="@style/search_right_arrow" />-->
-            <!--</LinearLayout>-->
 
             <LinearLayout style="@style/base_bar"
                 android:layout_marginTop="10dp"
                 android:id="@+id/me_my_favorites">
-                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_favorite"/>
+                <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_favorite"/>
                 <TextView style="@style/me_middle_text" android:text="我的收藏"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
             <View style="@style/longline" />
             <LinearLayout style="@style/base_bar"
                 android:id="@+id/me_upload">
-                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_upload"/>
+                <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_upload"/>
                 <TextView style="@style/me_middle_text" android:text="上传拍品"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
@@ -159,7 +151,7 @@
             <LinearLayout style="@style/base_bar"
                 android:layout_marginTop="10dp"
                 android:id="@+id/me_system">
-                <TextView style="@style/me_left_image" android:background="@drawable/me_tab_settings"/>
+                <ImageView style="@style/me_left_image" android:src="@drawable/me_tab_settings"/>
                 <TextView style="@style/me_middle_text" android:text="系统设置"/>
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>

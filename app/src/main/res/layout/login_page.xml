@@ -3,48 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-	
-    <LinearLayout style="@style/base_bar">
-        <TextView style="@style/base_text"
-            android:layout_width="100dp"
-            android:text="手机/邮箱"/>
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|left"
-            android:textSize="15sp"
-            android:background="@color/transparent"/>
-        <ImageView style="@style/base_right_clear"
-            android:id="@+id/username_clear"/>
-    </LinearLayout>
 
-    <View style="@style/longline"/>
-
-    <LinearLayout style="@style/base_bar">
-        <TextView style="@style/base_text"
-	    android:layout_width="100dp"
-        android:text="密          码"/>
-	<EditText
-	    android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical|left"
-        android:inputType="textPassword"
-        android:textSize="15sp"
-        android:background="@color/transparent"/>
-    <ImageView style="@style/base_right_clear"
-	    android:id="@+id/password_clear"/>
+<LinearLayout style="@style/login_bar">
+    <ImageView style="@style/register_l_iv"
+        android:background="@drawable/sign_user"/>
+    <EditText style="@style/register_ev"
+        android:id="@+id/username"
+        android:inputType="number"
+        android:hint="手机"/>
 </LinearLayout>
 
-<LinearLayout style="@style/base_bar"
-    android:background="@color/transparent"> 
+<LinearLayout style="@style/login_bar">
+    <ImageView style="@style/register_l_iv"
+        android:background="@drawable/sign_code"/>
+    <EditText style="@style/register_ev"
+        android:id="@+id/password"
+        android:inputType="textPassword"
+        android:hint="密码"/>
+</LinearLayout>
+
+
+<LinearLayout style="@style/login_bar"  android:background="@color/transparent">
 	<TextView style="@style/base_text"
 	    android:id="@+id/register"
         android:layout_width="100dp"
 	    android:textColor="@color/blue"
+        android:textSize="16sp"
 	    android:text="注  册" />
 	<TextView 
         android:layout_width="0dp"
@@ -54,26 +38,23 @@
 	    android:id="@+id/forget_pwd"
 	    android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textSize="14sp"
-	    android:background="@color/transparent"
+	    android:textSize="16sp"
 	    android:textColor="@color/blue"
 	    android:text="忘记/修改密码" />
 </LinearLayout>
 
-<LinearLayout style="@style/base_bar"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:background="@color/transparent"> 
-	<TextView
-	    android:id="@+id/login"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@drawable/shape_circle_rectangle_button"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-	    android:text="登  录"/>
-</LinearLayout>
+    <LinearLayout style="@style/login_bar"
+        android:background="@color/transparent">
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/shape_circle_rectangle_button"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="登录"/>
+    </LinearLayout>
 
 </LinearLayout>

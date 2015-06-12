@@ -122,7 +122,7 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.app_sign:
-                Variable.mainTabIndex = R.id.rb_1;
+                Variable.mainTabIndex = R.id.rb_3;
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
         }

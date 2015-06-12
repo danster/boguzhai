@@ -1,4 +1,4 @@
-package com.boguzhai.activity.me.capital;
+package com.boguzhai.activity.pay;
 
 import android.os.Bundle;
 import android.view.View;
@@ -55,7 +55,7 @@ public class CapitalWithdrawalActivity extends BaseActivity {
 				HttpClient conn = new HttpClient();
 				conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
 				conn.setParam("money", money);
-				conn.setUrl(Constant.url + "pTraceAction!accountWithdrawal.htm");
+				conn.setUrl(Constant.url + "pClientInfoAction!accountWithdrawal.htm");
 
 				new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
 					@Override
@@ -63,11 +63,10 @@ public class CapitalWithdrawalActivity extends BaseActivity {
 						super.handlerData(code, data);
 						switch (code){
 							case 0:	Utility.alertDialog("提现成功",null);	break;
-							case 1:	Utility.alertDialog("由于没有绑定银行卡，提现失败",null);	break;
-							case 2:	Utility.alertDialog("无法提现到绑定的银行卡，提现失败",null);	break;
-							case 3:	Utility.alertDialog("其它原因，提现失败",null);	break;
-							default:
-								break;
+							case 1:	Utility.alertDialog("由于没有绑定银行卡，提现失败",null);break;
+							case 2:	Utility.alertDialog("无法提现到绑定的银行卡，提现失败",null);break;
+							case 3:	Utility.alertDialog("其它原因，提现失败",null);break;
+							default:break;
 						}
 					}
 				})).start();

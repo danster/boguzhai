@@ -20,12 +20,6 @@
         android:layout_height="wrap_content"
         android:background="#fff1f4f4">
 
-        <!--<RadioButton-->
-            <!--style="@style/main_tab"-->
-            <!--android:id="@+id/rb_1"-->
-            <!--android:drawableTop="@drawable/main_tab_home_selector"-->
-            <!--android:text="首页" />-->
-
         <RadioButton
             style="@style/main_tab"
             android:id="@+id/rb_1"

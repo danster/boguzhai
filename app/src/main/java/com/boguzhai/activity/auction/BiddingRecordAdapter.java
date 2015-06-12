@@ -8,16 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.logic.dao.Record;
 
 import java.util.ArrayList;
 
-public class AuctionRecordAdapter extends BaseAdapter {
+public class BiddingRecordAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context context;
-    private ArrayList<Record> list;
+    private ArrayList<BiddingRecord> list;
 
-    public AuctionRecordAdapter(Context context, ArrayList<Record> list) {
+    public BiddingRecordAdapter(Context context, ArrayList<BiddingRecord> list) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.list = list;
@@ -52,7 +51,7 @@ public class AuctionRecordAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        Record record = list.get(position);
+        BiddingRecord record = list.get(position);
         holder.time.setText(record.time);
         holder.no.setText(record.no);
         holder.type.setText(record.type);

@@ -1,4 +1,4 @@
-package com.boguzhai.activity.me.capital;
+package com.boguzhai.activity.pay;
 
 import android.os.Bundle;
 import android.view.View;
@@ -51,20 +51,11 @@ public class CapitalChargeActivity  extends BaseActivity {
                 break;
             case R.id.submit:
                 pay_money = ((EditText)findViewById(R.id.money)).getText().toString();
-                try {
-                    Double.parseDouble(pay_money);
-                } catch (Exception ex){
-                    Utility.alertDialog("请输入正确的充值金额",null);
-                    break;
-                }
-                if(Double.parseDouble(pay_money)<0){
-                    Utility.alertDialog("请输入正确的充值金额",null);
-                    break;
-                }
-                if(!useUnionpay){
-                    Utility.alertDialog("请输入充值方式",null);
-                    break;
-                }
+
+                try { Double.parseDouble(pay_money);
+                } catch (Exception ex){ ex.printStackTrace(); Utility.alertDialog("请输入正确的充值金额",null); break;}
+                if(Double.parseDouble(pay_money)<0){ Utility.alertDialog("请输入正确的充值金额",null); break;}
+                if(!useUnionpay){ Utility.alertDialog("请输入充值方式",null); break;}
 
                 HttpClient conn = new HttpClient();
                 conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
@@ -78,17 +69,14 @@ public class CapitalChargeActivity  extends BaseActivity {
                         switch (code){
                             // 获取支付链接信息成功
                             case 0:
-                                try {
-                                    Utility.openUrl(data.getString("payUrl"));
+                                try { Utility.openUrl(data.getString("payUrl"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+                                    Utility.alertDialog("抱歉，网络出错", null);
                                 }
                                 break;
-                            case 1:
-                                Utility.alertDialog("抱歉，充值失败",null);
-                                break;
-                            default:
-                                break;
+                            case 1: Utility.alertDialog("抱歉，充值失败",null);  break;
+                            default:break;
                         }
                     }
                 })).start();

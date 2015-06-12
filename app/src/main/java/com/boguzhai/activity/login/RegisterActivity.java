@@ -1,5 +1,6 @@
 package com.boguzhai.activity.login;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class RegisterActivity extends BaseActivity {
 
     private int time = 30;
     private TimerTask task;
+    private ProgressDialog dialog;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class RegisterActivity extends BaseActivity {
         check_code = (EditText)findViewById(R.id.check_code);
         password = (EditText)findViewById(R.id.password);
         get_check_code = (TextView)findViewById(R.id.get_check_code);
+        dialog = Utility.getProgressDialog("正在注册，请稍后...");
 
 		int[] ids = {R.id.get_check_code, R.id.agree, R.id.register, R.id.login, R.id.protocol};
 		this.listen(ids);
@@ -117,17 +120,16 @@ public class RegisterActivity extends BaseActivity {
                 break;
             }
 
-            HttpClient conn2 = new HttpClient();
-            conn2.setParam("mobile", username.getText().toString());
-            conn2.setParam("password", password.getText().toString());
-            conn2.setParam("checkcode", check_code.getText().toString());
-            conn2.setUrl(Constant.url+"pLoginAction!register.htm");
-            new Thread(new HttpPostRunnable(conn2, new RegisterHandler())).start();
+            dialog.show();
+            HttpClient conn = new HttpClient();
+            conn.setParam("mobile", username.getText().toString());
+            conn.setParam("password", password.getText().toString());
+            conn.setParam("checkcode", check_code.getText().toString());
+            conn.setUrl(Constant.url + "pLoginAction!register.htm");
+            new Thread(new HttpPostRunnable(conn, new RegisterHandler())).start();
 
             break;
-        case R.id.login:
-            startActivity(new Intent(this, LoginActivity.class));
-            break;
+        case R.id.login: startActivity(new Intent(this, LoginActivity.class)); break;
         case R.id.protocol:
             Utility.openUrl("http://www.shbgz.com/otherAction!autionrule.htm?target=3_3_8");
             break;
@@ -138,6 +140,8 @@ public class RegisterActivity extends BaseActivity {
     public class RegisterHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            dialog.dismiss();
+            super.handlerData(code, data);
             switch(code){
                 case 0:
                     Utility.alertDialog("注册成功，请进行实名认证",new DialogInterface.OnClickListener() {
@@ -147,20 +151,11 @@ public class RegisterActivity extends BaseActivity {
                             Utility.gotoActivity(IdentityVerifyActivity.class);
                         }
                     });
-
                     break;
-                case 1:
-                    Utility.alertMessage("该账户已经被注册");
-                    break;
-                case 2:
-                    Utility.alertMessage("验证码错误");
-                    break;
-                case 3:
-                    Utility.alertMessage("账户号码填写错误");
-                    break;
-                default:
-                    Utility.alertMessage("注册失败, 请检查您的注册信息");
-                    break;
+                case 1:  Utility.alertMessage("该账户已经被注册");   break;
+                case 2:  Utility.alertMessage("验证码错误");        break;
+                case 3:  Utility.alertMessage("账户号码错误");   break;
+                default: Utility.alertMessage("注册失败, 请检查您的注册信息");   break;
             }
         }
     }

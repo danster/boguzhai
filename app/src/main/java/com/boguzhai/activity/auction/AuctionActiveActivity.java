@@ -17,7 +17,6 @@ import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.info.IdentityVerifyActivity;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.dao.Record;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.LoadImageTask;
@@ -36,9 +35,9 @@ import java.util.TimerTask;
 
 public class AuctionActiveActivity extends BaseActivity {
 
-    private ArrayList<Record> list;
+    private ArrayList<BiddingRecord> list;
     private ListViewForScrollView listview;
-    private AuctionRecordAdapter adapter;
+    private BiddingRecordAdapter adapter;
 
     // 参拍信息: 姓名 身份证 保证金 手机 号牌 支付状态
     private String name="", identityNumber="", money="", mobile="", biddingNo="", status="";
@@ -192,8 +191,8 @@ public class AuctionActiveActivity extends BaseActivity {
     // 展示出价记录初始化
     public void showListView(){
         listview = (ListViewForScrollView) findViewById(R.id.record_list);
-        list = new ArrayList<Record>();
-        adapter = new AuctionRecordAdapter(this, list);
+        list = new ArrayList<BiddingRecord>();
+        adapter = new BiddingRecordAdapter(this, list);
         listview.setAdapter(adapter);
     }
 
@@ -300,15 +299,9 @@ public class AuctionActiveActivity extends BaseActivity {
                 public void handlerData(int code, JSONObject data) {
                     super.handlerData(code, data);
                     switch (code) {
-                        case 0:
-                            Utility.alertDialog("出价成功",null);
-                            break;
-                        case 1:
-                            Utility.alertDialog("您的出价有误,出价失败",null);
-                            break;
-                        default:
-                            Utility.alertDialog("出价失败",null);
-                            break;
+                        case 0: Utility.alertDialog("出价成功",null); break;
+                        case 1: Utility.alertDialog("您的出价有误,出价失败",null); break;
+                        default: Utility.alertDialog("出价失败",null); break;
                     }
                 }
             })).start();
@@ -347,7 +340,7 @@ public class AuctionActiveActivity extends BaseActivity {
                     for(int i=0; i<records.length(); ++i){
                         JSONArray recObj = records.getJSONArray(i);
 
-                        Record record = new Record();
+                        BiddingRecord record = new BiddingRecord();
                         record.time = recObj.getString(0);
                         record.no = recObj.getString(1);
                         record.type = recObj.getString(2);

@@ -68,9 +68,6 @@ def png_transfer(name, new_name=None, width=None, height=None, org_dir=None):
 
 def main_icon():
     tab_height = 30;
-    
-    png_transfer("main_tab_home.png", height=tab_height)
-    png_transfer("main_tab_home_on.png", height=tab_height)
     png_transfer("main_tab_auction.png", height=tab_height)
     png_transfer("main_tab_auction_on.png", height=tab_height)
     png_transfer("main_tab_search.png", height=tab_height)
@@ -85,7 +82,6 @@ def base():
     png_transfer("logo.png","ic_laucher_xx.png",height=144,org_dir="icon/")
 
 def auction():
-    png_transfer("icon_search.png","base_search.png",height=30,org_dir="icon/")
     png_transfer("seek_thumb_disabled.png","seek_thumb_disabled.png",height=30,org_dir="icon/")
     png_transfer("seek_thumb_normal.png","seek_thumb_normal.png",height=30,org_dir="icon/")
     png_transfer("seek_thumb_pressed.png","seek_thumb_pressed.png",height=30,org_dir="icon/")
@@ -102,11 +98,6 @@ def auction():
 
 
 def me():
-    png_transfer("banner_red.png","me_banner_red.png",height=30,org_dir="icon/")
-    png_transfer("me_bg.png","me_bg.png",height=100,org_dir="icon/")
-
-    png_transfer("me_title_background.png",org_dir="icon/")
-
     png_transfer("me_tab_myauction.png",width=35,org_dir="icon/")
     png_transfer("me_tab_bidding.png",width=35,org_dir="icon/")
     png_transfer("me_tab_payment.png",width=35,org_dir="icon/")
@@ -116,13 +107,8 @@ def me():
     png_transfer("me_tab_upload.png",width=35,org_dir="icon/")
 
 
-
-
 if __name__ == '__main__':
     main_icon()
-    base()
-    auction()
-    me()
 
 
 

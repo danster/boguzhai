@@ -39,6 +39,8 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+
+
         tips = new AlertDialog.Builder(this);
         tips.setTitle("提示").setPositiveButton("确定", null);
 

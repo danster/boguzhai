@@ -80,8 +80,8 @@
         <activity android:name=".activity.me.capital.CapitalShowActivity" />
         <activity android:name=".activity.me.capital.CapitalBindbankActivity" />
         <activity android:name=".activity.me.capital.CapitalDetailActivity" />
-        <activity android:name=".activity.me.capital.CapitalChargeActivity" />
-        <activity android:name=".activity.me.capital.CapitalWithdrawalActivity" />
+        <activity android:name=".activity.pay.CapitalChargeActivity" />
+        <activity android:name=".activity.pay.CapitalWithdrawalActivity" />
 
         <!-- activities belong part of me myauction -->
         <activity android:name=".activity.me.myauction.MyAuctionActivity"
