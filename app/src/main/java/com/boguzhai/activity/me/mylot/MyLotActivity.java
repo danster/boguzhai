@@ -49,6 +49,7 @@ public class MyLotActivity extends BaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+        Utility.showLoadingDialog(this);
 		HttpClient conn = new HttpClient();
 		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
 		conn.setUrl(Constant.url + "pTraceAction!getMyAuctionList.htm");
@@ -94,6 +95,7 @@ public class MyLotActivity extends BaseActivity {
 				default:
 					break;
 			}
+            Utility.dismissLoadingDialog();
 		}
 	}
 }

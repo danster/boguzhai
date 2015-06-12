@@ -195,7 +195,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="12dp"
-        android:background="@color/gold"
+        android:background="@color/dark_red"
         android:text="搜索"
         android:textColor="@color/white"
         android:textSize="18sp" />

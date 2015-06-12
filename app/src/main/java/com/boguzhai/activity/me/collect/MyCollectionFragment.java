@@ -98,6 +98,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         super.onActivityCreated(savedInstanceState);
         mContext = (MyCollectionActivity) getActivity();
         initView();
+        Utility.showLoadingDialog(mContext);
         onRefresh();
     }
 
@@ -310,6 +311,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
         @Override
         public void handleMessage(Message msg) {
+            Utility.dismissLoadingDialog();
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
@@ -361,34 +363,9 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                             myCollections.add(lot);
                         }
 
-//                        // 网络批量下载拍品图片
-//                        new AsyncTask<Void, Void, Void>() {
-//                            @Override
-//                            protected Void doInBackground(Void... params) {
-//                                try {
-//                                    BitmapFactory.Options options = new BitmapFactory.Options();
-//                                    options.inJustDecodeBounds = false;
-//                                    options.inSampleSize = 5; //width，hight设为原来的 .. 分之一
-//
-//                                    for (CollectionLot lot : myCollections) {
-//                                        InputStream in = new URL(lot.imageUrl).openStream();
-//                                        lot.image = BitmapFactory.decodeStream(in, null, options);
-//                                    }
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-//                                return null;
-//                            }
-//
-//                            @Override
-//                            protected void onPostExecute(Void result) {
-//                                adapter.notifyDataSetChanged();
-//                            }
-//                        }.execute();
-
                         Log.i(TAG, "我的收藏数据获取完成！");
                         if (number == 1) {//刷新
-                            Toast.makeText(mContext, "刷新成功", Toast.LENGTH_SHORT).show();
+                            Utility.dismissLoadingDialog();
                             swipe_layout_my_collection.setRefreshing(false);
                             initData();
                         } else {//加载更多

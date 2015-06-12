@@ -3,6 +3,7 @@ package com.boguzhai.activity.mainpage;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
@@ -72,6 +73,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
         searchUrl=getIntent().getStringExtra("url");
 
+        Utility.showLoadingDialog(this);
         HttpClient conn = new HttpClient();
         conn.setUrl(searchUrl + "&number=1");
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
@@ -181,8 +183,24 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
     class ShowLotListHandler extends HttpJsonHandler {
         private ArrayList<Lot> lots;
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                case 9:
+                    Utility.dismissLoadingDialog();
+                    swipe_layout.setRefreshing(false);
+                    listview.stopLoadMore();
+                    break;
+            }
+        }
+
         @Override
         public void handlerData(int code, JSONObject data){
+            Utility.dismissLoadingDialog();
             swipe_layout.setRefreshing(false);
             listview.stopLoadMore();
 

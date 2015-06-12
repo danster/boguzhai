@@ -2,6 +2,8 @@ package com.boguzhai.logic.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Pair;
@@ -309,6 +311,27 @@ public class Utility {
         }
         return index;
     }
+
+
+    /**
+     * 加载数据时，显示提示对话框
+     */
+    static Dialog dialog;
+    public static void showLoadingDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        dialog = builder.setView(View.inflate(context, R.layout.loading_tip, null)).create();
+        dialog.show();
+    }
+    public static void dismissLoadingDialog() {
+        if(null != dialog) {
+            if(dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
+    }
+
+
+
 
 }
 

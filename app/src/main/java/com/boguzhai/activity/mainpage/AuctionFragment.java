@@ -17,6 +17,7 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
+import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import org.json.JSONObject;
@@ -52,6 +53,7 @@ public class AuctionFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 myCheckedId = checkedId;
+                Utility.showLoadingDialog(context);
                 updateDynamicAuctions(myCheckedId);
             }
         });
@@ -68,7 +70,6 @@ public class AuctionFragment extends Fragment {
     public void updateDynamicAuctions(int checkedId){
         list.clear();
         adapter.notifyDataSetChanged();
-
         HttpClient conn = new HttpClient();
         switch (checkedId){
             case R.id.auction_status_all:     conn.setParam("status", "");      break;
@@ -84,6 +85,7 @@ public class AuctionFragment extends Fragment {
     class AuctionListHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            Utility.dismissLoadingDialog();
             super.handlerData(code, data);
             switch (code){
                 case 0:

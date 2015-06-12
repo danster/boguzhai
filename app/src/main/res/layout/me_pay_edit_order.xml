@@ -162,7 +162,7 @@
 </LinearLayout>
 <Button style="@style/base_bar"  android:id="@+id/submit"
     android:gravity="center"
-    android:background="@color/gold"
+    android:background="@color/dark_red"
     android:textColor="@color/white"
     android:textSize="17sp"
     android:text="提交订单"/>

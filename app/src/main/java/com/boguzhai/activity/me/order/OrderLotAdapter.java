@@ -80,37 +80,13 @@ public class OrderLotAdapter extends BaseAdapter {
         }
         holder.me_pay_order_lot_name.setText(lots.get(position).name);
         holder.me_pay_order_lot_no.setText(lots.get(position).no);
-        holder.me_pay_order_lot_appraisal.setText(lots.get(position).appraisal);
-        holder.me_pay_order_lot_deal_price.setText(String.valueOf(lots.get(position).dealPrice));
-        holder.me_pay_order_lot_sum.setText(lots.get(position).sum);
-        holder.me_pay_order_lot_commission.setText(lots.get(position).commission);
+        holder.me_pay_order_lot_appraisal.setText("¥ " + lots.get(position).appraisal);
+        holder.me_pay_order_lot_deal_price.setText("¥ " + String.valueOf(lots.get(position).dealPrice));
+        holder.me_pay_order_lot_sum.setText("¥ " + lots.get(position).sum);
+        holder.me_pay_order_lot_commission.setText("¥ " + lots.get(position).commission);
 
 
 
-//        if (listView != null) {
-//            listView.setOnScrollListener(new XListViewForScrollView.OnScrollListener() {
-//                @Override
-//                public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                    Log.i("scroll", "state:" + scrollState);
-//
-//                    if(scrollState != XListViewForScrollView.SCROLL_STATE_FLING) {
-//                        new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
-//                    }
-////                    switch (scrollState) {
-////                        case XListViewForScrollView.SCROLL_STATE_IDLE:
-////                            new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
-////                            break;
-////                    }
-//                }
-//
-//                @Override
-//                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                }
-//            });
-//
-//        } else {
-//            new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
-//        }
         new LoadImageTask(holder.me_pay_order_lot_image, 4).execute(lots.get(position).imageUrl);
 
 

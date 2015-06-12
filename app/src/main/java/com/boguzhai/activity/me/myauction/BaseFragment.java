@@ -94,6 +94,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         mContext = (MyAuctionActivity) getActivity();
 
         initView();
+        Utility.showLoadingDialog(mContext);
         onRefresh();
     }
 
@@ -284,6 +285,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
 
         @Override
         public void handleMessage(Message msg) {
+            Utility.dismissLoadingDialog();
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
@@ -334,7 +336,6 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                         if(number == 1) {//刷新
                             Log.i(TAG, "刷新成功");
                             swipe_layout.setRefreshing(false);
-                            Toast.makeText(mContext, "刷新成功", Toast.LENGTH_SHORT).show();
                             initData();
                         }else {//加载更多
                             lv_my_auction.stopLoadMore();
@@ -352,6 +353,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     }
                     break;
             }
+            Utility.dismissLoadingDialog();
         }
     }
 
