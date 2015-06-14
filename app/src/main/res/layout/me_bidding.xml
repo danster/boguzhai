@@ -20,6 +20,8 @@
 
                 <com.boguzhai.logic.widget.ListViewForScrollView
                     android:id="@+id/bidding_list"
+                    android:background="@color/white"
+                    android:divider="@drawable/shape_listview_divider_thick"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </ScrollView>

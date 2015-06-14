@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity {
 		password= Variable.settings.getString(SharedKeys.password, null);
 		this.username_tv.setText(username == null?"":username);
 		this.password_tv.setText(password == null ? "" : password);
-        dialog = Utility.getProgressDialog("正在登录，请稍后...");
+//        dialog = Utility.getProgressDialog("正在登录，请稍后...");
 
 		int[] ids = { R.id.register, R.id.forget_pwd, R.id.login};
 		this.listen(ids);
@@ -67,7 +67,8 @@ public class LoginActivity extends BaseActivity {
                 Utility.alertMessage("密码不能为空");
                 break;
             }else {
-                dialog.show();
+//                dialog.show();
+                Utility.showLoadingDialog("正在登陆,请稍后...");
                 HttpClient conn = new HttpClient();
                 conn.setParam("mobile", username);
                 conn.setParam("password", password);
@@ -82,7 +83,8 @@ public class LoginActivity extends BaseActivity {
     public class LoginHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            dialog.dismiss();
+            Utility.dismissLoadingDialog();
+//            dialog.dismiss();
             super.handlerData(code,data);
             switch (code){
                 case 0:

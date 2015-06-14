@@ -1,4 +1,4 @@
-package com.boguzhai.logic.gaobo;
+package com.boguzhai.activity.me.order;
 
 import com.boguzhai.logic.dao.Lot;
 

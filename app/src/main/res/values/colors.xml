@@ -9,6 +9,7 @@
     <color name="half_black">#8C8C8C</color> <!-- 中黑色 -->
     <color name="light_black">#BABABA</color> <!-- 浅黑色 -->
     <color name="hint_black">#A0A0A0</color> <!-- 提示灰色 -->
+    <color name="background_gray">#F3F3F3</color> <!-- 背景灰色 -->
 
     <color name="yellow">#FFFF00</color>
     <color name="fuchsia">#FF00FF</color>

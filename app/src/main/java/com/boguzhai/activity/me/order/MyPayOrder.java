@@ -1,4 +1,4 @@
-package com.boguzhai.logic.gaobo;
+package com.boguzhai.activity.me.order;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 
-public class PayOrder {
+public class MyPayOrder {
     public String orderId;//订单id
     public String orderNo;//订单no
     public String orderTime;//产生订单的日期

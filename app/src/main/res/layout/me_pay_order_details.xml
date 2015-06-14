@@ -404,5 +404,5 @@
         android:background="@color/dark_red"
         android:text="付款"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.boguzhai.logic.view;
+package com.boguzhai.logic.widget;
 
 
 

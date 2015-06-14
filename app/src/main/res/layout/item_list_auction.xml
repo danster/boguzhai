@@ -24,10 +24,15 @@
         android:orientation="horizontal" >
         <TextView
             android:id="@+id/auction_type"
-            android:layout_width="40dp"
-            android:layout_height="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:gravity="center"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:background="@color/gold"/>
         <TextView

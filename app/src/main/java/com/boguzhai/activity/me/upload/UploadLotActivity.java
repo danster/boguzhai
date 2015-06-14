@@ -71,18 +71,12 @@ public class UploadLotActivity extends BaseActivity {
     private TextView me_upload_contact_number;
     private TextView me_upload_protocol;
     private EditText me_upload_remark;
-    private EditText me_upload_time;
-    private EditText me_upload_size;
-    private EditText me_upload_style;
     private EditText me_upload_img1_info;
     private EditText me_upload_img2_info;
     private EditText me_upload_img3_info;
 
     private ImageView me_upload_lot_name_delete;
     private ImageView me_upload_bottom_price_delete;
-    private ImageView me_upload_time_delete;
-    private ImageView me_upload_style_delete;
-    private ImageView me_upload_size_delete;
     private ImageView me_upload_img1;
     private ImageView me_upload_img2;
     private ImageView me_upload_img3;
@@ -116,7 +110,7 @@ public class UploadLotActivity extends BaseActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
-        this.setScrollView(R.layout.me_upload);
+        this.setLinearView(R.layout.me_upload);
         title.setText("上传拍品");
         init();
     }
@@ -158,9 +152,6 @@ public class UploadLotActivity extends BaseActivity {
         listen(me_upload_lot_name_delete);
         listen(me_upload_bottom_price_delete);
         listen(me_upload_protocol);
-        listen(me_upload_time_delete);
-        listen(me_upload_style_delete);
-        listen(me_upload_size_delete);
         listen(me_upload_img1);
         listen(me_upload_img2);
         listen(me_upload_img3);
@@ -203,7 +194,6 @@ public class UploadLotActivity extends BaseActivity {
                 } else if (!me_upload_agree.isChecked()) {
                     Toast.makeText(Variable.app_context, "请接受《在线拍品征集规则》", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Variable.app_context, "开始上传拍品", Toast.LENGTH_SHORT).show();
                     conn = new HttpClient();
                     conn.setUrl(Constant.url + "pAuctionInfoAction!uploadAuction.htm");
                     conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
@@ -225,6 +215,7 @@ public class UploadLotActivity extends BaseActivity {
                     conn.setParam("image2_info", image_info_2);
                     conn.setParam("image3_url", image_urls[2]);
                     conn.setParam("image3_info", image_info_3);
+                    enableButton(false);
                     new Thread(new HttpPostRunnable(conn, new UploadAuctionHandler())).start();
                 }
                 break;
@@ -260,6 +251,17 @@ public class UploadLotActivity extends BaseActivity {
     }
 
 
+    private void enableButton(boolean enable) {
+        if(enable) {
+            me_upload_commit.setEnabled(true);
+            me_upload_commit.setText("提交");
+        }else {
+            me_upload_commit.setEnabled(false);
+            me_upload_commit.setText("正在上传...");
+        }
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -282,6 +284,7 @@ public class UploadLotActivity extends BaseActivity {
     public class UploadAuctionHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data) {
+            enableButton(true);
             switch (code) {
                 case 0:
                     Utility.toastMessage("上传成功");

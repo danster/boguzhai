@@ -45,7 +45,7 @@ import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.DensityUtils;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;

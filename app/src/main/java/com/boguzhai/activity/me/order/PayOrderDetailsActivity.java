@@ -12,7 +12,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.pay.PayOrderActivity;
-import com.boguzhai.logic.gaobo.PayOrder;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 /**
@@ -25,7 +24,7 @@ public class PayOrderDetailsActivity extends BaseActivity {
     private OrderLotAdapter adapter;
     private ListViewForScrollView listView;
 
-    private PayOrder payOrder;
+    private MyPayOrder payOrder;
     private Button button;
 
     @Override

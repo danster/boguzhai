@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.ImageDetailsActivity;
-import com.boguzhai.logic.gaobo.OrderLot;
 import com.boguzhai.logic.thread.LoadImageTask;
 import com.boguzhai.logic.utils.Utility;
 
@@ -31,15 +30,6 @@ public class OrderLotAdapter extends BaseAdapter {
     private ArrayList<OrderLot> lots;
     private LayoutInflater inflater;
     private boolean isShowing = false;
-
-//    private XListViewForScrollView listView;
-//
-//    public OrderLotAdapter(Context context, ArrayList<OrderLot> lots, XListViewForScrollView listView) {
-//        this.listView = listView;
-//        inflater = LayoutInflater.from(context);
-//        mContext = context;
-//        this.lots = lots;
-//    }
 
     public OrderLotAdapter(Context context, ArrayList<OrderLot> lots) {
         inflater = LayoutInflater.from(context);

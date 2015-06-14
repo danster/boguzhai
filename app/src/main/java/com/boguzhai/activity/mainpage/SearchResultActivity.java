@@ -17,7 +17,7 @@ import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,7 +73,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
         searchUrl=getIntent().getStringExtra("url");
 
-        Utility.showLoadingDialog(this);
+        Utility.showLoadingDialog("正在加载...");
         HttpClient conn = new HttpClient();
         conn.setUrl(searchUrl + "&number=1");
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
@@ -83,6 +83,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
     public void onRefresh() {
         order.value = 1;
         swipe_layout.setRefreshing(true);
+        listview.setPullLoadEnable(true);
         HttpClient conn = new HttpClient();
         conn.setUrl(searchUrl + "&number=" + order.value);
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
@@ -216,6 +217,9 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
                     try {
                         int count = Integer.parseInt(data.getString("count"));
                         int size = Integer.parseInt(data.getString("size"));
+                        if(count < size) {
+                            listview.setPullLoadEnable(false);
+                        }
 
                         if ((order.value-1)*size == count ) {
                             order.value = -1;

@@ -48,13 +48,14 @@ public class AccountInfoEditActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        this.setScrollView(R.layout.me_myinfo_edit);
+        this.setLinearView(R.layout.me_myinfo_edit);
         title.setText("编辑个人信息");
         init();
 	}
 
 	private void init(){
-        dialog = Utility.getProgressDialog("正在提交个人信息，请等待...");
+//        dialog = Utility.getProgressDialog("正在提交个人信息，请等待...");
+
         fillAccountInfo();
 
         // 省市区选择器之间的联动
@@ -150,7 +151,8 @@ public class AccountInfoEditActivity extends BaseActivity {
             conn.setParam("qq",        ((EditText)findViewById(R.id.qq)).getText().toString());
             conn.setUrl(Constant.url+"pClientInfoAction!setAccountInfo.htm");
             new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
-            dialog.show();
+//            dialog.show();
+            Utility.showLoadingDialog("正在提交个人信息，请等待...");
             break;
 
         case R.id.my_email:  Utility.gotoActivity(AccountBindEmailActivity.class);     break;
@@ -181,7 +183,8 @@ public class AccountInfoEditActivity extends BaseActivity {
     class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            dialog.dismiss();
+//            dialog.dismiss();
+            Utility.dismissLoadingDialog();
             super.handlerData(code,data);
             switch(code){
                 case 0: Utility.alertMessage("修改个人信息成功!");break;

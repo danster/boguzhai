@@ -12,7 +12,7 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +49,7 @@ public class MyLotActivity extends BaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-        Utility.showLoadingDialog(this);
+        Utility.showLoadingDialog("正在加载...");
 		HttpClient conn = new HttpClient();
 		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
 		conn.setUrl(Constant.url + "pTraceAction!getMyAuctionList.htm");

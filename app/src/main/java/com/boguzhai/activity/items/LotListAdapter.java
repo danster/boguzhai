@@ -79,7 +79,7 @@ public class LotListAdapter extends BaseAdapter {
             holder.rightLot.setOnClickListener(new MyOnClickListener(2*position + 1));
             holder.rightLotName.setText(list.get(2*position+1).name);
             holder.rightLotID.setText("图录号: "+list.get(2*position+1).no);
-            holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).appraisal1+"-￥"+list.get(2*position+1).appraisal2);
+            holder.rightLotApprisal.setText("预估价: ￥"+list.get(2*position+1).appraisal1+" -￥"+list.get(2*position+1).appraisal2);
             holder.rightLotStartPrice.setText("起拍价: ￥"+list.get(2*position+1).startPrice);
         }
         return view;

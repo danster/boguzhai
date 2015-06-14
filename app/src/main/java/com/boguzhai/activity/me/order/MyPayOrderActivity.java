@@ -12,13 +12,11 @@ import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
-import com.boguzhai.logic.gaobo.OrderLot;
-import com.boguzhai.logic.gaobo.PayOrder;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +34,7 @@ public class MyPayOrderActivity extends BaseActivity implements SwipeRefreshLayo
     private int size;
     private int number = 1;
 
-    private ArrayList<PayOrder> payOrders;
+    private ArrayList<MyPayOrder> payOrders;
     private PayOrderAdapter adapter;
 
     private HttpClient conn;
@@ -62,7 +60,7 @@ public class MyPayOrderActivity extends BaseActivity implements SwipeRefreshLayo
         listview.setXListViewListener(this);
 
         payOrders = new ArrayList<>();
-        Utility.showLoadingDialog(this);
+        Utility.showLoadingDialog("正在加载...");
         onRefresh();
     }
 
@@ -155,10 +153,10 @@ private class MyPayOrderHandler extends HttpJsonHandler {
                     } else {
                         currentCount += size;
                         JSONArray jArray = data.getJSONArray("list");
-                        PayOrder order;
+                        MyPayOrder order;
                         OrderLot lot;
                         for (int i = 0; i < jArray.length(); i++) {
-                            order = new PayOrder();
+                            order = new MyPayOrder();
                             order.orderTime = jArray.getJSONObject(i).getString("orderTime");
                             order.orderId = jArray.getJSONObject(i).getString("orderId");
                             order.orderNo = jArray.getJSONObject(i).getString("orderNo");

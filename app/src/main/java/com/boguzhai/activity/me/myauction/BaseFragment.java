@@ -23,12 +23,11 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
-import com.boguzhai.logic.gaobo.MyAuction;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,7 +93,7 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
         mContext = (MyAuctionActivity) getActivity();
 
         initView();
-        Utility.showLoadingDialog(mContext);
+        Utility.showLoadingDialog("正在加载...");
         onRefresh();
     }
 
@@ -312,6 +311,9 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
                     try {
                         size = Integer.parseInt(data.getString("size"));//每页的数目
                         totalCount = Integer.parseInt(data.getString("count"));//总的数目
+                        if(totalCount < size) {//如果总数小于一页数，则不需要显示"加载更多"
+                            lv_my_auction.setPullLoadEnable(false);
+                        }
                         JSONArray jArray = data.getJSONArray("auctionList");
                         currentCount += jArray.length();
                         if(jArray.length() == 0) {

@@ -33,7 +33,6 @@ public class LotInBiddingAuctionAdapter extends BaseAdapter {
     private List<BiddingLot> mLotList;
     private LayoutInflater inflater;
     private boolean isShowing = false;
-    private String[] isLeader = {"出局", "领先"};
     public LotInBiddingAuctionAdapter(Context context, List<BiddingLot> lotList){
         inflater = LayoutInflater.from(context);
         mContext = context;
@@ -42,7 +41,6 @@ public class LotInBiddingAuctionAdapter extends BaseAdapter {
 
     private final class ViewHolder{
         TextView my_bidding_lot_name,
-                 my_bidding_lot_isleader,
                  my_bidding_lot_no,
                  my_bidding_lot_pricecount,
                  my_bidding_lot_appraisal,
@@ -59,7 +57,6 @@ public class LotInBiddingAuctionAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.my_bidding_item_lot, null);
             holder = new ViewHolder();
             holder.my_bidding_lot_name = (TextView) view.findViewById(R.id.my_bidding_lot_name);
-            holder.my_bidding_lot_isleader = (TextView) view.findViewById(R.id.my_bidding_lot_isleader);
             holder.my_bidding_lot_no = (TextView) view.findViewById(R.id.my_bidding_lot_no);
             holder.my_bidding_lot_pricecount = (TextView) view.findViewById(R.id.my_bidding_lot_pricecount);
             holder.my_bidding_lot_appraisal = (TextView) view.findViewById(R.id.my_bidding_lot_appraisal);
@@ -73,16 +70,14 @@ public class LotInBiddingAuctionAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         holder.my_bidding_lot_name.setText(mLotList.get(position).name);
-        holder.my_bidding_lot_isleader.setText(mLotList.get(position).isLeader);
         holder.my_bidding_lot_no.setText(mLotList.get(position).no);
         holder.my_bidding_lot_pricecount.setText(String.valueOf(mLotList.get(position).biddingCount));
-        holder.my_bidding_lot_appraisal.setText("￥" + mLotList.get(position).appraisal1 + "- ￥" + mLotList.get(position).appraisal2);
-        holder.my_bidding_lot_startprice.setText("￥" + String.valueOf(mLotList.get(position).startPrice));
+        holder.my_bidding_lot_appraisal.setText("￥" + mLotList.get(position).appraisal1 + " - ￥" + mLotList.get(position).appraisal2);
+        holder.my_bidding_lot_startprice.setText("￥ " + String.valueOf(mLotList.get(position).startPrice));
         holder.my_bidding_lot_nowprice.setText("￥" + String.valueOf(mLotList.get(position).currentPrice));
         holder.my_bidding_lot_topprice.setText("￥" + mLotList.get(position).topPrice);
 
         new LoadImageTask(holder.my_bidding_lot_image, 4).execute(mLotList.get(position).imageUrl);
-//        holder.my_bidding_lot_image.setImageBitmap(mLotList.get(position).image);
 
 
         holder.my_bidding_lot_image.setOnClickListener(new View.OnClickListener() {
@@ -133,29 +128,12 @@ public class LotInBiddingAuctionAdapter extends BaseAdapter {
                                 Variable.currentBitmap = bmp;
                                 Utility.gotoActivity(ImageDetailsActivity.class);
                                 isShowing = false;
-//                                LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
-//                                View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
-//                                ((ImageView) imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
-//                                final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
-//                                dialog.setView(imgEntryView); // 自定义dialog
-//                                dialog.show();
-//
-//                                // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-//                                imgEntryView.setOnClickListener(new View.OnClickListener() {
-//                                    public void onClick(View paramView) {
-//                                        dialog.cancel();
-//                                        isShowing = false;
-//                                    }
-//                                });
                             } else {
                                 Log.i("AsyncTask", "image get: failed !");
                             }
                         }
                     }.execute();
                 }
-
-
-
             }
         });
 

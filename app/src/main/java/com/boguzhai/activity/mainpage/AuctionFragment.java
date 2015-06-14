@@ -51,7 +51,7 @@ public class AuctionFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 myCheckedId = checkedId;
-                Utility.showLoadingDialog(context);
+                Utility.showLoadingDialog("正在加载...");
                 updateDynamicAuctions(myCheckedId);
             }
         });

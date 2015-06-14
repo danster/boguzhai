@@ -51,12 +51,12 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
 	protected void init(){
 
         swipe_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout_me_bidding);
-        swipe_layout.setColorSchemeColors(R.color.gold);
+        swipe_layout.setColorSchemeResources(R.color.gold);
         swipe_layout.setOnRefreshListener(this);
         biddingAuctionList = new ArrayList<>();
 
         lv_bidding = (ListViewForScrollView) findViewById(R.id.bidding_list);
-        Utility.showLoadingDialog(this);
+        Utility.showLoadingDialog("正在加载...");
         onRefresh();
 	}
 
