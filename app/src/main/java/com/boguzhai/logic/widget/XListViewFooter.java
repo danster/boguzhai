@@ -4,13 +4,16 @@
  * @author Maxwin
  * @description XListView's footer
  */
-package com.boguzhai.logic.view;
+package com.boguzhai.logic.widget;
 
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +29,7 @@ public class XListViewFooter extends LinearLayout {
 	private View mContentView;
 	private View mProgressBar;
 	private TextView mHintView;
+    private ImageView mImageView;
 	
 	public XListViewFooter(Context context) {
 		super(context);
@@ -47,6 +51,8 @@ public class XListViewFooter extends LinearLayout {
 			mHintView.setText("松开加载更多");
 		} else if (state == STATE_LOADING) {
 			mProgressBar.setVisibility(View.VISIBLE);
+
+
 		} else {
 			mHintView.setVisibility(View.VISIBLE);
 			mHintView.setText("查看更多");
@@ -110,6 +116,13 @@ public class XListViewFooter extends LinearLayout {
 		mContentView = moreView.findViewById(R.id.xlistview_footer_content);
 		mProgressBar = moreView.findViewById(R.id.xlistview_footer_progressbar);
 		mHintView = (TextView)moreView.findViewById(R.id.xlistview_footer_hint_textview);
+        mImageView = (ImageView) moreView.findViewById(R.id.iv_footer);
+
+        RotateAnimation anim = new RotateAnimation(45f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(200);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        mImageView.startAnimation(anim);
 	}
 	
 	

@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.logic.gaobo.PayOrder;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 import com.boguzhai.logic.widget.ListViewForScrollView;
 
 import java.util.ArrayList;
@@ -21,10 +20,9 @@ import java.util.ArrayList;
 public class PayOrderAdapter extends BaseAdapter {
 
     private Context mContext;
-    private ArrayList<PayOrder> payOrders;
+    private ArrayList<MyPayOrder> payOrders;
     private LayoutInflater inflater;
 
-//    private XListViewForScrollView listView;
     private XListView listView;
 
     private final class ViewHolder {
@@ -35,11 +33,10 @@ public class PayOrderAdapter extends BaseAdapter {
                 tv_me_pay_order_preferential,
                 tv_me_pay_order_realPayPrice;
         ListViewForScrollView listView;
-        OrderLotAdapter orderLotAdapter;
 
     }
 
-    public PayOrderAdapter(Context context, ArrayList<PayOrder> payOrders, XListView listView) {
+    public PayOrderAdapter(Context context, ArrayList<MyPayOrder> payOrders, XListView listView) {
         this.listView = listView;
         inflater = LayoutInflater.from(context);
         mContext = context;

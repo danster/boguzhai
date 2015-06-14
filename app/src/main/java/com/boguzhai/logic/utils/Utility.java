@@ -2,9 +2,8 @@ package com.boguzhai.logic.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.Dialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Pair;
@@ -38,6 +37,14 @@ public class Utility {
     /*********************************** 提示小工具 ********************************************/
     public static void toastMessage(String msg){
         Toast.makeText(Variable.app_context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void alertMessage(String msg){
+        if(!Variable.currentActivity.isFinishing()){
+            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+            tips.setIcon(android.R.drawable.ic_dialog_info);
+            tips.setTitle("提示").setMessage(msg).setPositiveButton("确定", null).create().show();
+        }
     }
 
     public static ProgressDialog getProgressDialog(String msg){
@@ -333,13 +340,18 @@ public class Utility {
     }
 
 
+
+
+
     /**
      * 加载数据时，显示提示对话框
      */
     static Dialog dialog;
-    public static void showLoadingDialog(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        dialog = builder.setView(View.inflate(context, R.layout.loading_tip, null)).create();
+    public static void showLoadingDialog(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Variable.currentActivity);
+        View view = View.inflate(Variable.currentActivity, R.layout.loading_tip, null);
+        ((TextView) view.findViewById(R.id.tv_progress_dialog)).setText(msg);
+        dialog = builder.setView(view).create();
         dialog.show();
     }
     public static void dismissLoadingDialog() {

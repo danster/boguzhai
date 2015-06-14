@@ -21,7 +21,7 @@ import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -131,6 +131,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
         swipe_layout.setOnRefreshListener(this);
 
         this.order.value = 1;
+        Utility.showLoadingDialog("正在加载...");
         this.httpConnect(1);
     }
 
@@ -231,7 +232,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
         public void handlerData(int code, JSONObject data){
             swipe_layout.setRefreshing(false);
             listview.stopLoadMore();
-
+            Utility.dismissLoadingDialog();
             switch (code){
                 case 0:
                     if(order.value == -1) {

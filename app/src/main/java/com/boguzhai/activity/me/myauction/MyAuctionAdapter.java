@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.proxy.ProxyPricingActivity;
-import com.boguzhai.logic.gaobo.MyAuction;
 
 import java.util.List;
 
@@ -70,7 +69,7 @@ public class MyAuctionAdapter extends BaseAdapter {
         holder.tv_my_auction_name.setText(myAuctions.get(position).name);
         holder.tv_my_auction_type.setText(myAuctions.get(position).type);
         holder.tv_my_auction_date.setText(myAuctions.get(position).auctionTime);
-        holder.tv_my_auction_deposit.setText("￥" + String.valueOf(myAuctions.get(position).deposit));
+        holder.tv_my_auction_deposit.setText("￥ " + String.valueOf(myAuctions.get(position).deposit));
         holder.tv_my_auction_set_deposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

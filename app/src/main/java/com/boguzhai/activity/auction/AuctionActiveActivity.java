@@ -124,6 +124,7 @@ public class AuctionActiveActivity extends BaseActivity {
                 });
             }
         };
+        Utility.showLoadingDialog("正在加载...");
         new Timer().schedule(timerTask, 0, 3000); // 立刻启动间隔N秒的task
 
         checkApplyStatus(); // 判断 同步拍卖会 或 网络拍卖会拍品 参拍状态
@@ -312,6 +313,7 @@ public class AuctionActiveActivity extends BaseActivity {
     class DispalyHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            Utility.dismissLoadingDialog();
             switch (code){
             case 0:
                 try {

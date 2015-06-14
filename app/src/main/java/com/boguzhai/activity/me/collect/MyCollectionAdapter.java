@@ -159,21 +159,6 @@ public class MyCollectionAdapter extends BaseAdapter {
                                 Variable.currentBitmap = bmp;
                                 Utility.gotoActivity(ImageDetailsActivity.class);
                                 isShowing = false;
-//                                Log.i("AsyncTask", "image get: succeed !");
-//                                LayoutInflater inflater = LayoutInflater.from(Variable.currentActivity);
-//                                View imgEntryView = inflater.inflate(R.layout.dialog_big_photo, null); // 加载自定义的布局文件
-//                                ((ImageView) imgEntryView.findViewById(R.id.large_image)).setImageBitmap(bmp); // 设置图片
-//                                final AlertDialog dialog = new AlertDialog.Builder(Variable.currentActivity).create();
-//                                dialog.setView(imgEntryView); // 自定义dialog
-//                                dialog.show();
-//
-//                                // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-//                                imgEntryView.setOnClickListener(new View.OnClickListener() {
-//                                    public void onClick(View paramView) {
-//                                        dialog.cancel();
-//                                        isShowing = false;
-//                                    }
-//                                });
                             } else {
                                 Log.i("AsyncTask", "image get: failed !");
                             }
@@ -182,10 +167,6 @@ public class MyCollectionAdapter extends BaseAdapter {
                 }
             }
         });
-
-
-
-
         return view;
     }
 

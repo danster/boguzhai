@@ -50,20 +50,6 @@ public class MyCollectionActivity extends BaseActivity {
         showFragmentByTag(ft, "tag_all", R.id.rb_my_collection_all);
         ft.commit();
 
-//        title_right.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new AlertDialog.Builder(MyCollectionActivity.this).setSingleChoiceItems(sortTypes, sortType,
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int index) {
-//                                sortType = index;
-////                                sortLots();
-//                                dialog.dismiss();
-//                            }
-//                        }).setNegativeButton("取消", null).show();
-//            }
-//        });
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

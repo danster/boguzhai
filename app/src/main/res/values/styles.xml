@@ -75,10 +75,15 @@
         <item name="android:background">@color/single_line</item>
     </style>
 
+    <style name="longline_light">
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <!-- 树形分割线式样 -->
     <style name="longline_vertical">
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_width">1dp</item>
         <item name="android:background">@color/single_line</item>
     </style>
 
@@ -89,6 +94,17 @@
         <item name="android:gravity">center|right</item>
         <item name="android:background">@drawable/base_choose_on</item>
     </style>
+
+    <!--头部切换样式-->
+    <style name="my_auction_tab">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:button">@null</item>
+    </style>
+
 
     <!-- 上传照片样式 -->
     <style name="upload_image">

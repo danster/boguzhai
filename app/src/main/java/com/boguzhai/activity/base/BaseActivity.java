@@ -45,6 +45,12 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 
 	}
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Variable.currentActivity = this;
+    }
+
     protected void readyForVariable(){
         Variable.currentActivity = this;
 

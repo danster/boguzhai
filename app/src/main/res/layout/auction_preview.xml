@@ -47,6 +47,7 @@
                 <EditText
                     android:id="@+id/search_value"
                     android:layout_width="0dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="请输入关键词"
@@ -56,7 +57,7 @@
             </LinearLayout>
             <TextView
                 android:id="@+id/search"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -80,7 +81,7 @@
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.boguzhai.logic.view.XListView
+        <com.boguzhai.logic.widget.XListView
             android:id="@+id/lotlist"
             android:divider="@drawable/shape_listview_divider"
             android:layout_width="match_parent"

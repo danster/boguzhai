@@ -9,7 +9,7 @@
         <TextView style="@style/me_middle_text" android:text="系统更新"/>
         <ImageView style="@style/search_right_arrow" />
     </LinearLayout>
-    <View style="@style/longline" />
+    <View style="@style/longline_light" />
     <LinearLayout android:id="@+id/ll_pwd" style="@style/base_bar" >
         <TextView style="@style/me_middle_text" android:text="修改密码"/>
         <ImageView style="@style/search_right_arrow" />
@@ -20,7 +20,7 @@
         <TextView style="@style/me_middle_text" android:text="关于博古斋"/>
         <ImageView style="@style/search_right_arrow" />
     </LinearLayout>
-    <View style="@style/longline" />
+    <View style="@style/longline_light" />
     <LinearLayout android:id="@+id/ll_guide" style="@style/base_bar" >
         <TextView style="@style/me_middle_text" android:text="拍卖指南"/>
         <ImageView style="@style/search_right_arrow" />

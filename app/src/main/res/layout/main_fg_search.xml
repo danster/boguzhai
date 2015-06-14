@@ -20,10 +20,13 @@
 
             <LinearLayout
                 style="@style/base_bar"
-                android:layout_marginTop="5dp">
+                android:layout_height="60dp">
 
                 <LinearLayout
                     android:layout_marginRight="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/shape_circle_rectangle">
@@ -66,7 +69,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline_light" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -81,7 +84,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline_light" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -112,7 +115,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline_light" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -127,7 +130,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline_light" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -142,7 +145,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline_light" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -172,7 +175,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline" />
+            <View style="@style/longline_light" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -193,10 +196,9 @@
     <Button
         android:id="@+id/search"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
         android:background="@color/dark_red"
         android:text="搜索"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 </LinearLayout>

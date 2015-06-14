@@ -33,7 +33,7 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,7 +98,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         super.onActivityCreated(savedInstanceState);
         mContext = (MyCollectionActivity) getActivity();
         initView();
-        Utility.showLoadingDialog(mContext);
+        Utility.showLoadingDialog("正在加载...");
         onRefresh();
     }
 
@@ -340,6 +340,9 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
                     try {
                         size = Integer.parseInt(data.getString("size"));//每页的数目
                         totalCount = Integer.parseInt(data.getString("count"));//总的数目
+                        if(totalCount < size) {
+                            lv_my_collection.setPullLoadEnable(false);
+                        }
                         if(number == 1 && totalCount == 0) {
                             Utility.toastMessage("暂无数据");
                         }

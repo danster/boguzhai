@@ -39,7 +39,8 @@
         </activity>
 
         <!-- activities belong part of app start and mainpage -->
-        <activity android:name=".activity.mainpage.MainActivity" />
+        <activity android:name=".activity.mainpage.MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".activity.mainpage.AppGuideActivity" />
         <activity android:name=".activity.mainpage.AppStartActivity" />
         <activity android:name=".activity.mainpage.SearchResultActivity" />
@@ -49,7 +50,8 @@
         <activity android:name=".activity.items.ImageDetailsActivity" />
 
         <!-- activities belong part of auction -->
-        <activity android:name=".activity.auction.AuctionDisplayActivity" />
+        <activity android:name=".activity.auction.AuctionDisplayActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activity.auction.LotInfoActivity" />
         <activity android:name=".activity.auction.LotFilterActivity" />
         <activity android:name=".activity.auction.AuctionActiveActivity" />
@@ -61,15 +63,17 @@
         <activity android:name=".activity.pay.PayOrderResultActivity" />
 
         <!-- activities belong part of login -->
-        <activity android:name=".activity.login.LoginActivity" />
+        <activity android:name=".activity.login.LoginActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activity.login.RegisterActivity" />
         <activity android:name=".activity.login.ResetPwdActivity" />
 
         <!-- activities belong part of me info -->
         <activity android:name=".activity.me.info.AccountInfoActivity" />
         <activity android:name=".activity.me.info.AccountInfoMoreActivity" />
-        <activity android:name=".activity.me.info.AccountInfoEditActivity" />
-        <activity android:name=".activity.me.info.AccountBindActivity" />
+        <activity android:name=".activity.me.info.AccountInfoEditActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity android:name=".activity.me.info.AccountBindEmailActivity" />
         <activity android:name=".activity.me.info.AccountBindMobileActivity" />
         <activity android:name=".activity.me.info.IdentityVerifyActivity" />
         <activity android:name=".activity.me.info.IdentityShowActivity" />
@@ -108,14 +112,17 @@
             android:windowSoftInputMode="stateHidden"/>
 
         <!-- activities belong part of me upload -->
-        <activity android:name=".activity.me.upload.UploadLotActivity" />
+        <!--stateHidden:防止已进入界面软键盘弹起-->
+        <!--adjustPan:防止软键盘将下方的button顶上去-->
+        <activity android:name=".activity.me.upload.UploadLotActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <!-- activities belong part of me setting -->
         <activity android:name=".activity.me.settings.SystemSettingsActivity" />
         <activity android:name=".activity.me.settings.AboutBoGuZhaiActivity" />
         <activity android:name=".activity.me.settings.AuctionGuideActivity" />
         <activity android:name=".activity.me.settings.AddAdviceActivity"
-                  android:windowSoftInputMode="stateHidden"/>
+                  android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".activity.me.settings.GetAdviceActivity"/>
         <activity android:name=".activity.me.settings.CheckAdivceActivity"/>
     </application>

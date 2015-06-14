@@ -23,7 +23,7 @@ import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
-import com.boguzhai.logic.view.XListView;
+import com.boguzhai.logic.widget.XListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,7 +76,7 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
         });
 
         advices = new ArrayList<>();
-        Utility.showLoadingDialog(this);
+        Utility.showLoadingDialog("正在加载...");
         requestData();
     }
 
@@ -109,6 +109,7 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
         number = 1;
         advices.clear();
         swipe_layout_advices.setRefreshing(true);
+        lv.setPullLoadEnable(true);
         requestData();
     }
 
@@ -165,6 +166,9 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
                     try {
                         size = Integer.parseInt(data.getString("size"));//每页的数目
                         totalCount = Integer.parseInt(data.getString("count"));//总的数目
+                        if(totalCount < size) {
+                            lv.setPullLoadEnable(false);
+                        }
                         JSONArray jArray = data.getJSONArray("adviceList");
                         currentCount += jArray.length();
                         if (jArray.length() == 0) {
@@ -189,7 +193,6 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
                         }
 
                         if (number == 1) {//刷新
-                            Utility.toastMessage("刷新成功");
                             swipe_layout_advices.setRefreshing(false);
                             adapter = new MyAdviceAdapter();
                             lv.setAdapter(adapter);

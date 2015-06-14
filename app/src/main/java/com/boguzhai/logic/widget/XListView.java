@@ -1,8 +1,9 @@
-package com.boguzhai.logic.view;
+package com.boguzhai.logic.widget;
 
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 
-public class XListViewForScrollView extends ListView implements OnScrollListener {
+public class XListView extends ListView implements OnScrollListener {
 
 	private float mLastY = -1; // save event y
 	private Scroller mScroller; // used for scroll back
@@ -41,7 +42,7 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
 	private boolean mEnablePullLoad;
 	private boolean mPullLoading;
 	private boolean mIsFooterReady = false;
-
+	
 	// total list items, used to detect is at the bottom of listview.
 	private int mTotalItemCount;
 
@@ -59,23 +60,26 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
 
 
 
+
 	/**
 	 * @param context
 	 */
-	public XListViewForScrollView(Context context) {
+	public XListView(Context context) {
 		super(context);
 		initWithContext(context);
 	}
 
-	public XListViewForScrollView(Context context, AttributeSet attrs) {
+	public XListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initWithContext(context);
 	}
 
-	public XListViewForScrollView(Context context, AttributeSet attrs, int defStyle) {
+	public XListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initWithContext(context);
 	}
+
+
 
 	private void initWithContext(Context context) {
 		mScroller = new Scroller(context, new DecelerateInterpolator());
@@ -228,6 +232,10 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
 
 	private void updateFooterHeight(float delta) {
 		int height = mFooterView.getBottomMargin() + (int) delta;
+//        Log.i("XListView", "底部距离:" + mFooterView.getBottomMargin());
+//        Log.i("XListView", "height:" + height);
+//        Log.i("XListView", "mEnablePullLoad:" + mEnablePullLoad);
+//        Log.i("XListView", "mPullLoading:" + mPullLoading);
 		if (mEnablePullLoad && !mPullLoading) {
 			if (height > PULL_LOAD_MORE_DELTA) { // height enough to invoke load
 													// more.
@@ -268,9 +276,11 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
 		switch (ev.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			mLastY = ev.getRawY();
+//            Log.i("XListView", "mLastY:" + mLastY);
 			break;
 		case MotionEvent.ACTION_MOVE:
 			final float deltaY = ev.getRawY() - mLastY;
+
 			mLastY = ev.getRawY();
 //			if (getFirstVisiblePosition() == 0
 //					&& (mHeaderView.getVisiableHeight() > 0 || deltaY > 0)) {
@@ -281,11 +291,14 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
             if (getLastVisiblePosition() == mTotalItemCount - 1
 					&& (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
 				// last item, already pulled up or want to pull up.
-				updateFooterHeight(-deltaY / OFFSET_RADIO);
+//                Log.i("XListView", "deltaY:" + deltaY);
+                updateFooterHeight(-deltaY / OFFSET_RADIO);
 			}
 			break;
 		default:
 			mLastY = -1; // reset
+            Log.i("XListView", "getLastVisiblePosition():" + getLastVisiblePosition());
+            Log.i("XListView", "mTotalItemCount:" + mTotalItemCount);
 //			if (getFirstVisiblePosition() == 0) {
 //				// invoke refresh
 //				if (mEnablePullRefresh
@@ -300,6 +313,9 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
 //			} else
             if (getLastVisiblePosition() == mTotalItemCount - 1) {
 				// invoke load more.
+//                Log.i("XListView", "mEnablePullLoad:" + mEnablePullLoad);
+//                Log.i("XListView", "mFooterView.getBottomMargin():" + mFooterView.getBottomMargin());
+
 				if (mEnablePullLoad
 						&& mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
 					startLoadMore();
@@ -348,7 +364,8 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
 		}
 	}
 
-	public void setXListViewListener(IXListViewListener l) {
+
+    public void setXListViewListener(IXListViewListener l) {
 		mListViewListener = l;
 	}
 
@@ -370,13 +387,4 @@ public class XListViewForScrollView extends ListView implements OnScrollListener
 	}
 
 
-    @Override
-    /**
-     * 重写该方法，达到使ListView适应ScrollView的效果
-     */
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
-                MeasureSpec.AT_MOST);
-        super.onMeasure(widthMeasureSpec, expandSpec);
-    }
 }
