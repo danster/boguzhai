@@ -1,9 +1,5 @@
 package com.boguzhai.logic.dao;
 
-import android.widget.Toast;
-
-import com.boguzhai.activity.base.Variable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,7 +53,6 @@ public class Session {
 
         }catch(JSONException ex) {
             ex.printStackTrace();
-            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
         }
 
         return session;

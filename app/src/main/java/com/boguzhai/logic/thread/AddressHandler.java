@@ -2,10 +2,10 @@ package com.boguzhai.logic.thread;
 
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.SharedKeys;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +46,7 @@ public class AddressHandler extends HttpJsonHandler{
                     break;
                 }
 
-                Toast.makeText(Variable.app_context, (String) msg.obj, Toast.LENGTH_SHORT).show();
+                Utility.toastMessage((String)msg.obj);
                 break;
         }
     }

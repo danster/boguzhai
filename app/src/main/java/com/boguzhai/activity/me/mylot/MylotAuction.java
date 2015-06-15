@@ -1,9 +1,5 @@
 package com.boguzhai.activity.me.mylot;
 
-import android.widget.Toast;
-
-import com.boguzhai.activity.base.Variable;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +38,6 @@ public class MylotAuction implements Serializable {
             }
         }catch(JSONException ex) {
             ex.printStackTrace();
-            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
         }
         return auction;
     }

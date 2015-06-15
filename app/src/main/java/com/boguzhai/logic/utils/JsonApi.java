@@ -1,7 +1,5 @@
 package com.boguzhai.logic.utils;
 
-import android.widget.Toast;
-
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.Auction;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 
 public class JsonApi {
 
-
     public static ArrayList<Auction> getAuctionList(JSONObject data){
         ArrayList<Auction> list = new ArrayList<Auction>();
         try {
@@ -25,7 +22,7 @@ public class JsonApi {
                 list.add( Auction.parseJson(auctionObj) );
             }
         }catch(JSONException ex) {
-            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
         }
         return list;
     }
@@ -54,7 +51,7 @@ public class JsonApi {
             Variable.account.qq = account.has("qq") ? account.getString("qq"): "";
 
         }catch(JSONException ex) {
-            Toast.makeText(Variable.app_context, "数据解析报错", Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
         }
     }
 
@@ -67,7 +64,7 @@ public class JsonApi {
                 list.add( Lot.parseSimpleJson(auctionObj) );
             }
         }catch(JSONException ex) {
-            Toast.makeText(Variable.app_context, "getLotList 数据解析报错", Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
         }
         return list;
     }

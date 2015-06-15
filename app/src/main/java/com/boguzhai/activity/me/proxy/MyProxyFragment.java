@@ -38,7 +38,6 @@ import android.widget.Toast;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.dao.ProxyLot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
@@ -665,18 +664,13 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
         @Override
         public void handlerData(int code, JSONObject data) {
+            super.handlerData(code,data);
             switch (code) {
                 case 1:
                     number--;
-                    Toast.makeText(Variable.app_context, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
-                    break;
-                case -1:
-                    number--;
-                    Toast.makeText(Variable.app_context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    Utility.toastMessage("网络异常");
                     break;
                 case 0:
-                    Log.i(TAG, "获取信息成功");
                     try {
                         size = Integer.parseInt(data.getString(""));//每页的数目
                         totalCount = Integer.parseInt(data.getString("count"));//总的数目
@@ -694,10 +688,8 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                             lot.imageUrl = jArray.getJSONObject(i).getString("image");
                             myProxyLots.add(lot);
                         }
-                        Log.i(TAG, "数据获取完成");
                         handler.sendEmptyMessage(0);
                     } catch (JSONException e) {
-                        Log.i(TAG, "json解析异常");
                         e.printStackTrace();
                     }
                     break;
@@ -719,13 +711,10 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
 
         @Override
         public void handlerData(int code, JSONObject data) {
+            super.handlerData(code,data);
             switch (code) {
                 case 1:
-                    Toast.makeText(Variable.app_context, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
-                    break;
-                case -1:
-                    Toast.makeText(Variable.app_context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    Utility.toastMessage("网络异常");
                     break;
                 case 0:
                     // 位移动画

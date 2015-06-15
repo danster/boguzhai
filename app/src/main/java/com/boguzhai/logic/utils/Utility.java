@@ -340,9 +340,6 @@ public class Utility {
     }
 
 
-
-
-
     /**
      * 加载数据时，显示提示对话框
      */
@@ -354,6 +351,7 @@ public class Utility {
         dialog = builder.setView(view).create();
         dialog.show();
     }
+    
     public static void dismissLoadingDialog() {
         if(null != dialog) {
             if(dialog.isShowing()) {
@@ -361,8 +359,6 @@ public class Utility {
             }
         }
     }
-
-
 
 
 }

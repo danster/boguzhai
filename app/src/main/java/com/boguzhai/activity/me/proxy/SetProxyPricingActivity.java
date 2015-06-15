@@ -1,6 +1,5 @@
 package com.boguzhai.activity.me.proxy;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,15 +8,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONObject;
 
@@ -64,7 +62,7 @@ public class SetProxyPricingActivity extends BaseActivity {
                 String proxyPrice = et_set_proxy_price.getText().toString().trim();
                 if(cb_enable_proxy.isChecked()) {
                     if(TextUtils.isEmpty(proxyPrice)) {
-                        Toast.makeText(SetProxyPricingActivity.this, "您启用了代理，请设置代理价格", Toast.LENGTH_SHORT).show();
+                        Utility.toastMessage("您启用了代理，请设置代理价格");
                     }else {
                         //网络请求，设置代理价格
                         Log.i(TAG, "网络请求，设置---" + auctionId +  "---的代理价格为:" +proxyPrice);
@@ -100,13 +98,10 @@ public class SetProxyPricingActivity extends BaseActivity {
 
         @Override
         public void handlerData(int code, JSONObject data) {
+            super.handlerData(code, data);
             switch (code) {
                 case 1:
-                    Toast.makeText(context, "网络异常，设置代理失败", Toast.LENGTH_SHORT).show();
-                    break;
-                case -1:
-                    Toast.makeText(context, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(context, LoginActivity.class));
+                    Utility.toastMessage("网络异常");
                     break;
                 case 0:
                     Log.i(TAG, "设置代理成功");
