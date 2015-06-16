@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
@@ -151,7 +150,7 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
                         lv.stopLoadMore();
                     }
                     swipe_layout_advices.setRefreshing(false);
-                    Toast.makeText(GetAdviceActivity.this, "网络异常，获取信息失败", Toast.LENGTH_SHORT).show();
+                    Utility.toastMessage("网络异常，获取信息失败");
                     break;
                 case -1:
                     if (number > 1) {
@@ -159,7 +158,7 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
                         lv.stopLoadMore();
                     }
                     swipe_layout_advices.setRefreshing(false);
-                    Toast.makeText(GetAdviceActivity.this, "用户名密码失效，请重新登录", Toast.LENGTH_SHORT).show();
+                    Utility.toastMessage("用户名密码失效，请重新登录");
                     startActivity(new Intent(GetAdviceActivity.this, LoginActivity.class));
                     break;
                 case 0:

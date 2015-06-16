@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -48,7 +49,6 @@ public class SystemSettingsActivity extends BaseActivity {
     private AlertDialog downLoadDialog;
     private TextView tv_download;
 
-    private AlertDialog.Builder downLoadBuilder;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -142,9 +142,12 @@ public class SystemSettingsActivity extends BaseActivity {
                     public void onLoading(long total, long current,
                                           boolean isUploading) {
                         if(!downLoadDialog.isShowing()) {
+                            dialog.dismiss();
                             showAppDownLodingDialog(total, current);
                         }else {
-                            tv_download.setText(total + "kb" + "/" + current + "kb");
+                            double current_100mb = current*100.0/(1024.0*1024);
+                            double total_100mb = total*100.0/(1024.0*1024);
+                            tv_download.setText(Math.round(current_100mb) / 100.0 + "MB" + "/" + Math.round(total_100mb) / 100.0 + "MB");
                         }
                     }
                 });
@@ -163,10 +166,18 @@ public class SystemSettingsActivity extends BaseActivity {
 
     private class MyAppUpateHandler extends HttpJsonHandler {
         @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what != 0) {
+                Utility.toastMessage("网络异常，获取数据失败");
+            }
+        }
+
+        @Override
         public void handlerData(int code, JSONObject data) {
             switch (code) {
                 case 1:
-                    Toast.makeText(Variable.app_context, "网络异常，获取数据失败", Toast.LENGTH_SHORT).show();
+                    Utility.toastMessage("网络异常，获取数据失败");
                     break;
                 case 0:
                     Log.i(TAG, "获取信息成功");
@@ -187,12 +198,6 @@ public class SystemSettingsActivity extends BaseActivity {
             }
         }
     }
-
-
-
-
-
-
 
     private void showAppUpdateDialog() {
         dialog.dismiss();

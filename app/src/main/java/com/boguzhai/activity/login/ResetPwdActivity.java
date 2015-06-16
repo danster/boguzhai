@@ -140,7 +140,7 @@ public class ResetPwdActivity extends BaseActivity {
             conn2.setParam("realCheckcode", check_code.getText().toString());
             conn2.setUrl(Constant.url+"pLoginAction!resetPwd.htm");
             new Thread(new HttpPostRunnable(conn2, new SubmitHandler())).start();
-            Utility.showProgressDialog("正在重置密码，请稍后...");
+            Utility.showLoadingDialog("正在重置密码，请稍后...");
 
             break;
 
@@ -151,7 +151,7 @@ public class ResetPwdActivity extends BaseActivity {
     public class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            Utility.dismissProgressDialog();
+            Utility.dismissLoadingDialog();
             super.handlerData(code,data);
             switch(code){
                 case 0: Utility.alertDialog("重置密码成功", Variable.toFinish); break;

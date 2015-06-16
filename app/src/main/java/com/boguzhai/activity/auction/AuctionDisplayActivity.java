@@ -233,6 +233,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
 
     class ShowLotListHandler extends HttpJsonHandler {
         private ArrayList<Lot> lots;
+
         @Override
         public void handlerData(int code, JSONObject data){
             swipe_layout.setRefreshing(false);

@@ -1,6 +1,7 @@
 package com.boguzhai.activity.me.settings;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -80,6 +81,15 @@ public class CheckAdivceActivity extends BaseActivity {
     }
 
     private class CheckAdvicesHandler extends HttpJsonHandler {
+
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what != 0) {
+                Utility.toastMessage("网络异常,请稍后重试");
+            }
+        }
 
         @Override
         public void handlerData(int code, JSONObject data) {

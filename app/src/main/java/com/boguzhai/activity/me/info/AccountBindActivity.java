@@ -136,7 +136,7 @@ public class AccountBindActivity extends BaseActivity {
                     conn_bind.setUrl(Constant.url + "pClientInfoAction!bindMobile.htm");
                 }
                 new Thread(new HttpPostRunnable(conn_bind, new SubmitHandler())).start();
-                Utility.showProgressDialog("正在绑定" + bind_info + "，请稍后...");
+                Utility.showLoadingDialog("正在绑定" + bind_info + "，请稍后...");
                 break;
         }
     }
@@ -144,7 +144,7 @@ public class AccountBindActivity extends BaseActivity {
     public class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            Utility.dismissProgressDialog();
+            Utility.dismissLoadingDialog();
             super.handlerData(code,data);
             switch(code){
                 case 0:
