@@ -30,6 +30,7 @@
         <EditText android:id="@+id/bank_number" style="@style/myinfo_middle_text"
             android:gravity="center|left"
             android:textSize="17sp"
+            android:inputType="number"
             android:hint="必填(信用卡不能用于提现)"/>
         <ImageView style="@style/myinfo_right_clear" android:id="@+id/bank_number_clear"/>
     </LinearLayout>

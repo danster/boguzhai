@@ -353,7 +353,7 @@ public class Utility {
     static Dialog dialog;
     public static void showLoadingDialog(String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Variable.currentActivity);
-        View view = View.inflate(Variable.currentActivity, R.layout.loading_tip, null);
+        View view = View.inflate(Variable.currentActivity, R.layout.dialog_loading_tip, null);
         ((TextView) view.findViewById(R.id.tv_progress_dialog)).setText(msg);
         dialog = builder.setView(view).create();
         dialog.show();

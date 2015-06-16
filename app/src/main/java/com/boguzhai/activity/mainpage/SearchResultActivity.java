@@ -40,7 +40,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
     private SwipeRefreshLayout swipe_layout;
     private MyInt order = new MyInt(1);
 
-    private String[] sortTypes = {"按拍品名称","按图录号",
+    private String[] sortTypes = {"按图录号","按拍品名称",
                                   "按拍品起拍价升序", "按拍品起拍价降序",
                                   "按拍品估价最低值升序", "按拍品估价最低价降序",
                                   "按拍品估价最高值升序", "按拍品估价最高值降序" };
@@ -127,16 +127,16 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
             RuleBasedCollator collator = (RuleBasedCollator) Collator.getInstance(Locale.CHINA);
             switch (sortType){
                 case 0:
-                    if(!l1.name.equals(l2.name)){
-                        return collator.compare(l1.name, l2.name);
-                    } else {
-                        return l1.id.compareTo(l2.id);
-                    }
-                case 1:
                     if(!l1.no.equals(l2.no)){
                         return Integer.parseInt(l1.no) - Integer.parseInt(l2.no);
                     } else {
                         return l1.id.compareTo(l2.id);
+                    }
+                case 1:
+                    if(!l1.name.equals(l2.name)){
+                            return collator.compare(l1.name, l2.name);
+                    } else {
+                            return l1.id.compareTo(l2.id);
                     }
                 case 2:
                     if(l1.startPrice != l2.startPrice){

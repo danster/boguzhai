@@ -8,6 +8,7 @@
     <LinearLayout style="@style/base_bar">
         <EditText style="@style/login_l_ev"
             android:id="@+id/mobile"
+            android:inputType="number"
             android:hint="填写绑定的手机号码"/>
         <TextView android:layout_width="wrap_content"
             android:layout_height="match_parent"

@@ -80,7 +80,7 @@
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="QQ"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/qq"/>
+            <EditText style="@style/myinfo_middle_text" android:inputType="number" android:id="@+id/qq"/>
             <ImageView style="@style/myinfo_right_clear" android:id="@+id/qq_clear" />
         </LinearLayout>
     </LinearLayout>

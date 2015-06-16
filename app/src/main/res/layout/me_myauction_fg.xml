@@ -48,7 +48,8 @@
 
 
     <LinearLayout
-        style="@style/base_bar" >
+        style="@style/base_bar"
+        android:visibility="gone">
 
         <TextView
             style="@style/search_left_text"
