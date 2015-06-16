@@ -77,7 +77,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     private int currentCount;//当前数量
 
     private TextView title_right;
-    private String[] sortTypes = {"按拍品号", "按拍品名称",
+    private String[] sortTypes = {"按图录号", "按拍品名称",
             "按拍品起拍价升序", "按拍品起拍价降序",
             "按拍品估价最低值升序", "按拍品估价最低价降序",
             "按拍品估价最高值升序", "按拍品估价最高值降序"};

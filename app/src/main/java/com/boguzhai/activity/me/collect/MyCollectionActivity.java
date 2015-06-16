@@ -23,12 +23,6 @@ public class MyCollectionActivity extends BaseActivity {
     private FragmentManager fm;
     private RadioButton rb_1;
 
-    private String[] sortTypes = {"按拍品名称","按拍品号",
-            "按拍品起拍价升序", "按拍品起拍价降序",
-            "按拍品估价最低值升序", "按拍品估价最低价降序",
-            "按拍品估价最高值升序", "按拍品估价最高值降序" };
-    private int sortType=0;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
