@@ -177,7 +177,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             }
             break;
 
-        case R.id.title_right:
+        case R.id.ly_title_right:
             Utility.alertDialog("确定删除该收货地址？", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

@@ -35,9 +35,8 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 		title_right = (TextView)findViewById(R.id.title_right);
         title_right.setVisibility(View.INVISIBLE);
     	
-    	listen(title_left);
-        listen(title);
-        listen(title_right);
+    	listen(R.id.ly_title_left);
+        listen(R.id.ly_title_right);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //禁止手机横屏
 
@@ -90,7 +89,7 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
 	@Override
  	public void onClick(View v){
 		switch (v.getId()) {
-			case R.id.title_left:
+			case R.id.ly_title_left:
                 finish();
                 break;
 		}

@@ -19,14 +19,14 @@ public class IdentityShowActivity extends BaseActivity {
     }
 
     protected void init() {
+//        if(Variable.account.authInfo.status.equals("1")){
+//            findViewById(R.id.reVerify).setVisibility(View.VISIBLE);
+//            this.listen(R.id.reVerify);
+//        }else{
+//            findViewById(R.id.reVerify).setVisibility(View.GONE);
+//        }
 
-        if(Variable.account.authInfo.status.equals("1")){
-            findViewById(R.id.reVerify).setVisibility(View.VISIBLE);
-            this.listen(R.id.reVerify);
-        }else{
-            findViewById(R.id.reVerify).setVisibility(View.GONE);
-        }
-
+        findViewById(R.id.reVerify).setVisibility(View.GONE);
         ((TextView)findViewById(R.id.status)).setText(Variable.account.authInfo.getStatusStr());
         ((TextView)findViewById(R.id.property)).setText(Variable.account.authInfo.property.equals("1") ? "个人" : "单位");
         ((TextView)findViewById(R.id.name)).setText(Variable.account.authInfo.name);

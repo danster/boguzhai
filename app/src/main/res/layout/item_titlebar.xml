@@ -9,6 +9,7 @@
     android:background="#ff9a8054" >
 
     <LinearLayout
+        android:id="@+id/ly_title_left"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -41,6 +42,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ly_title_right"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="1"

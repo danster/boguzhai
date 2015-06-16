@@ -2,6 +2,7 @@ package com.boguzhai.activity.me.info;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class AccountInfoActivity extends BaseActivity {
 	public void onClick(View view) {
 		super.onClick(view);
 		switch (view.getId()) {
+            case R.id.ly_title_left:  Utility.gotoMainpage(3);  break;
             case R.id.logout:
                 Variable.isLogin = false;
                 Variable.account.sessionid = "";
@@ -79,7 +81,7 @@ public class AccountInfoActivity extends BaseActivity {
                 new Thread(new HttpPostRunnable(connVerify, new GetAuthInfoHandler())).start();
                 break;
 
-            case R.id.title_right: startActivity(new Intent(this, AccountInfoEditActivity.class));break;
+            case R.id.ly_title_right: startActivity(new Intent(this, AccountInfoEditActivity.class));break;
             default: break;
 		};
 	}
@@ -139,6 +141,14 @@ public class AccountInfoActivity extends BaseActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown (int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK: Utility.gotoMainpage(3); break;
+        }
+        return true;
     }
 
 

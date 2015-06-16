@@ -85,7 +85,7 @@ public class MeFragment extends Fragment {
         @Override
         public void onClick(View v){
             switch (v.getId()) {
-                case R.id.title_right: Utility.gotoActivity(RegisterActivity.class);  break;
+                case R.id.ly_title_right: Utility.gotoActivity(RegisterActivity.class);  break;
                 case R.id.me_login: Utility.gotoActivity(LoginActivity.class);        break;
                 case R.id.me_myinfo: gotoActivityByLogin(AccountInfoActivity.class);  break;
                 case R.id.me_my_auctions: gotoActivityByLogin(MyAuctionActivity.class);  break;

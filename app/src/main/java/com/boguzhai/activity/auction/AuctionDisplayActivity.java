@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -76,12 +77,19 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
     }
 
     @Override
+    public boolean onKeyDown (int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK: Utility.gotoMainpage(1); break;
+        }
+        return true;
+    }
+
+    @Override
     public void onClick(View v){
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.title_right:
-                startActivity(new Intent(context, AuctionActiveActivity.class));
-                break;
+            case R.id.ly_title_left:  Utility.gotoMainpage(1);  break;
+            case R.id.ly_title_right: startActivity(new Intent(context, AuctionActiveActivity.class));   break;
             case R.id.sort:
                 new AlertDialog.Builder(this).setSingleChoiceItems(sortTypes, sortType,
                         new DialogInterface.OnClickListener() {
@@ -138,17 +146,13 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
     @Override
     public void onRefresh() {
         swipe_layout.setRefreshing(true);
+        listview.setPullLoadEnable(true);
         this.order.value = 1;
         this.httpConnect(1);
     }
 
     @Override
     public void onLoadMore() {
-        if(order.value == -1){
-            Utility.toastMessage("已无更多信息");
-            listview.stopLoadMore();
-            return;
-        }
         this.httpConnect(this.order.value);
     }
 
@@ -241,10 +245,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
             Utility.dismissLoadingDialog();
             switch (code){
                 case 0:
-                    if(order.value == -1) {
-                        Utility.toastMessage("已无更多信息");
-                        break;
-                    } else if(order.value == 1)  {
+                    if(order.value == 1)  {
                         list.clear();
                     }
 
@@ -252,12 +253,8 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
                         int count = Integer.parseInt(data.getString("count"));
                         int size = Integer.parseInt(data.getString("size"));
 
-                        if ((order.value-1)*size == count ) {
-                            order.value = -1;
-                            Utility.toastMessage("已无更多信息");
-                            break;
-                        } else if (order.value*size > count ) {
-                            order.value = -1;
+                        if (order.value*size >= count ) {
+                            listview.setPullLoadEnable(false);
                         } else {
                             order.value ++;
                         }

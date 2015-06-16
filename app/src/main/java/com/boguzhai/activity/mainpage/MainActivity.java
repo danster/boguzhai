@@ -52,8 +52,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown (int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                break;
+            case KeyEvent.KEYCODE_BACK:  break;
         }
         return true;
     }

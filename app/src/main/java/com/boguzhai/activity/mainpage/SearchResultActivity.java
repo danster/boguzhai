@@ -91,11 +91,6 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
     @Override
     public void onLoadMore() {
-        if(order.value == -1){
-            Utility.toastMessage("已无更多信息");
-            listview.stopLoadMore();
-            return;
-        }
         HttpClient conn = new HttpClient();
         conn.setUrl(searchUrl + "&number=" + order.value);
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
@@ -105,7 +100,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
     public void onClick(View v){
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.title_right:
+            case R.id.ly_title_right:
                 new AlertDialog.Builder(this).setSingleChoiceItems(sortTypes, sortType,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int index) {
@@ -211,26 +206,15 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
             switch (code){
                 case 0:
-                    if(order.value == -1) {
-                        Utility.toastMessage("已无更多信息");
-                        break;
-                    } else if(order.value == 1)  {
+                    if(order.value == 1)  {
                         list.clear();
                     }
 
                     try {
                         int count = Integer.parseInt(data.getString("count"));
                         int size = Integer.parseInt(data.getString("size"));
-                        if(count < size) {
-                            listview.setPullLoadEnable(false);
-                        }
 
-                        if ((order.value-1)*size == count ) {
-                            order.value = -1;
-                            listview.setPullLoadEnable(false);
-                            break;
-                        } else if (order.value*size > count ) {
-                            order.value = -1;
+                        if (order.value*size >= count ) {
                             listview.setPullLoadEnable(false);
                         } else {
                             order.value ++;

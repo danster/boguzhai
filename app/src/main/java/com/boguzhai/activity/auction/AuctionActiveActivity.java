@@ -200,7 +200,7 @@ public class AuctionActiveActivity extends BaseActivity {
     public void onClick(View v){
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.title_right:
+            case R.id.ly_title_right:
                 applyForBidding();
                 break;
             case R.id.bid_info_next_money:

@@ -35,9 +35,9 @@ public class BaseHtmlActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v){
-        if ((v.getId() == R.id.title_left) && myWebView.canGoBack()) {
+        if ((v.getId() == R.id.ly_title_left) && myWebView.canGoBack()) {
             myWebView.goBack();
-        } else if((v.getId() == R.id.title_left) && ! myWebView.canGoBack()){
+        } else if((v.getId() == R.id.ly_title_left) && ! myWebView.canGoBack()){
             finish();
         }
     };
