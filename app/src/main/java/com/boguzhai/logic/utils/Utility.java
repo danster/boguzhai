@@ -42,28 +42,28 @@ public class Utility {
 
     static ProgressDialog progressDialog;
 
-    // 显示进度循环圈
-    public static void showProgressDialog(String msg){
-        progressDialog = new ProgressDialog(Variable.currentActivity);
-        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        progressDialog.setMessage(msg);
-        progressDialog.setCancelable(true); // could be killed by backward
-        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-    }
-
-    // 取消进度循环圈
-    public static void dismissProgressDialog() {
-        if(null != progressDialog) {
-            if(progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-        }
-    }
+//    // 显示进度循环圈
+//    public static void showProgressDialog(String msg){
+//        progressDialog = new ProgressDialog(Variable.currentActivity);
+//        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        progressDialog.setMessage(msg);
+//        progressDialog.setCancelable(true); // could be killed by backward
+//        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//    }
+//
+//    // 取消进度循环圈
+//    public static void dismissProgressDialog() {
+//        if(null != progressDialog) {
+//            if(progressDialog.isShowing()) {
+//                progressDialog.dismiss();
+//            }
+//        }
+//    }
 
     // 添加确定信息,确定无动作
     public static void alertDialog(String msg){

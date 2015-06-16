@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/me_system_settings_download_dialog"
             android:paddingLeft="10dp"
-            android:text="0kb/0kb"
+            android:text="0MB/0MB"
             android:textSize="16sp"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"

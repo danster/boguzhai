@@ -140,7 +140,7 @@ public class IdentityVerifyActivity extends BaseActivity {
 
                 conn.setUrl(Constant.url+"pClientInfoAction!setAuthInfo.htm");
                 new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
-                Utility.showProgressDialog("正在提交认证信息，请稍后...");
+                Utility.showLoadingDialog("正在提交认证信息，请稍后...");
 
                 break;
         default: break;
@@ -176,7 +176,7 @@ public class IdentityVerifyActivity extends BaseActivity {
     class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            Utility.dismissProgressDialog();
+            Utility.dismissLoadingDialog();
             super.handlerData(code, data);
             switch(code){
                 case 0:

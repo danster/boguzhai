@@ -2,6 +2,7 @@ package com.boguzhai.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
@@ -77,6 +78,12 @@ public class LoginActivity extends BaseActivity {
 	}
 
     class LoginHandler extends HttpJsonHandler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Utility.dismissLoadingDialog();
+        }
+
         @Override
         public void handlerData(int code, JSONObject data){
             Utility.dismissLoadingDialog();

@@ -198,6 +198,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
                     Utility.dismissLoadingDialog();
                     swipe_layout.setRefreshing(false);
                     listview.stopLoadMore();
+                    Utility.toastMessage("网络异常，加载数据失败");
                     break;
             }
         }

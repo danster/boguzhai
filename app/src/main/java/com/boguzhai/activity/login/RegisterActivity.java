@@ -138,7 +138,8 @@ public class RegisterActivity extends BaseActivity {
                 break;
             }
 
-            Utility.showProgressDialog("正在注册，请稍后...");
+//            Utility.showProgressDialog("正在注册，请稍后...");
+            Utility.showLoadingDialog("正在注册，请稍后...");
             HttpClient conn = new HttpClient();
             conn.setParam("mobile", username.getText().toString());
             conn.setParam("password", password.getText().toString());
@@ -159,7 +160,7 @@ public class RegisterActivity extends BaseActivity {
     public class RegisterHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            Utility.dismissProgressDialog();
+            Utility.dismissLoadingDialog();
             super.handlerData(code, data);
             switch(code){
                 case 0:
