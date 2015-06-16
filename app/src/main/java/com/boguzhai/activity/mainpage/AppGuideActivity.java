@@ -12,13 +12,12 @@ import android.widget.LinearLayout;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.activity.login.LoginActivity;
 
 public class AppGuideActivity extends Activity implements View.OnClickListener {
     ViewPager viewPager;
     ViewGroup viewGroup;
     ImageView[] imageViews, tips;
-    ImageView startTips, signTips;
+    ImageView startTips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +92,8 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
 
                 if ( arg0 % imageViews.length == imageViews.length-1){
                     startTips.setVisibility(View.VISIBLE);
-                    signTips.setVisibility(View.VISIBLE);
                 } else {
                     startTips.setVisibility(View.INVISIBLE);
-                    signTips.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -104,12 +101,8 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
         viewPager.setCurrentItem(0);
 
         startTips = (ImageView)findViewById(R.id.app_enter);
-        signTips = (ImageView)findViewById(R.id.app_sign);
         startTips.setVisibility(View.INVISIBLE);
-        signTips.setVisibility(View.INVISIBLE);
-
         startTips.setOnClickListener(this);
-        signTips.setOnClickListener(this);
 
     }
 
@@ -119,11 +112,6 @@ public class AppGuideActivity extends Activity implements View.OnClickListener {
             case R.id.app_enter:
                 Variable.mainTabIndex = R.id.rb_1;
                 startActivity(new Intent(this, MainActivity.class));
-                break;
-
-            case R.id.app_sign:
-                Variable.mainTabIndex = R.id.rb_3;
-                startActivity(new Intent(this, LoginActivity.class));
                 break;
         }
     };

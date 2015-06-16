@@ -31,29 +31,28 @@
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:orientation="horizontal"
-            android:background="@color/transparent">
+            android:background="@color/transparent"
+            android:gravity="center">
             <ImageView
                 android:id="@+id/app_enter"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
                 android:src="@drawable/bgz_enter"
                 android:background="@color/transparent"
                 android:layout_gravity="center" >
             </ImageView>
 
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/app_sign"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/bgz_sign"
-                android:background="@color/transparent"
-                android:layout_gravity="center|right" >
-            </ImageView>
+            <!--<ImageView-->
+                <!--android:visibility="gone"-->
+                <!--android:id="@+id/app_sign"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:src="@drawable/bgz_sign"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:layout_gravity="center|right" >-->
+            <!--</ImageView>-->
         </LinearLayout>
 
         <LinearLayout
