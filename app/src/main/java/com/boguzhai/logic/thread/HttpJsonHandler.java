@@ -39,8 +39,7 @@ public abstract class HttpJsonHandler extends Handler {
             default:
                 if(Variable.app_context==null) { break;}
                 if(msg.obj==null){ break;}
-
-                Utility.toastMessage((String)msg.obj);
+//                Utility.toastMessage((String)msg.obj);
                 break;
         }
     }

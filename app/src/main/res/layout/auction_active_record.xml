@@ -4,7 +4,7 @@
     android:orientation="vertical" >
 
     <LinearLayout android:layout_width="match_parent"
-        android:layout_height="40dp" android:gravity="center"
+        android:layout_height="30dp" android:gravity="center"
         android:background="@color/white">
         <TextView style="@style/bidding_record_text" android:id="@+id/time" android:textSize="14sp"
             android:layout_weight="5" />

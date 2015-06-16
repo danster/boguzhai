@@ -28,13 +28,13 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:background="@color/white"
             android:id="@+id/lot_info_layout_1"
-            android:paddingBottom="10dp" >
+            android:paddingTop="10dp" android:paddingBottom="10dp" >
             <!-- 展示 拍品图片 -->
-            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8"
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.7"
                 android:gravity="center">
                 <ImageView android:id="@+id/lot_info_image_1"
                     android:layout_width="wrap_content"
-                    android:layout_height="140dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/image"/>
             </LinearLayout>
 
@@ -53,18 +53,19 @@
                 <TextView android:id="@+id/lot_info_no_1"       style="@style/bidding_lot_info"/>
                 <TextView android:id="@+id/lot_info_apprisal_1" style="@style/bidding_lot_info"/>
                 <TextView android:id="@+id/lot_info_start_price_1" style="@style/bidding_lot_info"/>
-                <TextView android:id="@+id/lot_status"          style="@style/bidding_lot_info"
-                    android:text="拍品状态: "/>
-                <TextView android:id="@+id/lot_info_moreinfo_1" style="@style/bidding_lot_info"
-                    android:textColor="@color/blue"
-                    android:text=">> 查看拍品详细信息"/>
+                <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
+                    android:orientation="horizontal" >
+                    <TextView  style="@style/bidding_lot_info" android:layout_width="wrap_content" android:text="拍品状态: "/>
+                    <TextView android:id="@+id/lot_status"  style="@style/bidding_lot_info"
+                        android:textColor="@color/red" android:textStyle="bold" android:textSize="19sp"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-
         <!-- 展示拍品竞价页面 -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
-            android:background="@color/white" android:layout_marginTop="1dp">
+            android:background="@color/white" android:paddingBottom="5dp"
+            android:layout_marginTop="1dp">
             <!-- 展示倒计时和当前出价信息-->
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
                 android:gravity="center|left">
@@ -85,7 +86,7 @@
 
                 <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal"
                     android:gravity="center|left">
-                    <TextView style="@style/bidding_lot_info" android:layout_width="wrap_content" android:text="当前出价:"/>
+                    <TextView style="@style/bidding_lot_info" android:layout_width="wrap_content" android:text="当前出价: "/>
                     <TextView android:id="@+id/bid_info_now_price"
                         style="@style/bidding_lot_info"
                         android:layout_width="0dp"
@@ -97,14 +98,13 @@
                         android:textStyle="bold"/>
                     <TextView style="@style/bidding_lot_info" android:layout_width="wrap_content"
                         android:textColor="@color/red"
-                        android:text="元(人民币)"/>
+                        android:text=" 元(人民币)"/>
                 </LinearLayout>
             </LinearLayout>
 
             <!-- 展示出价页面-->
             <LinearLayout android:id="@+id/price" android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center|left">
+                android:orientation="horizontal"  android:gravity="center|left">
 
                 <!--我的号牌 与 推荐出价-->
                 <LinearLayout android:layout_width="108dp" android:layout_height="wrap_content"  android:orientation="vertical"
@@ -176,8 +176,8 @@
         </LinearLayout>
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content" android:background="#ffc3c3c3">
-            <TextView style="@style/bidding_record_text" android:layout_weight="4" android:text="时间"/>
-            <TextView style="@style/bidding_record_text" android:layout_weight="1.5" android:text="拍牌号"/>
+            <TextView style="@style/bidding_record_text" android:layout_weight="5" android:text="时间"/>
+            <TextView style="@style/bidding_record_text" android:layout_weight="1" android:text="号牌"/>
             <TextView style="@style/bidding_record_text" android:layout_weight="1" android:text="方式"/>
             <TextView style="@style/bidding_record_text" android:layout_weight="2" android:text="出价"/>
         </LinearLayout>
@@ -221,11 +221,11 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:background="@color/white" android:paddingBottom="10dp">
                 <!-- 展示 拍品图片 -->
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.8"
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.6"
                     android:gravity="center">
                     <ImageView android:id="@+id/lot_info_image_2"
                         android:layout_width="wrap_content"
-                        android:layout_height="140dp"
+                        android:layout_height="100dp"
                         android:src="@drawable/image"/>
                 </LinearLayout>
 
@@ -234,7 +234,6 @@
                     android:orientation="vertical"
                     android:paddingLeft="5dp"
                     android:gravity="top|left" >
-
                     <TextView android:id="@+id/lot_info_name_2"
                         style="@style/bidding_lot_info"
                         android:layout_height="27dp"
@@ -244,10 +243,6 @@
                     <TextView android:id="@+id/lot_info_no_2"    style="@style/bidding_lot_info"/>
                     <TextView android:id="@+id/lot_info_apprisal_2" style="@style/bidding_lot_info"/>
                     <TextView android:id="@+id/lot_info_start_price_2" style="@style/bidding_lot_info"/>
-                    <TextView android:id="@+id/lot_info_moreinfo_2" style="@style/bidding_lot_info"
-                        android:textColor="@color/blue"
-                        android:layout_marginTop="10dp"
-                        android:text=">> 查看拍品详细信息"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

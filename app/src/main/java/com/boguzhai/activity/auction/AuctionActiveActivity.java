@@ -11,16 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.boguzhai.R;
-import com.boguzhai.activity.pay.PayDepositActivity;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.info.IdentityVerifyActivity;
+import com.boguzhai.activity.pay.PayDepositActivity;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.LoadImageTask;
-import com.boguzhai.logic.thread.Tasks;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.Utility;
 import com.boguzhai.logic.widget.ListViewForScrollView;
@@ -124,9 +123,7 @@ public class AuctionActiveActivity extends BaseActivity {
                 });
             }
         };
-        Utility.showLoadingDialog("正在加载...");
-        new Timer().schedule(timerTask, 0, 3000); // 立刻启动间隔N秒的task
-
+        new Timer().schedule(timerTask, 0, 5000); // 立刻启动间隔N秒的task
         checkApplyStatus(); // 判断 同步拍卖会 或 网络拍卖会拍品 参拍状态
     }
 
@@ -147,9 +144,11 @@ public class AuctionActiveActivity extends BaseActivity {
             conn.setParam("auctionId", "");
             conn.setParam("auctionMainId", Variable.currentAuction.id);
             conn.setUrl(Constant.url + "pJoinMainAction!getApplyInfoById.htm");
+            Utility.showLoadingDialog("正在加载参拍信息...");
             new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
                 @Override
                 public void handlerData(int code, JSONObject data) {
+                    Utility.dismissLoadingDialog();
                     super.handlerData(code, data);
                     authStatus = false;
                     biddingStatus = false;
@@ -234,8 +233,7 @@ public class AuctionActiveActivity extends BaseActivity {
                 }
             });
         } else if(biddingStatus == false){
-            String[] applyInfo = new String[]{"参拍人姓名:" + name, "手机号码  :" + mobile,
-                    "身份证号码:" + identityNumber};
+            String[] applyInfo = new String[]{"参拍人姓名:"+name, "手机号码  :"+mobile, "身份证号码:"+identityNumber};
             new AlertDialog.Builder(this).setTitle("申请参拍").setItems(applyInfo, null)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
@@ -268,15 +266,13 @@ public class AuctionActiveActivity extends BaseActivity {
                                                 e.printStackTrace();
                                             }
                                             break;
-                                        default:
-                                            break;
+                                        default:  break;
                                     }
                                 }
                             })).start();
                         }
                     }).show();
         }
-
     }
 
     // 出价
@@ -294,15 +290,22 @@ public class AuctionActiveActivity extends BaseActivity {
             conn.setParam("price", price);
             conn.setParam("biddingNo", biddingNo);
             conn.setUrl(Constant.url + "pSynchronizationAction!biddingLot.htm");
+            Utility.showLoadingDialog("正在出价...");
 
             new Thread(new HttpPostRunnable(conn, new HttpJsonHandler(){
                 @Override
                 public void handlerData(int code, JSONObject data) {
+                    Utility.dismissLoadingDialog();
                     super.handlerData(code, data);
                     switch (code) {
                         case 0: Utility.alertDialog("出价成功",null); break;
                         case 1: Utility.alertDialog("您的出价有误,出价失败",null); break;
-                        default: Utility.alertDialog("出价失败",null); break;
+                        case 2: Utility.alertDialog("拍卖会暂停,出价失败",null); break;
+                        case 3: Utility.alertDialog("倒计时结束,出价失败",null); break;
+                        case 4: Utility.alertDialog("您已经是最高价,出价失败",null); break;
+                        case 5: Utility.alertDialog("专场未开拍,出价失败",null); break;
+                        case 9: Utility.alertDialog("出价失败",null); break;
+                        default:Utility.alertDialog("出价失败",null); break;
                     }
                 }
             })).start();
@@ -313,53 +316,57 @@ public class AuctionActiveActivity extends BaseActivity {
     class DispalyHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            Utility.dismissLoadingDialog();
             switch (code){
             case 0:
                 try {
                     String status = data.getString("status"); // 拍卖会状态
-
-                    // 倒计时信息与当前实时价格显示
-                    int count = 0;
-                    if(!data.getString("countdown").equals("")){
-                        count = Integer.parseInt(data.getString("countdown"));
+                    if(status.equals("")){
+                        tips.setText("拍卖会状态: 进行中···");
+                    } else {
+                        tips.setText("拍卖会状态: "+status);
                     }
-                    if(countTask!=null) {
-                        countTask.cancel();
-                    }
-                    countTask = new CountTask(bid_seconds, count);
-                    new Timer().schedule(countTask, 0, 1000); // 更新倒计时信息
-                    bid_now_price.setText(data.getString("currentPriceForRMB")); // 显示当前价格
-
-                    // 出价页面信息展示
-                    bid_min_inc.setText("最小加价幅度:￥" + data.getString("minIncrement")); // 显示最小加价幅度
-                    nextPrice = data.getString("nextPrice"); // 设置下一推荐出价
-                    bid_next_price.setText("￥" + data.getString("nextPrice")); // 显示下一推荐出价
-
-                    // 更新当前出价记录
-                    JSONArray records = data.getJSONArray("records");
-                    list.clear();
-                    for(int i=0; i<records.length(); ++i){
-                        JSONArray recObj = records.getJSONArray(i);
-
-                        BiddingRecord record = new BiddingRecord();
-                        record.time = recObj.getString(0);
-                        record.no = recObj.getString(1);
-                        record.type = recObj.getString(2);
-                        record.price = recObj.getString(3);
-                        list.add(record);
-                    }
-                    adapter.notifyDataSetChanged();
 
                     // 展示当前拍品与下一拍品的信息
                     String auctionId = data.getString("auctionId");
                     String nextAuctionId = data.getString("nextAuctionId");
-                    lot_status.setText("拍品状态: "+data.getString("auctionStatus"));
+                    lot_status.setText(data.getString("auctionStatus"));
 
                     if(auctionId.equals("")){
                         currentLotId = "";
                         findViewById(R.id.ly_main).setVisibility(View.GONE);
                     } else {
+                        findViewById(R.id.ly_seconds).setVisibility(View.GONE);
+                        // 显示倒计时信息
+//                        if(!data.getString("countdown").equals("")){
+//                            int count = Integer.parseInt(data.getString("countdown"));
+//                            if(countTask != null) { countTask.cancel();}
+//                            countTask = new CountTask(bid_seconds, count);
+//                            new Timer().schedule(countTask, 0, 1000); // 更新倒计时信息
+//                        }
+
+                        // 显示当前实时价格
+                        bid_now_price.setText(data.getString("currentPriceForRMB"));
+
+                        // 出价页面信息展示
+                        bid_min_inc.setText("最小加价幅度:￥" + data.getString("minIncrement")); // 显示最小加价幅度
+                        nextPrice = data.getString("nextPrice"); // 设置下一推荐出价
+                        bid_next_price.setText("￥" + data.getString("nextPrice")); // 显示下一推荐出价
+
+                        // 更新当前出价记录
+                        JSONArray records = data.getJSONArray("records");
+                        list.clear();
+                        for(int i=0; i<records.length(); ++i){
+                            JSONArray recObj = records.getJSONArray(i);
+                            BiddingRecord record = new BiddingRecord();
+                            record.time = recObj.getString(0);
+                            record.no = recObj.getString(1);
+                            record.type = recObj.getString(2);
+                            record.price = recObj.getString(3);
+                            list.add(record);
+                        }
+                        adapter.notifyDataSetChanged();
+
+                        // 如果本次更新拍品与上次拍品不一样，更新拍品信息
                         if(!auctionId.equals(currentLotId)){
                             currentLotId = auctionId;
                             // 获取当前拍品的详细信息
@@ -381,11 +388,10 @@ public class AuctionActiveActivity extends BaseActivity {
                                             currentLot = lot;
                                             lot_name1.setText(lot.name);
                                             lot_no1.setText("图录号:" + lot.no);
-                                            lot_apprisal1.setText("预估价:" + lot.appraisal1 + "-" + lot.appraisal2);
-                                            lot_startprice1.setText("起拍价:" + lot.startPrice);
+                                            lot_apprisal1.setText("预估价:￥" + lot.appraisal1 + " - " + lot.appraisal2);
+                                            lot_startprice1.setText("起拍价:￥" + lot.startPrice);
                                             new LoadImageTask(lot_image1,4).execute(lot.imageUrl); // 显示缩略图
-                                            Tasks.showBigImage(lot.imageUrl, lot_image1, 1); // 点击缩略图时显示大图
-                                            findViewById(R.id.lot_info_moreinfo_1).setOnClickListener(new View.OnClickListener() {
+                                            findViewById(R.id.lot_info_layout_1).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
                                                     Variable.currentLot = currentLot;
@@ -431,8 +437,7 @@ public class AuctionActiveActivity extends BaseActivity {
                                             lot_apprisal2.setText("预估价:" + lot.appraisal1 + "-" + lot.appraisal2);
                                             lot_startprice2.setText("起拍价:" + lot.startPrice);
                                             new LoadImageTask(lot_image2,4).execute(lot.imageUrl); // 显示缩略图
-                                            Tasks.showBigImage(lot.imageUrl, lot_image2, 1); // 点击缩略图时显示大图
-                                            findViewById(R.id.lot_info_moreinfo_2).setOnClickListener(new View.OnClickListener() {
+                                            findViewById(R.id.lot_info_layout_2).setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
                                                     Variable.currentLot = nextLot;
@@ -451,34 +456,34 @@ public class AuctionActiveActivity extends BaseActivity {
                     }
 
                     // 当前拍卖会状态: "拍卖会未开始" "倒计时未开始" "倒计时开始" "倒计时已结束"
-                    switch (status){
-                        case "拍卖会未开始":
-                            tips.setText("拍卖会未开始");
-                            findViewById(R.id.ly_main).setVisibility(View.GONE);
-                            break;
-
-                        case "倒计时未开始":
-                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
-                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
-                            findViewById(R.id.ly_seconds).setVisibility(View.GONE);
-                            break;
-
-                        case "倒计时开始":
-                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
-                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
-                            findViewById(R.id.ly_seconds).setVisibility(View.VISIBLE);
-                            break;
-
-                        case "倒计时已结束":
-                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
-                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
-                            findViewById(R.id.ly_seconds).setVisibility(View.GONE);
-                            break;
-                        default:
-                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
-                            findViewById(R.id.ly_main).setVisibility(View.GONE);
-                            break;
-                    }
+//                    switch (status){
+//                        case "拍卖会未开始":
+//                            tips.setText("拍卖会未开始");
+//                            findViewById(R.id.ly_main).setVisibility(View.GONE);
+//                            break;
+//
+//                        case "倒计时未开始":
+//                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+//                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
+//                            findViewById(R.id.ly_seconds).setVisibility(View.GONE);
+//                            break;
+//
+//                        case "倒计时开始":
+//                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+//                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
+//                            findViewById(R.id.ly_seconds).setVisibility(View.VISIBLE);
+//                            break;
+//
+//                        case "倒计时已结束":
+//                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+//                            findViewById(R.id.ly_main).setVisibility(View.VISIBLE);
+//                            findViewById(R.id.ly_seconds).setVisibility(View.GONE);
+//                            break;
+//                        default:
+//                            findViewById(R.id.ly_tips).setVisibility(View.GONE);
+//                            findViewById(R.id.ly_main).setVisibility(View.GONE);
+//                            break;
+//                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
