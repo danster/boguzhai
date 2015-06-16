@@ -65,7 +65,7 @@
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="提货人手机:"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/dp_mobile" android:inputType="numberDecimal"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/dp_mobile" android:inputType="number"/>
             <TextView android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"

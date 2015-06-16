@@ -38,21 +38,21 @@
         <TextView style="@style/myinfo_left_star"  android:text="*"/>
         <TextView style="@style/myinfo_left_text"  android:text="手机"/>
         <EditText style="@style/myinfo_middle_text" android:id="@+id/mobile"/>
-        <ImageView style="@style/myinfo_right_clear" android:id="@+id/mobile_clear"/>
+        <ImageView style="@style/myinfo_right_clear" android:inputType="number" android:id="@+id/mobile_clear"/>
     </LinearLayout>
 
     <LinearLayout style="@style/base_bar"
         android:layout_marginTop="10dp">
         <TextView style="@style/myinfo_left_star"  android:text="  "/>
         <TextView style="@style/myinfo_left_text"  android:text="固定电话"/>
-        <EditText style="@style/myinfo_middle_text" android:id="@+id/telephone"/>
+        <EditText style="@style/myinfo_middle_text"  android:id="@+id/telephone"/>
         <ImageView style="@style/myinfo_right_clear" android:id="@+id/telephone_clear"/>
     </LinearLayout>
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar">
         <TextView style="@style/myinfo_left_star"  android:text="  "/>
         <TextView style="@style/myinfo_left_text"  android:text="邮编"/>
-        <EditText style="@style/myinfo_middle_text" android:id="@+id/zip"/>
+        <EditText style="@style/myinfo_middle_text" android:inputType="number" android:id="@+id/zip"/>
         <ImageView style="@style/myinfo_right_clear" android:id="@+id/zip_clear"/>
     </LinearLayout>
     <LinearLayout style="@style/base_bar"

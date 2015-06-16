@@ -39,10 +39,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Collator;
+import java.text.RuleBasedCollator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
@@ -74,7 +77,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
     private int currentCount;//当前数量
 
     private TextView title_right;
-    private String[] sortTypes = {"按拍品名称", "按拍品号",
+    private String[] sortTypes = {"按拍品号", "按拍品名称",
             "按拍品起拍价升序", "按拍品起拍价降序",
             "按拍品估价最低值升序", "按拍品估价最低价降序",
             "按拍品估价最高值升序", "按拍品估价最高值降序"};
@@ -432,70 +435,67 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         }
     }
 
+
+
     class LotComparator implements Comparator<CollectionLot> {
         public int compare(CollectionLot l1, CollectionLot l2) {
-            switch (sortType) {
+            RuleBasedCollator collator = (RuleBasedCollator) Collator.getInstance(Locale.CHINA);
+            switch (sortType){
                 case 0:
-                    if (!l1.name.equals(l2.name)) {
-                        return l1.name.compareTo(l2.name);
-                    } else if (!l1.id.equals(l2.id)) {
+                    if(!l1.no.equals(l2.no)){
+                        return Integer.parseInt(l1.no) - Integer.parseInt(l2.no);
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
-                    break;
                 case 1:
-                    if (l1.no.equals(l2.no)) {
-                        return l1.no.compareTo(l2.no);
-                    } else if (!l1.id.equals(l2.id)) {
+                    if(!l1.name.equals(l2.name)){
+                        return collator.compare(l1.name, l2.name);
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
-                    break;
                 case 2:
-                    if (l1.startPrice != l2.startPrice) {
+                    if(l1.startPrice != l2.startPrice){
                         double gap = l1.startPrice - l2.startPrice;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if (!l1.id.equals(l2.id)) {
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
-                    break;
                 case 3:
-                    if (l1.startPrice != l2.startPrice) {
+                    if(l1.startPrice != l2.startPrice){
                         double gap = l2.startPrice - l1.startPrice;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if (!l1.id.equals(l2.id)) {
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
-                    break;
                 case 4:
-                    if (l1.appraisal1 != l2.appraisal1) {
+                    if(l1.appraisal1 != l2.appraisal1){
                         double gap = l1.appraisal1 - l2.appraisal1;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if (!l1.id.equals(l2.id)) {
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
-                    break;
                 case 5:
-                    if (l1.appraisal1 != l2.appraisal1) {
+                    if(l1.appraisal1 != l2.appraisal1){
                         double gap = l2.appraisal1 - l1.appraisal1;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if (!l1.id.equals(l2.id)) {
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
-                    break;
                 case 6:
-                    if (l1.appraisal2 != l2.appraisal2) {
+                    if(l1.appraisal2 != l2.appraisal2){
                         double gap = l1.appraisal2 - l2.appraisal2;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if (!l1.id.equals(l2.id)) {
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
-                    break;
                 case 7:
-                    if (l1.appraisal2 != l2.appraisal2) {
+                    if(l1.appraisal2 != l2.appraisal2){
                         double gap = l2.appraisal2 - l1.appraisal2;
                         return gap > 0 ? 1 : (gap < 0 ? -1 : 0);
-                    } else if (!l1.id.equals(l2.id)) {
+                    } else {
                         return l1.id.compareTo(l2.id);
                     }
+                default:
                     break;
             }
             return 0;

@@ -3,6 +3,7 @@ package com.boguzhai.activity.me.info;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -40,6 +41,9 @@ public class AccountBindActivity extends BaseActivity {
     public void init(){
         bind_info = getIntent().getStringExtra("bind_info");
 
+        if("手机".equals(bind_info)) {
+            ((EditText) findViewById(R.id.mobile)).setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        }
         title.setText("绑定"+bind_info+"");
         get_check_code = (TextView)findViewById(R.id.get_check_code);
         email = (EditText)findViewById(R.id.mobile);

@@ -87,7 +87,7 @@ public class MyCollectionAdapter extends BaseAdapter {
         }
 
         holder.my_collection_lot_name.setText(lots.get(position).name);
-        holder.my_collection_lot_no.setText(String.format("%05d", Integer.parseInt(lots.get(position).no)));
+        holder.my_collection_lot_no.setText(lots.get(position).no);
         holder.my_collection_lot_startprice.setText(String.valueOf(lots.get(position).startPrice));
         holder.my_collection_lot_status.setText(lots.get(position).status);
         holder.my_collection_lot_appraisal.setText(lots.get(position).apprisal);
