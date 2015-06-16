@@ -11,7 +11,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
@@ -38,7 +37,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
     // 分页信息必备条件
     private SwipeRefreshLayout swipe_layout;
-    private MyInt order = new MyInt(1);
+    private int number = 1;
 
     private String[] sortTypes = {"按图录号","按拍品名称",
                                   "按拍品起拍价升序", "按拍品起拍价降序",
@@ -81,18 +80,18 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
     @Override
     public void onRefresh() {
-        order.value = 1;
+        number = 1;
         swipe_layout.setRefreshing(true);
         listview.setPullLoadEnable(true);
         HttpClient conn = new HttpClient();
-        conn.setUrl(searchUrl + "&number=" + order.value);
+        conn.setUrl(searchUrl + "&number=" + number);
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
     }
 
     @Override
     public void onLoadMore() {
         HttpClient conn = new HttpClient();
-        conn.setUrl(searchUrl + "&number=" + order.value);
+        conn.setUrl(searchUrl + "&number=" + number);
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
     }
 
@@ -206,7 +205,7 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
             switch (code){
                 case 0:
-                    if(order.value == 1)  {
+                    if(number == 1)  {
                         list.clear();
                     }
 
@@ -214,10 +213,10 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
                         int count = Integer.parseInt(data.getString("count"));
                         int size = Integer.parseInt(data.getString("size"));
 
-                        if (order.value*size >= count ) {
+                        if (number*size >= count ) {
                             listview.setPullLoadEnable(false);
                         } else {
-                            order.value ++;
+                            number ++;
                         }
 
                         lots = JsonApi.getLotList(data);

@@ -16,7 +16,6 @@ import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
-import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
@@ -42,7 +41,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
     private LotListAdapter adapter;
 
     private SwipeRefreshLayout swipe_layout;
-    private MyInt order = new MyInt(1);
+    private int number = 1;
 
     private String[] sortTypes = {"按图录号", "按拍品名称",
                                   "按拍品起拍价升序", "按拍品起拍价降序",
@@ -132,13 +131,12 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
         listview.setPullRefreshEnable(false);
         listview.setXListViewListener(this);
 
-
         // 支持下拉刷新的布局，设置下拉监听事件，重写onRefresh()方法
         swipe_layout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         swipe_layout.setColorSchemeResources(R.color.gold);
         swipe_layout.setOnRefreshListener(this);
 
-        this.order.value = 1;
+        number = 1;
         Utility.showLoadingDialog("正在加载...");
         this.httpConnect(1);
     }
@@ -147,13 +145,13 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
     public void onRefresh() {
         swipe_layout.setRefreshing(true);
         listview.setPullLoadEnable(true);
-        this.order.value = 1;
+        number = 1;
         this.httpConnect(1);
     }
 
     @Override
     public void onLoadMore() {
-        this.httpConnect(this.order.value);
+        this.httpConnect(number);
     }
 
     private void httpConnect(int number){
@@ -245,7 +243,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
             Utility.dismissLoadingDialog();
             switch (code){
                 case 0:
-                    if(order.value == 1)  {
+                    if(number == 1)  {
                         list.clear();
                     }
 
@@ -253,10 +251,10 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
                         int count = Integer.parseInt(data.getString("count"));
                         int size = Integer.parseInt(data.getString("size"));
 
-                        if (order.value*size >= count ) {
+                        if (number*size >= count ) {
                             listview.setPullLoadEnable(false);
                         } else {
-                            order.value ++;
+                            number ++;
                         }
 
                         lots = JsonApi.getLotList(data);

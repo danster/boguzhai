@@ -37,14 +37,12 @@
     </LinearLayout>
 
     <!-- 展示资金明细 -->
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:layout_marginTop="5dp">
         <com.boguzhai.logic.widget.XListView
             android:id="@+id/detail_list"
             android:layout_width="match_parent"

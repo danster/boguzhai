@@ -13,7 +13,6 @@ import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
-import com.boguzhai.logic.dao.MyInt;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
@@ -49,7 +48,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
     private TextView left_date, right_date;
 
     private SwipeRefreshLayout swipe_layout;
-    private MyInt order = new MyInt(1);
+    private int number = 1;
     private String httpUrl="";
 
     private Date lDate=null,rDate=null;
@@ -113,7 +112,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
 
         listen(R.id.search);
 
-        order.value = 1;
+        number = 1;
         httpConnect();
 	}
 
@@ -149,7 +148,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
 
     @Override
     public void onRefresh() {
-        order.value = 1;
+        number = 1;
         swipe_layout.setRefreshing(true);
         listview.setPullLoadEnable(true);
         httpConnect();
@@ -157,18 +156,13 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
 
     @Override
     public void onLoadMore() {
-        if(order.value == -1){
-            Utility.toastMessage("已无更多信息");
-            listview.stopLoadMore();
-            return;
-        }
         httpConnect();
     }
 
     private void httpConnect(){
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
-        conn.setUrl(Constant.url + httpUrl + "?number=" + order.value);
+        conn.setUrl(Constant.url + httpUrl + "?number=" + number);
         new Thread(new HttpPostRunnable(conn, new GetDetailHandler())).start();
     }
 
@@ -217,10 +211,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
 
             switch(code){
                 case 0:
-                    if(order.value == -1) {
-                        Utility.toastMessage("已无更多信息");
-                        break;
-                    } else if(order.value == 1)  {
+                    if(number == 1)  {
                         bailAllList.clear();
                         balanceAllList.clear();
                     }
@@ -229,16 +220,11 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                         int count = Integer.parseInt(data.getString("count"));
                         int size = Integer.parseInt(data.getString("size"));
 
-                        if ((order.value-1)*size == count ) {
-                            order.value = -1;
-                            Utility.toastMessage("已无更多信息");
-                            break;
-                        } else if (order.value*size > count ) {
-                            order.value = -1;
+                        if (number * size >= count ) {
+                            listview.setPullLoadEnable(false);
                         } else {
-                            order.value ++;
+                            number ++;
                         }
-
 
                         type_list.clear();
                         type_list.add("全部");
