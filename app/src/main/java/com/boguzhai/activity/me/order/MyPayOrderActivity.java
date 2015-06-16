@@ -39,8 +39,6 @@ public class MyPayOrderActivity extends BaseActivity implements SwipeRefreshLayo
 
     private HttpClient conn;
 
-
-//    private
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

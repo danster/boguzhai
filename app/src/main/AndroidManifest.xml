@@ -73,8 +73,7 @@
         <activity android:name=".activity.me.info.AccountInfoMoreActivity" />
         <activity android:name=".activity.me.info.AccountInfoEditActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
-        <activity android:name=".activity.me.info.AccountBindEmailActivity" />
-        <activity android:name=".activity.me.info.AccountBindMobileActivity" />
+        <activity android:name=".activity.me.info.AccountBindActivity" />
         <activity android:name=".activity.me.info.IdentityVerifyActivity" />
         <activity android:name=".activity.me.info.IdentityShowActivity" />
         <activity android:name=".activity.me.info.DeliveryAddressManageActivity" />

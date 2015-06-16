@@ -1,7 +1,5 @@
 package com.boguzhai.activity.login;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +8,7 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
@@ -33,7 +32,6 @@ public class ResetPwdActivity extends BaseActivity {
 
     private int time = 30;
     private TimerTask task;
-    private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,6 @@ public class ResetPwdActivity extends BaseActivity {
 	}
 	
 	protected void setBaseEnv() {
-        dialog = Utility.getProgressDialog("正在重置密码，请稍后...");
         mobile = (EditText)findViewById(R.id.mobile);
         check_code = (EditText)findViewById(R.id.check_code);
         pwd_input = (EditText)findViewById(R.id.pwd_input);
@@ -143,7 +140,7 @@ public class ResetPwdActivity extends BaseActivity {
             conn2.setParam("realCheckcode", check_code.getText().toString());
             conn2.setUrl(Constant.url+"pLoginAction!resetPwd.htm");
             new Thread(new HttpPostRunnable(conn2, new SubmitHandler())).start();
-            dialog.show();
+            Utility.showProgressDialog("正在重置密码，请稍后...");
 
             break;
 
@@ -154,17 +151,10 @@ public class ResetPwdActivity extends BaseActivity {
     public class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            dialog.dismiss();
+            Utility.dismissProgressDialog();
             super.handlerData(code,data);
             switch(code){
-                case 0:
-                    Utility.alertDialog("重置密码成功", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            Utility.gotoMainpage(3);
-                        }
-                    });
-                    break;
+                case 0: Utility.alertDialog("重置密码成功", Variable.toFinish); break;
                 case 1: Utility.alertDialog("手机号码填写错误");  break;
                 case 2: Utility.alertDialog("验证码错误");       break;
                 case 3: Utility.alertDialog("重置密码失败, 请检查您的密码修改信息"); break;

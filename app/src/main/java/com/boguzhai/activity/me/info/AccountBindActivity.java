@@ -1,6 +1,5 @@
 package com.boguzhai.activity.me.info;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +28,6 @@ public class AccountBindActivity extends BaseActivity {
 
     private int time = 30;
     private TimerTask task;
-    private ProgressDialog dialog;
     private String bind_info = "邮箱";
 
 	@Override
@@ -46,7 +44,6 @@ public class AccountBindActivity extends BaseActivity {
         get_check_code = (TextView)findViewById(R.id.get_check_code);
         email = (EditText)findViewById(R.id.mobile);
         check_code = (EditText)findViewById(R.id.check_code);
-        dialog = Utility.getProgressDialog("正在绑定"+bind_info+"，请稍后...");
         email.setHint("请填写绑定"+bind_info+"");
 
         TextView status = (TextView)findViewById(R.id.status);
@@ -139,7 +136,7 @@ public class AccountBindActivity extends BaseActivity {
                     conn_bind.setUrl(Constant.url + "pClientInfoAction!bindMobile.htm");
                 }
                 new Thread(new HttpPostRunnable(conn_bind, new SubmitHandler())).start();
-                dialog.show();
+                Utility.showProgressDialog("正在绑定" + bind_info + "，请稍后...");
                 break;
         }
     }
@@ -147,7 +144,7 @@ public class AccountBindActivity extends BaseActivity {
     public class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            dialog.dismiss();
+            Utility.dismissProgressDialog();
             super.handlerData(code,data);
             switch(code){
                 case 0:

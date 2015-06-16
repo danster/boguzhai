@@ -1,6 +1,5 @@
 package com.boguzhai.activity.me.info;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -44,7 +43,6 @@ public class AccountInfoEditActivity extends BaseActivity {
     private Address_1 currentAddress1;
     private Address_2 currentAddress2;
     boolean index1boost=true, index2boost=true;
-    private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,6 @@ public class AccountInfoEditActivity extends BaseActivity {
 	}
 
 	private void init(){
-        dialog = Utility.getProgressDialog("正在提交个人信息，请等待...");
         fillAccountInfo();
 
         // 省市区选择器之间的联动
@@ -163,7 +160,6 @@ public class AccountInfoEditActivity extends BaseActivity {
             conn.setParam("qq",        ((EditText)findViewById(R.id.qq)).getText().toString());
             conn.setUrl(Constant.url + "pClientInfoAction!setAccountInfo.htm");
             new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
-//            dialog.show();
             Utility.showLoadingDialog("正在提交个人信息，请等待...");
             break;
 
@@ -195,7 +191,6 @@ public class AccountInfoEditActivity extends BaseActivity {
     class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-//            dialog.dismiss();
             Utility.dismissLoadingDialog();
             super.handlerData(code,data);
             switch(code){

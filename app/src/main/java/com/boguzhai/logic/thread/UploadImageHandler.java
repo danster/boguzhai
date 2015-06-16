@@ -19,13 +19,11 @@ public class UploadImageHandler extends HttpJsonHandler{
 
     @Override
     public void handlerData(int code, JSONObject data) {
+        super.handlerData(code , data);
         switch(code){
             case 0:
                 Utility.toastMessage("上传图像成功");
                 iv.setImageBitmap(bitmap);
-                break;
-            case -1:
-                Utility.gotoLogin();
                 break;
             default:
                 Utility.toastMessage("上传图像失败");

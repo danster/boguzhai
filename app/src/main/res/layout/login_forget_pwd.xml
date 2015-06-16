@@ -46,19 +46,9 @@
             android:id="@+id/pwd_confirm_clear"/>
     </LinearLayout>
 
-    <LinearLayout style="@style/base_bar"
-        android:layout_marginTop="10dp"
-        android:background="@color/transparent">
-        <TextView
-            android:id="@+id/submit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:background="@drawable/shape_circle_rectangle_button"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="重置密码"/>
+    <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" android:background="@color/transparent">
+        <TextView style="@style/submit" android:id="@+id/submit"  android:text="重置密码"/>
     </LinearLayout>
 
 </LinearLayout>

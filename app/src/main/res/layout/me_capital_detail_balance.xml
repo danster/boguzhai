@@ -8,8 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -17,28 +15,26 @@
             android:layout_height="40dp"
             android:orientation="horizontal">
             <TextView android:id="@+id/info_1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center|left"
-                android:textSize="13sp"
-                android:textColor="#555"/>
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textColor="#ff404040"/>
 
             <TextView android:id="@+id/info_2"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_marginLeft="2dp"
-                android:gravity="center|left"
-                android:textSize="13sp"
+                android:layout_marginLeft="6dp"
+                android:gravity="center"
+                android:textSize="14sp"
                 android:textColor="#555"/>
 
             <TextView android:id="@+id/info_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_marginLeft="2dp"
-                android:gravity="center|left"
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:gravity="center|right"
                 android:textSize="13sp"
                 android:textColor="#999"/>
         </LinearLayout>
@@ -47,29 +43,27 @@
             android:layout_height="25dp"
             android:orientation="horizontal">
             <TextView android:id="@+id/info_4"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="top|left"
-                android:textSize="13sp"
+                android:gravity="top"
+                android:textSize="14sp"
                 android:textColor="#555"/>
 
             <TextView android:id="@+id/info_5"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_marginLeft="2dp"
-                android:gravity="top|left"
-                android:textSize="13sp"
+                android:layout_marginLeft="6dp"
+                android:gravity="top"
+                android:textSize="14sp"
                 android:textColor="#555"/>
 
             <TextView android:id="@+id/info_6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_marginLeft="2dp"
-                android:gravity="top|left"
-                android:textSize="13sp"
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:gravity="top|right"
+                android:textSize="14sp"
                 android:textColor="#555"/>
         </LinearLayout>
 

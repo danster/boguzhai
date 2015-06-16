@@ -60,7 +60,7 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
     private void init(){
         list = new ArrayList<Lot>();
         temp_list = new ArrayList<Lot>();
-        Utility.showAuctionInfo(baseActivity, Variable.currentAuction, Variable.currentSession);
+        Utility.showAuctionInfo(this, Variable.currentAuction, Variable.currentSession);
 
         this.listen(R.id.sort);
         this.listen(R.id.search);
@@ -144,6 +144,11 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
 
     @Override
     public void onLoadMore() {
+        if(order.value == -1){
+            Utility.toastMessage("已无更多信息");
+            listview.stopLoadMore();
+            return;
+        }
         this.httpConnect(this.order.value);
     }
 

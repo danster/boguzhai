@@ -113,12 +113,10 @@
                         android:layout_height="30dp"
                         android:gravity="center|left"
                         android:text="我的号牌:"/>
-                    <TextView android:id="@+id/bid_info_next_money" style="@style/bidding_lot_info"
-                        android:layout_height="30dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:background="@drawable/shape_circle_rectangle_button"
-                        android:textSize="18sp"/>
+                    <TextView android:id="@+id/bid_info_next_money"
+                        style="@style/submit"
+                        android:layout_height="40dp"
+                        android:textStyle="normal"/>
                 </LinearLayout>
 
                 <!--最小加价幅度 与 自主出价-->
@@ -130,7 +128,7 @@
                     <!-- 出价与出价按钮 -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp">
+                        android:layout_height="40dp">
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -140,18 +138,17 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:inputType="numberDecimal"
                                 android:gravity="center|left"
                                 android:lines="1"
                                 android:textSize="18sp"
-                                android:hint="出价"
+                                android:hint="出价(单位 元)"
                                 android:background="@color/transparent"/>
                             <TextView  android:id="@+id/bid_info_enter_money"
                                 android:layout_width="60dp"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textSize="18sp"
-                                android:background="@drawable/shape_circle_rectangle_button"
+                                style="@style/submit"
+                                android:layout_height="40dp"
+                                android:textStyle="normal"
                                 android:text="出价"/>
                         </LinearLayout>
                     </LinearLayout>

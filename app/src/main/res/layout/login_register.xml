@@ -92,20 +92,14 @@
         style="@style/login_bar"
         android:background="@color/transparent">
 
-        <TextView
+        <TextView style="@style/submit"
             android:id="@+id/register"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_circle_rectangle_button"
-            android:gravity="center"
-            android:text="同意协议，提交注册"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="同意协议，提交注册" />
     </LinearLayout>
 
     <LinearLayout
         style="@style/login_bar"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:background="@color/transparent">

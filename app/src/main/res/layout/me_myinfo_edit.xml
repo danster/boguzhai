@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -14,23 +13,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout android:id="@+id/my_photo"
-            style="@style/base_bar"
+        <LinearLayout android:id="@+id/my_photo"  style="@style/base_bar"
             android:layout_height="100dp"
             android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="头像"/>
             <View android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1" />
-            <ImageView android:id="@+id/image"
-                style="@style/upload_image"/>
+            <ImageView android:id="@+id/image"  style="@style/upload_image"/>
             <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
 
         <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="姓名"/>
-            <TextView android:id="@+id/name"
-                style="@style/myinfo_middle_text"/>
+            <TextView android:id="@+id/name" style="@style/myinfo_middle_text"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
@@ -53,56 +49,43 @@
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="具体地址"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/address"
-                android:hint="上海市福州路45弄12号802"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/address"/>
             <ImageView style="@style/myinfo_right_clear" android:id="@+id/address_clear"/>
         </LinearLayout>
 
         <LinearLayout style="@style/base_bar" android:id="@+id/my_email"
             android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="邮箱"/>
-            <TextView style="@style/myinfo_middle_text" android:id="@+id/email"
-                android:text="zhanfsan@126.com"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/email" />
             <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar" android:id="@+id/my_mobile">
             <TextView style="@style/myinfo_left_text"  android:text="手机"/>
-            <TextView style="@style/myinfo_middle_text" android:id="@+id/mobile"
-                android:text="13523451289"/>
+            <TextView style="@style/myinfo_middle_text" android:id="@+id/mobile" />
             <ImageView style="@style/myinfo_right_arrow" />
         </LinearLayout>
 
         <LinearLayout style="@style/base_bar"  android:layout_marginTop="10dp">
             <TextView style="@style/myinfo_left_text"  android:text="座机"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/telephone"
-                android:text="021-78265632"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/telephone" />
             <ImageView style="@style/myinfo_right_clear" android:id="@+id/telephone_clear"/>
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="传真"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/fax"
-                android:text="010-3414141"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/fax" />
             <ImageView style="@style/myinfo_right_clear" android:id="@+id/fax_clear" />
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
             <TextView style="@style/myinfo_left_text"  android:text="QQ"/>
-            <EditText style="@style/myinfo_middle_text" android:id="@+id/qq"
-                android:text="1434151541"/>
+            <EditText style="@style/myinfo_middle_text" android:id="@+id/qq"/>
             <ImageView style="@style/myinfo_right_clear" android:id="@+id/qq_clear" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
 
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/dark_red"
-    android:textColor="@color/white"
-    android:textSize="20sp"
-    android:id="@+id/ok"
-    android:text="确定"/>
+<TextView style="@style/submit" android:id="@+id/ok"  android:text="确定"/>
    
 </LinearLayout>

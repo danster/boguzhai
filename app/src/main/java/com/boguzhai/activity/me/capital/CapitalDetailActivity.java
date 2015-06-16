@@ -104,7 +104,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
         balanceList = new ArrayList<BalanceDetail>();
         bailAllList = new ArrayList<BailDetail>();
         bailList = new ArrayList<BailDetail>();
-        adapter = new CaptialDetailListAdapter(this, balanceList,bailList, type);
+        adapter = new CaptialDetailListAdapter(this, balanceList, bailList, type);
         listview.setAdapter(adapter);
 
         swipe_layout = (SwipeRefreshLayout) findViewById(R.id.refresh);
@@ -122,17 +122,17 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                         String str = type_list.get(arg2);
-                        if(str.equals("全部")){
+                        if (str.equals("全部")) {
                             return;
                         }
-                        switch (type){
+                        switch (type) {
                             case "balance":
                                 balanceList.clear();
                                 balanceList.addAll(BalanceDetail.filter(balanceAllList, str));
                                 adapter.notifyDataSetChanged();
                                 break;
 
-                            case  "bail":
+                            case "bail":
                                 bailList.clear();
                                 bailList.addAll(BailDetail.filter(bailAllList, str));
                                 adapter.notifyDataSetChanged();
@@ -141,6 +141,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                                 break;
                         }
                     }
+
                     public void onNothingSelected(AdapterView<?> arg0) {
                     }
                 });
@@ -150,11 +151,17 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
     public void onRefresh() {
         order.value = 1;
         swipe_layout.setRefreshing(true);
+        listview.setPullLoadEnable(true);
         httpConnect();
     }
 
     @Override
     public void onLoadMore() {
+        if(order.value == -1){
+            Utility.toastMessage("已无更多信息");
+            listview.stopLoadMore();
+            return;
+        }
         httpConnect();
     }
 
@@ -248,6 +255,8 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
                         left_date.setText("请选择日期");
                         right_date.setText("请选择日期");
                         setSpinner();
+                        balanceList.clear();
+                        bailList.clear();
                         balanceList.addAll(balanceAllList);
                         bailList.addAll(bailAllList);
                         adapter.notifyDataSetChanged();

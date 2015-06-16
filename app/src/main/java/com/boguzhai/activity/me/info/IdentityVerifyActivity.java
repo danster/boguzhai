@@ -1,7 +1,6 @@
 package com.boguzhai.activity.me.info;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,7 +31,6 @@ public class IdentityVerifyActivity extends BaseActivity {
     private int propertyIndex = 0;
     private String[] credentialTypeList = {"二代身份证","三代身份证","港澳台身份证","护照","其它"};
     private int credentialTypeIndex = 0, legalTypeIndex=0;
-    private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,6 @@ public class IdentityVerifyActivity extends BaseActivity {
     }
 
 	protected void init(){
-        dialog = Utility.getProgressDialog("正在提交认证信息，请稍后...");
         property = (TextView)findViewById(R.id.property);
         int[] ids = { R.id.submit, R.id.my_property, R.id.my_credential_type, R.id.my_legal_person_type,
                       R.id.image1, R.id.image2, R.id.image3, R.id.image_legal_person,
@@ -143,7 +140,7 @@ public class IdentityVerifyActivity extends BaseActivity {
 
                 conn.setUrl(Constant.url+"pClientInfoAction!setAuthInfo.htm");
                 new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
-                dialog.show();
+                Utility.showProgressDialog("正在提交认证信息，请稍后...");
 
                 break;
         default: break;
@@ -179,14 +176,14 @@ public class IdentityVerifyActivity extends BaseActivity {
     class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            dialog.dismiss();
+            Utility.dismissProgressDialog();
             super.handlerData(code, data);
             switch(code){
                 case 0:
                     Utility.alertDialog("提交认证信息成功", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                baseActivity.startActivity(new Intent(baseActivity, AccountInfoActivity.class));
+                                finish();
                             }
                         });
                     break;

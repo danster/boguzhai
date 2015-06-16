@@ -1,6 +1,5 @@
 package com.boguzhai.activity.login;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +12,15 @@ import android.widget.TextView;
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
+import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.info.IdentityVerifyActivity;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.utils.HttpClient;
+import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.StringApi;
 import com.boguzhai.logic.utils.Utility;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Timer;
@@ -31,11 +31,9 @@ public class RegisterActivity extends BaseActivity {
     private TextView get_check_code;
     private CheckBox isAgreedView;
     boolean isAgreed = false;
-    private String realCheckcode = "";
 
     private int time = 30;
     private TimerTask task;
-    private ProgressDialog dialog;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,6 @@ public class RegisterActivity extends BaseActivity {
         check_code = (EditText)findViewById(R.id.check_code);
         password = (EditText)findViewById(R.id.password);
         get_check_code = (TextView)findViewById(R.id.get_check_code);
-        dialog = Utility.getProgressDialog("正在注册，请稍后...");
 
 		int[] ids = {R.id.get_check_code, R.id.agree, R.id.register, R.id.login, R.id.protocol};
 		this.listen(ids);
@@ -109,11 +106,6 @@ public class RegisterActivity extends BaseActivity {
                     switch(code){
                         case 0:
                             Utility.toastMessage("发送验证码成功，请注意查收");
-                            try {
-                                realCheckcode = data.getString("check_code");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
                             break;
                         case 1:
                             Utility.toastMessage("发送验证码失败，请重新获取验证码");
@@ -146,8 +138,7 @@ public class RegisterActivity extends BaseActivity {
                 break;
             }
 
-            dialog.show();
-
+            Utility.showProgressDialog("正在注册，请稍后...");
             HttpClient conn = new HttpClient();
             conn.setParam("mobile", username.getText().toString());
             conn.setParam("password", password.getText().toString());
@@ -168,22 +159,47 @@ public class RegisterActivity extends BaseActivity {
     public class RegisterHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
-            dialog.dismiss();
+            Utility.dismissProgressDialog();
             super.handlerData(code, data);
             switch(code){
                 case 0:
+                    HttpClient conn = new HttpClient();
+                    conn.setParam("mobile", username.getText().toString());
+                    conn.setParam("password", password.getText().toString());
+                    conn.setUrl(Constant.url + "pClientInfoAction!login.htm");
+                    new Thread(new HttpPostRunnable(conn, new LoginHandler())).start();
+
                     Utility.alertDialog("注册成功，请进行实名认证",new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             Utility.gotoActivity(IdentityVerifyActivity.class);
                         }
-                    });
+                    },Variable.toFinish);
                     break;
                 case 1:  Utility.alertDialog("该账户已经被注册");   break;
                 case 2:  Utility.alertDialog("验证码错误");        break;
                 case 3:  Utility.alertDialog("账户号码错误");   break;
                 default: Utility.alertDialog("注册失败, 请检查您的注册信息");   break;
+            }
+        }
+    }
+
+    class LoginHandler extends HttpJsonHandler {
+        @Override
+        public void handlerData(int code, JSONObject data){
+            super.handlerData(code,data);
+            switch (code){
+                case 0:
+                    Variable.isLogin = true;
+                    Variable.account.password = password.getText().toString();
+                    JsonApi.getAccountInfo(data);
+                    finish();
+                    break;
+                case 1:
+                    break;
+                default:
+                    break;
             }
         }
     }

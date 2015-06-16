@@ -167,16 +167,17 @@ public class DeliveryAddressEditActivity extends BaseActivity {
                 tipsStr = "增加收货信息";
                 conn.setUrl(Constant.url+"pClientInfoAction!addDeliveryAddress.htm");
                 new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
+                Utility.showProgressDialog("正在上传新增信息 ...");
             } else { //修改收货信息
                 tipsStr = "修改收货信息";
                 conn.setParam("addressId", Variable.currentDeliveryAddress.id);
                 conn.setUrl(Constant.url + "pClientInfoAction!updateDeliveryAddress.htm");
                 new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
+                Utility.showProgressDialog("正在上传修改信息 ...");
             }
             break;
 
         case R.id.title_right:
-
             Utility.alertDialog("确定删除该收货地址？", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -187,6 +188,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
                     conn.setParam("addressId", Variable.currentDeliveryAddress.id);
                     conn.setUrl(Constant.url + "pClientInfoAction!removeDeliveryAddress.htm");
                     new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
+                    Utility.showProgressDialog("正在上传删除信息 ...");
                 }
             }, null);
             break;
@@ -203,20 +205,11 @@ public class DeliveryAddressEditActivity extends BaseActivity {
     class SubmitHandler extends HttpJsonHandler {
         @Override
         public void handlerData(int code, JSONObject data){
+            Utility.dismissProgressDialog();
             super.handlerData(code, data);
             switch(code){
-                case 0:
-                    Utility.alertDialog(tipsStr+"成功", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            finish();
-                        }
-                    }, null);
-                    break;
-                case 1:
-                    Utility.alertDialog(tipsStr + "失败");
-                    break;
+                case 0: Utility.alertDialog(tipsStr+"成功", Variable.toFinish);  break;
+                case 1: Utility.alertDialog(tipsStr+"失败");                     break;
             }
         }
     }

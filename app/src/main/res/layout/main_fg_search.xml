@@ -69,7 +69,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline_light" />
+            <View style="@style/longline" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -84,7 +84,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline_light" />
+            <View style="@style/longline" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -115,7 +115,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline_light" />
+            <View style="@style/longline" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -130,7 +130,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline_light" />
+            <View style="@style/longline" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -145,7 +145,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline_light" />
+            <View style="@style/longline" />
 
             <LinearLayout style="@style/base_bar">
 
@@ -175,7 +175,7 @@
                 <ImageView style="@style/search_right_arrow" />
             </LinearLayout>
 
-            <View style="@style/longline_light" />
+            <View style="@style/longline" />
 
             <LinearLayout style="@style/base_bar">
 

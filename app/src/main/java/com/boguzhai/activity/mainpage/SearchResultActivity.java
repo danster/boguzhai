@@ -91,6 +91,11 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
     @Override
     public void onLoadMore() {
+        if(order.value == -1){
+            Utility.toastMessage("已无更多信息");
+            listview.stopLoadMore();
+            return;
+        }
         HttpClient conn = new HttpClient();
         conn.setUrl(searchUrl + "&number=" + order.value);
         new Thread(new HttpPostRunnable(conn,new ShowLotListHandler())).start();
@@ -184,8 +189,6 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
     class ShowLotListHandler extends HttpJsonHandler {
         private ArrayList<Lot> lots;
-
-
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

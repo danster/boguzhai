@@ -19,22 +19,21 @@
         <TextView android:id="@+id/info_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:textSize="15sp"
             android:textStyle="bold"
             android:textColor="#333"
-            android:text="2015上海博古斋新春拍卖会"/>
+            android:text=""/>
 
         <TextView android:id="@+id/info_2"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:layout_marginLeft="10dp"
             android:gravity="center|right"
             android:textSize="13sp"
             android:textColor="#999"
-            android:text="2015-06-10 16:24"/>
+            android:text=""/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,21 +42,20 @@
         <TextView android:id="@+id/info_3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:gravity="left|top"
             android:textSize="13sp"
             android:textColor="#666"
-            android:text="资金来源：网络"/>
+            android:text="资金来源："/>
 
         <TextView android:id="@+id/info_4"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:layout_marginLeft="10dp"
             android:gravity="right|top"
             android:textSize="13sp"
             android:textColor="#666"
-            android:text="金额：￥2000.00"/>
+            android:text="金额：￥"/>
     </LinearLayout>
 
 </LinearLayout>

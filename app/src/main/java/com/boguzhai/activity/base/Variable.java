@@ -3,6 +3,7 @@ package com.boguzhai.activity.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -61,5 +62,13 @@ public class Variable {
     public static Bitmap currentBitmap = null;    //即将进行缩放的图片
 
     public static MyPayOrder payOrder = null;//跳转到订单详情时，使用的订单对象
+
+    // 程序中的一些帮助变量
+    public static DialogInterface.OnClickListener toFinish = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+            Variable.currentActivity.finish();
+        }
+    };
 
 }

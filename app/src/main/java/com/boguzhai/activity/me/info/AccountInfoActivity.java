@@ -130,7 +130,8 @@ public class AccountInfoActivity extends BaseActivity {
             switch (code){
                 case 0:
                     JsonApi.getAccountInfo(data);
-                    Tasks.showImage(Variable.account.imageUrl,(ImageView)findViewById(R.id.image),4);
+                    Tasks.showImage(Variable.account.imageUrl, (ImageView) findViewById(R.id.image), 1);
+                    Tasks.showBigImage(Variable.account.imageUrl, (ImageView) findViewById(R.id.image), 1);
                     break;
                 case 1:
                     break;

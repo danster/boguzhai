@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -39,50 +40,55 @@ public class Utility {
         Toast.makeText(Variable.app_context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public static void alertMessage(String msg){
-        if(!Variable.currentActivity.isFinishing()){
-            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-            tips.setIcon(android.R.drawable.ic_dialog_info);
-            tips.setTitle("提示").setMessage(msg).setPositiveButton("确定", null).create().show();
-        }
-    }
+    static ProgressDialog progressDialog;
 
-    public static ProgressDialog getProgressDialog(String msg){
-        ProgressDialog dialog = new ProgressDialog(Variable.currentActivity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setMessage(msg);
-        dialog.setCancelable(true); // could be killed by backward
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+    // 显示进度循环圈
+    public static void showProgressDialog(String msg){
+        progressDialog = new ProgressDialog(Variable.currentActivity);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        progressDialog.setMessage(msg);
+        progressDialog.setCancelable(true); // could be killed by backward
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 });
-        return dialog;
     }
 
-    // 添加确定信息
-    public static void alertDialog(String msg){
-        if (!Variable.currentActivity.isFinishing()){
-            AlertDialog dialog = (new AlertDialog.Builder(Variable.currentActivity)).setMessage(msg).create();
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.show();
+    // 取消进度循环圈
+    public static void dismissProgressDialog() {
+        if(null != progressDialog) {
+            if(progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
         }
     }
 
-    // 添加确定信息 确定动作
+    // 添加确定信息,确定无动作
+    public static void alertDialog(String msg){
+        if (!Variable.currentActivity.isFinishing()){
+            AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
+            AlertDialog dialog = tips.setMessage(msg).setPositiveButton("确定", null).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.show();
+            ((TextView)dialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
+        }
+    }
+
+    // 添加确定信息,确定动作
     public static void alertDialog(String msg, DialogInterface.OnClickListener ok){
         if (!Variable.currentActivity.isFinishing()){
             AlertDialog.Builder tips = new AlertDialog.Builder(Variable.currentActivity);
-//            tips.setIcon(android.R.drawable.ic_dialog_info);
-//            tips.setTitle("提示");
+            // tips.setIcon(android.R.drawable.ic_dialog_info).setTitle("提示");
             AlertDialog dialog = tips.setMessage(msg).setPositiveButton("确定", ok).create();
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.show();
+            ((TextView)dialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
         }
     }
 
-    // 添加确定信息 确定动作 取消动作
+    // 添加确定信息,确定动作,取消动作
     public static void alertDialog(String msg, DialogInterface.OnClickListener ok,
                                    DialogInterface.OnClickListener cancel){
         if (!Variable.currentActivity.isFinishing()){
@@ -91,6 +97,7 @@ public class Utility {
                                      .setNegativeButton("取消", cancel).create();
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.show();
+            ((TextView)dialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
         }
     }
 
@@ -351,7 +358,7 @@ public class Utility {
         dialog = builder.setView(view).create();
         dialog.show();
     }
-    
+
     public static void dismissLoadingDialog() {
         if(null != dialog) {
             if(dialog.isShowing()) {

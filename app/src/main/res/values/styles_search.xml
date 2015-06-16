@@ -1,6 +1,5 @@
 <resources>
 
-    <!-- 条形栏间的分割线式样 -->
     <style name="search_left_text">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">120dp</item>

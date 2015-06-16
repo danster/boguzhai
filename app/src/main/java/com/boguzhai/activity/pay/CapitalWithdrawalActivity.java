@@ -62,10 +62,10 @@ public class CapitalWithdrawalActivity extends BaseActivity {
 					public void handlerData(int code, JSONObject data) {
 						super.handlerData(code, data);
 						switch (code){
-							case 0:	Utility.alertDialog("提现成功",null);	break;
-							case 1:	Utility.alertDialog("由于没有绑定银行卡，提现失败",null);break;
-							case 2:	Utility.alertDialog("无法提现到绑定的银行卡，提现失败",null);break;
-							case 3:	Utility.alertDialog("其它原因，提现失败",null);break;
+							case 0:	Utility.alertDialog("提现申请提交成功", Variable.toFinish); break;
+							case 1:	Utility.alertDialog("由于没有绑定银行卡，提现申请提交失败", Variable.toFinish);break;
+							case 2:	Utility.alertDialog("无法提现到绑定银行卡，提现申请提交失败", Variable.toFinish);break;
+							case 3:	Utility.alertDialog("其它原因，提现申请提交失败", Variable.toFinish);break;
 							default:break;
 						}
 					}

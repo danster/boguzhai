@@ -62,7 +62,7 @@ public class Tasks {
         HttpClient conn = new HttpClient();
         conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
         conn.setUrl(Constant.url + "pClientInfoAction!getAccountInfo.htm");
-        new Thread(new HttpPostRunnable(conn, new UpdateHandler())).start();
+        new Thread(new HttpPostRunnable(conn, new UpdateAccountHandler())).start();
     }
 
     public static void getCheckCode(String mobile){
@@ -119,7 +119,7 @@ public class Tasks {
 
     }
 
-    // 点击缩略图时下载高清原图并用弹出框查看, ratio为下载原图时的缩放比
+    // 点击缩略图时下载高清原图并用全屏查看, ratio为下载原图时的缩放比
     public static void showBigImage(String url, ImageView img, int ratio){
 
         imageUrl = url;
@@ -322,7 +322,7 @@ public class Tasks {
 
 }
 
-class UpdateHandler extends HttpJsonHandler {
+class UpdateAccountHandler extends HttpJsonHandler {
     @Override
     public void handlerData(int code, JSONObject data){
         super.handlerData(code, data);

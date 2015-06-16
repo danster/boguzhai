@@ -36,14 +36,13 @@ public class MyLotActivity extends BaseActivity {
 
 	protected void init(){
 		mylots = new ArrayList<MylotItem>();
+        list   = new ArrayList<MylotAuction>();
 		listview = (XListView) findViewById(R.id.list);
 		listview.setPullLoadEnable(false);
 		listview.setPullRefreshEnable(false);
-		list = new ArrayList<MylotAuction>();
 		adapter = new MylotAuctionListAdapter(this, list);
 		listview.setAdapter(adapter);
 		this.listen(R.id.submit);
-
 	}
 
 	@Override
@@ -54,7 +53,6 @@ public class MyLotActivity extends BaseActivity {
 		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
 		conn.setUrl(Constant.url + "pTraceAction!getMyAuctionList.htm");
 		new Thread(new HttpPostRunnable(conn,new MylotHandler())).start();
-
 	}
 
 	@Override
@@ -83,6 +81,13 @@ public class MyLotActivity extends BaseActivity {
 				case 0:
 					try {
 						JSONArray auctionList = data.getJSONArray("list");
+                        if(auctionList.length() <= 0) {
+                            findViewById(R.id.submit).setVisibility(View.GONE);
+                            Utility.toastMessage("暂无数据");
+                        } else {
+                            findViewById(R.id.submit).setVisibility(View.VISIBLE);
+                        }
+
 						list.clear();
 						for(int i=0; i<auctionList.length(); ++i){
 							list.add(MylotAuction.parseJson(auctionList.getJSONObject(i)));

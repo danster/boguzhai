@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.boguzhai.R;
 import com.boguzhai.logic.thread.Tasks;
-import com.boguzhai.logic.utils.Utility;
 
 public abstract class BaseActivity extends Activity implements OnClickListener {
     public static String TAG = "BaseActivity";
@@ -20,7 +19,6 @@ public abstract class BaseActivity extends Activity implements OnClickListener {
     public BaseActivity baseActivity;
     public LinearLayout content, title_bar;
     public TextView title_left, title, title_right;
-    public Utility utility = new Utility();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

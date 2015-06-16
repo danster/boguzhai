@@ -36,15 +36,8 @@ public class AddressHandler extends HttpJsonHandler{
                 }
                 break;
             default:
-                if(Variable.app_context == null) {
-                    Log.i("TAG", "Variable.app_context is null");
-                    break;
-                }
-
-                if(msg.obj == null){
-                    Log.i("TAG", "msg.obj is null");
-                    break;
-                }
+                if(Variable.app_context == null) {  break;}
+                if(msg.obj == null){                break;}
 
                 Utility.toastMessage((String)msg.obj);
                 break;

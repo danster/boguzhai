@@ -12,16 +12,16 @@ import org.json.JSONObject;
 public class LotTypeHandler  extends HttpJsonHandler{
     @Override
     public void handlerData(int code, JSONObject data){
-            switch (code) {
-                case 0:
-                    if (data == null) break;
-                    Variable.settings_editor.putString(SharedKeys.lotType, data.toString());
-                    Variable.settings_editor.commit();
-                    break;
-                case 1:
-                    Utility.toastMessage("网络错误");
-                    break;
-            }
-
+        super.handlerData(code,data);
+        switch (code) {
+            case 0:
+                if (data == null) break;
+                Variable.settings_editor.putString(SharedKeys.lotType, data.toString());
+                Variable.settings_editor.commit();
+                break;
+            case 1:
+                Utility.toastMessage("网络错误");
+                break;
+        }
     }
 }

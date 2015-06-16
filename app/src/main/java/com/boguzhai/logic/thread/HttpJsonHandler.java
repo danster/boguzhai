@@ -27,27 +27,18 @@ public abstract class HttpJsonHandler extends Handler {
                 Log.i("JSON",(String)msg.obj);
                 try {
                     JSONObject result = new JSONObject((String)msg.obj);
-                    int code = -9;
                     JSONObject data = null;
-                    code = result.getInt("code");
                     if(result.has("data")){
                         data = result.getJSONObject("data");
                     }
-                    handlerData(code, data);
+                    handlerData(result.getInt("code"), data);
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
                 break;
             default:
-                if(Variable.app_context == null) {
-                    Log.i("TAG", "Variable.app_context is null");
-                    break;
-                }
-
-                if(msg.obj == null){
-                    Log.i("TAG", "msg.obj is null");
-                    break;
-                }
+                if(Variable.app_context==null) { break;}
+                if(msg.obj==null){ break;}
 
                 Utility.toastMessage((String)msg.obj);
                 break;

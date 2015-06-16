@@ -72,18 +72,18 @@
     <style name="longline">
         <item name="android:layout_height">0.5dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@color/single_line</item>
+        <!--<item name="android:background">@color/single_line</item>-->
     </style>
 
-    <style name="longline_light">
-        <item name="android:layout_height">0.5dp</item>
-        <item name="android:layout_width">match_parent</item>
-    </style>
+    <!--<style name="longline_light">-->
+        <!--<item name="android:layout_height">0.5dp</item>-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+    <!--</style>-->
 
-    <!-- 树形分割线式样 -->
+    <!-- 竖形分割线式样 -->
     <style name="longline_vertical">
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_width">0.5dp</item>
         <item name="android:background">@color/single_line</item>
     </style>
 
@@ -105,7 +105,6 @@
         <item name="android:button">@null</item>
     </style>
 
-
     <!-- 上传照片样式 -->
     <style name="upload_image">
         <item name="android:layout_height">90dp</item>
@@ -117,13 +116,12 @@
 
     <!-- 提交大按钮 -->
     <style name="submit">
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:text">"确 认"</item>
         <item name="android:background">@drawable/shape_circle_rectangle_button</item>
     </style>
 

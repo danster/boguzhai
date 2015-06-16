@@ -36,7 +36,9 @@ public class MeFragment extends Fragment {
         return view;
     }
 
-    public void init(){
+    @Override
+    public void onResume(){
+        super.onResume();
         if( Variable.isLogin == false ){
             ((TextView)view.findViewById(R.id.title_right)).setText("注册");
             view.findViewById(R.id.title_right).setVisibility(View.VISIBLE);
@@ -58,7 +60,9 @@ public class MeFragment extends Fragment {
             ((TextView)view.findViewById(R.id.address)).setText(address);
             ((TextView)view.findViewById(R.id.mobile)).setText(Variable.account.mobile);
         }
+    }
 
+    public void init(){
         this.listen(R.id.me_login);
         this.listen(R.id.title_right);
         this.listen(R.id.me_myinfo);
