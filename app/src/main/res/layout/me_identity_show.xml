@@ -105,9 +105,8 @@
 </ScrollView>
 
 <Button
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="@color/gold"
+    style="@style/submit"
     android:id="@+id/reVerify"
+    android:background="@color/dark_red"
     android:text="重新审核"/>
 </LinearLayout>

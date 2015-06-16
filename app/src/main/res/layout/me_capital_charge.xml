@@ -34,9 +34,9 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <Button style="@style/base_bar"  android:id="@+id/submit"
+    <Button style="@style/submit"  android:id="@+id/submit"
         android:gravity="center"
-        android:background="@color/gold"
+        android:background="@color/dark_red"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:text="确认支付"/>

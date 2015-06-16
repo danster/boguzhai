@@ -11,7 +11,16 @@
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar">
         <EditText style="@style/login_l_ev" android:id="@+id/mobile"  android:hint="填写绑定信息"/>
-        <TextView style="@style/get_check_code" android:id="@+id/get_check_code"/>
+        <TextView style="@style/get_check_code"  android:id="@+id/get_check_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_circle_rectangle_button"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginLeft="2dp"/>
     </LinearLayout>
     <View style="@style/longline"/>
     <LinearLayout style="@style/base_bar">
@@ -19,9 +28,11 @@
         <ImageView style="@style/base_right_clear"  android:id="@+id/check_code_clear"/>
     </LinearLayout>
 
-    <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp"
-        android:background="@color/transparent">
-        <TextView android:id="@+id/submit" style="@style/submit" android:text="确认"/>
-    </LinearLayout>
+    <TextView android:id="@+id/submit" style="@style/submit"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:text="确认"/>
 
 </LinearLayout>

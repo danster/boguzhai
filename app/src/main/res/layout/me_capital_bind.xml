@@ -61,11 +61,15 @@
         <TextView style="@style/myinfo_left_text" android:layout_margin="0dp" android:text="验证码"/>
         <EditText android:id="@+id/check_code" style="@style/myinfo_middle_text" android:hint="必填"/>
         <TextView android:id="@+id/get_check_code"
-            style="@style/base_text"
-            android:background="#ff8a292e"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_circle_rectangle_button"
             android:textColor="@color/white"
+            android:gravity="center"
             android:textStyle="bold"
-            android:layout_marginLeft="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginLeft="2dp"
             android:text=" 获取验证码 "/>
     </LinearLayout>
 
@@ -74,13 +78,11 @@
 
 
 <Button
-    android:layout_width="match_parent"
-    android:layout_height="55dp"
-    android:layout_marginTop="12dp"
-    android:background="@color/gold"
+    style="@style/submit"
     android:textColor="@color/white"
     android:textSize="18sp"
     android:id="@+id/ok"
+    android:background="@color/dark_red"
     android:text="绑 定"/>
 
 </LinearLayout>

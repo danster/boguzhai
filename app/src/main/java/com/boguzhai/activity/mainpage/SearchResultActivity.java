@@ -226,10 +226,11 @@ public class SearchResultActivity extends BaseActivity implements XListView.IXLi
 
                         if ((order.value-1)*size == count ) {
                             order.value = -1;
-                            Utility.toastMessage("已无更多信息");
+                            listview.setPullLoadEnable(false);
                             break;
                         } else if (order.value*size > count ) {
                             order.value = -1;
+                            listview.setPullLoadEnable(false);
                         } else {
                             order.value ++;
                         }

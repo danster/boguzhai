@@ -7,8 +7,8 @@
 
 
     <LinearLayout
-        android:layout_marginTop="5dp"
-        style="@style/base_bar" >
+        style="@style/base_bar"
+        android:layout_marginTop="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,10 +18,10 @@
 
         <TextView
             android:id="@+id/check_advice_title"
-            android:gravity="right"
-            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="10dp"
             android:text="---"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -29,8 +29,7 @@
 
     <View style="@style/longline" />
 
-    <LinearLayout
-        style="@style/base_bar" >
+    <LinearLayout style="@style/base_bar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,10 +39,10 @@
 
         <TextView
             android:id="@+id/check_advice_type"
-            android:gravity="right"
-            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="10dp"
             android:text="---"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -51,8 +50,7 @@
 
     <View style="@style/longline" />
 
-    <LinearLayout
-        style="@style/base_bar" >
+    <LinearLayout style="@style/base_bar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,10 +60,10 @@
 
         <TextView
             android:id="@+id/check_advice_orderId"
-            android:gravity="right"
-            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="10dp"
             android:text="---"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -73,56 +71,61 @@
 
     <View style="@style/longline" />
 
-    <LinearLayout
-        style="@style/base_bar" >
+    <LinearLayout style="@style/base_bar">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="状态"
             android:textSize="22sp" />
+
         <TextView
             android:id="@+id/check_advice_status"
-            android:gravity="right"
-            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="10dp"
             android:text="---"
             android:textColor="@color/black"
             android:textSize="18sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/base_bar" >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-
-        <TextView
-            android:layout_width="100dp"
+        <LinearLayout
+            style="@style/base_bar"
             android:layout_height="wrap_content"
-            android:text="问题描述"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/check_advice_info"
-            android:textSize="18dp"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
 
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="问题描述"
+                android:textSize="20sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/check_advice_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/check_advice_delete"
-        android:background="@color/gold"
+        style="@style/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_red"
         android:text="删除"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="18sp" />
 
 </LinearLayout>

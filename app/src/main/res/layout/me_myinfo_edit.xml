@@ -86,6 +86,6 @@
     </LinearLayout>
 </ScrollView>
 
-<TextView style="@style/submit" android:id="@+id/ok"  android:text="确定"/>
+<TextView style="@style/submit" android:id="@+id/ok" android:background="@color/dark_red" android:text="确定"/>
    
 </LinearLayout>
