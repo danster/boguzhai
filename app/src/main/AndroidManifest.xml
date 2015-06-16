@@ -81,9 +81,11 @@
 
         <!-- activities belong part of me capital -->
         <activity android:name=".activity.me.capital.CapitalShowActivity" />
-        <activity android:name=".activity.me.capital.CapitalBindbankActivity" />
+        <activity android:name=".activity.me.capital.CapitalBindbankActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".activity.me.capital.CapitalDetailActivity" />
-        <activity android:name=".activity.pay.CapitalChargeActivity" />
+        <activity android:name=".activity.pay.CapitalChargeActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".activity.pay.CapitalWithdrawalActivity" />
 
         <!-- activities belong part of me myauction -->

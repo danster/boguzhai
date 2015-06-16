@@ -105,12 +105,11 @@
 
 
 <Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    style="@style/submit"
     android:background="@color/dark_red"
     android:textColor="@color/white"
-    android:textSize="20sp"
+    android:textSize="18sp"
     android:id="@+id/logout"
-    android:text="退 出 登 陆"/>
+    android:text="退出登陆"/>
    
 </LinearLayout>

@@ -23,9 +23,7 @@
 
             <Button
                 android:id="@+id/iv_userinfo_takepic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/green"
+                style="@style/submit"
                 android:text="拍照"/>
         </LinearLayout>
 
@@ -40,9 +38,7 @@
 
             <Button
                 android:id="@+id/iv_userinfo_choosepic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/green"
+                style="@style/submit"
                 android:text="从相册选择"/>
         </LinearLayout>
 
@@ -57,8 +53,7 @@
 
             <Button
                 android:id="@+id/iv_userinfo_cancle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/submit"
                 android:background="@color/gray"
                 android:text="取消"/>
         </LinearLayout>

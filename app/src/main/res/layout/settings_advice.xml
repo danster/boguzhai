@@ -24,8 +24,7 @@
 
     <Button
         android:id="@+id/btn_advice_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/submit"
         android:background="@color/dark_red"
         android:text="添加投诉/建议"
         android:textColor="@color/white"

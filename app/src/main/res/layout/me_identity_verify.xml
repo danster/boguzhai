@@ -216,9 +216,8 @@
 </ScrollView>
 
 <Button
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="@color/gold"
+    style="@style/submit"
+    android:background="@color/dark_red"
     android:id="@+id/submit"
     android:text="提交审查"/>
 </LinearLayout>

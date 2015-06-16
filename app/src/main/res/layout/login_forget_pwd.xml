@@ -48,7 +48,8 @@
 
     <LinearLayout style="@style/base_bar" android:layout_marginTop="10dp"
         android:layout_height="wrap_content" android:background="@color/transparent">
-        <TextView style="@style/submit" android:id="@+id/submit"  android:text="重置密码"/>
+        <TextView style="@style/submit" android:id="@+id/submit"  android:text="重置密码"
+            android:background="@drawable/shape_circle_rectangle_button"/>
     </LinearLayout>
 
 </LinearLayout>

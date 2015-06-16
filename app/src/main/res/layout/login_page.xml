@@ -47,9 +47,7 @@
         android:background="@color/transparent">
         <TextView
             android:id="@+id/login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            style="@style/submit"
             android:background="@drawable/shape_circle_rectangle_button"
             android:textColor="@color/white"
             android:textSize="18sp"

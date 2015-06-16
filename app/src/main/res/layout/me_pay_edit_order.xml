@@ -160,8 +160,7 @@
         android:textColor="@color/half_black" android:textSize="14sp"
         android:text="(含运费:0.0 保费:0.0)"/>
 </LinearLayout>
-<Button style="@style/base_bar"  android:id="@+id/submit"
-    android:gravity="center"
+<Button style="@style/submit"  android:id="@+id/submit"
     android:background="@color/dark_red"
     android:textColor="@color/white"
     android:textSize="17sp"

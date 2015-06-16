@@ -195,8 +195,7 @@
 
     <Button
         android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/submit"
         android:background="@color/dark_red"
         android:text="搜索"
         android:textColor="@color/white"

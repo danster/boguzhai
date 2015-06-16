@@ -306,9 +306,8 @@
     </LinearLayout>
 
     <Button
+        style="@style/submit"
         android:id="@+id/me_upload_commit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@color/dark_red"
         android:text="提交"
         android:textColor="@color/white"

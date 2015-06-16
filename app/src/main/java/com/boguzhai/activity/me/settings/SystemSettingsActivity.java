@@ -156,7 +156,7 @@ public class SystemSettingsActivity extends BaseActivity {
      */
     private void checkVersion() {
         conn = new HttpClient();
-        conn.setUrl(Constant.url.replace("/phones/","/") + "uploadDownAction!checkVersion.htm");
+        conn.setUrl(Constant.url + "pVersionAction!checkVersion.htm");
         new Thread(new HttpPostRunnable(conn, new MyAppUpateHandler())).start();
     }
 

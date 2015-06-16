@@ -98,8 +98,7 @@
 
             <Button
                 android:id="@+id/btn_advice_commit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/submit"
                 android:background="@color/dark_red"
                 android:text="提交"
                 android:textColor="@color/white"
