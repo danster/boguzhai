@@ -12,6 +12,7 @@ import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.login.LoginActivity;
 import com.boguzhai.activity.login.RegisterActivity;
 import com.boguzhai.activity.me.bidding.BiddingActivity;
+import com.boguzhai.activity.me.collect.MyCollectionActivity;
 import com.boguzhai.activity.me.info.AccountInfoActivity;
 import com.boguzhai.activity.me.myauction.MyAuctionActivity;
 import com.boguzhai.activity.me.mylot.MyLotActivity;
@@ -91,7 +92,7 @@ public class MeFragment extends Fragment {
                 case R.id.me_biding: gotoActivityByLogin(BiddingActivity.class);  break;
                 case R.id.me_mylot:  gotoActivityByLogin(MyLotActivity.class);    break;
                 case R.id.me_myorder: gotoActivityByLogin(MyPayOrderActivity.class);   break;
-                case R.id.me_my_favorites: gotoActivityByLogin(BiddingActivity.class); break;
+                case R.id.me_my_favorites: gotoActivityByLogin(MyCollectionActivity.class); break;
                 case R.id.me_upload: gotoActivityByLogin(UploadLotActivity.class);       break;
                 case R.id.me_system: Utility.gotoActivity(SystemSettingsActivity.class); break;
                 default: break;

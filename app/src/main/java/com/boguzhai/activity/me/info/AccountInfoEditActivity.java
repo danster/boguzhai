@@ -125,6 +125,7 @@ public class AccountInfoEditActivity extends BaseActivity {
 
     // 修改之前先填充账户信息
     private void fillAccountInfo(){
+        Tasks.showImage(Variable.account.imageUrl, (ImageView) findViewById(R.id.image), 1);
         ((TextView)findViewById(R.id.name)).setText(Variable.account.name);
         ((EditText)findViewById(R.id.nickname)).setText(Variable.account.nickname);
         ((EditText)findViewById(R.id.address)).setText(Variable.account.address);

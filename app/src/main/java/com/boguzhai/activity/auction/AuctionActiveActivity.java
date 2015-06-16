@@ -282,6 +282,11 @@ public class AuctionActiveActivity extends BaseActivity {
             && !price.equals("") && !biddingNo.equals("")
             && !Variable.currentAuction.id.equals("") && !Variable.currentSession.id.equals("")){
 
+            if(price.equals("")){
+                Utility.toastMessage("出价不能为空");
+                return;
+            }
+
             HttpClient conn = new HttpClient();
             conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
             conn.setParam("auctionMainId", Variable.currentAuction.id);

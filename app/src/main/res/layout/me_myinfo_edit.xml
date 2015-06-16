@@ -48,7 +48,7 @@
         </LinearLayout>
         <View style="@style/longline"/>
         <LinearLayout style="@style/base_bar">
-            <TextView style="@style/myinfo_left_text"  android:text="具体地址"/>
+            <TextView style="@style/myinfo_left_text"  android:text="地址"/>
             <EditText style="@style/myinfo_middle_text" android:id="@+id/address"/>
             <ImageView style="@style/myinfo_right_clear" android:id="@+id/address_clear"/>
         </LinearLayout>

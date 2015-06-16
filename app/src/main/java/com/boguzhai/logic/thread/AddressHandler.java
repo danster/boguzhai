@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.SharedKeys;
-import com.boguzhai.logic.utils.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,8 +28,8 @@ public class AddressHandler extends HttpJsonHandler{
                     if(code==0) {
                         Variable.settings_editor.putString(SharedKeys.deliveryAddress, (String)msg.obj);
                         Variable.settings_editor.commit();
+                        Tasks.getMapZone();
                     }
-
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
@@ -38,8 +37,6 @@ public class AddressHandler extends HttpJsonHandler{
             default:
                 if(Variable.app_context == null) {  break;}
                 if(msg.obj == null){                break;}
-
-                Utility.toastMessage((String)msg.obj);
                 break;
         }
     }
