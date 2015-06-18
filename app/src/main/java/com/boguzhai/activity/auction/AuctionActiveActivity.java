@@ -326,9 +326,10 @@ public class AuctionActiveActivity extends BaseActivity {
                 try {
                     String status = data.getString("status"); // 拍卖会状态
                     if(status.equals("")){
-                        tips.setText("拍卖会状态: 进行中···");
+                        findViewById(R.id.ly_tips).setVisibility(View.GONE);
                     } else {
-                        tips.setText("拍卖会状态: "+status);
+                        findViewById(R.id.ly_tips).setVisibility(View.VISIBLE);
+                        tips.setText(status);
                     }
 
                     // 展示当前拍品与下一拍品的信息

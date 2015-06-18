@@ -41,6 +41,7 @@ public class LotInfoActivity extends BaseActivity {
         this.listen(R.id.session_info);
         this.listen(R.id.lot_image);
         collectText = (TextView)findViewById(R.id.favor);
+        findViewById(R.id.ly_auction_data).setVisibility(View.GONE);
 
         checkCollectInfo();
 
@@ -54,6 +55,7 @@ public class LotInfoActivity extends BaseActivity {
         new Thread(new HttpPostRunnable(con,new ShowLotInfoHandler())).start();
     }
 
+    // 检查拍品的收藏信息
     public void checkCollectInfo(){
         if(Variable.isLogin == true){
             HttpClient conn = new HttpClient();

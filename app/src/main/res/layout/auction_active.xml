@@ -5,6 +5,7 @@
 
     <LinearLayout android:id="@+id/ly_tips" style="@style/base_itembar"
         android:background="#fff9d6d7"
+        android:visibility="gone"
         android:gravity="center">
         <TextView
             android:id="@+id/tips"

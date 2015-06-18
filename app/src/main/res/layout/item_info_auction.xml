@@ -42,52 +42,58 @@
                 android:textSize="17sp"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="5dp"
+            android:id="@+id/ly_auction_data"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-            <TextView style="@style/auction_info_text"
-                android:textColor="@color/half_black"
-                android:text="拍卖会状态: "/>
-            <TextView style="@style/auction_info_text"
-                android:id="@+id/auction_status"
-                android:textColor="@color/red"
-                android:text=""/>
-            <TextView style="@style/auction_info_text"
-                android:textColor="@color/half_black"
-                android:text="  上拍件数: "/>
-            <TextView style="@style/auction_info_text"
-                android:id="@+id/auction_showNum"
-                android:textColor="@color/red"
-                android:text="  件"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-            <TextView style="@style/auction_info_text"
-                android:textColor="@color/half_black"
-                android:text="成交件数: "/>
-            <TextView style="@style/auction_info_text"
-                android:id="@+id/auction_dealNum"
-                android:textColor="@color/red"
-                android:text="   件"/>
-            <TextView style="@style/auction_info_text"
-                android:textColor="@color/half_black"
-                android:text=" 成交率: "/>
-            <TextView style="@style/auction_info_text"
-                android:id="@+id/auction_dealRate"
-                android:textColor="@color/red"
-                android:text="  %"/>
-            <TextView style="@style/auction_info_text"
-                android:textColor="@color/half_black"
-                android:text=" 成交额: "/>
-            <TextView style="@style/auction_info_text"
-                android:id="@+id/auction_dealSum"
-                android:textColor="@color/red"
-                android:text="  万"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+                <TextView style="@style/auction_info_text"
+                    android:textColor="@color/half_black"
+                    android:text="拍卖会状态: "/>
+                <TextView style="@style/auction_info_text"
+                    android:id="@+id/auction_status"
+                    android:textColor="@color/red"
+                    android:text=""/>
+                <TextView style="@style/auction_info_text"
+                    android:textColor="@color/half_black"
+                    android:text="  上拍件数: "/>
+                <TextView style="@style/auction_info_text"
+                    android:id="@+id/auction_showNum"
+                    android:textColor="@color/red"
+                    android:text="  件"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+                <TextView style="@style/auction_info_text"
+                    android:textColor="@color/half_black"
+                    android:text="成交件数: "/>
+                <TextView style="@style/auction_info_text"
+                    android:id="@+id/auction_dealNum"
+                    android:textColor="@color/red"
+                    android:text="   件"/>
+                <TextView style="@style/auction_info_text"
+                    android:textColor="@color/half_black"
+                    android:text=" 成交率: "/>
+                <TextView style="@style/auction_info_text"
+                    android:id="@+id/auction_dealRate"
+                    android:textColor="@color/red"
+                    android:text="  %"/>
+                <TextView style="@style/auction_info_text"
+                    android:textColor="@color/half_black"
+                    android:text=" 成交额: "/>
+                <TextView style="@style/auction_info_text"
+                    android:id="@+id/auction_dealSum"
+                    android:textColor="@color/red"
+                    android:text="  万"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
