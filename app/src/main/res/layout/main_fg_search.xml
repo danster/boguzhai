@@ -117,7 +117,7 @@
 
             <View style="@style/longline" />
 
-            <LinearLayout style="@style/base_bar">
+            <LinearLayout style="@style/base_bar" android:visibility="gone">
 
                 <TextView
                     style="@style/search_left_text"
