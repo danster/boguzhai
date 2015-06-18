@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.boguzhai.R;
 import com.boguzhai.activity.base.BaseActivity;
@@ -18,6 +19,7 @@ import com.boguzhai.activity.items.LotListAdapter;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
+import com.boguzhai.logic.thread.LoadImageTask;
 import com.boguzhai.logic.utils.HttpClient;
 import com.boguzhai.logic.utils.JsonApi;
 import com.boguzhai.logic.utils.Utility;
@@ -60,6 +62,9 @@ public class AuctionDisplayActivity extends BaseActivity implements XListView.IX
     private void init(){
         list = new ArrayList<Lot>();
         temp_list = new ArrayList<Lot>();
+
+        new LoadImageTask((ImageView)findViewById(R.id.session_image), 4)
+                .execute(Variable.currentSession.imageUrl); // 显示专场缩略图
         Utility.showAuctionInfo(this, Variable.currentAuction, Variable.currentSession);
 
         this.listen(R.id.sort);

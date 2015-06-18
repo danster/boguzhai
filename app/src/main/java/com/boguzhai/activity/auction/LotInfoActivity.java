@@ -46,7 +46,9 @@ public class LotInfoActivity extends BaseActivity {
         checkCollectInfo();
 
         ImageView image = (ImageView)findViewById(R.id.lot_image);
-        new LoadImageTask(image, 4).execute(Variable.currentLot.imageUrl); // 显示缩略图
+        new LoadImageTask(image, 4).execute(Variable.currentLot.imageUrl); // 显示拍品缩略图
+        new LoadImageTask((ImageView)findViewById(R.id.session_image), 4)
+                .execute(Variable.currentSession.imageUrl); // 显示专场缩略图
         Tasks.showBigImage(Variable.currentLot.imageUrl, image, 1); // 添加listener: 点击缩略图时显示大图
 
         // 获取当前拍品的详细信息

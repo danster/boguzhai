@@ -60,8 +60,8 @@ public class SessionListAdapter extends BaseAdapter {
         holder.previewLocation.setText("地点:" + session.previewLocation);
         holder.auctionTime.setText("拍卖:" + session.auctionTime);
         holder.auctionLocation.setText("地点:" + session.auctionLocation);
-        new LoadImageTask(holder.image, 2).execute(session.imageUrl); // 显示缩略图
 
+        new LoadImageTask(holder.image, 4).execute(session.imageUrl); // 显示缩略图
         convertView.setOnClickListener(new MyOnClickListener(position));
         return convertView;    
     }  

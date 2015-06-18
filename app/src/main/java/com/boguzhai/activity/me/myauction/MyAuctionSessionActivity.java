@@ -59,7 +59,7 @@ public class MyAuctionSessionActivity extends BaseActivity {
         conn.setParam("auctionMainId", auctionId);
         new Thread(new HttpPostRunnable(conn, new MyAuctionSessionHandler())).start();
     }
-    
+
     @Override
 	public void onClick(View view) {
         super.onClick(view);
