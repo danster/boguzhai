@@ -121,21 +121,6 @@
 
                 <TextView
                     style="@style/search_left_text"
-                    android:text="请选择拍卖会方式 " />
-
-                <Spinner
-                    android:id="@+id/auction_type"
-                    style="@style/lot_filter_spinner"></Spinner>
-
-                <ImageView style="@style/search_right_arrow" />
-            </LinearLayout>
-
-            <View style="@style/longline" />
-
-            <LinearLayout style="@style/base_bar">
-
-                <TextView
-                    style="@style/search_left_text"
                     android:text="请选择拍卖会 " />
 
                 <Spinner

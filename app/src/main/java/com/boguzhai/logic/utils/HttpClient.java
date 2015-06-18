@@ -34,6 +34,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MIME;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.message.BasicNameValuePair;
@@ -56,15 +57,12 @@ import java.io.OutputStreamWriter;
 import java.net.SocketTimeoutException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLHandshakeException;
 
 public class HttpClient {
     private static final String CHARSET = HTTP.UTF_8;
 	private static final String TAG = "HttpClient";
-    private static String regex = "^(http://|https://)?((?:[A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\\.)+([A-Za-z]+)[/\\?\\:]?.*$" ;
-    private static Pattern pattern = Pattern.compile(regex);
 
     public org.apache.http.client.HttpClient httpClient = null;  //HTTP 客户端连接管理器
     public String url = "";
@@ -102,12 +100,6 @@ public class HttpClient {
     		params = new ArrayList<NameValuePair>();
     	}
     	params.add(new BasicNameValuePair(key, value));
-    }
-
-    public void setParamFile(String key, File file){
-        MultipartEntityBuilder builder = this.getMultipartEntityBuilder();
-        builder.addBinaryBody(key, file);
-        // builder.addBinaryBody(key, file, ContentType.create("image/jpeg"), null);
     }
 
     // 将图片压缩成Base64编码字符串，之后再addTextBody
@@ -195,7 +187,6 @@ public class HttpClient {
         if(url.equals("")){ return false;}
         if(!( url.startsWith("http://") || url.startsWith("https://") )){ url = "http://" + url;}
         if(url.equals("") || url.contains(" ")){ return false;}
-        // if (!pattern.matcher(url).matches()){ return false;} 匹配表达式不正确
         return true;
     }
 
@@ -227,7 +218,7 @@ public class HttpClient {
         // 创建一个客户端HTTP请求
         // 如果使用连接管理器：this.httpClient =new DefaultHttpClient(cm, httpParameters);
         this.httpClient =new DefaultHttpClient(httpParameters);
-        // ((AbstractHttpClient)this.httpClient ).setHttpRequestRetryHandler(requestRetryHandler);
+        ((AbstractHttpClient)this.httpClient).setHttpRequestRetryHandler(requestRetryHandler);
 
         try {
 			this.httpResponse = this.httpClient.execute(this.httpRequest); // 发送HTTP请求并获取服务端响应

@@ -44,7 +44,6 @@ public class SearchFragment extends Fragment {
     private ArrayList<Pair<String,String>> mapSession = new ArrayList< Pair<String,String> >();
 
     private String[] list_status={"不限", "预展中","拍卖中","已结束"};
-    private String[] list_type={"不限", "同步", "网络"};
     private String[] list_lot_status={"不限","已上拍","未上拍","成交","流拍","撤拍"};
     private String[] list_lot_deal_type={"不限", "现场", "网络"};
 
@@ -63,7 +62,6 @@ public class SearchFragment extends Fragment {
     private StringBuffer auctionId=new StringBuffer("");
     private StringBuffer sessionId=new StringBuffer("");
     private StringBuffer auction_status=new StringBuffer("");
-    private StringBuffer auction_type=new StringBuffer("");
     private StringBuffer lot_status=new StringBuffer("");
     private StringBuffer lot_deal_type=new StringBuffer("");
 
@@ -146,9 +144,6 @@ public class SearchFragment extends Fragment {
         // 设置拍卖会的状态与类型以及拍品的状态与成交方式的选择器
         Utility.setSpinner(context, (Spinner)view.findViewById(R.id.auction_status), list_status,
                 new AuctionChooseListener(list_status, auction_status));
-        Utility.setSpinner(context, (Spinner)view.findViewById(R.id.auction_type), list_type,
-                new AuctionChooseListener(list_type, auction_type));
-
         Utility.setSpinner(context, (Spinner)view.findViewById(R.id.lot_status), list_lot_status,
                 new SpinnerListener(list_lot_status, lot_status));
         Utility.setSpinner(context, (Spinner)view.findViewById(R.id.lot_deal_type), list_lot_deal_type,
@@ -179,7 +174,7 @@ public class SearchFragment extends Fragment {
                     String keyword = ((EditText)view.findViewById(R.id.keyword)).getText().toString();
                     String url = Constant.url+"pAuctionInfoAction!searchAuction.htm?";
                     url += "keyword="+keyword;
-                    url += "&type2="+lottypeId1.toString();
+                    url += "&type1="+lottypeId1.toString();
                     url += "&type2="+lottypeId2.toString();
                     url += "&type3="+lottypeId3.toString();
                     url += "&auctionMainId="+auctionId.toString();
@@ -267,13 +262,9 @@ public class SearchFragment extends Fragment {
 
             list_auction.clear();
             for(Auction auction: list_auction_all){
-                if(auction_status.toString().equals("") && auction_type.toString().equals(""))
+                if(auction_status.toString().equals("") )
                     list_auction.add(auction);
-                else if(auction_status.toString().equals("") && auction_type.toString().equals(auction.type))
-                    list_auction.add(auction);
-                else if(auction_type.toString().equals("") && auction_status.toString().equals(auction.status))
-                    list_auction.add(auction);
-                else if(auction.status.equals(auction_status.toString()) && auction.type.equals(auction_type.toString()))
+                else if(auction.status.equals(auction_status.toString()))
                     list_auction.add(auction);
             }
             mapAuction = getAuctionKeyValueList(list_auction);
