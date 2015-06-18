@@ -81,7 +81,10 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Utility.dismissLoadingDialog();
+            if(msg.what != 0) {
+                Utility.dismissLoadingDialog();
+                Utility.toastMessage("网络异常，请稍后重试");
+            }
         }
 
         @Override

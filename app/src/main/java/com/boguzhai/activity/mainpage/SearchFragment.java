@@ -178,8 +178,8 @@ public class SearchFragment extends Fragment {
                     url += "&type2="+lottypeId2.toString();
                     url += "&type3="+lottypeId3.toString();
                     url += "&auctionMainId="+auctionId.toString();
-                    url += "&auctionSeesionId="+auctionId.toString();
-                    url += "&status="+sessionId.toString();
+                    url += "&auctionSeesionId="+sessionId.toString();
+                    url += "&status="+lot_status.toString();
                     url += "&type="+lot_deal_type.toString();
                     Intent intent = new Intent( context,  SearchResultActivity.class);
                     intent.putExtra("url",url);
