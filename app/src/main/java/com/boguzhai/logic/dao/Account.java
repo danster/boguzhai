@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Account{
 
     public String id="";          //Primary key
-    public String sessionid = ""; //登录后的session
     public String mobile="";    //手机
     public String password="";  //密码
     public String name="";      //姓名

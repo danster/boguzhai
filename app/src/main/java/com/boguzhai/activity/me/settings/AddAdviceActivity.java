@@ -94,7 +94,7 @@ public class AddAdviceActivity extends BaseActivity {
                 }else {
                     //网络请求
                     conn = new HttpClient();
-                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                    conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                     conn.setUrl(Constant.url + "pProposeAction!uploadAdvice.htm");
                     conn.setParam("title", et_advice_title.getText().toString().trim());
                     conn.setParam("type", type);

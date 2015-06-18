@@ -12,6 +12,7 @@ import com.boguzhai.activity.base.BaseActivity;
 import com.boguzhai.activity.base.Constant;
 import com.boguzhai.activity.base.Variable;
 import com.boguzhai.activity.me.capital.CapitalShowActivity;
+import com.boguzhai.logic.dao.SharedKeys;
 import com.boguzhai.logic.thread.HttpJsonHandler;
 import com.boguzhai.logic.thread.HttpPostRunnable;
 import com.boguzhai.logic.thread.Tasks;
@@ -53,7 +54,7 @@ public class AccountInfoActivity extends BaseActivity {
         super.onResume();
         // 更新账户基本信息
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pClientInfoAction!getAccountInfo.htm");
         new Thread(new HttpPostRunnable(conn, new UpdateInfoHandler())).start();
     }
@@ -65,7 +66,8 @@ public class AccountInfoActivity extends BaseActivity {
             case R.id.ly_title_left:  Utility.gotoMainpage(3);  break;
             case R.id.logout:
                 Variable.isLogin = false;
-                Variable.account.sessionid = "";
+                Variable.settings_editor.putString(SharedKeys.sessionid,"");
+                Variable.settings_editor.commit();
                 Utility.gotoMainpage(3);
                 break;
 
@@ -76,7 +78,7 @@ public class AccountInfoActivity extends BaseActivity {
             case R.id.my_verify:
                 // 获取账户认证信息
                 HttpClient connVerify = new HttpClient();
-                connVerify.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                connVerify.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                 connVerify.setUrl(Constant.url + "pClientInfoAction!getAuthInfo.htm");
                 new Thread(new HttpPostRunnable(connVerify, new GetAuthInfoHandler())).start();
                 break;

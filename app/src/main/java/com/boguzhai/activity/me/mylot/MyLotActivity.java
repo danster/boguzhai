@@ -50,7 +50,7 @@ public class MyLotActivity extends BaseActivity {
 		super.onResume();
         Utility.showLoadingDialog("正在加载...");
 		HttpClient conn = new HttpClient();
-		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+		conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
 		conn.setUrl(Constant.url + "pTraceAction!getMyAuctionList.htm");
 		new Thread(new HttpPostRunnable(conn,new MylotHandler())).start();
 	}

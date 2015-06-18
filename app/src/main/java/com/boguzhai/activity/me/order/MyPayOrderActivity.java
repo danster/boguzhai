@@ -70,7 +70,7 @@ public class MyPayOrderActivity extends BaseActivity implements SwipeRefreshLayo
 
     private void requestData() {
         conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pTraceAction!getMyOrderList.htm");
         conn.setParam("number", String.valueOf(number));
         new Thread(new HttpPostRunnable(conn, new MyPayOrderHandler())).start();

@@ -121,7 +121,7 @@ public class AccountBindActivity extends BaseActivity {
                 }
 
                 HttpClient conn_bind = new HttpClient();
-                conn_bind.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                conn_bind.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                 conn_bind.setParam("checkCode", check_code.getText().toString());
 
                 if(bind_info.equals("邮箱")){

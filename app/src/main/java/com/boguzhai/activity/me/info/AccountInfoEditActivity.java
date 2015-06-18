@@ -150,7 +150,7 @@ public class AccountInfoEditActivity extends BaseActivity {
             }
 
             HttpClient conn = new HttpClient();
-            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
             conn.setParam("address_1", address_1.toString());
             conn.setParam("address_2", address_2.toString());
             conn.setParam("address_3", address_3.toString());

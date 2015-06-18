@@ -42,7 +42,7 @@ public class Tasks {
 
     public static void uploadImage(String type, Bitmap bitmap, HttpJsonHandler handler){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("type", type);
         conn.setParamBitmap("fileStr", bitmap);
         conn.setUrl(Constant.url.replace("/phones/","/") + "fileUploadAction!uploadImage.htm");
@@ -51,7 +51,7 @@ public class Tasks {
 
     public static void uploadAuctionImage(Bitmap bitmap, HttpJsonHandler handler){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
 
         conn.setParamBitmap("fileStr", bitmap);
         conn.setUrl(Constant.url.replace("/phones/","/") + "fileUploadAction!uploadAuctionImage.htm");
@@ -60,7 +60,7 @@ public class Tasks {
 
     public static void getCheckCode(String mobile){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("mobile", mobile);
         conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
         new Thread(new HttpPostRunnable(conn, new GetCheckcodeHandler())).start();

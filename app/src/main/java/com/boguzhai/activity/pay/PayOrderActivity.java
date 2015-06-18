@@ -36,7 +36,7 @@ public class PayOrderActivity extends BaseActivity {
 
         // 获取订单支付信息
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("orderId", getIntent().getStringExtra("orderId") );
         conn.setUrl(Constant.url + "pTraceAction!getOrderPayInfoById.htm");
         new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
@@ -83,7 +83,7 @@ public class PayOrderActivity extends BaseActivity {
     // 上传支付信息，获取支付结果，跳转结果显示页或者网银支付页面
     private void payHttpConnect(){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie",    "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie",    "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("orderId",    orderNo);
         conn.setParam("useBalance", useDeposit ? "1" : "0");
         conn.setParam("useDeposit", useDeposit ? "1" : "0");

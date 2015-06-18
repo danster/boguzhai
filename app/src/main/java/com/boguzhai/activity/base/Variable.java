@@ -18,6 +18,7 @@ import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
 import com.boguzhai.logic.dao.Lottype_1;
 import com.boguzhai.logic.dao.Session;
+import com.boguzhai.logic.dao.SharedKeys;
 import com.boguzhai.logic.widget.XListView;
 
 import java.util.ArrayList;
@@ -71,4 +72,7 @@ public class Variable {
         }
     };
 
+    public static String getSessionId(){
+        return Variable.settings.getString(SharedKeys.sessionid, "");
+    }
 }

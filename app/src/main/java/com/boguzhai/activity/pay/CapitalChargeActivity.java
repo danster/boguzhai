@@ -58,7 +58,7 @@ public class CapitalChargeActivity  extends BaseActivity {
                 if(!useUnionpay){ Utility.alertDialog("请选择充值方式",null); break;}
 
                 HttpClient conn = new HttpClient();
-                conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                 conn.setParam("money", pay_money);
                 conn.setParam("type", "1");
                 conn.setUrl(Constant.url + "pTraceAction!accountCharge.htm");

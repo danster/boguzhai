@@ -103,8 +103,8 @@ public class BaseFragment extends Fragment implements XListView.IXListViewListen
      */
     public void requestData() {
         conn = new HttpClient();
-        Log.i(TAG, "sessionId" + Variable.account.sessionid);
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        Log.i(TAG, "sessionId" + Variable.getSessionId());
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pAuctionUserAction!getMyAuctionMainList.htm");
         conn.setParam("status", status);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
         conn.setParam("number", String.valueOf(number));//分页序号，从1开始

@@ -59,7 +59,7 @@ public class LotInfoActivity extends BaseActivity {
     public void checkCollectInfo(){
         if(Variable.isLogin == true){
             HttpClient conn = new HttpClient();
-            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
             conn.setUrl(Constant.url+"pCommonAction!checkAuctionIsCollected.htm?auctionId="+Variable.currentLot.id);
             new Thread(new HttpPostRunnable(conn,new CheckCollectInfoHandler())).start();
         }
@@ -74,7 +74,7 @@ public class LotInfoActivity extends BaseActivity {
                     Utility.gotoLogin();
                 } else if(collectText.getText().toString().equals("收藏")){
                     HttpClient conn = new HttpClient();
-                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                    conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                     conn.setUrl(Constant.url+"pCommonAction!collectAuction.htm?auctionId="+Variable.currentLot.id);
                     new Thread(new HttpPostRunnable(conn,new CollectInfoHandler())).start();
                 } else {

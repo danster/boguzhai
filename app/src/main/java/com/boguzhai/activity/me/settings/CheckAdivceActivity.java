@@ -54,7 +54,7 @@ public class CheckAdivceActivity extends BaseActivity {
 
     private void deleteAdvice() {
         conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pProposeAction!removeAdviceById.htm");
         conn.setParam("id", adviceId);
         new Thread(new HttpPostRunnable(conn, new DeleteAdvicesHandler())).start();
@@ -64,7 +64,7 @@ public class CheckAdivceActivity extends BaseActivity {
 
     private void checkAdvice() {
         conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pProposeAction!lookAdviceById.htm");
         conn.setParam("id", adviceId);
         new Thread(new HttpPostRunnable(conn, new CheckAdvicesHandler())).start();

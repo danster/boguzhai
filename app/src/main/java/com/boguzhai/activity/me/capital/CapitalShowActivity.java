@@ -40,7 +40,7 @@ public class CapitalShowActivity extends BaseActivity {
 
         // 获取账户资产信息
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pClientInfoAction!getCapitalInfo.htm");
         new Thread(new HttpPostRunnable(conn, new GetCaptialInfoHandler())).start();
     }

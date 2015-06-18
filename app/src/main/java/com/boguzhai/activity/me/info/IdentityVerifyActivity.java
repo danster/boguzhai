@@ -117,7 +117,7 @@ public class IdentityVerifyActivity extends BaseActivity {
                 break;
             case R.id.submit:
                 HttpClient conn = new HttpClient();
-                conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                 if(((TextView)findViewById(R.id.my_name)).getText().equals("个人")){
                     conn.setParam("property", "1");
                 } else {

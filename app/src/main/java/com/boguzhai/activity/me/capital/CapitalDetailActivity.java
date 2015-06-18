@@ -161,7 +161,7 @@ public class CapitalDetailActivity extends BaseActivity implements XListView.IXL
 
     private void httpConnect(){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + httpUrl + "?number=" + number);
         new Thread(new HttpPostRunnable(conn, new GetDetailHandler())).start();
     }

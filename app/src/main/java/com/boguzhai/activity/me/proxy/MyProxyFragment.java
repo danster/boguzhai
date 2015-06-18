@@ -210,7 +210,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
          */
         conn = new HttpClient();
         conn.setUrl(Constant.url + "pAuctionUserAction!getAuctionProxyList.htm");
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("status", String.valueOf(status));//0可修改的代理出价(拍卖未结束) 1历史代理(不可修改)
         conn.setParam("number", String.valueOf(number));//分页序号，从1开始
         new Thread(new HttpPostRunnable(conn, new MyProxyHandler())).start();
@@ -301,7 +301,7 @@ public class MyProxyFragment extends Fragment implements XListView.IXListViewLis
                                     //网络请求
                                     conn = new HttpClient();
                                     conn.setUrl(Constant.url + "pAuctionUserAction!removeAuctionProxyPrice.htm");
-                                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                                    conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                                     conn.setParam("number", adapter.getLots().get(position - 1).id);
                                     new Thread(new HttpPostRunnable(conn, new MyProxyDeleteHandler(position, view))).start();
                                 }

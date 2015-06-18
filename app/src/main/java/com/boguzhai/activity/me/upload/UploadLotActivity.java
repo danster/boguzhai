@@ -196,7 +196,7 @@ public class UploadLotActivity extends BaseActivity {
                 } else {
                     conn = new HttpClient();
                     conn.setUrl(Constant.url + "pAuctionInfoAction!uploadAuction.htm");
-                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                    conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                     conn.setParam("typeId", typeId);
                     conn.setParam("name", lot_name);
                     conn.setParam("basePrice", bottom_price);

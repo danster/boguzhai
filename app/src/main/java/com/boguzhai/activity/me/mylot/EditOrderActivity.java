@@ -118,7 +118,7 @@ public class EditOrderActivity extends BaseActivity {
     // 获取收货地址
     private void getDeliveryAddress(){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pClientInfoAction!getDeliveryAddress.htm");
         new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
             @Override
@@ -160,7 +160,7 @@ public class EditOrderActivity extends BaseActivity {
     // 获取发票内容
     private void getInvoiceContent(){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pTraceAction!getInvoiceContent.htm");
         new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
             @Override
@@ -185,7 +185,7 @@ public class EditOrderActivity extends BaseActivity {
     // 获取运费
     private void getFreight(){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("addressId", addressId);
         conn.setParam("auctionId", auctionId);
         conn.setUrl(Constant.url + "pTraceAction!getFreight.htm");
@@ -208,7 +208,7 @@ public class EditOrderActivity extends BaseActivity {
     // 计算保费
     private void getSupportPrice(String price){
 		HttpClient conn = new HttpClient();
-		conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+		conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
 		conn.setParam("price", price);
 		conn.setUrl(Constant.url + "pTraceAction!getSupportPrice.htm");
 		new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
@@ -359,7 +359,7 @@ public class EditOrderActivity extends BaseActivity {
                 };
 
                 HttpClient conn = new HttpClient();
-                conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                 conn.setParam("mobile", dp_mobile.getText().toString());
                 conn.setUrl(Constant.url+"pLoginAction!getMobileCheckCode.htm");
                 new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {
@@ -395,7 +395,7 @@ public class EditOrderActivity extends BaseActivity {
     // 提交订单信息,获取订单编号
     private void getOrderId(){
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("addressId", addressId);
         conn.setParam("auctionId", auctionId);
         conn.setParam("deliveryType", deliveryType);
@@ -465,7 +465,7 @@ public class EditOrderActivity extends BaseActivity {
                     Utility.alertDialog("请填写声明价值",null);
                 } else {
                     HttpClient conn = new HttpClient();
-                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                    conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                     conn.setParam("price", support_price.getText().toString());
                     conn.setUrl(Constant.url + "pTraceAction!getSupportPrice.htm");
                     new Thread(new HttpPostRunnable(conn, new HttpJsonHandler() {

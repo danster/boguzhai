@@ -95,10 +95,11 @@ public class ResetPwdActivity extends BaseActivity {
                     super.handlerData(code, data);
                     switch(code){
                         case 0:
-                            Utility.toastMessage("发送验证码成功，请注意查收");
                             try {
                                 realCheckcode = data.getString("check_code");
+                                Utility.toastMessage("发送验证码成功，请注意查收");
                             } catch (JSONException e) {
+                                Utility.toastMessage("发送验证码失败，请重新获取验证码");
                                 e.printStackTrace();
                             }
                             break;
@@ -116,6 +117,10 @@ public class ResetPwdActivity extends BaseActivity {
             break;
 
         case R.id.submit:
+            if(realCheckcode.equals("")){
+                Utility.alertDialog("请重新获取验证码");
+                break;
+            }
             if(!stringApi.checkPhoneNumber(mobile.getText().toString())){
                 Utility.alertDialog(stringApi.tips);
                 break;
@@ -137,7 +142,7 @@ public class ResetPwdActivity extends BaseActivity {
             conn2.setParam("mobile", mobile.getText().toString());
             conn2.setParam("password", pwd_input.getText().toString());
             conn2.setParam("checkcode", check_code.getText().toString());
-            conn2.setParam("realCheckcode", check_code.getText().toString());
+            conn2.setParam("realCheckcode", realCheckcode);
             conn2.setUrl(Constant.url+"pLoginAction!resetPwd.htm");
             new Thread(new HttpPostRunnable(conn2, new SubmitHandler())).start();
             Utility.showLoadingDialog("正在重置密码，请稍后...");

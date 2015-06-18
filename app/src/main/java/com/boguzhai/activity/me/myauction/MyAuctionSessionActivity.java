@@ -54,13 +54,12 @@ public class MyAuctionSessionActivity extends BaseActivity {
 
     private void requestData() {
         conn = new HttpClient();
-        Log.i(TAG, "sessionId" + Variable.account.sessionid);
+        Log.i(TAG, "sessionId" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pMainAction!getAuctionMainById.htm");
         conn.setParam("auctionMainId", auctionId);
         new Thread(new HttpPostRunnable(conn, new MyAuctionSessionHandler())).start();
     }
-
-
+    
     @Override
 	public void onClick(View view) {
         super.onClick(view);

@@ -140,7 +140,7 @@ public class AuctionActiveActivity extends BaseActivity {
 
         if(Variable.isLogin == true) {
             HttpClient conn = new HttpClient();
-            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
             conn.setParam("auctionId", "");
             conn.setParam("auctionMainId", Variable.currentAuction.id);
             conn.setUrl(Constant.url + "pJoinMainAction!getApplyInfoById.htm");
@@ -240,7 +240,7 @@ public class AuctionActiveActivity extends BaseActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             HttpClient conn = new HttpClient();
-                            conn.setHeader("cookie", "JSESSIONID="+Variable.account.sessionid);
+                            conn.setHeader("cookie", "JSESSIONID="+Variable.getSessionId());
                             conn.setParam("auctionId", "");
                             conn.setParam("auctionMainId", Variable.currentAuction.id);
                             conn.setUrl(Constant.url + "pTraceAction!askPayDeposit.htm");
@@ -288,7 +288,7 @@ public class AuctionActiveActivity extends BaseActivity {
             }
 
             HttpClient conn = new HttpClient();
-            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
             conn.setParam("auctionMainId", Variable.currentAuction.id);
             conn.setParam("auctionSessionId", Variable.currentSession.id);
             conn.setParam("auctionId", currentLotId);

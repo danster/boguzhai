@@ -49,7 +49,7 @@ public class PayDepositActivity extends BaseActivity {
     private void payHttpConnect(){
 
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("auctionMainId", Variable.currentAuction.id);
         conn.setParam("auctionId", "");
         conn.setParam("useBalance", useBalance?"1":"0");

@@ -67,7 +67,7 @@ public class BiddingActivity extends BaseActivity implements SwipeRefreshLayout.
 
     public void requestData() {
         conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pClientInfoAction!getBiddingLotList.htm");
         new Thread(new HttpPostRunnable(conn, new BiddingHandler())).start();
     }

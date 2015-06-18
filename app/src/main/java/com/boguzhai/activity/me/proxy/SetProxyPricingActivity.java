@@ -85,7 +85,7 @@ public class SetProxyPricingActivity extends BaseActivity {
      */
     private void setProxy(String useProxy, String proxyPrice) {
         HttpClient conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setParam("auctionId", auctionId);
         conn.setParam("useProxy", useProxy);
         conn.setParam("proxyPrice", proxyPrice);

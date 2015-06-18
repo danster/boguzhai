@@ -53,7 +53,7 @@ public class CapitalWithdrawalActivity extends BaseActivity {
 				}
 
 				HttpClient conn = new HttpClient();
-				conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+				conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
 				conn.setParam("money", money);
 				conn.setUrl(Constant.url + "pClientInfoAction!accountWithdrawal.htm");
 

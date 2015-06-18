@@ -4,6 +4,7 @@ import com.boguzhai.activity.base.Variable;
 import com.boguzhai.logic.dao.Account;
 import com.boguzhai.logic.dao.Auction;
 import com.boguzhai.logic.dao.Lot;
+import com.boguzhai.logic.dao.SharedKeys;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +33,8 @@ public class JsonApi {
             // 判断是登陆，不是信息更新
             if(data.has("sessionid")){
                 Variable.account = new Account();
-                Variable.account.sessionid = data.getString("sessionid");
+                Variable.settings_editor.putString(SharedKeys.sessionid,data.getString("sessionid"));
+                Variable.settings_editor.commit();
             }
 
             // 解析账户基本信息

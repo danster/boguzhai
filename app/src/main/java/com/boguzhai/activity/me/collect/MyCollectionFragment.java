@@ -110,7 +110,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
     private void requestData() {
         conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pClientStowAction!getCollectedAuctionList.htm");
         conn.setParam("mainState", status[0]);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
         conn.setParam("status", status[1]);//拍卖会状态 "" "预展中" "拍卖中" "已结束"
@@ -121,7 +121,7 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
 
     private void deleteCollection(int position, View view) {
         conn = new HttpClient();
-        conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+        conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
         conn.setUrl(Constant.url + "pClientStowAction!removeCollectedAuction.htm");
         conn.setParam("auctionId", adapter.lots.get(position - 1).id);//收藏拍品id
         new Thread(new HttpPostRunnable(conn, new DeleteCollectionHandler(position, view))).start();

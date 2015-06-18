@@ -94,7 +94,7 @@ public class CapitalBindbankActivity extends BaseActivity {
                 } else {
 
                     HttpClient conn_bind = new HttpClient();
-                    conn_bind.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                    conn_bind.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                     conn_bind.setParam("bankName", bank);
                     conn_bind.setParam("bankNumber", bank_number);
                     conn_bind.setParam("checkCode", check_code);

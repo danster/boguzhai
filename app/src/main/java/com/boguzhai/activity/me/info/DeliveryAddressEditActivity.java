@@ -152,7 +152,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
             }
 
             HttpClient conn = new HttpClient();
-            conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+            conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
             conn.setParam("receiver", name.getText().toString());
             conn.setParam("address_1", address_1.toString());
             conn.setParam("address_2", address_2.toString());
@@ -184,7 +184,7 @@ public class DeliveryAddressEditActivity extends BaseActivity {
                     tipsStr = "删除收货信息";
                     dialog.dismiss();
                     HttpClient conn = new HttpClient();
-                    conn.setHeader("cookie", "JSESSIONID=" + Variable.account.sessionid);
+                    conn.setHeader("cookie", "JSESSIONID=" + Variable.getSessionId());
                     conn.setParam("addressId", Variable.currentDeliveryAddress.id);
                     conn.setUrl(Constant.url + "pClientInfoAction!removeDeliveryAddress.htm");
                     new Thread(new HttpPostRunnable(conn, new SubmitHandler())).start();
