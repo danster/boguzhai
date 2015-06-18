@@ -87,6 +87,8 @@ public class MyCollectionFragment extends Fragment implements XListView.IXListVi
         this.status[0] = mainState;
         this.status[1] = status;
     }
+    public MyCollectionFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

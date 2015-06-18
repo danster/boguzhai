@@ -59,7 +59,7 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
         btn_advice_add = (Button) findViewById(R.id.btn_advice_add);
         listen(btn_advice_add);
 
-        swipe_layout_advices.setColorSchemeColors(R.color.gold);
+        swipe_layout_advices.setColorSchemeResources(R.color.gold);
         swipe_layout_advices.setOnRefreshListener(this);
 
         lv.setPullLoadEnable(true);
@@ -73,9 +73,13 @@ public class GetAdviceActivity extends BaseActivity implements SwipeRefreshLayou
                 startActivity(intent);
             }
         });
+    }
 
-        advices = new ArrayList<>();
+    @Override
+    protected void onResume() {
+        super.onResume();
         Utility.showLoadingDialog("正在加载...");
+        advices = new ArrayList<>();
         requestData();
     }
 

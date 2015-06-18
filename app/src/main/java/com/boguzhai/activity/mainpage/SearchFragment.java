@@ -179,12 +179,12 @@ public class SearchFragment extends Fragment {
                     String keyword = ((EditText)view.findViewById(R.id.keyword)).getText().toString();
                     String url = Constant.url+"pAuctionInfoAction!searchAuction.htm?";
                     url += "keyword="+keyword;
-                    url += "&type2="+lottypeId1.toString();
+                    url += "&type1="+lottypeId1.toString();
                     url += "&type2="+lottypeId2.toString();
                     url += "&type3="+lottypeId3.toString();
                     url += "&auctionMainId="+auctionId.toString();
-                    url += "&auctionSeesionId="+auctionId.toString();
-                    url += "&status="+sessionId.toString();
+                    url += "&auctionSeesionId="+sessionId.toString();
+                    url += "&status="+lot_status.toString();
                     url += "&type="+lot_deal_type.toString();
                     Intent intent = new Intent( context,  SearchResultActivity.class);
                     intent.putExtra("url",url);
