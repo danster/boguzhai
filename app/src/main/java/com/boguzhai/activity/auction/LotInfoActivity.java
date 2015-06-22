@@ -90,7 +90,7 @@ public class LotInfoActivity extends BaseActivity {
     public void showLotInfo(){
         Lot lot = Variable.currentLot;
         ((TextView)findViewById(R.id.lot_name)).setText(lot.name);
-        ((TextView)findViewById(R.id.description)).setText("  " + lot.description);
+        ((TextView)findViewById(R.id.description)).setText(lot.description);
         String info = "";
         info += "拍品图录号: "+lot.no;
         info += "\n拍品编号: "+lot.id;

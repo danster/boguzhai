@@ -53,15 +53,16 @@ public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... params) {
         mImageUrl = params[0];
-        //将图片名称encode(图片名称可能是中文)
-        String tmp = mImageUrl.substring(mImageUrl.lastIndexOf("/") + 1, mImageUrl.lastIndexOf("."));
-        mImageUrl =
-                mImageUrl.substring(0, mImageUrl.lastIndexOf("/")+1)
-                        + URLEncoder.encode(tmp)
-                        + mImageUrl.substring(mImageUrl.lastIndexOf("."));
-        Log.i("test", mImageUrl);
+
         if(mImageUrl.equals("")){
             return null;
+        }else{
+            //将图片名称encode(图片名称可能是中文)
+            String tmp = mImageUrl.substring(mImageUrl.lastIndexOf("/") + 1, mImageUrl.lastIndexOf("."));
+            mImageUrl =  mImageUrl.substring(0, mImageUrl.lastIndexOf("/")+1)
+                            + URLEncoder.encode(tmp)
+                            + mImageUrl.substring(mImageUrl.lastIndexOf("."));
+            Log.i("test", mImageUrl);
         }
 
         // 如果手机没有安装SD卡，只下载图片不缓存进SD卡
